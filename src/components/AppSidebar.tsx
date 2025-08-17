@@ -29,30 +29,18 @@ export function AppSidebar({ onNavigate }: AppSidebarProps) {
     <div className="w-72 h-screen bg-card border-r flex flex-col">
       {/* Logo Section */}
       <div className="p-6 border-b">
-        <div className="flex items-center gap-3">
-          <img src="/lovable-uploads/8dc3b4f9-4ebf-4b9b-90c7-c85727a0e166.png" alt="dolly" className="flex-shrink-0 w-16 h-16" />
-          <h2 className="font-semibold text-lg text-foreground">dolly</h2>
+        <div className="flex flex-col gap-2">
+          <div className="flex items-center gap-3">
+            <img src="/lovable-uploads/8dc3b4f9-4ebf-4b9b-90c7-c85727a0e166.png" alt="dolly" className="flex-shrink-0 w-16 h-16" />
+            <h2 className="font-semibold text-lg text-foreground">dolly</h2>
+          </div>
+          {user && (
+            <p className="text-sm text-muted-foreground ml-19">
+              {user.email}
+            </p>
+          )}
         </div>
       </div>
-
-      {/* User Info */}
-      {user && (
-        <div className="px-6 py-4 border-b bg-muted/30">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-primary/20 flex items-center justify-center">
-              <span className="text-sm font-semibold text-primary">
-                {user.email?.slice(0, 2).toUpperCase()}
-              </span>
-            </div>
-            <div className="flex-1 min-w-0">
-              <p className="text-sm font-medium text-foreground">Good morning!</p>
-              <p className="text-xs text-muted-foreground truncate">
-                {user.email}
-              </p>
-            </div>
-          </div>
-        </div>
-      )}
 
       {/* Navigation */}
       <nav className="flex-1 p-4">
