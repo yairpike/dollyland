@@ -6,27 +6,27 @@
 
 @layer base {
   :root {
-    /* Modern Dashboard Style - Purple/Blue Theme */
-    --background: 240 25% 96%;
-    --foreground: 235 15% 25%;
+    /* Urbanist Color Scheme */
+    --background: 0 0% 96%;
+    --foreground: 258 15% 22%;
     --card: 0 0% 100%;
-    --card-foreground: 235 15% 25%;
+    --card-foreground: 258 15% 22%;
     --popover: 0 0% 100%;
-    --popover-foreground: 235 15% 25%;
-    --primary: 262 75% 45%;
+    --popover-foreground: 258 15% 22%;
+    --primary: 258 15% 22%;
     --primary-foreground: 0 0% 100%;
-    --primary-glow: 262 75% 65%;
-    --secondary: 240 10% 92%;
-    --secondary-foreground: 235 15% 25%;
-    --muted: 240 8% 95%;
-    --muted-foreground: 235 8% 50%;
-    --accent: 270 95% 85%;
-    --accent-foreground: 235 15% 25%;
+    --primary-glow: 258 30% 35%;
+    --secondary: 257 8% 96%;
+    --secondary-foreground: 258 15% 22%;
+    --muted: 257 8% 96%;
+    --muted-foreground: 220 8% 55%;
+    --accent: 257 63% 92%;
+    --accent-foreground: 258 15% 22%;
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 98%;
-    --border: 240 10% 88%;
+    --border: 257 8% 92%;
     --input: 0 0% 100%;
-    --ring: 262 75% 65%;
+    --ring: 258 15% 22%;
     --success: 142 76% 36%;
     --success-foreground: 0 0% 98%;
     
@@ -34,29 +34,35 @@
     --button-primary-bg: 163 77% 62%;
     --button-primary-text: 225 46% 12%;
     
+    /* Design System Colors */
+    --urbanist-dark: 258 15% 22%;     /* #352b38 */
+    --urbanist-gray: 220 8% 55%;      /* #7e808c */
+    --urbanist-lavender: 257 63% 92%; /* #dad8f9 */
+    --urbanist-light: 257 8% 96%;     /* #f4f3f8 */
+    
     /* Dashboard-inspired colors */
-    --dashboard-purple: 262 75% 45%;
+    --dashboard-purple: 258 15% 22%;
     --dashboard-blue: 210 95% 60%;
     --dashboard-pink: 320 65% 75%;
     --dashboard-mint: 160 70% 80%;
-    --dashboard-lavender: 270 95% 85%;
-    --dashboard-gray-50: 240 20% 98%;
-    --dashboard-gray-100: 240 15% 95%;
-    --dashboard-gray-200: 240 10% 88%;
-    --dashboard-gray-600: 235 15% 45%;
-    --dashboard-gray-800: 235 15% 25%;
+    --dashboard-lavender: 257 63% 92%;
+    --dashboard-gray-50: 257 8% 98%;
+    --dashboard-gray-100: 257 8% 96%;
+    --dashboard-gray-200: 257 8% 92%;
+    --dashboard-gray-600: 220 8% 55%;
+    --dashboard-gray-800: 258 15% 22%;
     
     /* Design tokens */
     --radius: 16px;
-    --shadow-sm: 0 1px 3px 0 hsl(262 75% 45% / 0.1);
-    --shadow: 0 4px 12px 0 hsl(262 75% 45% / 0.15);
-    --shadow-md: 0 8px 24px 0 hsl(262 75% 45% / 0.2);
-    --shadow-lg: 0 16px 32px 0 hsl(262 75% 45% / 0.25);
-    --shadow-xl: 0 24px 48px 0 hsl(262 75% 45% / 0.3);
-    --shadow-glass: 0 8px 32px 0 hsl(262 75% 45% / 0.15);
-    --shadow-card: 0 4px 24px 0 hsl(262 75% 45% / 0.1);
-    --gradient-primary: linear-gradient(135deg, hsl(262 75% 45%), hsl(270 95% 65%));
-    --gradient-card: linear-gradient(145deg, hsl(0 0% 100% / 0.8), hsl(270 95% 95% / 0.6));
+    --shadow-sm: 0 1px 3px 0 hsl(258 15% 22% / 0.08);
+    --shadow: 0 4px 12px 0 hsl(258 15% 22% / 0.12);
+    --shadow-md: 0 8px 24px 0 hsl(258 15% 22% / 0.16);
+    --shadow-lg: 0 16px 32px 0 hsl(258 15% 22% / 0.20);
+    --shadow-xl: 0 24px 48px 0 hsl(258 15% 22% / 0.24);
+    --shadow-glass: 0 8px 32px 0 hsl(258 15% 22% / 0.12);
+    --shadow-card: 0 4px 24px 0 hsl(258 15% 22% / 0.08);
+    --gradient-primary: linear-gradient(135deg, hsl(258 15% 22%), hsl(257 63% 92%));
+    --gradient-card: linear-gradient(145deg, hsl(0 0% 100% / 0.9), hsl(257 63% 92% / 0.3));
     --glass-blur: blur(12px);
     --transition-all: all 0.3s ease;
 
@@ -78,26 +84,26 @@
   }
 
   .dark {
-    --background: 235 20% 8%;
-    --foreground: 0 0% 95%;
-    --card: 235 15% 12%;
-    --card-foreground: 0 0% 95%;
-    --popover: 235 15% 12%;
-    --popover-foreground: 0 0% 95%;
-    --primary: 262 75% 55%;
-    --primary-foreground: 0 0% 100%;
-    --primary-glow: 262 75% 75%;
-    --secondary: 235 15% 15%;
-    --secondary-foreground: 0 0% 95%;
-    --muted: 235 10% 18%;
-    --muted-foreground: 240 5% 65%;
-    --accent: 270 95% 25%;
-    --accent-foreground: 0 0% 95%;
+    --background: 258 15% 8%;
+    --foreground: 257 8% 95%;
+    --card: 258 15% 12%;
+    --card-foreground: 257 8% 95%;
+    --popover: 258 15% 12%;
+    --popover-foreground: 257 8% 95%;
+    --primary: 257 63% 82%;
+    --primary-foreground: 258 15% 22%;
+    --primary-glow: 257 63% 72%;
+    --secondary: 258 15% 15%;
+    --secondary-foreground: 257 8% 95%;
+    --muted: 258 15% 18%;
+    --muted-foreground: 220 8% 65%;
+    --accent: 257 63% 25%;
+    --accent-foreground: 257 8% 95%;
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 98%;
-    --border: 235 15% 20%;
-    --input: 235 15% 15%;
-    --ring: 262 75% 65%;
+    --border: 258 15% 20%;
+    --input: 258 15% 15%;
+    --ring: 257 63% 62%;
     --success: 142 76% 45%;
     --success-foreground: 0 0% 98%;
     

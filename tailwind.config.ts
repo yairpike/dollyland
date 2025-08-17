@@ -71,6 +71,12 @@ export default {
 						800: 'hsl(var(--dashboard-gray-800))'
 					}
 				},
+				urbanist: {
+					dark: 'hsl(var(--urbanist-dark))',
+					gray: 'hsl(var(--urbanist-gray))',
+					lavender: 'hsl(var(--urbanist-lavender))',
+					light: 'hsl(var(--urbanist-light))'
+				},
 				sidebar: {
 					DEFAULT: 'hsl(var(--sidebar-background))',
 					foreground: 'hsl(var(--sidebar-foreground))',
@@ -106,7 +112,7 @@ export default {
 				'glass': 'var(--glass-blur)'
 			},
 			fontFamily: {
-				sans: ['Poppins', 'system-ui', '-apple-system', 'BlinkMacSystemFont', '"Segoe UI"', 'Roboto', '"Helvetica Neue"', 'Arial', 'sans-serif'],
+				sans: ['Urbanist', 'system-ui', '-apple-system', 'BlinkMacSystemFont', '"Segoe UI"', 'Roboto', '"Helvetica Neue"', 'Arial', 'sans-serif'],
 			},
 			fontSize: {
 				'2xs': ['0.625rem', { lineHeight: '0.75rem' }],

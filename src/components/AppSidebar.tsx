@@ -37,14 +37,14 @@ export function AppSidebar() {
 
   const getNavCls = (active: boolean) =>
     active 
-      ? "bg-primary/10 text-primary font-medium border-r-2 border-primary" 
-      : "text-muted-foreground hover:bg-muted/50 hover:text-foreground";
+      ? "bg-urbanist-lavender text-urbanist-dark font-medium rounded-xl" 
+      : "text-muted-foreground hover:bg-muted/50 hover:text-foreground rounded-xl";
 
   return (
-    <Sidebar className={state === "collapsed" ? "w-16" : "w-64"}>
-      <SidebarContent className="bg-card border-r">
+    <Sidebar className={state === "collapsed" ? "w-16" : "w-72"}>
+      <SidebarContent className="bg-card border-none shadow-lg rounded-r-3xl">
         {/* Logo Section */}
-        <div className="p-4 border-b">
+        <div className="p-6 border-none">
           <div className="flex items-center gap-3">
             <img src={dollyLogo} alt="dolly" className="w-8 h-8" />
             {state !== "collapsed" && (
@@ -58,15 +58,15 @@ export function AppSidebar() {
 
         {/* User Info */}
         {state !== "collapsed" && user && (
-          <div className="p-4 border-b bg-muted/30">
+          <div className="px-6 py-4 border-none bg-gradient-to-r from-urbanist-lavender/30 to-transparent rounded-2xl mx-4 mb-4">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center">
-                <span className="text-sm font-medium text-primary">
+              <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-urbanist-lavender to-primary/20 flex items-center justify-center shadow-lg">
+                <span className="text-sm font-semibold text-urbanist-dark">
                   {user.email?.slice(0, 2).toUpperCase()}
                 </span>
               </div>
               <div className="flex-1 min-w-0">
-                <p className="text-sm font-medium">Good morning!</p>
+                <p className="text-sm font-medium text-urbanist-dark">Good morning!</p>
                 <p className="text-xs text-muted-foreground truncate">
                   {user.email}
                 </p>
@@ -77,19 +77,19 @@ export function AppSidebar() {
 
         <SidebarGroup>
           <SidebarGroupContent>
-            <SidebarMenu className="px-2 py-4">
+            <SidebarMenu className="px-4 py-6 space-y-2">
               {mainItems.map((item) => (
-                <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild className="mb-1">
+                <SidebarMenuItem key={item.title} className="mb-2">
+                  <SidebarMenuButton asChild className="w-full">
                     <NavLink
                       to={item.url}
                       end
-                      className={`flex items-center gap-3 px-3 py-2 rounded-lg transition-all ${getNavCls(
+                      className={`flex items-center gap-4 px-4 py-3 transition-all duration-200 w-full ${getNavCls(
                         isActive(item.url)
                       )}`}
                     >
-                      <item.icon className="h-5 w-5 flex-shrink-0" />
-                      {state !== "collapsed" && <span className="text-sm">{item.title}</span>}
+                      <item.icon className="h-6 w-6 flex-shrink-0" />
+                      {state !== "collapsed" && <span className="text-sm font-medium">{item.title}</span>}
                     </NavLink>
                   </SidebarMenuButton>
                 </SidebarMenuItem>

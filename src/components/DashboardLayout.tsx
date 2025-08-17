@@ -9,19 +9,19 @@ interface DashboardLayoutProps {
 export function DashboardLayout({ children }: DashboardLayoutProps) {
   return (
     <SidebarProvider defaultOpen={true}>
-      <div className="min-h-screen flex w-full bg-muted/30">
+      <div className="min-h-screen flex w-full bg-urbanist-light">
         <AppSidebar />
         <div className="flex-1 flex flex-col">
           {/* Header */}
-          <header className="h-16 border-b bg-card/50 backdrop-blur-sm flex items-center justify-between px-6">
+          <header className="h-20 border-none bg-card/80 backdrop-blur-sm flex items-center justify-between px-8 rounded-b-3xl shadow-sm">
             <div className="flex items-center gap-4">
-              <SidebarTrigger className="h-8 w-8" />
+              <SidebarTrigger className="h-10 w-10 rounded-2xl hover:bg-urbanist-lavender/50" />
               <div className="flex items-center gap-4">
                 <div className="relative">
                   <input
                     type="search"
                     placeholder="Search..."
-                    className="h-9 w-64 rounded-lg border bg-background px-3 text-sm"
+                    className="h-11 w-80 rounded-2xl border-none bg-urbanist-light px-4 text-sm shadow-sm"
                   />
                 </div>
               </div>
@@ -32,7 +32,7 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
           </header>
 
           {/* Main Content */}
-          <main className="flex-1 p-6">
+          <main className="flex-1 p-8 bg-urbanist-light">
             {children}
           </main>
         </div>
