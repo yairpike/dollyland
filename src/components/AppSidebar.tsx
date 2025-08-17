@@ -88,7 +88,7 @@ export function AppSidebar() {
 
         <SidebarGroup>
           <SidebarGroupContent>
-            <SidebarMenu className={`space-y-2 ${state === "collapsed" ? "px-1 py-4" : "px-4 py-6"}`}>
+            <SidebarMenu className={`space-y-2 ${state === "collapsed" ? "px-2 py-4" : "px-4 py-6"}`}>
               {mainItems.map((item) => (
                 <SidebarMenuItem key={item.title} className="mb-2">
                   <SidebarMenuButton asChild className="w-full">
@@ -97,7 +97,7 @@ export function AppSidebar() {
                       end
                       className={`flex items-center transition-all duration-200 w-full ${
                         state === "collapsed" 
-                          ? `justify-center px-1 py-4 rounded-xl ${getNavCls(isActive(item.url))}`
+                          ? `justify-center px-2 py-3 rounded-xl ${getNavCls(isActive(item.url))}`
                           : `gap-4 px-4 py-3 ${getNavCls(isActive(item.url))}`
                       }`}
                       title={state === "collapsed" ? item.title : undefined}
