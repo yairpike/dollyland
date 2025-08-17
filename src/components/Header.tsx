@@ -29,7 +29,7 @@ export const Header = () => {
             <Link to="/" className="flex items-center gap-3 flex-shrink-0 hover:scale-105 transition-transform">
               <img src={dollyLogo} alt="Dolly AI" className="w-10 h-10" />
               <div>
-                <h1 className="text-xl font-bold bg-gradient-primary bg-clip-text text-transparent">Dolly</h1>
+                <h1 className="text-xl font-semibold bg-gradient-primary bg-clip-text text-transparent">dolly</h1>
               </div>
             </Link>
             

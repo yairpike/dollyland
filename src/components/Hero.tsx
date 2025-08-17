@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Zap, Sparkles } from "lucide-react";
 import dollyLogo from "@/assets/dolly-logo.png";
+import hero3dBrain from "@/assets/hero-3d-brain.png";
 
 export const Hero = () => {
   const navigate = useNavigate();
@@ -9,6 +10,11 @@ export const Hero = () => {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-background via-dashboard-lavender/10 to-dashboard-mint/10">
       <div className="absolute inset-0 bg-gradient-card opacity-30"></div>
+      
+      {/* 3D Brain Illustration */}
+      <div className="absolute top-20 right-20 hidden lg:block animate-float">
+        <img src={hero3dBrain} alt="3D Brain AI" className="w-48 h-36 opacity-60" />
+      </div>
       
       {/* Modern floating elements */}
       <div className="absolute top-20 left-16 w-24 h-20 bg-dashboard-purple/20 rounded-3xl animate-float blur-sm"></div>
@@ -25,7 +31,7 @@ export const Hero = () => {
       <div className="relative z-10 text-center max-w-5xl mx-auto px-6">
         <div className="mb-12 animate-slide-up">
           <img src={dollyLogo} alt="Dolly AI" className="w-32 h-32 mx-auto mb-8 animate-float rounded-3xl shadow-xl bg-gradient-card backdrop-blur-glass p-4" />
-          <h1 className="text-6xl md:text-7xl font-bold mb-8 leading-tight">
+          <h1 className="text-6xl md:text-7xl font-semibold mb-8 leading-tight">
             <span className="bg-gradient-primary bg-clip-text text-transparent">Build & Deploy</span>
             <span className="block text-foreground mt-2">AI Agents</span>
           </h1>
