@@ -11,7 +11,7 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
     <SidebarProvider defaultOpen={true} className="w-full">
       <div className="min-h-screen flex w-full bg-urbanist-light">
         <AppSidebar />
-        <div className="flex-1 flex flex-col min-w-0">
+        <div className="flex-1 flex flex-col min-w-0 pr-6">
           {/* Header */}
           <header className="h-20 border-none bg-card/80 backdrop-blur-sm flex items-center justify-between px-8 rounded-b-3xl shadow-sm ml-4">
             <div className="flex items-center gap-6">
