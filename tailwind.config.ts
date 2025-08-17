@@ -61,6 +61,14 @@ export default {
 					primary: 'hsl(var(--agent-primary))',
 					secondary: 'hsl(var(--agent-secondary))'
 				},
+				wellness: {
+					yellow: 'hsl(var(--wellness-yellow))',
+					green: 'hsl(var(--wellness-green))',
+					coral: 'hsl(var(--wellness-coral))',
+					blue: 'hsl(var(--wellness-blue))',
+					purple: 'hsl(var(--wellness-purple))',
+					mint: 'hsl(var(--wellness-mint))'
+				},
 				sidebar: {
 					DEFAULT: 'hsl(var(--sidebar-background))',
 					foreground: 'hsl(var(--sidebar-foreground))',
@@ -80,12 +88,14 @@ export default {
 			backgroundImage: {
 				'gradient-hero': 'var(--gradient-hero)',
 				'gradient-card': 'var(--gradient-card)',
-				'gradient-agent': 'var(--gradient-agent)'
+				'gradient-agent': 'var(--gradient-agent)',
+				'gradient-wellness': 'var(--gradient-wellness)'
 			},
 			boxShadow: {
 				'glow': 'var(--shadow-glow)',
 				'neural': 'var(--shadow-neural)',
-				'elegant': 'var(--shadow-elegant)'
+				'elegant': 'var(--shadow-elegant)',
+				'card': 'var(--shadow-card)'
 			},
 			keyframes: {
 				'accordion-down': {
