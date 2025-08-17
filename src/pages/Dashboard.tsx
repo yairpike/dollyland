@@ -179,7 +179,7 @@ export const Dashboard = () => {
                   <div className="flex flex-col sm:flex-row gap-2">
                     <Button 
                       size="sm" 
-                      className="flex-1"
+                      className="flex-1 h-9"
                       onClick={() => navigate(`/chat/${agent.id}`)}
                     >
                       <MessageCircle className="w-4 h-4 mr-2" />
@@ -192,7 +192,7 @@ export const Dashboard = () => {
                         setSelectedAgent(agent);
                         setEditModalOpen(true);
                       }}
-                      className="sm:w-auto"
+                      className="sm:w-auto h-9"
                     >
                       <Settings className="w-4 h-4 sm:mr-0" />
                       <span className="sm:hidden ml-2">Settings</span>
