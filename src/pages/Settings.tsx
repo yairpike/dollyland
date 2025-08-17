@@ -36,17 +36,14 @@ export const Settings = () => {
             <h1 className="text-3xl font-semibold">Settings</h1>
             <p className="text-muted-foreground">Manage your account and preferences</p>
           </div>
+          <ThemeToggle />
         </div>
 
         <Tabs defaultValue="account" className="w-full">
-          <TabsList className="grid w-full grid-cols-4">
+          <TabsList className="grid w-full max-w-md grid-cols-3">
             <TabsTrigger value="account" className="flex items-center gap-2">
               <User className="w-4 h-4" />
               Account
-            </TabsTrigger>
-            <TabsTrigger value="appearance" className="flex items-center gap-2">
-              <Palette className="w-4 h-4" />
-              Appearance
             </TabsTrigger>
             <TabsTrigger value="ai-providers" className="flex items-center gap-2">
               <Bot className="w-4 h-4" />
@@ -115,28 +112,6 @@ export const Settings = () => {
             </Card>
           </TabsContent>
 
-          {/* Appearance Settings */}
-          <TabsContent value="appearance" className="mt-6">
-            <Card>
-              <CardHeader>
-                <CardTitle>Appearance</CardTitle>
-                <CardDescription>
-                  Customize the appearance of your application
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="flex items-center justify-between">
-                  <div>
-                    <h4 className="font-medium">Theme</h4>
-                    <p className="text-sm text-muted-foreground">
-                      Choose your preferred theme
-                    </p>
-                  </div>
-                  <ThemeToggle />
-                </div>
-              </CardContent>
-            </Card>
-          </TabsContent>
 
           {/* AI Providers Settings */}
           <TabsContent value="ai-providers" className="mt-6">
