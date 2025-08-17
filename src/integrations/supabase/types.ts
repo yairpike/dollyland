@@ -319,6 +319,47 @@ export type Database = {
         }
         Relationships: []
       }
+      secure_api_keys: {
+        Row: {
+          created_at: string
+          encrypted_key: string
+          expires_at: string | null
+          id: string
+          key_hash: string
+          last_rotation_at: string | null
+          provider_id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          encrypted_key: string
+          expires_at?: string | null
+          id?: string
+          key_hash: string
+          last_rotation_at?: string | null
+          provider_id: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          encrypted_key?: string
+          expires_at?: string | null
+          id?: string
+          key_hash?: string
+          last_rotation_at?: string | null
+          provider_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "secure_api_keys_provider_id_fkey"
+            columns: ["provider_id"]
+            isOneToOne: false
+            referencedRelation: "user_ai_providers"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       user_ai_providers: {
         Row: {
           access_count: number | null
@@ -387,6 +428,21 @@ export type Database = {
       encrypt_api_key_enhanced: {
         Args: { api_key: string; user_id: string }
         Returns: string
+      }
+      get_api_key_for_provider: {
+        Args: { provider_uuid: string; requesting_user_id: string }
+        Returns: string
+      }
+      get_masked_access_logs: {
+        Args: { user_uuid: string }
+        Returns: {
+          access_type: string
+          accessed_at: string
+          id: string
+          masked_ip: string
+          provider_name: string
+          success: boolean
+        }[]
       }
       log_api_key_access: {
         Args: {
