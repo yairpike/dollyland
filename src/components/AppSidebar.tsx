@@ -1,7 +1,7 @@
 import { Bot, Users, BarChart3, Settings, Plus, Home, ShoppingBag } from "lucide-react";
 import { NavLink, useLocation } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
-import dollyLogo from "@/assets/dolly-logo.png";
+import dollyLogo from "@/assets/dolly-brain-logo.png";
 
 import {
   Sidebar,
@@ -48,10 +48,7 @@ export function AppSidebar() {
           <div className="flex items-center gap-3">
             <img src={dollyLogo} alt="dolly" className="w-8 h-8" />
             {state !== "collapsed" && (
-              <div>
-                <h2 className="font-semibold text-lg">dolly</h2>
-                <p className="text-xs text-muted-foreground">AI Platform</p>
-              </div>
+              <h2 className="font-semibold text-lg text-foreground">dolly</h2>
             )}
           </div>
         </div>

@@ -30,9 +30,9 @@ export const Hero = () => {
       
       <div className="relative z-10 text-center max-w-5xl mx-auto px-6">
         <div className="mb-12 animate-slide-up">
-          <img src={dollyLogo} alt="Dolly AI" className="w-32 h-32 mx-auto mb-8 animate-float rounded-3xl shadow-xl bg-gradient-card backdrop-blur-glass p-4" />
+          <img src={dollyLogo} alt="dolly" className="w-32 h-32 mx-auto mb-8 animate-float rounded-3xl shadow-xl bg-card backdrop-blur-glass p-4" />
           <h1 className="text-6xl md:text-7xl font-semibold mb-8 leading-tight">
-            <span className="bg-gradient-primary bg-clip-text text-transparent">Build & Deploy</span>
+            <span className="text-foreground">Build & Deploy</span>
             <span className="block text-foreground mt-2">AI Agents</span>
           </h1>
           <p className="text-xl text-muted-foreground mb-10 max-w-3xl mx-auto leading-relaxed font-medium">

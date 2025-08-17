@@ -5,7 +5,7 @@ import { Sparkles, Menu, LogOut, Settings } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import { toast } from "sonner";
 import { ThemeToggle } from "./ThemeToggle";
-import dollyLogo from "@/assets/dolly-logo.png";
+import dollyLogo from "@/assets/dolly-brain-logo.png";
 
 export const Header = () => {
   const { user, signOut } = useAuth();
