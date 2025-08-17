@@ -58,7 +58,7 @@ export function AppSidebar() {
 
         {/* User Info - Only show when expanded */}
         {state !== "collapsed" && user && (
-          <div className="px-6 py-4 border-none bg-gradient-to-r from-urbanist-lavender/30 to-transparent rounded-2xl mx-4 mb-4">
+          <div className="px-6 py-4 border-none bg-muted/30 rounded-2xl mx-4 mb-4">
             <div className="flex items-center gap-3">
               <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-urbanist-lavender to-primary/20 flex items-center justify-center shadow-lg">
                 <span className="text-sm font-semibold text-urbanist-dark">
