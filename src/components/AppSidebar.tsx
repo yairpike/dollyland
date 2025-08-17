@@ -42,22 +42,20 @@ export function AppSidebar() {
 
   return (
     <Sidebar 
-      className={`transition-all duration-300 ${state === "collapsed" ? "w-20" : "w-72"}`}
-      collapsible="icon"
+      className="w-72 hidden lg:flex"
+      collapsible="none"
     >
-      <SidebarContent className="bg-background border-none rounded-r-3xl">
+      <SidebarContent className="bg-card border-none rounded-r-3xl">
         {/* Logo Section */}
-        <div className={`border-none ${state === "collapsed" ? "p-3 flex justify-center items-center" : "p-6"}`}>
-          <div className={`flex items-center ${state === "collapsed" ? "justify-center" : "gap-3"}`}>
-            <img src="/lovable-uploads/8dc3b4f9-4ebf-4b9b-90c7-c85727a0e166.png" alt="dolly" className={`flex-shrink-0 ${state === "collapsed" ? "w-10 h-10" : "w-[72px] h-[72px]"}`} />
-            {state !== "collapsed" && (
-              <h2 className="font-semibold text-lg text-foreground">dolly</h2>
-            )}
+        <div className="p-6 border-none">
+          <div className="flex items-center gap-3">
+            <img src="/lovable-uploads/8dc3b4f9-4ebf-4b9b-90c7-c85727a0e166.png" alt="dolly" className="flex-shrink-0 w-[72px] h-[72px]" />
+            <h2 className="font-semibold text-lg text-foreground">dolly</h2>
           </div>
         </div>
 
-        {/* User Info - Only show when expanded */}
-        {state !== "collapsed" && user && (
+        {/* User Info */}
+        {user && (
           <div className="px-6 py-4 border-none bg-muted/30 rounded-2xl mx-4 mb-4">
             <div className="flex items-center gap-3">
               <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-urbanist-lavender to-primary/20 flex items-center justify-center shadow-lg">
@@ -75,35 +73,20 @@ export function AppSidebar() {
           </div>
         )}
 
-        {/* Collapsed User Avatar */}
-        {state === "collapsed" && user && (
-          <div className="px-3 py-2 mb-4 flex justify-center">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-urbanist-lavender to-primary/20 flex items-center justify-center shadow-lg mx-auto">
-              <span className="text-sm font-semibold text-urbanist-dark">
-                {user.email?.slice(0, 1).toUpperCase()}
-              </span>
-            </div>
-          </div>
-        )}
-
         <SidebarGroup>
           <SidebarGroupContent>
-            <SidebarMenu className={`space-y-1 ${state === "collapsed" ? "px-2" : "px-4 py-2"}`}>
+            <SidebarMenu className="space-y-2 px-4 py-6">
               {mainItems.map((item) => (
                 <SidebarMenuItem key={item.title} className="mb-2">
                   <SidebarMenuButton asChild className="w-full">
                     <NavLink
                       to={item.url}
                       end
-                      className={`flex items-center transition-all duration-200 w-full ${
-                        state === "collapsed" 
-                          ? `justify-center p-3 rounded-xl ${getNavCls(isActive(item.url))}`
-                          : `gap-4 px-4 py-3 ${getNavCls(isActive(item.url))}`
-                      }`}
-                      title={state === "collapsed" ? item.title : undefined}
+                      className={`flex items-center transition-all duration-200 w-full gap-4 px-4 py-3 ${getNavCls(isActive(item.url))}`}
+                      title={item.title}
                     >
-                      <item.icon className={`flex-shrink-0 ${state === "collapsed" ? "h-6 w-6" : "h-6 w-6"}`} />
-                      {state !== "collapsed" && <span className="text-sm font-medium">{item.title}</span>}
+                      <item.icon className="flex-shrink-0 h-6 w-6" />
+                      <span className="text-sm font-medium">{item.title}</span>
                     </NavLink>
                   </SidebarMenuButton>
                 </SidebarMenuItem>

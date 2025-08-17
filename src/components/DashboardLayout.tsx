@@ -15,7 +15,7 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
           {/* Header */}
           <header className="h-20 border-none bg-card/80 backdrop-blur-sm flex items-center justify-between px-8 rounded-b-3xl shadow-sm ml-4">
             <div className="flex items-center gap-6">
-              <SidebarTrigger className="h-10 w-10 rounded-2xl hover:bg-urbanist-lavender/50" />
+              <SidebarTrigger className="h-10 w-10 rounded-2xl hover:bg-urbanist-lavender/50 lg:hidden" />
               <div className="flex items-center gap-4">
                 <div className="relative">
                   <input
@@ -27,7 +27,7 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
               </div>
             </div>
             <div className="flex items-center gap-3">
-              <ThemeToggle />
+              {/* Theme toggle moved to settings */}
             </div>
           </header>
 
