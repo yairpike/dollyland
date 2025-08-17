@@ -8,7 +8,8 @@ import { Badge } from "@/components/ui/badge";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
-import { Send, ArrowLeft, Bot, User, Loader2 } from "lucide-react";
+import { Send, ArrowLeft, Bot, User, Loader2, Settings } from "lucide-react";
+import { EditAgentModal } from "@/components/EditAgentModal";
 
 interface Message {
   id: string;
@@ -43,6 +44,7 @@ export const Chat = () => {
   const [loading, setLoading] = useState(true);
   const [sending, setSending] = useState(false);
   const [streamingMessage, setStreamingMessage] = useState("");
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -323,6 +325,14 @@ export const Chat = () => {
                 {agent.description || "AI Assistant"}
               </p>
             </div>
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => setIsEditModalOpen(true)}
+              className="shrink-0"
+            >
+              <Settings className="w-4 h-4" />
+            </Button>
           </div>
           
           <Button
@@ -468,6 +478,13 @@ export const Chat = () => {
           </div>
         </div>
       </div>
+      
+      <EditAgentModal
+        agent={agent}
+        open={isEditModalOpen}
+        onOpenChange={setIsEditModalOpen}
+        onAgentUpdated={fetchAgent}
+      />
     </div>
   );
 };
