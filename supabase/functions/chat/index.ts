@@ -103,13 +103,13 @@ serve(async (req) => {
       ...(messages || []).map(m => ({ role: m.role, content: m.content }))
     ];
 
-    // Call OpenAI API
+    // Call OpenAI API with streaming
     const openAIApiKey = Deno.env.get('OPENAI_API_KEY');
     if (!openAIApiKey) {
       throw new Error('OpenAI API key not configured');
     }
 
-    console.log('Calling OpenAI with model gpt-5-2025-08-07');
+    console.log('Calling OpenAI with streaming model gpt-5-2025-08-07');
     const openAIResponse = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
       headers: {
@@ -120,6 +120,7 @@ serve(async (req) => {
         model: 'gpt-5-2025-08-07',
         messages: conversationMessages,
         max_completion_tokens: 1000,
+        stream: true, // Enable streaming
         // Note: temperature not supported for GPT-5 models
       }),
     });
@@ -130,32 +131,90 @@ serve(async (req) => {
       throw new Error(`OpenAI API error: ${openAIResponse.status}`);
     }
 
-    const openAIData = await openAIResponse.json();
-    const aiResponse = openAIData.choices[0]?.message?.content;
+    // Set up Server-Sent Events for streaming
+    const headers = {
+      ...corsHeaders,
+      'Content-Type': 'text/event-stream',
+      'Cache-Control': 'no-cache',
+      'Connection': 'keep-alive',
+    };
 
-    if (!aiResponse) {
-      throw new Error('No response from OpenAI');
-    }
+    const encoder = new TextEncoder();
+    let fullResponse = '';
 
-    // Save AI response
-    const { error: aiMessageError } = await supabase
-      .from('messages')
-      .insert({
-        conversation_id: currentConversationId,
-        content: aiResponse,
-        role: 'assistant'
-      });
+    const stream = new ReadableStream({
+      async start(controller) {
+        try {
+          const reader = openAIResponse.body?.getReader();
+          if (!reader) throw new Error('No response body');
 
-    if (aiMessageError) {
-      console.error('Failed to save AI message:', aiMessageError);
-    }
+          // Send initial data with conversation ID
+          const initialData = JSON.stringify({
+            type: 'start',
+            conversationId: currentConversationId
+          });
+          controller.enqueue(encoder.encode(`data: ${initialData}\n\n`));
 
-    return new Response(JSON.stringify({
-      response: aiResponse,
-      conversationId: currentConversationId
-    }), {
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+          while (true) {
+            const { done, value } = await reader.read();
+            if (done) break;
+
+            const chunk = new TextDecoder().decode(value);
+            const lines = chunk.split('\n');
+
+            for (const line of lines) {
+              if (line.startsWith('data: ')) {
+                const data = line.slice(6);
+                if (data === '[DONE]') {
+                  // Save the complete AI response to database
+                  const { error: aiMessageError } = await supabase
+                    .from('messages')
+                    .insert({
+                      conversation_id: currentConversationId,
+                      content: fullResponse,
+                      role: 'assistant'
+                    });
+
+                  if (aiMessageError) {
+                    console.error('Failed to save AI message:', aiMessageError);
+                  }
+
+                  controller.enqueue(encoder.encode(`data: {"type":"done"}\n\n`));
+                  controller.close();
+                  return;
+                }
+
+                try {
+                  const parsed = JSON.parse(data);
+                  const content = parsed.choices?.[0]?.delta?.content;
+                  
+                  if (content) {
+                    fullResponse += content;
+                    const streamData = JSON.stringify({
+                      type: 'content',
+                      content: content
+                    });
+                    controller.enqueue(encoder.encode(`data: ${streamData}\n\n`));
+                  }
+                } catch (e) {
+                  // Skip invalid JSON
+                }
+              }
+            }
+          }
+        } catch (error) {
+          console.error('Streaming error:', error);
+          const errorData = JSON.stringify({
+            type: 'error',
+            error: error.message
+          });
+          controller.enqueue(encoder.encode(`data: ${errorData}\n\n`));
+          controller.close();
+        }
+      }
     });
+
+    return new Response(stream, { headers });
 
   } catch (error) {
     console.error('Error in chat function:', error);

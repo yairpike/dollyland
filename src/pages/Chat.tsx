@@ -42,6 +42,7 @@ export const Chat = () => {
   const [newMessage, setNewMessage] = useState("");
   const [loading, setLoading] = useState(true);
   const [sending, setSending] = useState(false);
+  const [streamingMessage, setStreamingMessage] = useState("");
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -142,6 +143,7 @@ export const Chat = () => {
     const messageContent = newMessage.trim();
     setNewMessage("");
     setSending(true);
+    setStreamingMessage("");
 
     // Add user message to UI immediately
     const tempUserMessage: Message = {
@@ -157,65 +159,107 @@ export const Chat = () => {
       const { data: { session } } = await supabase.auth.getSession();
       if (!session) throw new Error('No session');
 
-      // Call the chat edge function
-      const response = await supabase.functions.invoke('chat', {
-        body: {
+      // Call the chat edge function with streaming
+      const response = await fetch(`https://fzdetwatsinsftunljir.supabase.co/functions/v1/chat`, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${session.access_token}`,
+          'Content-Type': 'application/json',
+          'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZ6ZGV0d2F0c2luc2Z0dW5samlyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTUzOTg0MjIsImV4cCI6MjA3MDk3NDQyMn0.dD_MP3Ek4ivbItUc8KQLAsFseyVKcaOF7SXr0A9lE7U',
+        },
+        body: JSON.stringify({
           message: messageContent,
           agentId: agent.id,
           conversationId: currentConversation?.id
-        }
+        })
       });
 
-      if (response.error) {
-        throw new Error(response.error.message || 'Failed to send message');
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
       }
 
-      const { response: aiResponse, conversationId } = response.data;
+      // Handle streaming response
+      const reader = response.body?.getReader();
+      if (!reader) throw new Error('No response body');
 
-      // If this was a new conversation, update the current conversation
-      if (!currentConversation && conversationId) {
-        await fetchConversations();
-        // Find and select the new conversation
-        const { data: newConv, error: convError } = await supabase
-          .from('conversations')
-          .select(`
-            id,
-            title,
-            agent:agents(id, name, description, avatar_url, system_prompt)
-          `)
-          .eq('id', conversationId)
-          .single();
+      let conversationId = currentConversation?.id;
+      let accumulatedContent = '';
 
-        if (!convError && newConv) {
-          setCurrentConversation(newConv);
-        }
-      }
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
 
-      // Remove temp message and add both real messages
-      setMessages(prev => {
-        const withoutTemp = prev.filter(m => m.id !== 'temp-user');
-        return [
-          ...withoutTemp,
-          {
-            id: `user-${Date.now()}`,
-            content: messageContent,
-            role: 'user' as const,
-            created_at: new Date().toISOString()
-          },
-          {
-            id: `ai-${Date.now()}`,
-            content: aiResponse,
-            role: 'assistant' as const,
-            created_at: new Date().toISOString()
+        const chunk = new TextDecoder().decode(value);
+        const lines = chunk.split('\n');
+
+        for (const line of lines) {
+          if (line.startsWith('data: ')) {
+            const data = line.slice(6);
+            
+            try {
+              const parsed = JSON.parse(data);
+              
+              if (parsed.type === 'start') {
+                conversationId = parsed.conversationId;
+                
+                // If this was a new conversation, update the current conversation
+                if (!currentConversation && conversationId) {
+                  await fetchConversations();
+                  const { data: newConv, error: convError } = await supabase
+                    .from('conversations')
+                    .select(`
+                      id,
+                      title,
+                      agent:agents(id, name, description, avatar_url, system_prompt)
+                    `)
+                    .eq('id', conversationId)
+                    .single();
+
+                  if (!convError && newConv) {
+                    setCurrentConversation(newConv);
+                  }
+                }
+              } else if (parsed.type === 'content') {
+                accumulatedContent += parsed.content;
+                setStreamingMessage(accumulatedContent);
+              } else if (parsed.type === 'done') {
+                // Remove temp message and add final messages
+                setMessages(prev => {
+                  const withoutTemp = prev.filter(m => m.id !== 'temp-user');
+                  return [
+                    ...withoutTemp,
+                    {
+                      id: `user-${Date.now()}`,
+                      content: messageContent,
+                      role: 'user' as const,
+                      created_at: new Date().toISOString()
+                    },
+                    {
+                      id: `ai-${Date.now()}`,
+                      content: accumulatedContent,
+                      role: 'assistant' as const,
+                      created_at: new Date().toISOString()
+                    }
+                  ];
+                });
+                setStreamingMessage("");
+                break;
+              } else if (parsed.type === 'error') {
+                throw new Error(parsed.error);
+              }
+            } catch (e) {
+              // Skip invalid JSON
+            }
           }
-        ];
-      });
+        }
+      }
 
     } catch (error: any) {
       console.error('Error sending message:', error);
       toast.error(error.message || "Failed to send message");
       // Remove temp message on error
       setMessages(prev => prev.filter(m => m.id !== 'temp-user'));
+      setStreamingMessage("");
     } finally {
       setSending(false);
     }
@@ -379,15 +423,19 @@ export const Chat = () => {
             ))
           )}
           
-          {sending && (
+          {(sending || streamingMessage) && (
             <div className="flex gap-3 justify-start">
               <Avatar className="w-8 h-8 mt-1">
                 <AvatarFallback>
                   <Bot className="w-4 h-4" />
                 </AvatarFallback>
               </Avatar>
-              <div className="bg-muted p-3 rounded-lg">
-                <Loader2 className="w-4 h-4 animate-spin" />
+              <div className="bg-muted p-3 rounded-lg max-w-[70%]">
+                {streamingMessage ? (
+                  <p className="whitespace-pre-wrap">{streamingMessage}<span className="animate-pulse">|</span></p>
+                ) : (
+                  <Loader2 className="w-4 h-4 animate-spin" />
+                )}
               </div>
             </div>
           )}

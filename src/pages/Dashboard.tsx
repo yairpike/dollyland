@@ -7,6 +7,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { useAuth } from "@/hooks/useAuth"
 import { supabase } from "@/integrations/supabase/client"
 import { CreateAgentModal } from "@/components/CreateAgentModal"
+import { EditAgentModal } from "@/components/EditAgentModal"
 import { SupabaseConnectionNotice } from "@/components/SupabaseConnectionNotice"
 import { Plus, MessageCircle, Settings, Users, Brain } from "lucide-react"
 import { toast } from "sonner"
@@ -28,6 +29,8 @@ export const Dashboard = () => {
   const [agents, setAgents] = useState<Agent[]>([])
   const [loading, setLoading] = useState(true)
   const [createModalOpen, setCreateModalOpen] = useState(false)
+  const [editModalOpen, setEditModalOpen] = useState(false)
+  const [selectedAgent, setSelectedAgent] = useState<Agent | null>(null)
 
   useEffect(() => {
     fetchAgents()
@@ -178,7 +181,14 @@ export const Dashboard = () => {
                       <MessageCircle className="w-4 h-4 mr-2" />
                       Chat
                     </Button>
-                    <Button size="sm" variant="outline">
+                    <Button 
+                      size="sm" 
+                      variant="outline"
+                      onClick={() => {
+                        setSelectedAgent(agent);
+                        setEditModalOpen(true);
+                      }}
+                    >
                       <Settings className="w-4 h-4" />
                     </Button>
                   </div>
@@ -193,6 +203,13 @@ export const Dashboard = () => {
         open={createModalOpen} 
         onOpenChange={setCreateModalOpen}
         onAgentCreated={fetchAgents}
+      />
+      
+      <EditAgentModal
+        agent={selectedAgent}
+        open={editModalOpen}
+        onOpenChange={setEditModalOpen}
+        onAgentUpdated={fetchAgents}
       />
     </div>
   )
