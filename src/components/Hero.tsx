@@ -1,8 +1,11 @@
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Brain, Sparkles } from "lucide-react";
 import heroBrain from "@/assets/hero-brain.jpg";
 
 export const Hero = () => {
+  const navigate = useNavigate();
+  
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-background to-accent/30">
       {/* Background Image with Overlay */}
@@ -34,11 +37,11 @@ export const Hero = () => {
         </p>
         
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center animate-slide-up" style={{ animationDelay: '0.4s' }}>
-          <Button variant="hero" size="lg">
+          <Button variant="hero" size="lg" onClick={() => navigate('/auth')}>
             <Brain className="w-5 h-5" />
             Get Started
           </Button>
-          <Button variant="agent" size="lg">
+          <Button variant="agent" size="lg" onClick={() => navigate('/auth')}>
             Learn More
           </Button>
         </div>

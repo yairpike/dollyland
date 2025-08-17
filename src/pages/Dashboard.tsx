@@ -5,7 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { useAuth } from "@/hooks/useAuth"
-import { supabase, isSupabaseConfigured } from "@/lib/supabase"
+import { supabase } from "@/integrations/supabase/client"
 import { CreateAgentModal } from "@/components/CreateAgentModal"
 import { SupabaseConnectionNotice } from "@/components/SupabaseConnectionNotice"
 import { Plus, MessageCircle, Settings, Users, Brain } from "lucide-react"
@@ -16,8 +16,10 @@ interface Agent {
   name: string
   description: string | null
   avatar_url: string | null
-  is_public: boolean
+  system_prompt: string | null
+  user_id: string
   created_at: string
+  updated_at: string
 }
 
 export const Dashboard = () => {
@@ -32,7 +34,7 @@ export const Dashboard = () => {
   }, [user])
 
   const fetchAgents = async () => {
-    if (!user || !supabase) return
+    if (!user) return
 
     try {
       const { data, error } = await supabase
@@ -50,9 +52,12 @@ export const Dashboard = () => {
     }
   }
 
-  if (!isSupabaseConfigured()) {
-    return <SupabaseConnectionNotice />;
-  }
+  // Redirect to auth if not logged in
+  useEffect(() => {
+    if (!user) {
+      navigate('/auth');
+    }
+  }, [user, navigate]);
 
   if (loading) {
     return (
@@ -106,8 +111,8 @@ export const Dashboard = () => {
               <div className="flex items-center">
                 <Users className="h-8 w-8 text-agent-primary" />
                 <div className="ml-4">
-                  <p className="text-sm font-medium text-muted-foreground">Public Agents</p>
-                  <p className="text-2xl font-bold">{agents.filter(a => a.is_public).length}</p>
+                  <p className="text-sm font-medium text-muted-foreground">Private Agents</p>
+                  <p className="text-2xl font-bold">{agents.length}</p>
                 </div>
               </div>
             </CardContent>
@@ -153,8 +158,8 @@ export const Dashboard = () => {
                     <div className="flex-1">
                       <CardTitle className="text-lg">{agent.name}</CardTitle>
                       <div className="flex items-center space-x-2 mt-1">
-                        <Badge variant={agent.is_public ? "default" : "secondary"}>
-                          {agent.is_public ? "Public" : "Private"}
+                        <Badge variant="secondary">
+                          Private
                         </Badge>
                       </div>
                     </div>

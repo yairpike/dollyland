@@ -6,22 +6,16 @@ import { AgentShowcase } from "@/components/AgentShowcase";
 import { KnowledgeUpload } from "@/components/KnowledgeUpload";
 import { SupabaseConnectionNotice } from "@/components/SupabaseConnectionNotice";
 import { useAuth } from "@/hooks/useAuth";
-import { isSupabaseConfigured } from "@/lib/supabase";
 
 const Index = () => {
   const { user, loading } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!loading && user && isSupabaseConfigured()) {
+    if (!loading && user) {
       navigate('/dashboard');
     }
   }, [user, loading, navigate]);
-
-  // Show connection notice if Supabase is not configured
-  if (!isSupabaseConfigured()) {
-    return <SupabaseConnectionNotice />;
-  }
 
   if (loading) {
     return (

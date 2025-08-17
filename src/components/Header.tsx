@@ -1,14 +1,13 @@
-import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Brain, Menu, LogOut } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
-import { AuthModal } from "@/components/auth/AuthModal";
 import { toast } from "sonner";
 
 export const Header = () => {
   const { user, signOut } = useAuth();
-  const [authModalOpen, setAuthModalOpen] = useState(false);
+  const navigate = useNavigate();
 
   const handleSignOut = async () => {
     const { error } = await signOut();
@@ -25,7 +24,7 @@ export const Header = () => {
         <div className="max-w-7xl mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
             {/* Logo */}
-            <div className="flex items-center gap-3">
+            <Link to="/" className="flex items-center gap-3">
               <div className="w-10 h-10 bg-gradient-hero rounded-xl flex items-center justify-center shadow-glow">
                 <Brain className="w-6 h-6 text-white" />
               </div>
@@ -33,13 +32,13 @@ export const Header = () => {
                 <h1 className="text-xl font-bold">AgentHub</h1>
                 <p className="text-xs text-muted-foreground">AI Agent Creation</p>
               </div>
-            </div>
+            </Link>
             
             {/* Navigation */}
             <nav className="hidden md:flex items-center gap-8">
               {user ? (
                 <>
-                  <a href="/dashboard" className="text-foreground hover:text-primary transition-colors">Dashboard</a>
+                  <Link to="/dashboard" className="text-foreground hover:text-primary transition-colors">Dashboard</Link>
                   <a href="#agents" className="text-foreground hover:text-primary transition-colors">Agents</a>
                 </>
               ) : (
@@ -66,10 +65,10 @@ export const Header = () => {
                 </>
               ) : (
                 <>
-                  <Button variant="ghost" className="hidden sm:inline-flex" onClick={() => setAuthModalOpen(true)}>
+                  <Button variant="ghost" className="hidden sm:inline-flex" onClick={() => navigate('/auth')}>
                     Sign In
                   </Button>
-                  <Button variant="hero" onClick={() => setAuthModalOpen(true)}>
+                  <Button variant="hero" onClick={() => navigate('/auth')}>
                     Get Started
                   </Button>
                 </>
@@ -81,8 +80,6 @@ export const Header = () => {
           </div>
         </div>
       </header>
-      
-      <AuthModal open={authModalOpen} onOpenChange={setAuthModalOpen} />
     </>
   );
 };
