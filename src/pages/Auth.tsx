@@ -98,7 +98,7 @@ const Auth = () => {
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20 flex items-center justify-center p-4">
       <div className="w-full max-w-md space-y-6">
         <div className="text-center space-y-2">
-          <Link to="/" className="inline-flex items-center space-x-2 text-2xl font-bold">
+          <Link to="/" className="inline-flex items-center space-x-2 text-2xl font-semibold">
             <Sparkles className="h-8 w-8 text-primary" />
             <span>AgentHub</span>
           </Link>

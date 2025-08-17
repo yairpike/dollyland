@@ -49,7 +49,7 @@ export const AgentShowcase = () => {
     <section className="py-24 px-6 bg-gradient-to-br from-background to-accent/20">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-6xl font-bold mb-6">
+          <h2 className="text-4xl md:text-6xl font-semibold mb-6">
             Your
             <span className="bg-gradient-hero bg-clip-text text-transparent"> AI Team</span>
           </h2>
@@ -69,7 +69,7 @@ export const AgentShowcase = () => {
                 <agent.icon className={`w-8 h-8 ${agent.color}`} />
               </div>
               
-              <h3 className="text-xl font-bold mb-2">{agent.name}</h3>
+              <h3 className="text-xl font-semibold mb-2">{agent.name}</h3>
               <p className="text-sm mb-6 leading-relaxed text-muted-foreground">{agent.description}</p>
               
               <Button variant="outline" size="sm" className="w-full">
@@ -86,7 +86,7 @@ export const AgentShowcase = () => {
               <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center">
                 <Plus className="w-8 h-8 text-primary" />
               </div>
-              <h3 className="text-xl font-bold">Create Agent</h3>
+              <h3 className="text-xl font-semibold">Create Agent</h3>
               <p className="text-muted-foreground max-w-md">
                 Upload your knowledge to create custom agents.
               </p>

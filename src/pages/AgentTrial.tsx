@@ -194,7 +194,7 @@ This ensures consistency across your entire product ecosystem. Would you like me
                 </Avatar>
                 
                 <div className="flex-1">
-                  <h1 className="text-2xl font-bold mb-2">{agent.name}</h1>
+                  <h1 className="text-2xl font-semibold mb-2">{agent.name}</h1>
                   <p className="text-muted-foreground mb-3">{agent.description}</p>
                   
                   <div className="flex flex-wrap gap-2 mb-4">

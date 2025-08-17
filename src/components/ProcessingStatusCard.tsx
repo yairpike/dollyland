@@ -34,19 +34,19 @@ export const ProcessingStatusCard = ({ knowledgeBaseId }: ProcessingStatusCardPr
       <CardContent className="space-y-4">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
           <div className="text-center">
-            <div className="text-2xl font-bold text-primary">{stats.total}</div>
+            <div className="text-2xl font-semibold text-primary">{stats.total}</div>
             <div className="text-muted-foreground">Total Files</div>
           </div>
           <div className="text-center">
-            <div className="text-2xl font-bold text-green-600">{stats.completed}</div>
+            <div className="text-2xl font-semibold text-green-600">{stats.completed}</div>
             <div className="text-muted-foreground">Completed</div>
           </div>
           <div className="text-center">
-            <div className="text-2xl font-bold text-blue-600">{stats.processing}</div>
+            <div className="text-2xl font-semibold text-blue-600">{stats.processing}</div>
             <div className="text-muted-foreground">Processing</div>
           </div>
           <div className="text-center">
-            <div className="text-2xl font-bold text-destructive">{stats.failed}</div>
+            <div className="text-2xl font-semibold text-destructive">{stats.failed}</div>
             <div className="text-muted-foreground">Failed</div>
           </div>
         </div>

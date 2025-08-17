@@ -44,7 +44,7 @@ export const Settings = () => {
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Dashboard
             </Button>
-            <h1 className="text-3xl font-bold">Settings</h1>
+            <h1 className="text-3xl font-semibold">Settings</h1>
             <p className="text-muted-foreground">Manage your account and preferences</p>
           </div>
 

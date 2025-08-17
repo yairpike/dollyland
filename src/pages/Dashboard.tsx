@@ -84,7 +84,7 @@ export const Dashboard = () => {
         {/* Header */}
         <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-4 mb-8">
           <div className="flex-1 min-w-0">
-            <h1 className="text-2xl sm:text-3xl font-bold">Your AI Agents</h1>
+            <h1 className="text-2xl sm:text-3xl font-semibold">Your AI Agents</h1>
             <p className="text-muted-foreground mt-1">Manage and chat with your custom AI assistants</p>
           </div>
           <div className="flex-shrink-0">
@@ -103,7 +103,7 @@ export const Dashboard = () => {
                 <Sparkles className="h-6 w-6 sm:h-8 sm:w-8 text-primary flex-shrink-0" />
                 <div className="ml-3 sm:ml-4 min-w-0">
                   <p className="text-xs sm:text-sm font-medium text-muted-foreground">Total Agents</p>
-                  <p className="text-xl sm:text-2xl font-bold">{agents.length}</p>
+                  <p className="text-xl sm:text-2xl font-semibold">{agents.length}</p>
                 </div>
               </div>
             </CardContent>
@@ -114,7 +114,7 @@ export const Dashboard = () => {
                 <MessageCircle className="h-6 w-6 sm:h-8 sm:w-8 text-neural flex-shrink-0" />
                 <div className="ml-3 sm:ml-4 min-w-0">
                   <p className="text-xs sm:text-sm font-medium text-muted-foreground">Conversations</p>
-                  <p className="text-xl sm:text-2xl font-bold">24</p>
+                  <p className="text-xl sm:text-2xl font-semibold">24</p>
                 </div>
               </div>
             </CardContent>
@@ -125,7 +125,7 @@ export const Dashboard = () => {
                 <Users className="h-6 w-6 sm:h-8 sm:w-8 text-agent-primary flex-shrink-0" />
                 <div className="ml-3 sm:ml-4 min-w-0">
                   <p className="text-xs sm:text-sm font-medium text-muted-foreground">Private Agents</p>
-                  <p className="text-xl sm:text-2xl font-bold">{agents.length}</p>
+                  <p className="text-xl sm:text-2xl font-semibold">{agents.length}</p>
                 </div>
               </div>
             </CardContent>
@@ -136,7 +136,7 @@ export const Dashboard = () => {
                 <Settings className="h-6 w-6 sm:h-8 sm:w-8 text-agent-secondary flex-shrink-0" />
                 <div className="ml-3 sm:ml-4 min-w-0">
                   <p className="text-xs sm:text-sm font-medium text-muted-foreground">Active</p>
-                  <p className="text-xl sm:text-2xl font-bold">{agents.length}</p>
+                  <p className="text-xl sm:text-2xl font-semibold">{agents.length}</p>
                 </div>
               </div>
             </CardContent>

@@ -12,7 +12,7 @@ export const SupabaseNotice = () => {
           Backend Integration Required
         </Badge>
         
-        <h2 className="text-4xl md:text-5xl font-bold mb-6">
+        <h2 className="text-4xl md:text-5xl font-semibold mb-6">
           Ready to Build Your
           <span className="bg-gradient-hero bg-clip-text text-transparent"> AI Workforce?</span>
         </h2>

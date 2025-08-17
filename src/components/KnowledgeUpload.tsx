@@ -206,7 +206,7 @@ export const KnowledgeUpload = () => {
     <section id="upload" className="py-20 bg-gradient-to-br from-background to-accent/30">
       <div className="max-w-6xl mx-auto px-6">
         <div className="text-center mb-12">
-          <h2 className="text-4xl font-bold mb-4">Build Your Knowledge Base</h2>
+          <h2 className="text-4xl font-semibold mb-4">Build Your Knowledge Base</h2>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
             Train your AI agents with documents, websites, and Google Docs. 
             Upload files or add URLs to career sites, portfolios, and more.

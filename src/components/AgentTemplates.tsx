@@ -174,7 +174,7 @@ export const AgentTemplates = ({ onSelectTemplate }: AgentTemplatesProps) => {
   return (
     <div className="space-y-8">
       <div className="text-center">
-        <h2 className="text-3xl font-bold mb-4">
+        <h2 className="text-3xl font-semibold mb-4">
           Choose Your Agent
           <span className="bg-gradient-hero bg-clip-text text-transparent"> Template</span>
         </h2>
