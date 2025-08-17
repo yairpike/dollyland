@@ -9,6 +9,7 @@ import { toast } from "sonner";
 import { Brain, File, Trash2, Plus, Loader2, AlertCircle, CheckCircle, Clock, RefreshCw } from "lucide-react";
 import { KnowledgeBaseUpload } from "./KnowledgeBaseUpload";
 import { ProcessingStatusCard } from "./ProcessingStatusCard";
+import { DebugPanel } from "./DebugPanel";
 
 interface KnowledgeBase {
   id: string;
@@ -266,6 +267,7 @@ export const KnowledgeBaseManager = ({ agentId }: KnowledgeBaseManagerProps) => 
           {knowledgeBases.map((kb) => (
             <div key={kb.id} className="space-y-4">
               <ProcessingStatusCard knowledgeBaseId={kb.id} />
+              <DebugPanel knowledgeBaseId={kb.id} />
               
               <Card>
                 <CardHeader>

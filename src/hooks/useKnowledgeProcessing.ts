@@ -55,31 +55,38 @@ export const useKnowledgeProcessing = (knowledgeBaseId?: string) => {
     if (!knowledgeBaseId) return;
 
     try {
-      const { error } = await supabase.functions.invoke('process-knowledge', {
+      console.log('Starting processing for knowledge base:', knowledgeBaseId);
+      
+      const { data, error } = await supabase.functions.invoke('process-knowledge', {
         body: { 
           knowledgeBaseId,
           batchProcess: true 
         }
       });
 
+      console.log('Processing response:', { data, error });
+
       if (error) {
+        console.error('Processing error details:', error);
         toast({
           title: "Error",
-          description: "Failed to start processing",
+          description: `Failed to start processing: ${error.message || 'Unknown error'}`,
           variant: "destructive",
         });
       } else {
+        console.log('Processing started successfully:', data);
         toast({
           title: "Processing Started",
           description: "Knowledge base processing has begun",
         });
-        fetchStats();
+        // Wait a moment then refresh stats
+        setTimeout(() => fetchStats(), 1000);
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error starting processing:', error);
       toast({
         title: "Error",
-        description: "Failed to start processing",
+        description: `Failed to start processing: ${error.message || 'Network error'}`,
         variant: "destructive",
       });
     }
