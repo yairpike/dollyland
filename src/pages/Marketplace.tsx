@@ -247,17 +247,16 @@ export const Marketplace = () => {
           <div className="space-y-6">
             <h2 className="text-2xl font-semibold">Featured Agents</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {filteredAgents.filter(agent => agent.is_featured).map((agent) => (
+              {filteredAgents.filter(agent => agent.is_featured).map((agent) => {
+                const CategoryIcon = getCategoryIcon(agent.category)
+                return (
                 <Card key={agent.id} className="hover:shadow-lg transition-shadow duration-200">
                   <CardHeader className="pb-3">
                     <div className="flex items-start justify-between">
                       <div className="flex items-center space-x-3">
-                        <Avatar>
-                          <AvatarImage src={agent.avatar_url || ''} />
-                          <AvatarFallback>
-                            {agent.name.slice(0, 2).toUpperCase()}
-                          </AvatarFallback>
-                        </Avatar>
+                        <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center">
+                          <CategoryIcon className="w-6 h-6 text-primary" />
+                        </div>
                         <div>
                           <CardTitle className="text-lg">{agent.name}</CardTitle>
                           <p className="text-sm text-muted-foreground">by {agent.creator_name}</p>
@@ -317,7 +316,8 @@ export const Marketplace = () => {
                     </div>
                   </CardContent>
                 </Card>
-              ))}
+                )
+              })}
             </div>
           </div>
         )}
