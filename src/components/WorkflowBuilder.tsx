@@ -401,7 +401,7 @@ export const WorkflowBuilder: React.FC<WorkflowBuilderProps> = ({ agentId }) => 
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 flex-1 flex flex-col overflow-hidden">
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
