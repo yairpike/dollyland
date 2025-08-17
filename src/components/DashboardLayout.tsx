@@ -2,13 +2,14 @@ import { useState } from "react";
 import { AppSidebar } from "./AppSidebar";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
-import { Menu } from "lucide-react";
+import { Menu, Plus } from "lucide-react";
 
 interface DashboardLayoutProps {
   children: React.ReactNode;
+  onCreateAgent?: () => void;
 }
 
-export function DashboardLayout({ children }: DashboardLayoutProps) {
+export function DashboardLayout({ children, onCreateAgent }: DashboardLayoutProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   
   return (
@@ -22,7 +23,7 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
       <div className="flex-1 flex flex-col min-w-0">
         {/* Header */}
         <header className="h-16 lg:h-20 border-b bg-card/80 backdrop-blur-sm flex items-center justify-between px-4 lg:px-8">
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2 flex-1">
             {/* Mobile Hamburger - Only visible on mobile/tablet */}
             <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
               <SheetTrigger asChild>
@@ -36,14 +37,24 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
             </Sheet>
             
             {/* Search */}
-            <div className="relative">
+            <div className="relative flex-1 max-w-md">
               <input
                 type="search"
                 placeholder="Search..."
-                className="h-10 w-64 lg:w-80 rounded-2xl border-none bg-input px-4 text-sm shadow-sm text-foreground placeholder:text-muted-foreground"
+                className="h-10 w-full rounded-2xl border-none bg-input px-4 text-sm shadow-sm text-foreground placeholder:text-muted-foreground"
               />
             </div>
           </div>
+          
+          {/* Create Agent Button */}
+          <Button 
+            onClick={() => onCreateAgent ? onCreateAgent() : window.dispatchEvent(new CustomEvent('openCreateAgentModal'))} 
+            size="sm" 
+            className="ml-2 px-4"
+          >
+            <Plus className="w-4 h-4 mr-1" />
+            Create Agent
+          </Button>
         </header>
 
         {/* Main Content */}
