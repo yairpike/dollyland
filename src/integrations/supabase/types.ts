@@ -58,6 +58,39 @@ export type Database = {
           },
         ]
       }
+      api_key_access_logs: {
+        Row: {
+          access_type: string
+          accessed_at: string
+          id: string
+          ip_address: unknown | null
+          provider_id: string
+          success: boolean
+          user_agent: string | null
+          user_id: string
+        }
+        Insert: {
+          access_type: string
+          accessed_at?: string
+          id?: string
+          ip_address?: unknown | null
+          provider_id: string
+          success?: boolean
+          user_agent?: string | null
+          user_id: string
+        }
+        Update: {
+          access_type?: string
+          accessed_at?: string
+          id?: string
+          ip_address?: unknown | null
+          provider_id?: string
+          success?: boolean
+          user_agent?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
       conversations: {
         Row: {
           agent_id: string
@@ -288,36 +321,45 @@ export type Database = {
       }
       user_ai_providers: {
         Row: {
+          access_count: number | null
           api_key_encrypted: string
           created_at: string
+          created_from_ip: unknown | null
           display_name: string | null
           id: string
           is_active: boolean
           is_default: boolean
+          last_accessed_at: string | null
           model_name: string
           provider_name: string
           updated_at: string
           user_id: string
         }
         Insert: {
+          access_count?: number | null
           api_key_encrypted: string
           created_at?: string
+          created_from_ip?: unknown | null
           display_name?: string | null
           id?: string
           is_active?: boolean
           is_default?: boolean
+          last_accessed_at?: string | null
           model_name: string
           provider_name: string
           updated_at?: string
           user_id: string
         }
         Update: {
+          access_count?: number | null
           api_key_encrypted?: string
           created_at?: string
+          created_from_ip?: unknown | null
           display_name?: string | null
           id?: string
           is_active?: boolean
           is_default?: boolean
+          last_accessed_at?: string | null
           model_name?: string
           provider_name?: string
           updated_at?: string
@@ -334,9 +376,28 @@ export type Database = {
         Args: { encrypted_key: string; user_id: string }
         Returns: string
       }
+      decrypt_api_key_enhanced: {
+        Args: { encrypted_key: string; provider_id: string; user_id: string }
+        Returns: string
+      }
       encrypt_api_key: {
         Args: { api_key: string; user_id: string }
         Returns: string
+      }
+      encrypt_api_key_enhanced: {
+        Args: { api_key: string; user_id: string }
+        Returns: string
+      }
+      log_api_key_access: {
+        Args: {
+          p_access_type: string
+          p_ip_address?: unknown
+          p_provider_id: string
+          p_success?: boolean
+          p_user_agent?: string
+          p_user_id: string
+        }
+        Returns: undefined
       }
     }
     Enums: {
