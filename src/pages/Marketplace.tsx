@@ -5,7 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Input } from "@/components/ui/input"
-import { Header } from "@/components/Header"
+import { DashboardLayout } from "@/components/DashboardLayout"
 import { supabase } from "@/integrations/supabase/client"
 import { 
   Search, 
@@ -199,61 +199,57 @@ export const Marketplace = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background to-accent/20">
-      <Header />
-      <div className="max-w-7xl mx-auto p-4 sm:p-6 pt-20 sm:pt-24">
+    <DashboardLayout>
+      <div className="space-y-6">
         {/* Header */}
-        <div className="text-center mb-12">
-          <h1 className="text-4xl md:text-6xl font-semibold mb-6">
-            Agent 
-            <span className="bg-gradient-hero bg-clip-text text-transparent"> Marketplace</span>
-          </h1>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto mb-8">
-            Discover and try AI agents built by expert designers and developers
-          </p>
-          
-          {/* Search and Filter */}
-          <div className="flex flex-col sm:flex-row gap-4 max-w-2xl mx-auto">
-            <div className="relative flex-1">
-              <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-              <Input
-                placeholder="Search agents, skills, or tools..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-10"
-              />
-            </div>
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="outline" className="sm:w-auto">
-                  <Filter className="w-4 h-4 mr-2" />
-                  {AGENT_CATEGORIES.find(cat => cat.id === selectedCategory)?.name}
-                  <ChevronDown className="w-4 h-4 ml-2" />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end">
-                {AGENT_CATEGORIES.map((category) => (
-                  <DropdownMenuItem
-                    key={category.id}
-                    onClick={() => setSelectedCategory(category.id)}
-                  >
-                    <category.icon className="w-4 h-4 mr-2" />
-                    {category.name}
-                  </DropdownMenuItem>
-                ))}
-              </DropdownMenuContent>
-            </DropdownMenu>
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+          <div>
+            <h1 className="text-3xl font-semibold">Agent Marketplace</h1>
+            <p className="text-muted-foreground">Discover and try AI agents built by expert designers and developers</p>
           </div>
+        </div>
+
+        {/* Search and Filter */}
+        <div className="flex flex-col sm:flex-row gap-4 max-w-2xl">
+          <div className="relative flex-1">
+            <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+            <Input
+              placeholder="Search agents, skills, or tools..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="pl-10"
+            />
+          </div>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="outline" className="sm:w-auto">
+                <Filter className="w-4 h-4 mr-2" />
+                {AGENT_CATEGORIES.find(cat => cat.id === selectedCategory)?.name}
+                <ChevronDown className="w-4 h-4 ml-2" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              {AGENT_CATEGORIES.map((category) => (
+                <DropdownMenuItem
+                  key={category.id}
+                  onClick={() => setSelectedCategory(category.id)}
+                >
+                  <category.icon className="w-4 h-4 mr-2" />
+                  {category.name}
+                </DropdownMenuItem>
+              ))}
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
 
         {/* Featured Section */}
         {selectedCategory === 'all' && (
-          <div className="mb-12">
-            <h2 className="text-2xl font-semibold mb-6">Featured Agents</h2>
+          <div className="space-y-6">
+            <h2 className="text-2xl font-semibold">Featured Agents</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {filteredAgents.filter(agent => agent.is_featured).map((agent) => (
-                <Card key={agent.id} className="hover:shadow-elegant transition-all duration-300 hover:-translate-y-1">
-                  <CardHeader>
+                <Card key={agent.id} className="hover:shadow-lg transition-shadow duration-200">
+                  <CardHeader className="pb-3">
                     <div className="flex items-start justify-between">
                       <div className="flex items-center space-x-3">
                         <Avatar>
@@ -270,7 +266,7 @@ export const Marketplace = () => {
                       <Badge variant="secondary">Featured</Badge>
                     </div>
                   </CardHeader>
-                  <CardContent>
+                  <CardContent className="pt-0">
                     <p className="text-sm text-muted-foreground mb-4 line-clamp-2">
                       {agent.description}
                     </p>
@@ -326,8 +322,8 @@ export const Marketplace = () => {
         )}
 
         {/* All Agents */}
-        <div>
-          <h2 className="text-2xl font-semibold mb-6">
+        <div className="space-y-6">
+          <h2 className="text-2xl font-semibold">
             {selectedCategory === 'all' ? 'All Agents' : AGENT_CATEGORIES.find(cat => cat.id === selectedCategory)?.name}
           </h2>
           
@@ -344,8 +340,8 @@ export const Marketplace = () => {
               {filteredAgents.map((agent) => {
                 const CategoryIcon = getCategoryIcon(agent.category)
                 return (
-                  <Card key={agent.id} className="hover:shadow-elegant transition-all duration-300 hover:-translate-y-1">
-                    <CardHeader>
+                  <Card key={agent.id} className="hover:shadow-lg transition-shadow duration-200">
+                    <CardHeader className="pb-3">
                       <div className="flex items-start justify-between">
                         <div className="flex items-center space-x-3">
                           <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center">
@@ -358,7 +354,7 @@ export const Marketplace = () => {
                         </div>
                       </div>
                     </CardHeader>
-                    <CardContent>
+                    <CardContent className="pt-0">
                       <p className="text-sm text-muted-foreground mb-4 line-clamp-2">
                         {agent.description}
                       </p>
@@ -414,7 +410,7 @@ export const Marketplace = () => {
           )}
         </div>
       </div>
-    </div>
+    </DashboardLayout>
   )
 }
 
