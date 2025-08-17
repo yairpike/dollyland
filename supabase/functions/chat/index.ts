@@ -103,21 +103,21 @@ serve(async (req) => {
       ...(messages || []).map(m => ({ role: m.role, content: m.content }))
     ];
 
-    // Call OpenAI API with streaming
-    const openAIApiKey = Deno.env.get('OPENAI_API_KEY');
-    if (!openAIApiKey) {
-      throw new Error('OpenAI API key not configured');
+    // Call DeepSeek API with streaming (free tier available)
+    const deepSeekApiKey = Deno.env.get('DEEPSEEK_API_KEY');
+    if (!deepSeekApiKey) {
+      throw new Error('DeepSeek API key not configured');
     }
 
-    console.log('Calling OpenAI with streaming model gpt-4o-mini');
-    const openAIResponse = await fetch('https://api.openai.com/v1/chat/completions', {
+    console.log('Calling DeepSeek with streaming model deepseek-chat');
+    const openAIResponse = await fetch('https://api.deepseek.com/chat/completions', {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${openAIApiKey}`,
+        'Authorization': `Bearer ${deepSeekApiKey}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        model: 'gpt-4o-mini',
+        model: 'deepseek-chat',
         messages: conversationMessages,
         max_tokens: 1000,
         temperature: 0.7,
