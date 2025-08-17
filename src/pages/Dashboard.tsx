@@ -58,10 +58,11 @@ export const Dashboard = () => {
 
   // Redirect to auth if not logged in
   useEffect(() => {
-    if (!user) {
+    if (!loading && !user) {
+      console.log('Redirecting unauthenticated user to auth')
       navigate('/auth');
     }
-  }, [user, navigate]);
+  }, [user, loading, navigate]);
 
   if (loading) {
     return (

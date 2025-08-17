@@ -19,12 +19,12 @@ export const useAuth = () => {
         console.log('Auth state change:', { event, hasSession: !!session, hasUser: !!session?.user })
         setSession(session)
         setUser(session?.user || null)
+        setLoading(false)
         
-        // Only set loading to false after initial auth check is complete
+        // Set initializing to false after any auth state change
         if (initializing) {
           setInitializing(false)
         }
-        setLoading(false)
       }
     )
 
@@ -35,16 +35,15 @@ export const useAuth = () => {
         if (!mounted) return
         
         console.log('Initial session check:', { hasSession: !!session, hasUser: !!session?.user })
-        // Always update state on initial load
         setSession(session)
         setUser(session?.user || null)
-        setInitializing(false)
         setLoading(false)
+        setInitializing(false)
       } catch (error) {
         console.error('Error getting session:', error)
         if (mounted) {
-          setInitializing(false)
           setLoading(false)
+          setInitializing(false)
         }
       }
     }

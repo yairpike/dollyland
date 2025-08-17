@@ -20,11 +20,11 @@ const Auth = () => {
 
   // Redirect if already authenticated
   useEffect(() => {
-    if (!initializing && !authLoading && user) {
-      // Removed sensitive logging for security
+    if (!initializing && user) {
+      console.log('Redirecting authenticated user to dashboard')
       navigate('/dashboard', { replace: true });
     }
-  }, [user, authLoading, initializing, navigate]);
+  }, [user, initializing, navigate]);
 
   // Show loading screen during initialization
   if (initializing) {
@@ -72,7 +72,7 @@ const Auth = () => {
           }
         } else {
           toast.success("Welcome back!");
-          // Navigation will happen automatically via useEffect
+          // Note: Navigation will happen automatically via useEffect when user state updates
         }
       }
     } catch (error) {
