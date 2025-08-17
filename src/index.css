@@ -6,68 +6,69 @@
 
 @layer base {
   :root {
-    /* Base Colors - Soft beige/cream background matching the images */
-    --background: 25 15% 92%;           /* warm beige background */
-    --foreground: 25 8% 20%;            /* soft dark text */
+    /* Base Colors - Warm human skin tone background from the images */
+    --background: 15 25% 88%;           /* warm peachy-beige skin tone */
+    --foreground: 15 15% 15%;           /* dark text for AA accessibility */
 
     /* Card & Surface Colors - Clean white cards */
     --card: 0 0% 100%;                  /* pure white cards */
-    --card-foreground: 25 8% 20%;
+    --card-foreground: 15 15% 15%;      /* dark text for contrast */
 
     --popover: 0 0% 100%;
-    --popover-foreground: 25 8% 20%;
+    --popover-foreground: 15 15% 15%;
 
-    /* Primary - Soft blue from mood indicators */
-    --primary: 210 55% 65%;
+    /* Primary - Strong blue for good contrast */
+    --primary: 210 70% 45%;             /* darker blue for AA accessibility */
     --primary-foreground: 0 0% 100%;
     --primary-glow: 210 65% 75%;
 
-    /* Secondary - Muted sage green */
-    --secondary: 140 25% 75%;
-    --secondary-foreground: 140 40% 30%;
+    /* Secondary - Darker sage green for contrast */
+    --secondary: 140 35% 45%;           /* darker green for accessibility */
+    --secondary-foreground: 0 0% 100%;
 
-    /* Muted tones - Very soft neutrals */
-    --muted: 25 8% 90%;
-    --muted-foreground: 25 8% 45%;
+    /* Muted tones - ensuring good contrast */
+    --muted: 15 15% 82%;                /* darker muted for contrast */
+    --muted-foreground: 15 15% 35%;     /* dark enough for AA standard */
 
-    /* Accent - Soft lavender */
-    --accent: 260 25% 85%;
-    --accent-foreground: 260 40% 35%;
+    /* Accent - Darker lavender for contrast */
+    --accent: 260 25% 75%;
+    --accent-foreground: 260 40% 25%;   /* dark text for contrast */
 
-    /* Destructive - Soft coral from mood indicators */
-    --destructive: 15 65% 70%;
+    /* Destructive - Darker coral for accessibility */
+    --destructive: 15 65% 55%;          /* darker coral for contrast */
     --destructive-foreground: 0 0% 100%;
 
-    /* Borders & Inputs - Very subtle */
-    --border: 25 8% 85%;
-    --input: 25 8% 85%;
-    --ring: 210 55% 65%;
+    /* Borders & Inputs - Good contrast */
+    --border: 15 15% 75%;               /* darker border for visibility */
+    --input: 15 15% 75%;
+    --ring: 210 70% 45%;
 
     /* Extra rounded corners like in the images */
-    --radius: 1.5rem;
+    --radius: 2rem;
 
-    /* Wellness Color Palette - Matching the mood indicators exactly */
-    --wellness-yellow: 45 85% 75%;      /* Happy/joy mood */
-    --wellness-green: 140 35% 65%;      /* Calm/peaceful mood */
-    --wellness-coral: 15 70% 70%;       /* Anger/frustration mood */
-    --wellness-blue: 210 55% 70%;       /* Excitement/energy mood */
-    --wellness-purple: 280 35% 75%;     /* Stress/overwhelm mood */
-    --wellness-mint: 160 40% 75%;       /* Fresh/new feeling */
-    --wellness-pink: 340 45% 85%;       /* Gentle pink accent */
-    --wellness-sage: 120 25% 70%;       /* Natural sage green */
+    /* Wellness Color Palette - Exact colors from the mood indicators */
+    --wellness-yellow: 45 95% 65%;      /* Happy mood - darker for contrast */
+    --wellness-green: 140 45% 55%;      /* Calm mood - darker for accessibility */
+    --wellness-coral: 15 75% 60%;       /* Anger/frustration - darker */
+    --wellness-blue: 210 70% 60%;       /* Excitement - darker for contrast */
+    --wellness-purple: 280 45% 65%;     /* Stress - darker for readability */
+    --wellness-mint: 160 50% 65%;       /* Fresh feeling - darker */
+    --wellness-pink: 340 35% 75%;       /* Gentle pink accent */
+    --wellness-sage: 120 30% 60%;       /* Natural sage green - darker */
     
-    /* Neural/AI Colors - Softer, more organic */
-    --neural: 210 55% 70%;
-    --neural-glow: 210 65% 80%;
-    --agent-primary: 140 35% 65%;
-    --agent-secondary: 210 45% 75%;
+    /* Neural/AI Colors - Ensuring good contrast */
+    --neural: 210 70% 55%;              /* darker for accessibility */
+    --neural-glow: 210 65% 70%;
+    --agent-primary: 140 45% 55%;       /* darker green */
+    --agent-secondary: 210 55% 65%;
     
-    /* Organic Gradients - Soft and natural */
+    /* Organic Gradients - Maintaining contrast */
     --gradient-hero: linear-gradient(135deg, hsl(var(--wellness-blue)), hsl(var(--wellness-mint)));
-    --gradient-card: linear-gradient(145deg, hsl(var(--card)), hsl(var(--wellness-pink) / 0.2));
-    --gradient-agent: linear-gradient(135deg, hsl(var(--wellness-mint) / 0.4), hsl(var(--wellness-yellow) / 0.3));
-    --gradient-wellness: linear-gradient(135deg, hsl(var(--wellness-green) / 0.3), hsl(var(--wellness-blue) / 0.2));
-    --gradient-background: radial-gradient(circle at 50% 0%, hsl(var(--wellness-pink) / 0.1), transparent 50%);
+    --gradient-card: linear-gradient(145deg, hsl(var(--card)), hsl(var(--wellness-pink) / 0.3));
+    --gradient-agent: linear-gradient(135deg, hsl(var(--wellness-mint) / 0.6), hsl(var(--wellness-yellow) / 0.4));
+    --gradient-wellness: linear-gradient(135deg, hsl(var(--wellness-green) / 0.4), hsl(var(--wellness-blue) / 0.3));
+    --gradient-background: radial-gradient(circle at 30% 20%, hsl(var(--wellness-pink) / 0.15), transparent 60%), 
+                          radial-gradient(circle at 70% 80%, hsl(var(--wellness-yellow) / 0.1), transparent 60%);
     
     /* Very Soft Shadows - Barely visible, organic feel */
     --shadow-glow: 0 8px 32px hsl(var(--wellness-blue) / 0.12);
