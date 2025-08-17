@@ -31,6 +31,7 @@ class FirecrawlService {
 
   async scrapeUrl(url: string): Promise<{ success: boolean; data?: any; error?: string }> {
     try {
+      console.log('Firecrawl scraping URL:', url);
       const response = await fetch('https://api.firecrawl.dev/v0/scrape', {
         method: 'POST',
         headers: {
@@ -39,22 +40,31 @@ class FirecrawlService {
         },
         body: JSON.stringify({
           url,
-          formats: ['markdown', 'html'],
+          formats: ['markdown'],
           onlyMainContent: true,
           includeTags: ['title', 'meta'],
+          waitFor: 2000
         }),
       });
 
       if (!response.ok) {
-        // Firecrawl API error occurred
-        return { success: false, error: 'Failed to process URL' };
+        const errorText = await response.text();
+        console.error('Firecrawl API error:', response.status, errorText);
+        return { success: false, error: `Firecrawl API error: ${response.status}` };
       }
 
       const data = await response.json();
-      return { success: true, data };
+      console.log('Firecrawl response data:', data);
+      
+      if (!data || !data.data) {
+        console.error('No data in Firecrawl response');
+        return { success: false, error: 'No data returned from Firecrawl' };
+      }
+      
+      return { success: true, data: data.data };
     } catch (error) {
-      // URL scraping error occurred
-      return { success: false, error: 'Failed to process URL' };
+      console.error('Firecrawl scraping error:', error);
+      return { success: false, error: `Scraping failed: ${error.message}` };
     }
   }
 }
@@ -204,10 +214,11 @@ serve(async (req) => {
             throw new Error(result.error || 'Failed to scrape URL');
           }
 
-          content = result.data?.markdown || result.data?.content || '';
-          title = result.data?.metadata?.title || file.source_url;
+          content = result.data?.markdown || result.data?.content || result.data?.text || '';
+          title = result.data?.metadata?.title || result.data?.title || file.source_url;
           
           console.log('Extracted content length:', content.length, 'Title:', title);
+          console.log('Firecrawl data structure:', Object.keys(result.data || {}));
         } else {
           // Process file from storage
           const { data: fileData, error: downloadError } = await supabase.storage
