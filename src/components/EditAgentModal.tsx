@@ -175,6 +175,7 @@ export const EditAgentModal = ({ agent, open, onOpenChange, onAgentUpdated }: Ed
                   value={formData.name}
                   onChange={(e) => handleChange("name", e.target.value)}
                   placeholder="Enter agent name"
+                  className="bg-white"
                   required
                 />
               </div>
@@ -186,6 +187,7 @@ export const EditAgentModal = ({ agent, open, onOpenChange, onAgentUpdated }: Ed
                   value={formData.description}
                   onChange={(e) => handleChange("description", e.target.value)}
                   placeholder="Describe what your agent does"
+                  className="bg-white"
                   rows={3}
                 />
               </div>
@@ -197,6 +199,7 @@ export const EditAgentModal = ({ agent, open, onOpenChange, onAgentUpdated }: Ed
                   value={formData.systemPrompt}
                   onChange={(e) => handleChange("systemPrompt", e.target.value)}
                   placeholder="Define your agent's role and behavior"
+                  className="bg-white"
                   rows={6}
                 />
               </div>
@@ -254,7 +257,7 @@ export const EditAgentModal = ({ agent, open, onOpenChange, onAgentUpdated }: Ed
             </form>
           </TabsContent>
 
-          <TabsContent value="knowledge" className="space-y-4 flex-1 overflow-y-auto">
+          <TabsContent value="knowledge" className="space-y-4 flex-1 overflow-y-auto p-1">
             <KnowledgeBaseManager agentId={agent.id} />
           </TabsContent>
 

@@ -238,7 +238,7 @@ export const AIProviderManager = () => {
                   <SelectTrigger>
                     <SelectValue placeholder="Choose AI provider" />
                   </SelectTrigger>
-                  <SelectContent>
+                  <SelectContent className="z-50">
                     {Object.entries(AI_PROVIDERS).map(([key, provider]) => (
                       <SelectItem key={key} value={key}>
                         {provider.name}
@@ -258,7 +258,7 @@ export const AIProviderManager = () => {
                     <SelectTrigger>
                       <SelectValue placeholder="Choose model" />
                     </SelectTrigger>
-                    <SelectContent>
+                    <SelectContent className="z-50">
                       {AI_PROVIDERS[formData.provider as keyof typeof AI_PROVIDERS]?.models.map((model) => (
                         <SelectItem key={model.id} value={model.id}>
                           <div className="flex items-center justify-between w-full">
@@ -283,6 +283,7 @@ export const AIProviderManager = () => {
                   id="apiKey"
                   type="password"
                   placeholder="Enter your API key"
+                  className="bg-white"
                   value={formData.apiKey}
                   onChange={(e) => setFormData(prev => ({ ...prev, apiKey: e.target.value }))}
                   required
@@ -294,6 +295,7 @@ export const AIProviderManager = () => {
                 <Input
                   id="displayName"
                   placeholder="e.g., My Personal OpenAI"
+                  className="bg-white"
                   value={formData.displayName}
                   onChange={(e) => setFormData(prev => ({ ...prev, displayName: e.target.value }))}
                 />
