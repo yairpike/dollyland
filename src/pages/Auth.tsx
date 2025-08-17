@@ -18,9 +18,10 @@ const Auth = () => {
   const { signIn, signUp, signInWithGoogle, user, loading: authLoading, initializing } = useAuth();
   const navigate = useNavigate();
 
-  // Redirect if already authenticated - but wait for initialization
+  // Redirect if already authenticated
   useEffect(() => {
     if (!initializing && !authLoading && user) {
+      console.log('Redirecting authenticated user to dashboard')
       navigate('/dashboard', { replace: true });
     }
   }, [user, authLoading, initializing, navigate]);

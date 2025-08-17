@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { Header } from "@/components/Header"
 import { useAuth } from "@/hooks/useAuth"
 import { supabase } from "@/integrations/supabase/client"
 import { CreateAgentModal } from "@/components/CreateAgentModal"
@@ -72,7 +73,8 @@ export const Dashboard = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background to-accent/20">
-      <div className="max-w-7xl mx-auto p-6">
+      <Header />
+      <div className="max-w-7xl mx-auto p-6 pt-24">
         {/* Header */}
         <div className="flex justify-between items-center mb-8">
           <div>

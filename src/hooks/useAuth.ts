@@ -23,13 +23,8 @@ export const useAuth = () => {
         // Only set loading to false after initial auth check is complete
         if (initializing) {
           setInitializing(false)
-          setLoading(false)
-        } else {
-          // For subsequent changes, add small delay to prevent flickering
-          setTimeout(() => {
-            if (mounted) setLoading(false)
-          }, 100)
         }
+        setLoading(false)
       }
     )
 
@@ -40,11 +35,15 @@ export const useAuth = () => {
         if (!mounted) return
         
         console.log('Initial session:', session?.user?.email || 'No user')
-        setSession(session)
-        setUser(session?.user || null)
+        // Don't update state here if we already have a session from the listener
+        if (!session) {
+          setSession(session)
+          setUser(session?.user || null)
+          setInitializing(false)
+          setLoading(false)
+        }
       } catch (error) {
         console.error('Error getting session:', error)
-      } finally {
         if (mounted) {
           setInitializing(false)
           setLoading(false)
