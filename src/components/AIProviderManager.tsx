@@ -352,13 +352,13 @@ export const AIProviderManager = () => {
           </CardContent>
         </Card>
       ) : (
-        <div className="grid gap-4">
+        <div className="grid gap-4 p-1">
           {providers.map((provider) => {
             const providerInfo = AI_PROVIDERS[provider.provider_name as keyof typeof AI_PROVIDERS];
             const modelInfo = providerInfo?.models.find(m => m.id === provider.model_name);
             
             return (
-              <Card key={provider.id} className={provider.is_default ? 'ring-2 ring-primary' : ''}>
+              <Card key={provider.id} className={provider.is_default ? 'ring-2 ring-primary m-0.5' : 'm-0.5'}>
                 <CardHeader>
                   <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
                     <div>
