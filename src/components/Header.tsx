@@ -4,6 +4,7 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Sparkles, Menu, LogOut, Settings } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import { toast } from "sonner";
+import { ThemeToggle } from "./ThemeToggle";
 import dollyLogo from "@/assets/dolly-logo.png";
 
 export const Header = () => {
@@ -29,7 +30,6 @@ export const Header = () => {
               <img src={dollyLogo} alt="Dolly AI" className="w-10 h-10" />
               <div>
                 <h1 className="text-xl font-bold bg-gradient-primary bg-clip-text text-transparent">Dolly</h1>
-                <p className="text-xs text-muted-foreground">AI Agent Platform</p>
               </div>
             </Link>
             
@@ -61,6 +61,9 @@ export const Header = () => {
                       {user.email?.slice(0, 2).toUpperCase()}
                     </AvatarFallback>
                   </Avatar>
+                  
+                  {/* Theme Toggle */}
+                  <ThemeToggle />
                   
                   {/* Settings Button */}
                   <Button variant="ghost" size="sm" onClick={() => navigate('/settings')} className="hidden sm:inline-flex">
