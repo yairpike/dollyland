@@ -18,7 +18,7 @@ export function ThemeToggle() {
         <Moon className="h-4 w-4" />
       )}
       <span className="text-sm font-medium">
-        Switch to {theme === "light" ? "Dark" : "Light"} Mode
+        {theme === "light" ? "Switch to Dark Mode" : "Switch to Light Mode"}
       </span>
       <span className="sr-only">Toggle theme</span>
     </Button>
