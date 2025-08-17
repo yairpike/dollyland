@@ -13,9 +13,9 @@ export function ThemeToggle() {
       className="flex items-center gap-2"
     >
       {theme === "light" ? (
-        <Sun className="h-4 w-4" />
-      ) : (
         <Moon className="h-4 w-4" />
+      ) : (
+        <Sun className="h-4 w-4" />
       )}
       <span className="text-sm font-medium">
         {theme === "light" ? "Switch to Dark Mode" : "Switch to Light Mode"}
