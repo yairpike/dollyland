@@ -6,75 +6,79 @@
 
 @layer base {
   :root {
-    /* Base Colors - Warm, cream background like the image */
-    --background: 25 15% 94%;
-    --foreground: 25 8% 25%;
+    /* Base Colors - Soft beige/cream background matching the images */
+    --background: 25 15% 92%;           /* warm beige background */
+    --foreground: 25 8% 20%;            /* soft dark text */
 
-    /* Card & Surface Colors - Soft whites with warm undertones */
-    --card: 25 20% 98%;
-    --card-foreground: 25 8% 25%;
+    /* Card & Surface Colors - Clean white cards */
+    --card: 0 0% 100%;                  /* pure white cards */
+    --card-foreground: 25 8% 20%;
 
-    --popover: 25 20% 98%;
-    --popover-foreground: 25 8% 25%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 25 8% 20%;
 
-    /* Primary - Soft blue from the progress indicator */
-    --primary: 210 60% 65%;
+    /* Primary - Soft blue from mood indicators */
+    --primary: 210 55% 65%;
     --primary-foreground: 0 0% 100%;
-    --primary-glow: 210 70% 75%;
+    --primary-glow: 210 65% 75%;
 
     /* Secondary - Muted sage green */
-    --secondary: 140 20% 85%;
-    --secondary-foreground: 140 40% 35%;
+    --secondary: 140 25% 75%;
+    --secondary-foreground: 140 40% 30%;
 
-    /* Muted tones - Soft neutrals */
-    --muted: 25 10% 90%;
-    --muted-foreground: 25 8% 50%;
+    /* Muted tones - Very soft neutrals */
+    --muted: 25 8% 90%;
+    --muted-foreground: 25 8% 45%;
 
     /* Accent - Soft lavender */
-    --accent: 260 30% 88%;
-    --accent-foreground: 260 40% 40%;
+    --accent: 260 25% 85%;
+    --accent-foreground: 260 40% 35%;
 
-    /* Destructive - Soft coral */
-    --destructive: 10 60% 70%;
+    /* Destructive - Soft coral from mood indicators */
+    --destructive: 15 65% 70%;
     --destructive-foreground: 0 0% 100%;
 
     /* Borders & Inputs - Very subtle */
-    --border: 25 8% 88%;
-    --input: 25 8% 88%;
-    --ring: 210 60% 65%;
+    --border: 25 8% 85%;
+    --input: 25 8% 85%;
+    --ring: 210 55% 65%;
 
-    /* Increased radius for that soft, rounded look */
-    --radius: 1rem;
+    /* Extra rounded corners like in the images */
+    --radius: 1.5rem;
 
-    /* Wellness Color Palette - Inspired by the image */
-    --wellness-yellow: 45 90% 80%;    /* Happy emotion color */
-    --wellness-green: 140 40% 70%;    /* Calm emotion color */
-    --wellness-coral: 10 70% 75%;     /* Anger/energy color */
-    --wellness-blue: 210 60% 75%;     /* Excitement color */
-    --wellness-purple: 280 40% 80%;   /* Stress color */
-    --wellness-mint: 160 40% 80%;     /* Diversity & inclusion */
+    /* Wellness Color Palette - Matching the mood indicators exactly */
+    --wellness-yellow: 45 85% 75%;      /* Happy/joy mood */
+    --wellness-green: 140 35% 65%;      /* Calm/peaceful mood */
+    --wellness-coral: 15 70% 70%;       /* Anger/frustration mood */
+    --wellness-blue: 210 55% 70%;       /* Excitement/energy mood */
+    --wellness-purple: 280 35% 75%;     /* Stress/overwhelm mood */
+    --wellness-mint: 160 40% 75%;       /* Fresh/new feeling */
+    --wellness-pink: 340 45% 85%;       /* Gentle pink accent */
+    --wellness-sage: 120 25% 70%;       /* Natural sage green */
     
-    /* Neural/AI Colors - Softer versions */
-    --neural: 210 60% 75%;
-    --neural-glow: 210 70% 85%;
-    --agent-primary: 260 50% 75%;
-    --agent-secondary: 140 40% 75%;
+    /* Neural/AI Colors - Softer, more organic */
+    --neural: 210 55% 70%;
+    --neural-glow: 210 65% 80%;
+    --agent-primary: 140 35% 65%;
+    --agent-secondary: 210 45% 75%;
     
-    /* Soft Gradients */
-    --gradient-hero: linear-gradient(135deg, hsl(var(--wellness-blue)), hsl(var(--wellness-purple)));
-    --gradient-card: linear-gradient(135deg, hsl(var(--card)), hsl(var(--accent)));
-    --gradient-agent: linear-gradient(135deg, hsl(var(--wellness-mint) / 0.3), hsl(var(--wellness-yellow) / 0.3));
-    --gradient-wellness: linear-gradient(135deg, hsl(var(--wellness-green) / 0.2), hsl(var(--wellness-blue) / 0.2));
+    /* Organic Gradients - Soft and natural */
+    --gradient-hero: linear-gradient(135deg, hsl(var(--wellness-blue)), hsl(var(--wellness-mint)));
+    --gradient-card: linear-gradient(145deg, hsl(var(--card)), hsl(var(--wellness-pink) / 0.2));
+    --gradient-agent: linear-gradient(135deg, hsl(var(--wellness-mint) / 0.4), hsl(var(--wellness-yellow) / 0.3));
+    --gradient-wellness: linear-gradient(135deg, hsl(var(--wellness-green) / 0.3), hsl(var(--wellness-blue) / 0.2));
+    --gradient-background: radial-gradient(circle at 50% 0%, hsl(var(--wellness-pink) / 0.1), transparent 50%);
     
-    /* Soft Shadows */
-    --shadow-glow: 0 8px 32px hsl(var(--primary) / 0.15);
-    --shadow-neural: 0 12px 40px hsl(var(--neural) / 0.12);
-    --shadow-elegant: 0 4px 20px hsl(var(--foreground) / 0.08);
-    --shadow-card: 0 2px 16px hsl(var(--foreground) / 0.06);
+    /* Very Soft Shadows - Barely visible, organic feel */
+    --shadow-glow: 0 8px 32px hsl(var(--wellness-blue) / 0.12);
+    --shadow-neural: 0 12px 40px hsl(var(--wellness-green) / 0.1);
+    --shadow-elegant: 0 4px 24px hsl(var(--foreground) / 0.06);
+    --shadow-card: 0 2px 20px hsl(var(--foreground) / 0.04);
+    --shadow-soft: 0 1px 12px hsl(var(--foreground) / 0.03);
     
-    /* Smooth Animations */
-    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    --transition-bounce: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    /* Smooth, Natural Animations */
+    --transition-smooth: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    --transition-bounce: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 
     --sidebar-background: 0 0% 98%;
 
