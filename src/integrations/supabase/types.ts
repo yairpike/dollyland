@@ -185,6 +185,8 @@ export type Database = {
           mime_type: string
           processed_content: string | null
           processing_status: string
+          source_type: string
+          source_url: string | null
           updated_at: string
           user_id: string
         }
@@ -198,6 +200,8 @@ export type Database = {
           mime_type: string
           processed_content?: string | null
           processing_status?: string
+          source_type?: string
+          source_url?: string | null
           updated_at?: string
           user_id: string
         }
@@ -211,6 +215,8 @@ export type Database = {
           mime_type?: string
           processed_content?: string | null
           processing_status?: string
+          source_type?: string
+          source_url?: string | null
           updated_at?: string
           user_id?: string
         }
