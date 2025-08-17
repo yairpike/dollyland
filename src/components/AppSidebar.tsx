@@ -1,4 +1,4 @@
-import { Bot, Users, BarChart3, Settings, Plus, Home, Store } from "lucide-react";
+import { Bot, Users, BarChart3, Settings, Plus, Home, ShoppingBag } from "lucide-react";
 import { NavLink, useLocation } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
 import dollyLogo from "@/assets/dolly-logo.png";
@@ -17,7 +17,7 @@ import {
 const mainItems = [
   { title: "Dashboard", url: "/dashboard", icon: Home },
   { title: "My Agents", url: "/dashboard", icon: Bot },
-  { title: "Marketplace", url: "/marketplace", icon: Store },
+  { title: "Marketplace", url: "/marketplace", icon: ShoppingBag },
   { title: "Analytics", url: "/analytics", icon: BarChart3 },
   { title: "Settings", url: "/settings", icon: Settings },
 ];

@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
-import { Bot, Plus, MessageSquare, Users, TrendingUp, Activity, Globe, Lock, Settings, Edit, Trash2, Store } from "lucide-react";
+import { Bot, Plus, MessageSquare, Users, TrendingUp, Activity, Globe, Lock, Settings, Edit, Trash2, ShoppingBag } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { CreateAgentModal } from "@/components/CreateAgentModal";
@@ -303,7 +303,7 @@ export const Dashboard = () => {
           <TabsContent value="marketplace">
             <Card className="p-12">
               <div className="text-center">
-                <Store className="w-16 h-16 mx-auto text-muted-foreground mb-4" />
+                <ShoppingBag className="w-16 h-16 mx-auto text-muted-foreground mb-4" />
                 <h3 className="text-xl font-semibold mb-2">Marketplace</h3>
                 <p className="text-muted-foreground mb-6">
                   Discover and purchase AI agents from the community
