@@ -296,25 +296,15 @@ export const Marketplace = () => {
                       </div>
                     </div>
 
-                    <div className="flex gap-2">
                       <Button 
-                        variant="secondary"
+                        variant="outline"
                         size="sm" 
-                        className="flex-1"
+                        className="flex-1 border-primary text-primary hover:bg-primary hover:text-primary-foreground"
                         onClick={() => handleTryAgent(agent.id)}
                       >
                         <Play className="w-4 h-4 mr-2" />
                         Try Now
                       </Button>
-                      <Button 
-                        size="sm" 
-                        variant="outline"
-                        className="border-primary text-primary hover:bg-primary hover:text-primary-foreground"
-                        onClick={() => navigate(`/agent/${agent.id}`)}
-                      >
-                        <MessageCircle className="w-4 h-4" />
-                      </Button>
-                    </div>
                   </CardContent>
                 </Card>
                 )
@@ -387,25 +377,15 @@ export const Marketplace = () => {
                         </div>
                       </div>
 
-                      <div className="flex gap-2">
                         <Button 
-                          variant="secondary"
+                          variant="outline"
                           size="sm" 
-                          className="flex-1"
+                          className="w-full border-primary text-primary hover:bg-primary hover:text-primary-foreground"
                           onClick={() => handleTryAgent(agent.id)}
                         >
                           <Play className="w-4 h-4 mr-2" />
                           Try Now
                         </Button>
-                        <Button 
-                          size="sm" 
-                          variant="outline"
-                          className="border-primary text-primary hover:bg-primary hover:text-primary-foreground"
-                          onClick={() => navigate(`/agent/${agent.id}`)}
-                        >
-                          <MessageCircle className="w-4 h-4" />
-                        </Button>
-                      </div>
                     </CardContent>
                   </Card>
                 )
