@@ -9,7 +9,7 @@ import { supabase } from "@/integrations/supabase/client"
 import { CreateAgentModal } from "@/components/CreateAgentModal"
 import { EditAgentModal } from "@/components/EditAgentModal"
 import { SupabaseConnectionNotice } from "@/components/SupabaseConnectionNotice"
-import { Plus, MessageCircle, Settings, Users, Brain } from "lucide-react"
+import { Plus, MessageCircle, Settings, Users, Sparkles } from "lucide-react"
 import { toast } from "sonner"
 
 interface Agent {
@@ -90,7 +90,7 @@ export const Dashboard = () => {
           <Card>
             <CardContent className="p-6">
               <div className="flex items-center">
-                <Brain className="h-8 w-8 text-primary" />
+                <Sparkles className="h-8 w-8 text-primary" />
                 <div className="ml-4">
                   <p className="text-sm font-medium text-muted-foreground">Total Agents</p>
                   <p className="text-2xl font-bold">{agents.length}</p>
@@ -137,7 +137,7 @@ export const Dashboard = () => {
         {agents.length === 0 ? (
           <Card className="text-center py-16">
             <CardContent>
-              <Brain className="w-16 h-16 text-muted-foreground mx-auto mb-4" />
+              <Sparkles className="w-16 h-16 text-muted-foreground mx-auto mb-4" />
               <h3 className="text-xl font-semibold mb-2">No agents yet</h3>
               <p className="text-muted-foreground mb-6">Create your first AI agent to get started</p>
               <Button variant="hero" onClick={() => setCreateModalOpen(true)}>

@@ -7,7 +7,7 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } f
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
-import { Brain, Loader2 } from "lucide-react";
+import { Sparkles, Loader2 } from "lucide-react";
 
 interface CreateAgentModalProps {
   open: boolean;
@@ -62,7 +62,7 @@ export const CreateAgentModal = ({ open, onOpenChange, onAgentCreated }: CreateA
       <DialogContent className="sm:max-w-[600px]">
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
-            <Brain className="w-5 h-5 text-primary" />
+            <Sparkles className="w-5 h-5 text-primary" />
             Create New AI Agent
           </DialogTitle>
           <DialogDescription>
@@ -125,7 +125,7 @@ export const CreateAgentModal = ({ open, onOpenChange, onAgentCreated }: CreateA
                 </>
               ) : (
                 <>
-                  <Brain className="w-4 h-4 mr-2" />
+                  <Sparkles className="w-4 h-4 mr-2" />
                   Create Agent
                 </>
               )}

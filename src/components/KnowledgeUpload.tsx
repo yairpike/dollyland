@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { toast } from "sonner";
-import { Upload, FileText, Check, X, Loader2, Brain } from "lucide-react";
+import { Upload, FileText, Check, X, Loader2, Sparkles } from "lucide-react";
 
 interface UploadedFile {
   name: string;
@@ -234,7 +234,7 @@ export const KnowledgeUpload = () => {
               {completedFiles.length > 0 && (
                 <div className="pt-4">
                   <Button className="w-full" variant="hero">
-                    <Brain className="w-4 h-4 mr-2" />
+                    <Sparkles className="w-4 h-4 mr-2" />
                     Create Agent from Knowledge
                   </Button>
                 </div>

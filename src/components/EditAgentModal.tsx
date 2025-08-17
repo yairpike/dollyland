@@ -7,7 +7,7 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } f
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
-import { Brain, Loader2, Trash2, Edit } from "lucide-react";
+import { Sparkles, Loader2, Trash2, Edit } from "lucide-react";
 
 interface Agent {
   id: string;
@@ -182,7 +182,7 @@ export const EditAgentModal = ({ agent, open, onOpenChange, onAgentUpdated }: Ed
                     </>
                   ) : (
                     <>
-                      <Brain className="w-4 h-4 mr-2" />
+                      <Sparkles className="w-4 h-4 mr-2" />
                       Update Agent
                     </>
                   )}

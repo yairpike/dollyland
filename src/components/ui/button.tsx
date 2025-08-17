@@ -5,7 +5,7 @@ import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "@/lib/utils"
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-xl text-sm font-medium ring-offset-background transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-3xl text-sm font-medium ring-offset-background transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 shadow-soft hover:shadow-card",
   {
     variants: {
       variant: {
@@ -18,12 +18,12 @@ const buttonVariants = cva(
           "bg-secondary text-secondary-foreground hover:bg-secondary/80",
         ghost: "hover:bg-accent hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
-        hero: "bg-gradient-hero text-white shadow-soft hover:shadow-card transition-all duration-500 hover:scale-[1.02] rounded-3xl border-0",
-        neural: "bg-wellness-blue text-white hover:bg-wellness-blue/90 shadow-soft hover:shadow-card transition-all duration-300 rounded-3xl",
-        agent: "bg-gradient-agent text-foreground shadow-soft hover:shadow-card transition-all duration-300 rounded-3xl border border-wellness-mint/30",
-        wellness: "bg-gradient-wellness text-foreground shadow-soft hover:shadow-card transition-all duration-300 rounded-3xl border border-wellness-green/20",
-        soft: "bg-wellness-mint/30 text-wellness-green border border-wellness-green/20 hover:bg-wellness-mint/40 rounded-3xl shadow-soft hover:shadow-card transition-all duration-300",
-        calm: "bg-wellness-blue/30 text-wellness-blue border border-wellness-blue/20 hover:bg-wellness-blue/40 rounded-3xl shadow-soft hover:shadow-card transition-all duration-300",
+        hero: "bg-gradient-hero text-white hover:scale-[1.02] transition-all duration-500",
+        neural: "bg-wellness-blue text-white hover:bg-wellness-blue/90 transition-all duration-300",
+        agent: "bg-gradient-agent text-white transition-all duration-300",
+        wellness: "bg-gradient-wellness text-white transition-all duration-300",
+        soft: "bg-wellness-mint/20 text-wellness-green border border-wellness-green/30 hover:bg-wellness-mint/30 transition-all duration-300",
+        calm: "bg-wellness-blue/20 text-wellness-blue border border-wellness-blue/30 hover:bg-wellness-blue/30 transition-all duration-300",
       },
       size: {
         default: "h-10 px-4 py-2",

@@ -46,27 +46,27 @@
     /* Extra rounded corners like in the images */
     --radius: 2rem;
 
-    /* Wellness Color Palette - Exact colors from the mood indicators */
-    --wellness-yellow: 45 95% 65%;      /* Happy mood - darker for contrast */
-    --wellness-green: 140 45% 55%;      /* Calm mood - darker for accessibility */
-    --wellness-coral: 15 75% 60%;       /* Anger/frustration - darker */
-    --wellness-blue: 210 70% 60%;       /* Excitement - darker for contrast */
-    --wellness-purple: 280 45% 65%;     /* Stress - darker for readability */
-    --wellness-mint: 160 50% 65%;       /* Fresh feeling - darker */
-    --wellness-pink: 340 35% 75%;       /* Gentle pink accent */
-    --wellness-sage: 120 30% 60%;       /* Natural sage green - darker */
+    /* Wellness Color Palette - AA Accessible versions */
+    --wellness-yellow: 45 85% 35%;      /* Dark yellow for good contrast */
+    --wellness-green: 140 60% 35%;      /* Dark green for AA accessibility */
+    --wellness-coral: 15 75% 40%;       /* Dark coral for contrast */
+    --wellness-blue: 210 80% 35%;       /* Dark blue for AA compliance */
+    --wellness-purple: 280 60% 35%;     /* Dark purple for readability */
+    --wellness-mint: 160 70% 35%;       /* Dark mint for contrast */
+    --wellness-pink: 340 50% 65%;       /* Medium pink accent */
+    --wellness-sage: 120 50% 35%;       /* Dark sage green */
     
-    /* Neural/AI Colors - Ensuring good contrast */
-    --neural: 210 70% 55%;              /* darker for accessibility */
-    --neural-glow: 210 65% 70%;
-    --agent-primary: 140 45% 55%;       /* darker green */
-    --agent-secondary: 210 55% 65%;
+    /* Neural/AI Colors - AA Accessible */
+    --neural: 210 80% 35%;              /* Dark for accessibility */
+    --neural-glow: 210 65% 50%;
+    --agent-primary: 140 60% 35%;       /* Dark green for contrast */
+    --agent-secondary: 210 70% 40%;
     
-    /* Organic Gradients - Maintaining contrast */
-    --gradient-hero: linear-gradient(135deg, hsl(var(--wellness-blue)), hsl(var(--wellness-mint)));
+    /* Accessible Gradients */
+    --gradient-hero: linear-gradient(135deg, hsl(210 80% 45%), hsl(160 70% 45%));
     --gradient-card: linear-gradient(145deg, hsl(var(--card)), hsl(var(--wellness-pink) / 0.3));
-    --gradient-agent: linear-gradient(135deg, hsl(var(--wellness-mint) / 0.6), hsl(var(--wellness-yellow) / 0.4));
-    --gradient-wellness: linear-gradient(135deg, hsl(var(--wellness-green) / 0.4), hsl(var(--wellness-blue) / 0.3));
+    --gradient-agent: linear-gradient(135deg, hsl(var(--wellness-mint) / 0.8), hsl(var(--wellness-yellow) / 0.6));
+    --gradient-wellness: linear-gradient(135deg, hsl(var(--wellness-green) / 0.6), hsl(var(--wellness-blue) / 0.5));
     --gradient-background: radial-gradient(circle at 30% 20%, hsl(var(--wellness-pink) / 0.15), transparent 60%), 
                           radial-gradient(circle at 70% 80%, hsl(var(--wellness-yellow) / 0.1), transparent 60%);
     

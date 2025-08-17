@@ -6,7 +6,7 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { useAuth } from "@/hooks/useAuth";
 import { toast } from "sonner";
-import { Brain } from "lucide-react";
+import { Sparkles } from "lucide-react";
 
 const Auth = () => {
   const [isSignUp, setIsSignUp] = useState(false);
@@ -66,7 +66,7 @@ const Auth = () => {
       <div className="w-full max-w-md space-y-6">
         <div className="text-center space-y-2">
           <Link to="/" className="inline-flex items-center space-x-2 text-2xl font-bold">
-            <Brain className="h-8 w-8 text-primary" />
+            <Sparkles className="h-8 w-8 text-primary" />
             <span>AgentHub</span>
           </Link>
           <p className="text-muted-foreground">
