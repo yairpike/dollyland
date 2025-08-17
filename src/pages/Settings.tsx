@@ -5,11 +5,13 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { AIProviderManager } from "@/components/AIProviderManager";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { DashboardLayout } from "@/components/DashboardLayout";
 import { useAuth } from "@/hooks/useAuth";
-import { User, CreditCard, Bot, LogOut } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
+import { User, CreditCard, Bot, LogOut, Mail } from "lucide-react";
 import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
 
@@ -18,10 +20,35 @@ export const Settings = () => {
   const navigate = useNavigate();
   const [fullName, setFullName] = useState(user?.user_metadata?.full_name || "");
   const [email, setEmail] = useState(user?.email || "");
+  const [showEmailChange, setShowEmailChange] = useState(false);
+  const [newEmail, setNewEmail] = useState("");
 
   const handleSaveProfile = async () => {
     // Profile update functionality would go here
     toast.success("Profile updated successfully");
+  };
+
+  const handleChangeEmail = async () => {
+    if (!newEmail || newEmail === email) {
+      toast.error("Please enter a different email address");
+      return;
+    }
+
+    try {
+      const { error } = await supabase.auth.updateUser({
+        email: newEmail
+      });
+
+      if (error) {
+        toast.error(error.message);
+      } else {
+        toast.success("Verification email sent! Check your new email to confirm the change.");
+        setShowEmailChange(false);
+        setNewEmail("");
+      }
+    } catch (error) {
+      toast.error("Failed to update email. Please try again.");
+    }
   };
 
   const handleManagePayment = () => {
@@ -87,12 +114,23 @@ export const Settings = () => {
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="email">Email</Label>
-                    <Input
-                      id="email"
-                      value={email}
-                      disabled
-                      className="bg-muted"
-                    />
+                    <div className="flex gap-2">
+                      <Input
+                        id="email"
+                        value={email}
+                        disabled
+                        className="bg-muted flex-1"
+                      />
+                      <Button 
+                        variant="outline" 
+                        size="sm"
+                        onClick={() => setShowEmailChange(true)}
+                        className="flex items-center gap-2"
+                      >
+                        <Mail className="w-4 h-4" />
+                        Change
+                      </Button>
+                    </div>
                   </div>
                 </div>
                 
@@ -236,6 +274,48 @@ export const Settings = () => {
             </Card>
           </TabsContent>
         </Tabs>
+
+        {/* Email Change Dialog */}
+        <Dialog open={showEmailChange} onOpenChange={setShowEmailChange}>
+          <DialogContent className="sm:max-w-md">
+            <DialogHeader>
+              <DialogTitle>Change Email Address</DialogTitle>
+              <DialogDescription>
+                Enter your new email address. You'll need to verify it before the change takes effect.
+              </DialogDescription>
+            </DialogHeader>
+            <div className="space-y-4 py-4">
+              <div className="space-y-2">
+                <Label htmlFor="current-email">Current Email</Label>
+                <Input
+                  id="current-email"
+                  value={email}
+                  disabled
+                  className="bg-muted"
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="new-email">New Email</Label>
+                <Input
+                  id="new-email"
+                  type="email"
+                  value={newEmail}
+                  onChange={(e) => setNewEmail(e.target.value)}
+                  placeholder="Enter your new email"
+                  autoFocus
+                />
+              </div>
+            </div>
+            <DialogFooter>
+              <Button variant="outline" onClick={() => setShowEmailChange(false)}>
+                Cancel
+              </Button>
+              <Button onClick={handleChangeEmail} disabled={!newEmail}>
+                Send Verification Email
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
       </div>
     </DashboardLayout>
   );
