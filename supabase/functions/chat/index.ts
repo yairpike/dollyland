@@ -109,7 +109,7 @@ serve(async (req) => {
       throw new Error('OpenAI API key not configured');
     }
 
-    console.log('Calling OpenAI with streaming model gpt-5-2025-08-07');
+    console.log('Calling OpenAI with streaming model gpt-4o-mini');
     const openAIResponse = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
       headers: {
@@ -117,11 +117,11 @@ serve(async (req) => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        model: 'gpt-5-2025-08-07',
+        model: 'gpt-4o-mini',
         messages: conversationMessages,
-        max_completion_tokens: 1000,
+        max_tokens: 1000,
+        temperature: 0.7,
         stream: true, // Enable streaming
-        // Note: temperature not supported for GPT-5 models
       }),
     });
 
