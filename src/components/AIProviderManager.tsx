@@ -373,7 +373,7 @@ export const AIProviderManager = () => {
                         {provider.display_name || `${provider.model_name} model`}
                       </CardDescription>
                     </div>
-                    <div className="flex items-center gap-2">
+                    <div className="flex flex-wrap items-center gap-2">
                       {modelInfo && (
                         <Badge 
                           variant="secondary" 
@@ -393,7 +393,7 @@ export const AIProviderManager = () => {
                   </div>
                 </CardHeader>
                 <CardContent>
-                  <div className="flex items-center justify-between">
+                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
                     <div className="text-sm text-muted-foreground">
                       Model: {provider.model_name}
                     </div>
@@ -402,6 +402,7 @@ export const AIProviderManager = () => {
                         variant="outline"
                         size="sm"
                         onClick={() => toggleDefault(provider.id)}
+                        className="w-full sm:w-auto"
                       >
                         Set as Default
                       </Button>
