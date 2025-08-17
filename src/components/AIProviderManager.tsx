@@ -341,7 +341,7 @@ export const AIProviderManager = () => {
         </Dialog>
       </div>
       </CardHeader>
-      <CardContent className="space-y-6">
+      <CardContent className="space-y-6 max-h-96 overflow-y-auto">
 
       {providers.length === 0 ? (
         <Card>
