@@ -2,7 +2,8 @@ import { useState } from "react";
 import { AppSidebar } from "./AppSidebar";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
-import { Menu, Plus } from "lucide-react";
+import { Menu } from "lucide-react";
+import { Plus } from "lucide-react";
 
 interface DashboardLayoutProps {
   children: React.ReactNode;
