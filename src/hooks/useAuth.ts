@@ -16,7 +16,7 @@ export const useAuth = () => {
       (event, session) => {
         if (!mounted) return
         
-        console.log('Auth state change:', event, session?.user?.email || 'No user')
+        // Removed sensitive logging for security
         setSession(session)
         setUser(session?.user || null)
         
@@ -34,7 +34,7 @@ export const useAuth = () => {
         const { data: { session } } = await supabase.auth.getSession()
         if (!mounted) return
         
-        console.log('Initial session:', session?.user?.email || 'No user')
+        // Removed sensitive logging for security
         // Don't update state here if we already have a session from the listener
         if (!session) {
           setSession(session)

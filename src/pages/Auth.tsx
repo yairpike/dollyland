@@ -21,7 +21,7 @@ const Auth = () => {
   // Redirect if already authenticated
   useEffect(() => {
     if (!initializing && !authLoading && user) {
-      console.log('Redirecting authenticated user to dashboard')
+      // Removed sensitive logging for security
       navigate('/dashboard', { replace: true });
     }
   }, [user, authLoading, initializing, navigate]);

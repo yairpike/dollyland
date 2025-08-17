@@ -5,6 +5,10 @@ import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.55.0';
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
+  'X-Content-Type-Options': 'nosniff',
+  'X-Frame-Options': 'DENY',
+  'X-XSS-Protection': '1; mode=block',
+  'Referrer-Policy': 'strict-origin-when-cross-origin',
 };
 
 interface ProcessRequest {
@@ -42,16 +46,15 @@ class FirecrawlService {
       });
 
       if (!response.ok) {
-        const errorText = await response.text();
-        console.error('Firecrawl API error:', errorText);
-        return { success: false, error: `API error: ${response.status}` };
+        // Firecrawl API error occurred
+        return { success: false, error: 'Failed to process URL' };
       }
 
       const data = await response.json();
       return { success: true, data };
     } catch (error) {
-      console.error('Error scraping URL:', error);
-      return { success: false, error: error.message };
+      // URL scraping error occurred
+      return { success: false, error: 'Failed to process URL' };
     }
   }
 }
@@ -82,7 +85,7 @@ async function extractTextFromPdf(fileContent: Uint8Array): Promise<string> {
     
     return extractedText.trim() || 'Could not extract text from PDF';
   } catch (error) {
-    console.error('Error extracting PDF text:', error);
+    // PDF extraction error occurred
     return 'Error extracting PDF text';
   }
 }
@@ -124,7 +127,7 @@ serve(async (req) => {
     
     const { fileId, knowledgeBaseId, batchProcess } = await req.json() as ProcessRequest;
 
-    console.log('Processing request:', { fileId, knowledgeBaseId, batchProcess });
+    // Processing knowledge files request
 
     let filesToProcess = [];
 
@@ -137,8 +140,8 @@ serve(async (req) => {
         .eq('processing_status', 'pending');
 
       if (error) {
-        console.error('Error fetching pending files:', error);
-        return new Response(JSON.stringify({ error: 'Failed to fetch pending files' }), {
+        // Error fetching pending files
+        return new Response(JSON.stringify({ error: 'Failed to fetch files for processing' }), {
           status: 500,
           headers: { ...corsHeaders, 'Content-Type': 'application/json' },
         });
@@ -154,7 +157,7 @@ serve(async (req) => {
         .single();
 
       if (error || !file) {
-        console.error('Error fetching file:', error);
+        // File not found or access error
         return new Response(JSON.stringify({ error: 'File not found' }), {
           status: 404,
           headers: { ...corsHeaders, 'Content-Type': 'application/json' },
@@ -169,7 +172,7 @@ serve(async (req) => {
       });
     }
 
-    console.log(`Processing ${filesToProcess.length} files`);
+    // Processing files batch
 
     // Process files in parallel
     const processingPromises = filesToProcess.map(async (file) => {
@@ -234,7 +237,7 @@ serve(async (req) => {
 
         // Create chunks
         const chunks = chunkContent(content);
-        console.log(`Created ${chunks.length} chunks for file ${file.id}`);
+        // File chunks created successfully
 
         // Insert chunks into database
         const chunkInserts = chunks.map((chunk, index) => ({
@@ -258,7 +261,7 @@ serve(async (req) => {
           .insert(chunkInserts);
 
         if (chunkError) {
-          console.error('Error inserting chunks:', chunkError);
+          // Chunk insertion error occurred
           throw new Error('Failed to create knowledge chunks');
         }
 
@@ -268,22 +271,22 @@ serve(async (req) => {
           .update({ processing_status: 'completed' })
           .eq('id', file.id);
 
-        console.log(`Successfully processed file ${file.id} with ${chunks.length} chunks`);
+        // File processed successfully
         return { success: true, fileId: file.id, chunksCreated: chunks.length };
 
       } catch (error) {
-        console.error(`Error processing file ${file.id}:`, error);
+        // File processing error occurred
         
         // Mark as failed
         await supabase
           .from('knowledge_files')
           .update({ 
             processing_status: 'failed',
-            processed_content: `Error: ${error.message}`
+            processed_content: 'Processing failed'
           })
           .eq('id', file.id);
 
-        return { success: false, fileId: file.id, error: error.message };
+        return { success: false, fileId: file.id, error: 'Processing failed' };
       }
     });
 
@@ -291,7 +294,7 @@ serve(async (req) => {
     const successful = results.filter(r => r.success).length;
     const failed = results.filter(r => !r.success).length;
 
-    console.log(`Processing complete: ${successful} successful, ${failed} failed`);
+    // Batch processing completed
 
     return new Response(JSON.stringify({
       success: true,
@@ -304,10 +307,9 @@ serve(async (req) => {
     });
 
   } catch (error) {
-    console.error('Error in process-knowledge function:', error);
+    // Processing function error occurred
     return new Response(JSON.stringify({ 
-      error: error.message || 'Internal server error',
-      details: error.stack 
+      error: 'An error occurred while processing files'
     }), {
       status: 500,
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },

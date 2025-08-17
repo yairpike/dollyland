@@ -55,7 +55,7 @@ export const useKnowledgeProcessing = (knowledgeBaseId?: string) => {
     if (!knowledgeBaseId) return;
 
     try {
-      console.log('Starting processing for knowledge base:', knowledgeBaseId);
+      // Starting knowledge base processing
       
       const { data, error } = await supabase.functions.invoke('process-knowledge', {
         body: { 
@@ -64,17 +64,17 @@ export const useKnowledgeProcessing = (knowledgeBaseId?: string) => {
         }
       });
 
-      console.log('Processing response:', { data, error });
+      // Processing response received
 
       if (error) {
-        console.error('Processing error details:', error);
+        // Processing error occurred
         toast({
           title: "Error",
           description: `Failed to start processing: ${error.message || 'Unknown error'}`,
           variant: "destructive",
         });
       } else {
-        console.log('Processing started successfully:', data);
+        // Processing started successfully
         toast({
           title: "Processing Started",
           description: "Knowledge base processing has begun",

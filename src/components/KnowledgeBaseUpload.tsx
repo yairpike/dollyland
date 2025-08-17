@@ -124,7 +124,7 @@ export const KnowledgeBaseUpload = ({ agentId, onKnowledgeAdded }: KnowledgeBase
       // Process URLs first
       for (const [index, url] of validUrls.entries()) {
         try {
-          console.log(`Processing URL: ${url}`);
+          // Processing URL
           
           // Save URL record
           const { error: urlError } = await supabase
@@ -143,7 +143,7 @@ export const KnowledgeBaseUpload = ({ agentId, onKnowledgeAdded }: KnowledgeBase
 
           if (urlError) throw urlError;
           
-          console.log(`URL record saved: ${url}`);
+          // URL record saved successfully
         } catch (error: any) {
           console.error('Error processing URL:', error);
           toast.error(`Failed to process URL: ${url}`);
@@ -201,7 +201,7 @@ export const KnowledgeBaseUpload = ({ agentId, onKnowledgeAdded }: KnowledgeBase
 
       // Trigger background processing
       try {
-        console.log('Triggering background processing for knowledge base:', knowledgeBase.id);
+        // Triggering background processing
         const { error: processError } = await supabase.functions.invoke('process-knowledge', {
           body: { 
             knowledgeBaseId: knowledgeBase.id,

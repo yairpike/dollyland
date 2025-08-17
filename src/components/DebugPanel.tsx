@@ -22,7 +22,7 @@ export const DebugPanel = ({ knowledgeBaseId }: DebugPanelProps) => {
     setResults(null);
     
     try {
-      console.log('Running debug checks for knowledge base:', knowledgeBaseId);
+      // Debug check initiated
       
       // Test the process-knowledge function
       const { data, error } = await supabase.functions.invoke('process-knowledge', {
@@ -40,7 +40,7 @@ export const DebugPanel = ({ knowledgeBaseId }: DebugPanelProps) => {
         success: !error
       };
 
-      console.log('Debug results:', debugResults);
+      // Debug results processed
       setResults(debugResults);
 
       if (error) {

@@ -59,7 +59,7 @@ export const KnowledgeBaseManager = ({ agentId }: KnowledgeBaseManagerProps) => 
           table: 'knowledge_files',
         },
         (payload) => {
-          console.log('Knowledge file updated:', payload);
+          // Knowledge file status updated
           // Refresh the knowledge bases to show updated status
           fetchKnowledgeBases();
         }

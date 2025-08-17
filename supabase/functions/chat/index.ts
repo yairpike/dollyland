@@ -5,6 +5,10 @@ import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
+  'X-Content-Type-Options': 'nosniff',
+  'X-Frame-Options': 'DENY',
+  'X-XSS-Protection': '1; mode=block',
+  'Referrer-Policy': 'strict-origin-when-cross-origin',
 };
 
 interface ChatRequest {
@@ -133,7 +137,7 @@ serve(async (req) => {
       .limit(20);
 
     if (historyError) {
-      console.error('Failed to load conversation history:', historyError);
+      // Failed to load conversation history - continuing with empty context
     }
 
     // Prepare messages for AI API
@@ -201,7 +205,7 @@ serve(async (req) => {
         throw new Error(`Unsupported AI provider: ${aiProvider.provider_name}`);
     }
 
-    console.log(`Calling ${aiProvider.provider_name} with model ${aiProvider.model_name}`);
+    // Calling AI provider API
     const aiResponse = await fetch(apiEndpoint, {
       method: 'POST',
       headers,
@@ -209,9 +213,8 @@ serve(async (req) => {
     });
 
     if (!aiResponse.ok) {
-      const errorData = await aiResponse.text();
-      console.error(`${aiProvider.provider_name} API error:`, errorData);
-      throw new Error(`${aiProvider.provider_name} API error: ${aiResponse.status}`);
+      // AI provider API error occurred
+      throw new Error('AI provider temporarily unavailable');
     }
 
     // Set up Server-Sent Events for streaming
@@ -259,7 +262,7 @@ serve(async (req) => {
                     });
 
                   if (aiMessageError) {
-                    console.error('Failed to save AI message:', aiMessageError);
+                    // Failed to save AI message to database
                   }
 
                   controller.enqueue(encoder.encode(`data: {"type":"done"}\n\n`));
@@ -295,10 +298,10 @@ serve(async (req) => {
             }
           }
         } catch (error) {
-          console.error('Streaming error:', error);
+          // Streaming error occurred
           const errorData = JSON.stringify({
             type: 'error',
-            error: error.message
+            error: 'An error occurred while processing your request'
           });
           controller.enqueue(encoder.encode(`data: ${errorData}\n\n`));
           controller.close();
@@ -309,9 +312,9 @@ serve(async (req) => {
     return new Response(stream, { headers: responseHeaders });
 
   } catch (error) {
-    console.error('Error in chat function:', error);
+    // Chat function error occurred
     return new Response(JSON.stringify({ 
-      error: error.message || 'Internal server error' 
+      error: 'An error occurred while processing your request' 
     }), {
       status: 500,
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
