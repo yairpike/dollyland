@@ -16,7 +16,6 @@ import {
 
 const mainItems = [
   { title: "Dashboard", url: "/dashboard", icon: Home },
-  { title: "My Agents", url: "/dashboard", icon: Bot },
   { title: "Marketplace", url: "/marketplace", icon: ShoppingBag },
   { title: "Analytics", url: "/analytics", icon: BarChart3 },
   { title: "Settings", url: "/settings", icon: Settings },
@@ -37,8 +36,8 @@ export function AppSidebar() {
 
   const getNavCls = (active: boolean) =>
     active 
-      ? "bg-urbanist-lavender text-urbanist-dark font-medium rounded-xl" 
-      : "text-muted-foreground hover:bg-muted/50 hover:text-foreground rounded-xl";
+      ? "bg-primary text-primary-foreground font-medium rounded-xl" 
+      : "text-muted-foreground hover:bg-accent hover:text-accent-foreground rounded-xl";
 
   return (
     <Sidebar 

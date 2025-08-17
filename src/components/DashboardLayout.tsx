@@ -9,7 +9,7 @@ interface DashboardLayoutProps {
 export function DashboardLayout({ children }: DashboardLayoutProps) {
   return (
     <SidebarProvider defaultOpen={true} className="w-full">
-      <div className="min-h-screen flex w-full bg-urbanist-light">
+      <div className="min-h-screen flex w-full bg-background">
         <AppSidebar />
         <div className="flex-1 flex flex-col min-w-0 pr-6">
           {/* Header */}
@@ -21,7 +21,7 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
                   <input
                     type="search"
                     placeholder="Search..."
-                    className="h-11 w-80 rounded-2xl border-none bg-urbanist-light px-4 text-sm shadow-sm"
+                    className="h-11 w-80 rounded-2xl border-none bg-input px-4 text-sm shadow-sm text-foreground placeholder:text-muted-foreground"
                   />
                 </div>
               </div>
