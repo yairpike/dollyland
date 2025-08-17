@@ -41,16 +41,55 @@ serve(async (req) => {
       throw new Error('Unauthorized');
     }
 
-    // Get agent details
+    // Get agent details with AI provider
     const { data: agent, error: agentError } = await supabase
       .from('agents')
-      .select('*')
+      .select(`
+        *,
+        ai_provider:user_ai_providers(
+          id,
+          provider_name,
+          model_name,
+          api_key_encrypted
+        )
+      `)
       .eq('id', agentId)
       .eq('user_id', user.id)
       .single();
 
     if (agentError || !agent) {
       throw new Error('Agent not found or unauthorized');
+    }
+
+    // Get AI provider - either agent-specific or user's default
+    let aiProvider = agent.ai_provider;
+    
+    if (!aiProvider) {
+      // Get user's default AI provider
+      const { data: defaultProvider, error: providerError } = await supabase
+        .from('user_ai_providers')
+        .select('*')
+        .eq('user_id', user.id)
+        .eq('is_default', true)
+        .eq('is_active', true)
+        .single();
+
+      if (providerError || !defaultProvider) {
+        throw new Error('No AI provider configured. Please set up an AI provider in your agent settings.');
+      }
+      
+      aiProvider = defaultProvider;
+    }
+
+    // Decrypt the API key
+    const { data: decryptedKey, error: decryptError } = await supabase
+      .rpc('decrypt_api_key', { 
+        encrypted_key: aiProvider.api_key_encrypted,
+        user_id: user.id 
+      });
+
+    if (decryptError || !decryptedKey) {
+      throw new Error('Failed to decrypt API key');
     }
 
     // Create or get conversation
@@ -97,42 +136,86 @@ serve(async (req) => {
       console.error('Failed to load conversation history:', historyError);
     }
 
-    // Prepare messages for OpenAI
+    // Prepare messages for AI API
     const conversationMessages = [
       { role: 'system', content: agent.system_prompt || 'You are a helpful AI assistant.' },
       ...(messages || []).map(m => ({ role: m.role, content: m.content }))
     ];
 
-    // Call DeepSeek API with streaming (free tier available)
-    const deepSeekApiKey = Deno.env.get('DEEPSEEK_API_KEY');
-    if (!deepSeekApiKey) {
-      throw new Error('DeepSeek API key not configured');
+    // Determine API endpoint and request format based on provider
+    let apiEndpoint: string;
+    let requestBody: any;
+    let headers: any;
+
+    switch (aiProvider.provider_name) {
+      case 'openai':
+        apiEndpoint = 'https://api.openai.com/v1/chat/completions';
+        headers = {
+          'Authorization': `Bearer ${decryptedKey}`,
+          'Content-Type': 'application/json',
+        };
+        requestBody = {
+          model: aiProvider.model_name,
+          messages: conversationMessages,
+          max_tokens: 1000,
+          temperature: 0.7,
+          stream: true,
+        };
+        break;
+
+      case 'deepseek':
+        apiEndpoint = 'https://api.deepseek.com/chat/completions';
+        headers = {
+          'Authorization': `Bearer ${decryptedKey}`,
+          'Content-Type': 'application/json',
+        };
+        requestBody = {
+          model: aiProvider.model_name,
+          messages: conversationMessages,
+          max_tokens: 1000,
+          temperature: 0.7,
+          stream: true,
+        };
+        break;
+
+      case 'anthropic':
+        apiEndpoint = 'https://api.anthropic.com/v1/messages';
+        headers = {
+          'x-api-key': decryptedKey,
+          'Content-Type': 'application/json',
+          'anthropic-version': '2023-06-01',
+        };
+        // Convert messages format for Claude
+        const systemMessage = conversationMessages.find(m => m.role === 'system');
+        const userMessages = conversationMessages.filter(m => m.role !== 'system');
+        requestBody = {
+          model: aiProvider.model_name,
+          max_tokens: 1000,
+          system: systemMessage?.content || 'You are a helpful AI assistant.',
+          messages: userMessages,
+          stream: true,
+        };
+        break;
+
+      default:
+        throw new Error(`Unsupported AI provider: ${aiProvider.provider_name}`);
     }
 
-    console.log('Calling DeepSeek with streaming model deepseek-chat');
-    const openAIResponse = await fetch('https://api.deepseek.com/chat/completions', {
+    console.log(`Calling ${aiProvider.provider_name} with model ${aiProvider.model_name}`);
+    const aiResponse = await fetch(apiEndpoint, {
       method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${deepSeekApiKey}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        model: 'deepseek-chat',
-        messages: conversationMessages,
-        max_tokens: 1000,
-        temperature: 0.7,
-        stream: true, // Enable streaming
-      }),
+      headers,
+      body: JSON.stringify(requestBody),
     });
 
-    if (!openAIResponse.ok) {
-      const errorData = await openAIResponse.text();
-      console.error('OpenAI API error:', errorData);
-      throw new Error(`OpenAI API error: ${openAIResponse.status}`);
+    if (!aiResponse.ok) {
+      const errorData = await aiResponse.text();
+      console.error(`${aiProvider.provider_name} API error:`, errorData);
+      throw new Error(`${aiProvider.provider_name} API error: ${aiResponse.status}`);
     }
 
     // Set up Server-Sent Events for streaming
-    const headers = {
+    const responseHeaders = {
       ...corsHeaders,
       'Content-Type': 'text/event-stream',
       'Cache-Control': 'no-cache',
@@ -145,7 +228,7 @@ serve(async (req) => {
     const stream = new ReadableStream({
       async start(controller) {
         try {
-          const reader = openAIResponse.body?.getReader();
+          const reader = aiResponse.body?.getReader();
           if (!reader) throw new Error('No response body');
 
           // Send initial data with conversation ID
@@ -186,7 +269,16 @@ serve(async (req) => {
 
                 try {
                   const parsed = JSON.parse(data);
-                  const content = parsed.choices?.[0]?.delta?.content;
+                  let content = '';
+                  
+                  // Handle different response formats based on provider
+                  if (aiProvider.provider_name === 'anthropic') {
+                    // Claude format
+                    content = parsed.delta?.text || '';
+                  } else {
+                    // OpenAI/DeepSeek format
+                    content = parsed.choices?.[0]?.delta?.content || '';
+                  }
                   
                   if (content) {
                     fullResponse += content;
@@ -214,7 +306,7 @@ serve(async (req) => {
       }
     });
 
-    return new Response(stream, { headers });
+    return new Response(stream, { headers: responseHeaders });
 
   } catch (error) {
     console.error('Error in chat function:', error);

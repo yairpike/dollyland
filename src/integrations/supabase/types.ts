@@ -16,6 +16,7 @@ export type Database = {
     Tables: {
       agents: {
         Row: {
+          ai_provider_id: string | null
           avatar_url: string | null
           created_at: string
           description: string | null
@@ -26,6 +27,7 @@ export type Database = {
           user_id: string
         }
         Insert: {
+          ai_provider_id?: string | null
           avatar_url?: string | null
           created_at?: string
           description?: string | null
@@ -36,6 +38,7 @@ export type Database = {
           user_id: string
         }
         Update: {
+          ai_provider_id?: string | null
           avatar_url?: string | null
           created_at?: string
           description?: string | null
@@ -45,7 +48,15 @@ export type Database = {
           updated_at?: string
           user_id?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "agents_ai_provider_id_fkey"
+            columns: ["ai_provider_id"]
+            isOneToOne: false
+            referencedRelation: "user_ai_providers"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       conversations: {
         Row: {
@@ -272,6 +283,45 @@ export type Database = {
         }
         Relationships: []
       }
+      user_ai_providers: {
+        Row: {
+          api_key_encrypted: string
+          created_at: string
+          display_name: string | null
+          id: string
+          is_active: boolean
+          is_default: boolean
+          model_name: string
+          provider_name: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          api_key_encrypted: string
+          created_at?: string
+          display_name?: string | null
+          id?: string
+          is_active?: boolean
+          is_default?: boolean
+          model_name: string
+          provider_name: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          api_key_encrypted?: string
+          created_at?: string
+          display_name?: string | null
+          id?: string
+          is_active?: boolean
+          is_default?: boolean
+          model_name?: string
+          provider_name?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
@@ -280,6 +330,14 @@ export type Database = {
       binary_quantize: {
         Args: { "": string } | { "": unknown }
         Returns: unknown
+      }
+      decrypt_api_key: {
+        Args: { encrypted_key: string; user_id: string }
+        Returns: string
+      }
+      encrypt_api_key: {
+        Args: { api_key: string; user_id: string }
+        Returns: string
       }
       halfvec_avg: {
         Args: { "": number[] }

@@ -8,8 +8,9 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
-import { Sparkles, Loader2, Trash2, Edit, Brain } from "lucide-react";
+import { Sparkles, Loader2, Trash2, Edit, Brain, Settings } from "lucide-react";
 import { KnowledgeBaseManager } from "./KnowledgeBaseManager";
+import { AIProviderManager } from "./AIProviderManager";
 
 interface Agent {
   id: string;
@@ -116,10 +117,11 @@ export const EditAgentModal = ({ agent, open, onOpenChange, onAgentUpdated }: Ed
           </DialogHeader>
           
           <Tabs defaultValue="settings" className="w-full">
-            <TabsList className="grid w-full grid-cols-2">
-              <TabsTrigger value="settings">Agent Settings</TabsTrigger>
-              <TabsTrigger value="knowledge">Knowledge Base</TabsTrigger>
-            </TabsList>
+          <TabsList className="grid w-full grid-cols-3">
+            <TabsTrigger value="settings">Agent Settings</TabsTrigger>
+            <TabsTrigger value="knowledge">Knowledge Base</TabsTrigger>
+            <TabsTrigger value="ai-setup">AI Setup</TabsTrigger>
+          </TabsList>
             
             <TabsContent value="settings" className="space-y-6">
               <form onSubmit={handleSubmit} className="space-y-6">
@@ -209,6 +211,19 @@ export const EditAgentModal = ({ agent, open, onOpenChange, onAgentUpdated }: Ed
                 </p>
               </div>
               <KnowledgeBaseManager agentId={agent.id} />
+            </TabsContent>
+            
+            <TabsContent value="ai-setup" className="space-y-6">
+              <div className="space-y-4">
+                <div className="flex items-center gap-2">
+                  <Settings className="w-5 h-5 text-primary" />
+                  <h3 className="text-lg font-semibold">AI Provider Setup</h3>
+                </div>
+                <p className="text-sm text-muted-foreground">
+                  Configure AI providers and choose the best model for your agent. You can use free options like DeepSeek or premium models from OpenAI.
+                </p>
+              </div>
+              <AIProviderManager />
             </TabsContent>
           </Tabs>
         </DialogContent>
