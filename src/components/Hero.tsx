@@ -1,47 +1,36 @@
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Brain, Sparkles } from "lucide-react";
-import heroBrain from "@/assets/hero-brain.jpg";
+import { ArrowRight, Zap, Sparkles } from "lucide-react";
 
 export const Hero = () => {
   const navigate = useNavigate();
   
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-background to-accent/30">
-      {/* Background Image with Overlay */}
-      <div className="absolute inset-0 opacity-20">
-        <img 
-          src={heroBrain} 
-          alt="AI Neural Network" 
-          className="w-full h-full object-cover"
-        />
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/30 to-neural/20"></div>
-      </div>
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-background via-wellness-mint/5 to-wellness-blue/5">
+      {/* Subtle floating elements */}
+      <div className="absolute top-1/4 left-1/4 w-2 h-2 bg-wellness-green/30 rounded-full animate-float"></div>
+      <div className="absolute bottom-1/3 right-1/3 w-3 h-3 bg-wellness-coral/20 rounded-full animate-float" style={{ animationDelay: '2s' }}></div>
+      <div className="absolute top-1/2 right-1/4 w-1 h-1 bg-wellness-purple/40 rounded-full animate-float" style={{ animationDelay: '4s' }}></div>
       
-      {/* Floating Elements */}
-      <div className="absolute top-20 left-10 w-20 h-20 bg-primary/10 rounded-full animate-float"></div>
-      <div className="absolute bottom-32 right-16 w-32 h-32 bg-neural/10 rounded-full animate-float" style={{ animationDelay: '2s' }}></div>
-      <div className="absolute top-1/3 right-20 w-16 h-16 bg-agent-primary/10 rounded-full animate-float" style={{ animationDelay: '4s' }}></div>
-      
-      <div className="relative z-10 text-center max-w-6xl mx-auto px-6">
-        <h1 className="text-6xl md:text-8xl font-bold mb-6 animate-slide-up">
+      <div className="relative z-10 text-center max-w-4xl mx-auto px-6">
+        <h1 className="text-5xl md:text-7xl font-light mb-6 animate-slide-up text-foreground">
           Clone Your
           <br />
-          <span className="bg-gradient-hero bg-clip-text text-transparent">
+          <span className="font-medium text-wellness-green">
             Expertise
           </span>
         </h1>
         
-        <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto animate-slide-up" style={{ animationDelay: '0.2s' }}>
-          Create AI agents from your knowledge. Scale yourself.
+        <p className="text-lg text-muted-foreground mb-12 max-w-xl mx-auto leading-relaxed animate-slide-up" style={{ animationDelay: '0.2s' }}>
+          Create AI agents from your knowledge. Scale yourself effortlessly.
         </p>
         
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center animate-slide-up" style={{ animationDelay: '0.4s' }}>
-          <Button variant="hero" size="lg" onClick={() => navigate('/auth')}>
-            <Brain className="w-5 h-5" />
+          <Button variant="soft" size="lg" onClick={() => navigate('/auth')}>
+            <Zap className="w-4 h-4" />
             Get Started
           </Button>
-          <Button variant="agent" size="lg" onClick={() => navigate('/auth')}>
+          <Button variant="calm" size="lg" onClick={() => navigate('/auth')}>
             Learn More
           </Button>
         </div>
