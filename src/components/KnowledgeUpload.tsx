@@ -16,29 +16,29 @@ import {
 const uploadTypes = [
   {
     icon: FileText,
-    title: "Documents & Files",
-    description: "PDFs, docs, presentations, and text files",
+    title: "Documents",
+    description: "PDFs, docs, text files",
     color: "text-primary",
     bgColor: "bg-primary/10"
   },
   {
     icon: Video,
-    title: "Video Content",
-    description: "Training videos, meetings, and presentations",
+    title: "Videos",
+    description: "Training content",
     color: "text-neural",
     bgColor: "bg-neural/10"
   },
   {
     icon: Mic,
-    title: "Audio Records",
-    description: "Podcasts, interviews, and voice notes",
+    title: "Audio",
+    description: "Podcasts, voice notes",
     color: "text-agent-primary",
     bgColor: "bg-agent-primary/10"
   },
   {
     icon: Link,
-    title: "Web Content",
-    description: "Websites, articles, and online resources",
+    title: "Links",
+    description: "Websites, articles",
     color: "text-agent-secondary",
     bgColor: "bg-agent-secondary/10"
   }
@@ -68,28 +68,18 @@ export const KnowledgeUpload = () => {
               Upload Your
               <br />
               <span className="bg-gradient-hero bg-clip-text text-transparent">
-                Expertise
+                Knowledge
               </span>
             </h2>
             
-            <p className="text-xl text-muted-foreground mb-8 leading-relaxed">
-              Our advanced AI processes your knowledge from any format—documents, videos, audio files, 
-              or web content. Your expertise becomes the foundation for intelligent, personalized agents.
+            <p className="text-xl text-muted-foreground mb-8">
+              Train your AI agents with your expertise.
             </p>
             
-            <div className="space-y-3 mb-8">
-              {features.map((feature, index) => (
-                <div key={feature} className="flex items-center gap-3">
-                  <CheckCircle className="w-5 h-5 text-primary" />
-                  <span className="text-foreground">{feature}</span>
-                </div>
-              ))}
-            </div>
             
-            <Button variant="hero" size="lg" className="text-lg">
+            <Button variant="hero" size="lg">
               <Upload className="w-5 h-5" />
-              Start Knowledge Upload
-              <ArrowRight className="w-5 h-5" />
+              Upload Files
             </Button>
           </div>
           
@@ -100,8 +90,8 @@ export const KnowledgeUpload = () => {
                 <div className="w-20 h-20 bg-gradient-hero rounded-full flex items-center justify-center mx-auto mb-4 shadow-glow">
                   <Sparkles className="w-10 h-10 text-white" />
                 </div>
-                <h3 className="text-2xl font-bold mb-2">Knowledge Upload Center</h3>
-                <p className="text-muted-foreground">Choose your content type to begin</p>
+                <h3 className="text-2xl font-bold mb-2">Upload Center</h3>
+                <p className="text-muted-foreground">Drag files or click to browse</p>
               </div>
               
               <div className="grid grid-cols-2 gap-4 mb-8">
