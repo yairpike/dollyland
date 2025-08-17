@@ -345,3 +345,5 @@ This ensures consistency across your entire product ecosystem. Would you like me
     </div>
   )
 }
+
+export default AgentTrial;
