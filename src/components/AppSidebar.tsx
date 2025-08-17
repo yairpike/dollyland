@@ -45,11 +45,11 @@ export function AppSidebar() {
       className={`transition-all duration-300 ${state === "collapsed" ? "w-20" : "w-72"}`}
       collapsible="icon"
     >
-      <SidebarContent className="bg-sidebar border-none rounded-r-3xl">
+      <SidebarContent className="bg-background border-none rounded-r-3xl">
         {/* Logo Section */}
-        <div className={`border-none ${state === "collapsed" ? "px-4 py-3 flex justify-center" : "p-6"}`}>
-          <div className={`flex items-center ${state === "collapsed" ? "" : "gap-3"}`}>
-            <img src="/lovable-uploads/8dc3b4f9-4ebf-4b9b-90c7-c85727a0e166.png" alt="dolly" className={`flex-shrink-0 ${state === "collapsed" ? "w-8 h-8" : "w-[72px] h-[72px]"}`} />
+        <div className={`border-none ${state === "collapsed" ? "p-3 flex justify-center items-center" : "p-6"}`}>
+          <div className={`flex items-center ${state === "collapsed" ? "justify-center" : "gap-3"}`}>
+            <img src="/lovable-uploads/8dc3b4f9-4ebf-4b9b-90c7-c85727a0e166.png" alt="dolly" className={`flex-shrink-0 ${state === "collapsed" ? "w-10 h-10" : "w-[72px] h-[72px]"}`} />
             {state !== "collapsed" && (
               <h2 className="font-semibold text-lg text-foreground">dolly</h2>
             )}
@@ -77,7 +77,7 @@ export function AppSidebar() {
 
         {/* Collapsed User Avatar */}
         {state === "collapsed" && user && (
-          <div className="px-4 py-3 mb-4">
+          <div className="px-3 py-2 mb-4 flex justify-center">
             <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-urbanist-lavender to-primary/20 flex items-center justify-center shadow-lg mx-auto">
               <span className="text-sm font-semibold text-urbanist-dark">
                 {user.email?.slice(0, 1).toUpperCase()}
@@ -88,7 +88,7 @@ export function AppSidebar() {
 
         <SidebarGroup>
           <SidebarGroupContent>
-            <SidebarMenu className={`space-y-2 ${state === "collapsed" ? "px-3 py-4" : "px-4 py-6"}`}>
+            <SidebarMenu className={`space-y-1 ${state === "collapsed" ? "px-2" : "px-4 py-2"}`}>
               {mainItems.map((item) => (
                 <SidebarMenuItem key={item.title} className="mb-2">
                   <SidebarMenuButton asChild className="w-full">
@@ -97,12 +97,12 @@ export function AppSidebar() {
                       end
                       className={`flex items-center transition-all duration-200 w-full ${
                         state === "collapsed" 
-                          ? `justify-center px-3 py-3 rounded-xl ${getNavCls(isActive(item.url))}`
+                          ? `justify-center p-3 rounded-xl ${getNavCls(isActive(item.url))}`
                           : `gap-4 px-4 py-3 ${getNavCls(isActive(item.url))}`
                       }`}
                       title={state === "collapsed" ? item.title : undefined}
                     >
-                      <item.icon className={`flex-shrink-0 ${state === "collapsed" ? "h-7 w-7" : "h-6 w-6"}`} />
+                      <item.icon className={`flex-shrink-0 ${state === "collapsed" ? "h-6 w-6" : "h-6 w-6"}`} />
                       {state !== "collapsed" && <span className="text-sm font-medium">{item.title}</span>}
                     </NavLink>
                   </SidebarMenuButton>
