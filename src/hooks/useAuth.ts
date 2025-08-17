@@ -1,40 +1,76 @@
 import { useEffect, useState } from 'react'
-import { User } from '@supabase/supabase-js'
+import { User, Session } from '@supabase/supabase-js'
 import { supabase } from '@/integrations/supabase/client'
 
 export const useAuth = () => {
   const [user, setUser] = useState<User | null>(null)
+  const [session, setSession] = useState<Session | null>(null)
   const [loading, setLoading] = useState(true)
+  const [initializing, setInitializing] = useState(true)
 
   useEffect(() => {
-    // Get initial session
-    const getSession = async () => {
-      const { data: { session } } = await supabase.auth.getSession()
-      console.log('Initial session:', session?.user?.email || 'No user')
-      setUser(session?.user || null)
-      setLoading(false)
-    }
+    let mounted = true
 
-    getSession()
-
-    // Listen for auth changes - NEVER use async here to prevent deadlocks
+    // Set up auth state listener FIRST
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       (event, session) => {
+        if (!mounted) return
+        
         console.log('Auth state change:', event, session?.user?.email || 'No user')
+        setSession(session)
         setUser(session?.user || null)
-        setLoading(false)
+        
+        // Only set loading to false after initial auth check is complete
+        if (initializing) {
+          setInitializing(false)
+          setLoading(false)
+        } else {
+          // For subsequent changes, add small delay to prevent flickering
+          setTimeout(() => {
+            if (mounted) setLoading(false)
+          }, 100)
+        }
       }
     )
 
-    return () => subscription?.unsubscribe()
+    // THEN check for existing session
+    const getInitialSession = async () => {
+      try {
+        const { data: { session } } = await supabase.auth.getSession()
+        if (!mounted) return
+        
+        console.log('Initial session:', session?.user?.email || 'No user')
+        setSession(session)
+        setUser(session?.user || null)
+      } catch (error) {
+        console.error('Error getting session:', error)
+      } finally {
+        if (mounted) {
+          setInitializing(false)
+          setLoading(false)
+        }
+      }
+    }
+
+    getInitialSession()
+
+    return () => {
+      mounted = false
+      subscription?.unsubscribe()
+    }
   }, [])
 
   const signIn = async (email: string, password: string) => {
-    const { data, error } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    })
-    return { data, error }
+    setLoading(true)
+    try {
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      })
+      return { data, error }
+    } finally {
+      // Don't set loading to false here - let onAuthStateChange handle it
+    }
   }
 
   const signUp = async (email: string, password: string, userData?: any) => {
@@ -66,7 +102,9 @@ export const useAuth = () => {
 
   return {
     user,
+    session,
     loading,
+    initializing,
     signIn,
     signUp,
     signInWithGoogle,
