@@ -42,7 +42,7 @@ export function AppSidebar() {
 
   return (
     <Sidebar 
-      className={`transition-all duration-300 ${state === "collapsed" ? "w-16" : "w-72"}`}
+      className={`transition-all duration-300 ${state === "collapsed" ? "w-20" : "w-72"}`}
       collapsible="icon"
     >
       <SidebarContent className="bg-card border-none rounded-r-3xl">
@@ -77,7 +77,7 @@ export function AppSidebar() {
 
         {/* Collapsed User Avatar */}
         {state === "collapsed" && user && (
-          <div className="px-2 py-3 mb-4">
+          <div className="px-4 py-3 mb-4">
             <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-urbanist-lavender to-primary/20 flex items-center justify-center shadow-lg mx-auto">
               <span className="text-sm font-semibold text-urbanist-dark">
                 {user.email?.slice(0, 1).toUpperCase()}
@@ -88,7 +88,7 @@ export function AppSidebar() {
 
         <SidebarGroup>
           <SidebarGroupContent>
-            <SidebarMenu className={`space-y-2 ${state === "collapsed" ? "px-2 py-4" : "px-4 py-6"}`}>
+            <SidebarMenu className={`space-y-2 ${state === "collapsed" ? "px-3 py-4" : "px-4 py-6"}`}>
               {mainItems.map((item) => (
                 <SidebarMenuItem key={item.title} className="mb-2">
                   <SidebarMenuButton asChild className="w-full">
@@ -97,7 +97,7 @@ export function AppSidebar() {
                       end
                       className={`flex items-center transition-all duration-200 w-full ${
                         state === "collapsed" 
-                          ? `justify-center px-2 py-3 rounded-xl ${getNavCls(isActive(item.url))}`
+                          ? `justify-center px-3 py-3 rounded-xl ${getNavCls(isActive(item.url))}`
                           : `gap-4 px-4 py-3 ${getNavCls(isActive(item.url))}`
                       }`}
                       title={state === "collapsed" ? item.title : undefined}
