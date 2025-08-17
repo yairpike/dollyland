@@ -358,7 +358,7 @@ export const AIProviderManager = () => {
             return (
               <Card key={provider.id} className={provider.is_default ? 'ring-2 ring-primary' : ''}>
                 <CardHeader>
-                  <div className="flex items-start justify-between">
+                  <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
                     <div>
                       <CardTitle className="flex items-center gap-2">
                         {providerInfo?.name || provider.provider_name}
