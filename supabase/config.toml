@@ -56,3 +56,15 @@ verify_jwt = true
 
 [functions.vercel-integration]
 verify_jwt = true
+
+[functions.linear-integration]
+verify_jwt = false
+
+[functions.agent-actions]
+verify_jwt = false
+
+[functions.webhook-manager]
+verify_jwt = false
+
+[functions.workflow-engine]
+verify_jwt = false
