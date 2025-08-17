@@ -41,8 +41,7 @@ export function AppSidebar() {
 
   return (
     <Sidebar 
-      className="w-72"
-      collapsible="offcanvas"
+      className="w-72 hidden lg:block"
     >
       <SidebarContent className="bg-card border-none rounded-r-3xl">
         {/* Logo Section */}
