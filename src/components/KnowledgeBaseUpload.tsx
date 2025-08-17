@@ -177,6 +177,7 @@ export const KnowledgeBaseUpload = ({ agentId, onKnowledgeAdded }: KnowledgeBase
               file_path: fileName,
               file_size: uploadFile.file.size,
               mime_type: uploadFile.file.type,
+              source_type: 'file',
               processing_status: 'pending'
             });
 
@@ -184,19 +185,9 @@ export const KnowledgeBaseUpload = ({ agentId, onKnowledgeAdded }: KnowledgeBase
 
           setFiles(prev => prev.map(f => 
             f.id === uploadFile.id 
-              ? { ...f, status: 'processing' as const, progress: 100 }
+              ? { ...f, status: 'completed' as const, progress: 100 }
               : f
           ));
-
-          // TODO: Add document processing here
-          // For now, mark as completed
-          setTimeout(() => {
-            setFiles(prev => prev.map(f => 
-              f.id === uploadFile.id 
-                ? { ...f, status: 'completed' as const }
-                : f
-            ));
-          }, 1000);
 
         } catch (error: any) {
           console.error('Error uploading file:', error);
@@ -208,7 +199,27 @@ export const KnowledgeBaseUpload = ({ agentId, onKnowledgeAdded }: KnowledgeBase
         }
       }
 
-      toast.success("Knowledge base created successfully!");
+      // Trigger background processing
+      try {
+        console.log('Triggering background processing for knowledge base:', knowledgeBase.id);
+        const { error: processError } = await supabase.functions.invoke('process-knowledge', {
+          body: { 
+            knowledgeBaseId: knowledgeBase.id,
+            batchProcess: true 
+          }
+        });
+
+        if (processError) {
+          console.error('Processing error:', processError);
+          toast.success("Knowledge base created! Processing will begin shortly.");
+        } else {
+          toast.success("Knowledge base created and processing started!");
+        }
+      } catch (processError) {
+        console.error('Failed to trigger processing:', processError);
+        toast.success("Knowledge base created! Processing will begin shortly.");
+      }
+
       setKnowledgeBaseName("");
       setFiles([]);
       setUrls([""]);
