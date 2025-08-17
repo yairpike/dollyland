@@ -218,35 +218,41 @@ export const KnowledgeBaseManager = ({ agentId }: KnowledgeBaseManagerProps) => 
   }
 
   return (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <div>
-          <h3 className="text-lg font-semibold">Knowledge Bases</h3>
-          <p className="text-sm text-muted-foreground">
-            Manage your agent's training data and expertise
-          </p>
+    <Card>
+      <CardHeader>
+        <div className="flex items-center justify-between">
+          <div>
+            <CardTitle className="flex items-center gap-2">
+              <Brain className="w-5 h-5" />
+              Knowledge Bases
+            </CardTitle>
+            <CardDescription>
+              Manage your agent's training data and expertise
+            </CardDescription>
+          </div>
+          <Dialog open={uploadModalOpen} onOpenChange={setUploadModalOpen}>
+            <DialogTrigger asChild>
+              <Button>
+                <Plus className="w-4 h-4 mr-2" />
+                Add Knowledge
+              </Button>
+            </DialogTrigger>
+            <DialogContent className="max-w-2xl">
+              <DialogHeader>
+                <DialogTitle>Upload Knowledge Base</DialogTitle>
+              </DialogHeader>
+              <KnowledgeBaseUpload 
+                agentId={agentId} 
+                onKnowledgeAdded={() => {
+                  setUploadModalOpen(false);
+                  fetchKnowledgeBases();
+                }}
+              />
+            </DialogContent>
+          </Dialog>
         </div>
-        <Dialog open={uploadModalOpen} onOpenChange={setUploadModalOpen}>
-          <DialogTrigger asChild>
-            <Button>
-              <Plus className="w-4 h-4 mr-2" />
-              Add Knowledge
-            </Button>
-          </DialogTrigger>
-          <DialogContent className="max-w-2xl">
-            <DialogHeader>
-              <DialogTitle>Upload Knowledge Base</DialogTitle>
-            </DialogHeader>
-            <KnowledgeBaseUpload 
-              agentId={agentId} 
-              onKnowledgeAdded={() => {
-                setUploadModalOpen(false);
-                fetchKnowledgeBases();
-              }}
-            />
-          </DialogContent>
-        </Dialog>
-      </div>
+      </CardHeader>
+      <CardContent className="space-y-6">
 
       {knowledgeBases.length === 0 ? (
         <Card>
@@ -357,6 +363,7 @@ export const KnowledgeBaseManager = ({ agentId }: KnowledgeBaseManagerProps) => 
           ))}
         </div>
       )}
-    </div>
+      </CardContent>
+    </Card>
   );
 };

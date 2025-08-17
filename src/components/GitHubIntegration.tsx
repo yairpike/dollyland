@@ -95,14 +95,17 @@ export const GitHubIntegration: React.FC<GitHubIntegrationProps> = ({ agentId })
   };
 
   return (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <div>
-          <h3 className="text-lg font-semibold">GitHub Integration</h3>
-          <p className="text-sm text-muted-foreground">
-            Create and manage repositories for your AI agent projects
-          </p>
-        </div>
+    <Card>
+      <CardHeader>
+        <CardTitle className="flex items-center gap-2">
+          <GitBranch className="w-5 h-5" />
+          GitHub Integration
+        </CardTitle>
+        <CardDescription>
+          Create and manage repositories for your AI agent projects
+        </CardDescription>
+      </CardHeader>
+      <CardContent className="space-y-6">
         <div className="flex gap-2">
           <Button
             variant="outline"
@@ -183,61 +186,60 @@ export const GitHubIntegration: React.FC<GitHubIntegrationProps> = ({ agentId })
             </DialogContent>
           </Dialog>
         </div>
-      </div>
 
-      
-      {repositories.length === 0 ? (
-        <Card>
-          <CardContent className="flex flex-col items-center justify-center py-12">
-            <Folder className="w-12 h-12 text-muted-foreground mb-4" />
-            <h4 className="text-lg font-semibold mb-2">No repositories found</h4>
-            <p className="text-sm text-muted-foreground text-center mb-4">
-              Create your first repository to start building with AI agents
-            </p>
-            <Button onClick={() => setShowCreateDialog(true)}>
-              <Plus className="w-4 h-4 mr-2" />
-              Create Repository
-            </Button>
-          </CardContent>
-        </Card>
-      ) : (
-        <div className="space-y-4">
-          {repositories.map((repo) => (
-            <Card key={repo.id}>
-              <CardHeader className="pb-3">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <CardTitle className="text-lg">{repo.name}</CardTitle>
-                    <CardDescription className="flex items-center gap-2">
-                      <GitBranch className="w-4 h-4" />
-                      {repo.fullName}
-                    </CardDescription>
+        {repositories.length === 0 ? (
+          <Card>
+            <CardContent className="flex flex-col items-center justify-center py-12">
+              <Folder className="w-12 h-12 text-muted-foreground mb-4" />
+              <h4 className="text-lg font-semibold mb-2">No repositories found</h4>
+              <p className="text-sm text-muted-foreground text-center mb-4">
+                Create your first repository to start building with AI agents
+              </p>
+              <Button onClick={() => setShowCreateDialog(true)}>
+                <Plus className="w-4 h-4 mr-2" />
+                Create Repository
+              </Button>
+            </CardContent>
+          </Card>
+        ) : (
+          <div className="space-y-4">
+            {repositories.map((repo) => (
+              <Card key={repo.id}>
+                <CardHeader className="pb-3">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <CardTitle className="text-lg">{repo.name}</CardTitle>
+                      <CardDescription className="flex items-center gap-2">
+                        <GitBranch className="w-4 h-4" />
+                        {repo.fullName}
+                      </CardDescription>
+                    </div>
+                    <Badge variant="outline">
+                      {repo.defaultBranch}
+                    </Badge>
                   </div>
-                  <Badge variant="outline">
-                    {repo.defaultBranch}
-                  </Badge>
-                </div>
-              </CardHeader>
-              <CardContent>
-                <div className="flex gap-2">
-                  <Button variant="outline" size="sm" asChild>
-                    <a href={repo.url} target="_blank" rel="noopener noreferrer">
-                      <ExternalLink className="w-4 h-4 mr-2" />
-                      View on GitHub
-                    </a>
-                  </Button>
-                  <Button variant="outline" size="sm" onClick={() => {
-                    navigator.clipboard.writeText(repo.cloneUrl);
-                    toast.success('Clone URL copied to clipboard');
-                  }}>
-                    Copy Clone URL
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-      )}
-    </div>
+                </CardHeader>
+                <CardContent>
+                  <div className="flex gap-2">
+                    <Button variant="outline" size="sm" asChild>
+                      <a href={repo.url} target="_blank" rel="noopener noreferrer">
+                        <ExternalLink className="w-4 h-4 mr-2" />
+                        View on GitHub
+                      </a>
+                    </Button>
+                    <Button variant="outline" size="sm" onClick={() => {
+                      navigator.clipboard.writeText(repo.cloneUrl);
+                      toast.success('Clone URL copied to clipboard');
+                    }}>
+                      Copy Clone URL
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        )}
+      </CardContent>
+    </Card>
   );
 };

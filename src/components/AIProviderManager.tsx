@@ -10,7 +10,7 @@ import { Switch } from "@/components/ui/switch";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
-import { Plus, Settings, Trash2, Key, Loader2, CheckCircle } from "lucide-react";
+import { Plus, Settings, Trash2, Key, Loader2, CheckCircle, Zap } from "lucide-react";
 
 interface AIProvider {
   id: string;
@@ -203,14 +203,18 @@ export const AIProviderManager = () => {
   }
 
   return (
-    <div className="space-y-6">
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-        <div>
-          <h3 className="text-lg font-semibold">AI Providers</h3>
-          <p className="text-sm text-muted-foreground">
-            Configure multiple AI providers and choose your preferred models
-          </p>
-        </div>
+    <Card>
+      <CardHeader>
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+          <div>
+            <CardTitle className="flex items-center gap-2">
+              <Zap className="w-5 h-5" />
+              AI Providers
+            </CardTitle>
+            <CardDescription>
+              Configure multiple AI providers and choose your preferred models
+            </CardDescription>
+          </div>
         <Dialog open={addModalOpen} onOpenChange={setAddModalOpen}>
           <DialogTrigger asChild>
             <Button>
@@ -336,6 +340,8 @@ export const AIProviderManager = () => {
           </DialogContent>
         </Dialog>
       </div>
+      </CardHeader>
+      <CardContent className="space-y-6">
 
       {providers.length === 0 ? (
         <Card>
@@ -416,6 +422,7 @@ export const AIProviderManager = () => {
           })}
         </div>
       )}
-    </div>
+      </CardContent>
+    </Card>
   );
 };
