@@ -1,7 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { Sparkles, Menu, LogOut } from "lucide-react";
+import { Sparkles, Menu, LogOut, Settings } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import { toast } from "sonner";
 
@@ -39,6 +39,7 @@ export const Header = () => {
               {user ? (
                 <>
                   <Link to="/dashboard" className="text-foreground hover:text-primary transition-colors">Dashboard</Link>
+                  <Link to="/settings" className="text-foreground hover:text-primary transition-colors">Settings</Link>
                   <a href="#agents" className="text-foreground hover:text-primary transition-colors">Agents</a>
                 </>
               ) : (
@@ -58,6 +59,10 @@ export const Header = () => {
                       {user.email?.slice(0, 2).toUpperCase()}
                     </AvatarFallback>
                   </Avatar>
+                  <Button variant="ghost" size="sm" onClick={() => navigate('/settings')}>
+                    <Settings className="w-4 h-4 mr-2" />
+                    Settings
+                  </Button>
                   <Button variant="ghost" size="sm" onClick={handleSignOut}>
                     <LogOut className="w-4 h-4 mr-2" />
                     Sign Out
