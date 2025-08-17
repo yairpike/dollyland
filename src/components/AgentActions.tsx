@@ -332,7 +332,7 @@ export const AgentActions: React.FC<AgentActionsProps> = ({ agentId }) => {
                                     {action.name}
                                   </div>
                                 </SelectItem>
-                              ))
+                              ))}
                             </SelectContent>
                           </Select>
                         </div>
