@@ -299,7 +299,7 @@ export const Marketplace = () => {
                       <Button 
                         variant="outline"
                         size="sm" 
-                        className="flex-1 border-primary text-primary hover:bg-primary hover:text-primary-foreground"
+                        className="w-full border-primary text-primary hover:bg-primary hover:text-primary-foreground"
                         onClick={() => handleTryAgent(agent.id)}
                       >
                         <Play className="w-4 h-4 mr-2" />
