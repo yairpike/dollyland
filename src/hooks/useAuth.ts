@@ -10,15 +10,17 @@ export const useAuth = () => {
     // Get initial session
     const getSession = async () => {
       const { data: { session } } = await supabase.auth.getSession()
+      console.log('Initial session:', session?.user?.email || 'No user')
       setUser(session?.user || null)
       setLoading(false)
     }
 
     getSession()
 
-    // Listen for auth changes
+    // Listen for auth changes - NEVER use async here to prevent deadlocks
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      async (event, session) => {
+      (event, session) => {
+        console.log('Auth state change:', event, session?.user?.email || 'No user')
         setUser(session?.user || null)
         setLoading(false)
       }
