@@ -125,6 +125,87 @@ export type Database = {
         }
         Relationships: []
       }
+      agent_integrations: {
+        Row: {
+          agent_id: string
+          api_key: string | null
+          config: Json
+          created_at: string
+          id: string
+          integration_type: string
+          is_active: boolean | null
+          last_used_at: string | null
+          updated_at: string
+          usage_count: number | null
+          user_id: string
+          webhook_url: string | null
+        }
+        Insert: {
+          agent_id: string
+          api_key?: string | null
+          config?: Json
+          created_at?: string
+          id?: string
+          integration_type: string
+          is_active?: boolean | null
+          last_used_at?: string | null
+          updated_at?: string
+          usage_count?: number | null
+          user_id: string
+          webhook_url?: string | null
+        }
+        Update: {
+          agent_id?: string
+          api_key?: string | null
+          config?: Json
+          created_at?: string
+          id?: string
+          integration_type?: string
+          is_active?: boolean | null
+          last_used_at?: string | null
+          updated_at?: string
+          usage_count?: number | null
+          user_id?: string
+          webhook_url?: string | null
+        }
+        Relationships: []
+      }
+      agent_reviews: {
+        Row: {
+          agent_id: string
+          created_at: string
+          helpful_count: number | null
+          id: string
+          is_verified: boolean | null
+          rating: number
+          review_text: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          agent_id: string
+          created_at?: string
+          helpful_count?: number | null
+          id?: string
+          is_verified?: boolean | null
+          rating: number
+          review_text?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          agent_id?: string
+          created_at?: string
+          helpful_count?: number | null
+          id?: string
+          is_verified?: boolean | null
+          rating?: number
+          review_text?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       agents: {
         Row: {
           ai_provider_id: string | null
@@ -257,6 +338,48 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      detailed_analytics: {
+        Row: {
+          agent_id: string
+          conversation_turns: number | null
+          created_at: string
+          event_type: string
+          id: string
+          integration_type: string | null
+          metadata: Json | null
+          revenue_generated: number | null
+          satisfaction_score: number | null
+          session_duration: number | null
+          user_id: string
+        }
+        Insert: {
+          agent_id: string
+          conversation_turns?: number | null
+          created_at?: string
+          event_type: string
+          id?: string
+          integration_type?: string | null
+          metadata?: Json | null
+          revenue_generated?: number | null
+          satisfaction_score?: number | null
+          session_duration?: number | null
+          user_id: string
+        }
+        Update: {
+          agent_id?: string
+          conversation_turns?: number | null
+          created_at?: string
+          event_type?: string
+          id?: string
+          integration_type?: string | null
+          metadata?: Json | null
+          revenue_generated?: number | null
+          satisfaction_score?: number | null
+          session_duration?: number | null
+          user_id?: string
+        }
+        Relationships: []
       }
       integration_logs: {
         Row: {
