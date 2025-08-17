@@ -44,3 +44,12 @@ port = 54329
 
 [functions.chat]
 verify_jwt = true
+
+[functions.process-knowledge]
+verify_jwt = true
+
+[functions.agent-api]
+verify_jwt = false
+
+[functions.github-integration]
+verify_jwt = true
