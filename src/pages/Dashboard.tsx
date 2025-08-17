@@ -5,7 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import { Bot, Plus, MessageSquare, Users, TrendingUp, Activity, Globe, Lock, Settings, Edit, Trash2, ShoppingBag } from "lucide-react";
-import { BarChart, Bar, ResponsiveContainer } from "recharts";
+import { BarChart, Bar, ResponsiveContainer, Cell } from "recharts";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { CreateAgentModal } from "@/components/CreateAgentModal";
@@ -153,15 +153,40 @@ export const Dashboard = () => {
               <div className="h-16">
                 <ResponsiveContainer width="100%" height="100%">
                   <BarChart data={[
-                    { name: 'Mon', value: 2 },
-                    { name: 'Tue', value: 4 },
-                    { name: 'Wed', value: 3 },
-                    { name: 'Thu', value: 6 },
-                    { name: 'Fri', value: 5 },
-                    { name: 'Sat', value: 8 },
-                    { name: 'Sun', value: 7 }
+                    { name: 'Mon', value: 2, pattern: 'dots' },
+                    { name: 'Tue', value: 4, pattern: 'stripes' },
+                    { name: 'Wed', value: 3, pattern: 'dots' },
+                    { name: 'Thu', value: 6, pattern: 'solid' },
+                    { name: 'Fri', value: 5, pattern: 'stripes' },
+                    { name: 'Sat', value: 8, pattern: 'dots' },
+                    { name: 'Sun', value: 7, pattern: 'solid' }
                   ]}>
-                    <Bar dataKey="value" fill="hsl(var(--primary))" radius={2} />
+                    <defs>
+                      <pattern id="dots" patternUnits="userSpaceOnUse" width="4" height="4">
+                        <rect width="4" height="4" fill="hsl(var(--primary))" opacity="0.3"/>
+                        <circle cx="2" cy="2" r="1" fill="hsl(var(--primary))"/>
+                      </pattern>
+                      <pattern id="stripes" patternUnits="userSpaceOnUse" width="4" height="4" patternTransform="rotate(45)">
+                        <rect width="4" height="4" fill="hsl(var(--primary))" opacity="0.3"/>
+                        <rect width="2" height="4" fill="hsl(var(--primary))"/>
+                      </pattern>
+                    </defs>
+                    <Bar dataKey="value" radius={2}>
+                      {[
+                        { name: 'Mon', value: 2, pattern: 'dots' },
+                        { name: 'Tue', value: 4, pattern: 'stripes' },
+                        { name: 'Wed', value: 3, pattern: 'dots' },
+                        { name: 'Thu', value: 6, pattern: 'solid' },
+                        { name: 'Fri', value: 5, pattern: 'stripes' },
+                        { name: 'Sat', value: 8, pattern: 'dots' },
+                        { name: 'Sun', value: 7, pattern: 'solid' }
+                      ].map((entry, index) => (
+                        <Cell 
+                          key={`cell-${index}`} 
+                          fill={entry.pattern === 'solid' ? 'hsl(var(--primary))' : `url(#${entry.pattern})`} 
+                        />
+                      ))}
+                    </Bar>
                   </BarChart>
                 </ResponsiveContainer>
               </div>
@@ -183,15 +208,40 @@ export const Dashboard = () => {
               <div className="h-16">
                 <ResponsiveContainer width="100%" height="100%">
                   <BarChart data={[
-                    { name: 'Mon', value: 15 },
-                    { name: 'Tue', value: 22 },
-                    { name: 'Wed', value: 18 },
-                    { name: 'Thu', value: 28 },
-                    { name: 'Fri', value: 24 },
-                    { name: 'Sat', value: 30 },
-                    { name: 'Sun', value: 19 }
+                    { name: 'Mon', value: 15, pattern: 'stripes' },
+                    { name: 'Tue', value: 22, pattern: 'dots' },
+                    { name: 'Wed', value: 18, pattern: 'stripes' },
+                    { name: 'Thu', value: 28, pattern: 'solid' },
+                    { name: 'Fri', value: 24, pattern: 'dots' },
+                    { name: 'Sat', value: 30, pattern: 'stripes' },
+                    { name: 'Sun', value: 19, pattern: 'solid' }
                   ]}>
-                    <Bar dataKey="value" fill="hsl(var(--primary))" radius={2} />
+                    <defs>
+                      <pattern id="dots2" patternUnits="userSpaceOnUse" width="4" height="4">
+                        <rect width="4" height="4" fill="hsl(var(--primary))" opacity="0.3"/>
+                        <circle cx="2" cy="2" r="1" fill="hsl(var(--primary))"/>
+                      </pattern>
+                      <pattern id="stripes2" patternUnits="userSpaceOnUse" width="4" height="4" patternTransform="rotate(45)">
+                        <rect width="4" height="4" fill="hsl(var(--primary))" opacity="0.3"/>
+                        <rect width="2" height="4" fill="hsl(var(--primary))"/>
+                      </pattern>
+                    </defs>
+                    <Bar dataKey="value" radius={2}>
+                      {[
+                        { name: 'Mon', value: 15, pattern: 'stripes2' },
+                        { name: 'Tue', value: 22, pattern: 'dots2' },
+                        { name: 'Wed', value: 18, pattern: 'stripes2' },
+                        { name: 'Thu', value: 28, pattern: 'solid' },
+                        { name: 'Fri', value: 24, pattern: 'dots2' },
+                        { name: 'Sat', value: 30, pattern: 'stripes2' },
+                        { name: 'Sun', value: 19, pattern: 'solid' }
+                      ].map((entry, index) => (
+                        <Cell 
+                          key={`cell-${index}`} 
+                          fill={entry.pattern === 'solid' ? 'hsl(var(--primary))' : `url(#${entry.pattern})`} 
+                        />
+                      ))}
+                    </Bar>
                   </BarChart>
                 </ResponsiveContainer>
               </div>
@@ -213,15 +263,21 @@ export const Dashboard = () => {
               <div className="h-16">
                 <ResponsiveContainer width="100%" height="100%">
                   <BarChart data={[
-                    { name: 'Mon', value: 12 },
-                    { name: 'Tue', value: 19 },
-                    { name: 'Wed', value: 16 },
-                    { name: 'Thu', value: 14 },
-                    { name: 'Fri', value: 18 },
-                    { name: 'Sat', value: 11 },
-                    { name: 'Sun', value: 9 }
+                    { name: 'Mon', value: 12, gradient: true },
+                    { name: 'Tue', value: 19, gradient: true },
+                    { name: 'Wed', value: 16, gradient: true },
+                    { name: 'Thu', value: 14, gradient: true },
+                    { name: 'Fri', value: 18, gradient: true },
+                    { name: 'Sat', value: 11, gradient: true },
+                    { name: 'Sun', value: 9, gradient: true }
                   ]}>
-                    <Bar dataKey="value" fill="hsl(var(--primary))" radius={2} />
+                    <defs>
+                      <linearGradient id="userGradient" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stopColor="hsl(var(--primary))" stopOpacity="1"/>
+                        <stop offset="100%" stopColor="hsl(var(--primary))" stopOpacity="0.6"/>
+                      </linearGradient>
+                    </defs>
+                    <Bar dataKey="value" fill="url(#userGradient)" radius={2} />
                   </BarChart>
                 </ResponsiveContainer>
               </div>
@@ -243,15 +299,22 @@ export const Dashboard = () => {
               <div className="h-16">
                 <ResponsiveContainer width="100%" height="100%">
                   <BarChart data={[
-                    { name: 'Mon', value: 98 },
-                    { name: 'Tue', value: 99 },
-                    { name: 'Wed', value: 97 },
-                    { name: 'Thu', value: 100 },
-                    { name: 'Fri', value: 98 },
-                    { name: 'Sat', value: 99 },
-                    { name: 'Sun', value: 98 }
+                    { name: 'Mon', value: 98, gradient: true },
+                    { name: 'Tue', value: 99, gradient: true },
+                    { name: 'Wed', value: 97, gradient: true },
+                    { name: 'Thu', value: 100, gradient: true },
+                    { name: 'Fri', value: 98, gradient: true },
+                    { name: 'Sat', value: 99, gradient: true },
+                    { name: 'Sun', value: 98, gradient: true }
                   ]}>
-                    <Bar dataKey="value" fill="hsl(var(--primary))" radius={2} />
+                    <defs>
+                      <linearGradient id="performanceGradient" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stopColor="hsl(var(--primary))" stopOpacity="1"/>
+                        <stop offset="50%" stopColor="hsl(var(--primary))" stopOpacity="0.8"/>
+                        <stop offset="100%" stopColor="hsl(var(--primary))" stopOpacity="0.4"/>
+                      </linearGradient>
+                    </defs>
+                    <Bar dataKey="value" fill="url(#performanceGradient)" radius={2} />
                   </BarChart>
                 </ResponsiveContainer>
               </div>
