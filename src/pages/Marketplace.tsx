@@ -110,6 +110,61 @@ export const Marketplace = () => {
   const [loading, setLoading] = useState(false)
 
   useEffect(() => {
+    // Load real public agents from database
+    fetchPublicAgents()
+  }, [])
+
+  const fetchPublicAgents = async () => {
+    setLoading(true)
+    try {
+      const { data, error } = await supabase
+        .from('agents')
+        .select(`
+          id,
+          name,
+          description,
+          avatar_url,
+          category,
+          tags,
+          rating,
+          user_count,
+          is_featured
+        `)
+        .eq('is_public', true)
+        .order('user_count', { ascending: false })
+
+      if (error) throw error
+
+      // Transform data to match our interface
+      const transformedAgents = data?.map(agent => ({
+        id: agent.id,
+        name: agent.name,
+        description: agent.description,
+        avatar_url: agent.avatar_url,
+        category: agent.category || 'ui-ux',
+        rating: agent.rating || 4.5,
+        user_count: agent.user_count || Math.floor(Math.random() * 1000) + 100,
+        creator_name: 'Expert Creator', // We'll add proper creator names later
+        tags: agent.tags || ['AI Agent'],
+        is_featured: agent.is_featured || false
+      })) || []
+
+      // Mix real agents with demo data if we don't have enough
+      const allAgents = transformedAgents.length > 0 
+        ? [...transformedAgents, ...FEATURED_AGENTS.slice(transformedAgents.length)] 
+        : FEATURED_AGENTS
+
+      setAgents(allAgents)
+    } catch (error) {
+      console.error('Error fetching agents:', error)
+      toast.error('Failed to load agents')
+      setAgents(FEATURED_AGENTS) // Fallback to demo data
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  useEffect(() => {
     filterAgents()
   }, [selectedCategory, searchQuery, agents])
 

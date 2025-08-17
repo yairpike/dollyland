@@ -22,6 +22,11 @@ interface Agent {
   user_id: string
   created_at: string
   updated_at: string
+  is_public: boolean
+  category: string | null
+  tags: string[] | null
+  user_count: number
+  rating: number
 }
 
 export const Dashboard = () => {
@@ -166,9 +171,14 @@ export const Dashboard = () => {
                     <div className="flex-1">
                       <CardTitle className="text-lg">{agent.name}</CardTitle>
                       <div className="flex items-center space-x-2 mt-1">
-                        <Badge variant="secondary">
-                          Private
+                        <Badge variant={agent.is_public ? "default" : "secondary"}>
+                          {agent.is_public ? "Public" : "Private"}
                         </Badge>
+                        {agent.is_public && agent.category && (
+                          <Badge variant="outline" className="text-xs">
+                            {agent.category}
+                          </Badge>
+                        )}
                       </div>
                     </div>
                   </div>

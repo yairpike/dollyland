@@ -24,6 +24,11 @@ interface Agent {
   description: string | null;
   avatar_url: string | null;
   system_prompt: string | null;
+  is_public: boolean;
+  category: string | null;
+  tags: string[] | null;
+  user_count: number;
+  rating: number;
 }
 
 interface Conversation {
@@ -91,7 +96,7 @@ export const Chat = () => {
         .select(`
           id,
           title,
-          agent:agents(id, name, description, avatar_url, system_prompt)
+          agent:agents(id, name, description, avatar_url, system_prompt, is_public, category, tags, user_count, rating)
         `)
         .eq('agent_id', agentId)
         .eq('user_id', user.id)
@@ -212,7 +217,7 @@ export const Chat = () => {
                     .select(`
                       id,
                       title,
-                      agent:agents(id, name, description, avatar_url, system_prompt)
+                      agent:agents(id, name, description, avatar_url, system_prompt, is_public, category, tags, user_count, rating)
                     `)
                     .eq('id', conversationId)
                     .single();
