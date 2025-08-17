@@ -7,7 +7,7 @@ interface AppSidebarProps {
 }
 
 const mainItems = [
-  { title: "Dashboard", url: "/dashboard", icon: Home },
+  { title: "Home", url: "/dashboard", icon: Home },
   { title: "Marketplace", url: "/marketplace", icon: ShoppingBag },
   { title: "Analytics", url: "/analytics", icon: BarChart3 },
   { title: "Settings", url: "/settings", icon: Settings },

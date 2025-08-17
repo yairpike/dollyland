@@ -10,6 +10,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { AgentTemplates } from "@/components/AgentTemplates";
 import { toast } from "sonner";
 import { Sparkles, Loader2, ArrowLeft, ChevronLeft } from "lucide-react";
+import { DashboardLayout } from "@/components/DashboardLayout";
 
 export const CreateAgent = () => {
   const navigate = useNavigate();
@@ -81,10 +82,10 @@ export const CreateAgent = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
-      <div className="container max-w-4xl mx-auto py-8 px-4">
+    <DashboardLayout>
+      <div className="space-y-6">
         {/* Header */}
-        <div className="flex items-center gap-4 mb-8">
+        <div className="flex items-center gap-4">
           <Button
             variant="ghost"
             size="sm"
@@ -92,7 +93,7 @@ export const CreateAgent = () => {
             className="flex items-center gap-2"
           >
             <ChevronLeft className="w-4 h-4" />
-            {step === 'template' ? 'Back to Dashboard' : 'Back to Templates'}
+            {step === 'template' ? 'Back to Home' : 'Back to Templates'}
           </Button>
         </div>
 
@@ -181,7 +182,7 @@ export const CreateAgent = () => {
           </CardContent>
         </Card>
       </div>
-    </div>
+    </DashboardLayout>
   );
 };
 
