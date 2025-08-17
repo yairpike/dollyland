@@ -300,7 +300,7 @@ export const Marketplace = () => {
                     <div className="flex gap-2">
                       <Button 
                         size="sm" 
-                        className="flex-1"
+                        className="flex-1 bg-primary hover:bg-primary/90 text-primary-foreground"
                         onClick={() => handleTryAgent(agent.id)}
                       >
                         <Play className="w-4 h-4 mr-2" />
@@ -309,6 +309,7 @@ export const Marketplace = () => {
                       <Button 
                         size="sm" 
                         variant="outline"
+                        className="border-primary text-primary hover:bg-primary hover:text-primary-foreground"
                         onClick={() => navigate(`/agent/${agent.id}`)}
                       >
                         <MessageCircle className="w-4 h-4" />
@@ -388,7 +389,7 @@ export const Marketplace = () => {
                       <div className="flex gap-2">
                         <Button 
                           size="sm" 
-                          className="flex-1"
+                          className="flex-1 bg-primary hover:bg-primary/90 text-primary-foreground"
                           onClick={() => handleTryAgent(agent.id)}
                         >
                           <Play className="w-4 h-4 mr-2" />
@@ -397,6 +398,7 @@ export const Marketplace = () => {
                         <Button 
                           size="sm" 
                           variant="outline"
+                          className="border-primary text-primary hover:bg-primary hover:text-primary-foreground"
                           onClick={() => navigate(`/agent/${agent.id}`)}
                         >
                           <MessageCircle className="w-4 h-4" />

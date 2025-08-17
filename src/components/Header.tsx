@@ -5,7 +5,7 @@ import { Sparkles, Menu, LogOut, Settings } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import { toast } from "sonner";
 import { ThemeToggle } from "./ThemeToggle";
-import dollyLogo from "@/assets/dolly-logo.png";
+import dollyLogo from "/lovable-uploads/8dc3b4f9-4ebf-4b9b-90c7-c85727a0e166.png";
 
 export const Header = () => {
   const { user, signOut } = useAuth();
@@ -27,7 +27,7 @@ export const Header = () => {
           <div className="flex items-center justify-between">
             {/* Logo */}
             <Link to="/" className="flex items-center gap-3 flex-shrink-0 hover:scale-105 transition-transform">
-              <img src={dollyLogo} alt="dolly" className="w-10 h-10" />
+              <img src={dollyLogo} alt="dolly" className="w-12 h-12 rounded-xl" />
               <div>
                 <h1 className="text-xl font-semibold text-foreground">dolly</h1>
               </div>

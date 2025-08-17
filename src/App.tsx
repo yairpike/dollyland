@@ -6,12 +6,13 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import Index from "./pages/Index";
 import { Dashboard } from "./pages/Dashboard";
+import { Analytics } from "./pages/Analytics";
 import { Settings } from "./pages/Settings";
-import { Chat } from "./pages/Chat";
 import Marketplace from "./pages/Marketplace";
 import AgentTrial from "./pages/AgentTrial";
 import Auth from "./pages/Auth";
 import NotFound from "./pages/NotFound";
+import { Chat } from "./pages/Chat";
 import { ProtectedRoute } from "./components/ProtectedRoute";
 
 const queryClient = new QueryClient();
@@ -29,8 +30,9 @@ const App = () => (
           <Route path="/marketplace" element={<Marketplace />} />
           <Route path="/trial/:agentId" element={<AgentTrial />} />
           <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
-          <Route path="/settings" element={<ProtectedRoute><Settings /></ProtectedRoute>} />
-          <Route path="/chat/:agentId" element={<ProtectedRoute><Chat /></ProtectedRoute>} />
+           <Route path="/settings" element={<ProtectedRoute><Settings /></ProtectedRoute>} />
+           <Route path="/analytics" element={<ProtectedRoute><Analytics /></ProtectedRoute>} />
+           <Route path="/chat/:agentId" element={<ProtectedRoute><Chat /></ProtectedRoute>} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
