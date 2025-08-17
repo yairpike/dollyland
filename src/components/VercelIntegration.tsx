@@ -172,7 +172,7 @@ export const VercelIntegration: React.FC<VercelIntegrationProps> = ({ agentId })
   };
 
   return (
-    <div className="space-y-6 flex-1 flex flex-col overflow-hidden">
+    <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
           <h3 className="text-lg font-semibold">Vercel Integration</h3>

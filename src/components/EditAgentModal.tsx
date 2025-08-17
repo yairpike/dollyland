@@ -257,7 +257,7 @@ export const EditAgentModal = ({ agent, open, onOpenChange, onAgentUpdated }: Ed
             </form>
           </TabsContent>
 
-          <TabsContent value="knowledge" className="flex-1 overflow-y-auto p-4">
+          <TabsContent value="knowledge" className="space-y-4 flex-1 overflow-y-auto">
             <KnowledgeBaseManager agentId={agent.id} />
           </TabsContent>
 
@@ -281,7 +281,7 @@ export const EditAgentModal = ({ agent, open, onOpenChange, onAgentUpdated }: Ed
             <LinearIntegration agentId={agent.id} />
           </TabsContent>
 
-          <TabsContent value="github" className="flex-1 overflow-y-auto p-4">
+          <TabsContent value="github" className="space-y-4 flex-1 overflow-y-auto">
             <GitHubIntegration agentId={agent.id} />
           </TabsContent>
 
