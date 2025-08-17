@@ -121,13 +121,13 @@ export const EditAgentModal = ({ agent, open, onOpenChange, onAgentUpdated }: Ed
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-6xl max-h-[90vh] overflow-y-auto">
+      <DialogContent className="max-w-6xl h-[90vh] flex flex-col">
         <DialogHeader>
           <DialogTitle>Edit Agent: {agent.name}</DialogTitle>
         </DialogHeader>
         
-        <Tabs defaultValue="settings" className="w-full">
-          <TabsList className="grid w-full grid-cols-9">
+        <Tabs defaultValue="settings" className="w-full flex-1 flex flex-col">
+          <TabsList className="grid w-full grid-cols-9 bg-background border">
             <TabsTrigger value="settings" className="flex items-center gap-2">
               <Settings className="w-4 h-4" />
               Settings
@@ -166,7 +166,7 @@ export const EditAgentModal = ({ agent, open, onOpenChange, onAgentUpdated }: Ed
             </TabsTrigger>
           </TabsList>
 
-          <TabsContent value="settings" className="space-y-4">
+          <TabsContent value="settings" className="space-y-4 flex-1 overflow-y-auto">
             <form onSubmit={handleSubmit} className="space-y-4">
               <div className="space-y-2">
                 <Label htmlFor="name">Agent Name</Label>
@@ -254,35 +254,35 @@ export const EditAgentModal = ({ agent, open, onOpenChange, onAgentUpdated }: Ed
             </form>
           </TabsContent>
 
-          <TabsContent value="knowledge" className="space-y-4">
+          <TabsContent value="knowledge" className="space-y-4 flex-1 overflow-y-auto">
             <KnowledgeBaseManager agentId={agent.id} />
           </TabsContent>
 
-          <TabsContent value="ai-setup" className="space-y-4">
+          <TabsContent value="ai-setup" className="space-y-4 flex-1 overflow-y-auto">
             <AIProviderManager />
           </TabsContent>
 
-          <TabsContent value="actions" className="space-y-4">
+          <TabsContent value="actions" className="space-y-4 flex-1 overflow-y-auto">
             <AgentActions agentId={agent.id} />
           </TabsContent>
 
-          <TabsContent value="workflows" className="space-y-4">
+          <TabsContent value="workflows" className="space-y-4 flex-1 overflow-y-auto">
             <WorkflowBuilder agentId={agent.id} />
           </TabsContent>
 
-          <TabsContent value="webhooks" className="space-y-4">
+          <TabsContent value="webhooks" className="space-y-4 flex-1 overflow-y-auto">
             <WebhookManager agentId={agent.id} />
           </TabsContent>
 
-          <TabsContent value="linear" className="space-y-4">
+          <TabsContent value="linear" className="space-y-4 flex-1 overflow-y-auto">
             <LinearIntegration agentId={agent.id} />
           </TabsContent>
 
-          <TabsContent value="github" className="space-y-4">
+          <TabsContent value="github" className="space-y-4 flex-1 overflow-y-auto">
             <GitHubIntegration agentId={agent.id} />
           </TabsContent>
 
-          <TabsContent value="deploy" className="space-y-4">
+          <TabsContent value="deploy" className="space-y-4 flex-1 overflow-y-auto">
             <VercelIntegration agentId={agent.id} />
           </TabsContent>
         </Tabs>
