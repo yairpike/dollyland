@@ -218,7 +218,7 @@ export const KnowledgeBaseManager = ({ agentId }: KnowledgeBaseManagerProps) => 
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 h-full flex flex-col overflow-hidden">
       <div className="flex items-center justify-between">
         <div>
           <h3 className="text-lg font-semibold">Knowledge Bases</h3>
@@ -263,7 +263,7 @@ export const KnowledgeBaseManager = ({ agentId }: KnowledgeBaseManagerProps) => 
           </CardContent>
         </Card>
       ) : (
-        <div className="space-y-6">
+        <div className="space-y-6 flex-1 overflow-y-auto min-h-0">
           {knowledgeBases.map((kb) => (
             <div key={kb.id} className="space-y-4">
               <ProcessingStatusCard knowledgeBaseId={kb.id} />
