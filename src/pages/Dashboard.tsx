@@ -321,7 +321,7 @@ export const Dashboard = () => {
 
         {/* Main Content */}
         <Tabs defaultValue="agents" className="space-y-6">
-          <TabsList className="grid w-full max-w-md grid-cols-2 bg-card border">
+          <TabsList className="grid w-full max-w-md grid-cols-2 bg-card border py-2 h-12 content-center">
             <TabsTrigger value="agents">My Agents</TabsTrigger>
             <TabsTrigger value="marketplace">Marketplace</TabsTrigger>
           </TabsList>
