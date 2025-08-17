@@ -32,7 +32,7 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
           </header>
 
           {/* Main Content */}
-          <main className="flex-1 p-8 bg-urbanist-light min-w-0 ml-4">
+          <main className="flex-1 p-8 bg-background min-w-0 ml-4">
             {children}
           </main>
         </div>
