@@ -203,7 +203,7 @@ export const AIProviderManager = () => {
   }
 
   return (
-    <Card>
+    <Card className="flex flex-col h-full">
       <CardHeader>
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div>
@@ -341,7 +341,7 @@ export const AIProviderManager = () => {
         </Dialog>
       </div>
       </CardHeader>
-      <CardContent className="space-y-6 h-full overflow-y-auto">
+      <CardContent className="space-y-6 flex-1 overflow-y-auto">
 
       {providers.length === 0 ? (
         <Card>

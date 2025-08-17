@@ -95,7 +95,7 @@ export const GitHubIntegration: React.FC<GitHubIntegrationProps> = ({ agentId })
   };
 
   return (
-    <Card>
+    <Card className="flex flex-col h-full">
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <GitBranch className="w-5 h-5" />
@@ -105,7 +105,7 @@ export const GitHubIntegration: React.FC<GitHubIntegrationProps> = ({ agentId })
           Create and manage repositories for your AI agent projects
         </CardDescription>
       </CardHeader>
-      <CardContent className="space-y-6 h-full overflow-y-auto">
+      <CardContent className="space-y-6 flex-1 overflow-y-auto">
         <div className="flex gap-2">
           <Button
             variant="outline"
