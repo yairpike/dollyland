@@ -245,11 +245,11 @@ This ensures consistency across your entire product ecosystem. Would you like me
               <Button
                 key={index}
                 variant="outline"
-                className="h-auto p-4 text-left justify-start"
+                className="h-auto p-4 text-left justify-start whitespace-normal"
                 onClick={() => handleSamplePrompt(prompt)}
               >
-                <MessageCircle className="w-4 h-4 mr-3 flex-shrink-0" />
-                <span className="text-sm">{prompt}</span>
+                <MessageCircle className="w-4 h-4 mr-3 flex-shrink-0 mt-0.5" />
+                <span className="text-sm break-words">{prompt}</span>
               </Button>
             ))}
           </div>
