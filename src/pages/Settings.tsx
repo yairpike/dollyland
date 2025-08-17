@@ -86,7 +86,7 @@ export const Settings = () => {
                 
                 <Separator />
                 
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 items-center">
+                <div className="flex justify-between items-center">
                   <div>
                     <h4 className="font-medium">Account Status</h4>
                     <p className="text-sm text-muted-foreground">
