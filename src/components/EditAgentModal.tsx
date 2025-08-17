@@ -127,7 +127,7 @@ export const EditAgentModal = ({ agent, open, onOpenChange, onAgentUpdated }: Ed
         </DialogHeader>
         
         <Tabs defaultValue="settings" className="w-full flex-1 flex flex-col">
-          <TabsList className="grid w-full grid-cols-9 bg-white border">
+          <TabsList className="grid w-full grid-cols-9 bg-white border p-1 h-12 items-center">
             <TabsTrigger value="settings" className="flex items-center gap-2">
               <Settings className="w-4 h-4" />
               Settings
