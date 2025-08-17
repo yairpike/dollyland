@@ -23,7 +23,7 @@ export function DashboardLayout({ children, onCreateAgent }: DashboardLayoutProp
       {/* Main Content */}
       <div className="flex-1 flex flex-col min-w-0">
         {/* Header */}
-        <header className="h-16 lg:h-20 border-b bg-card/80 backdrop-blur-sm flex items-center justify-between px-4 lg:px-8">
+        <header className="h-16 lg:h-20 flex items-center justify-between px-4 lg:px-8">
           <div className="flex items-center gap-2 flex-1">
             {/* Mobile Hamburger - Only visible on mobile/tablet */}
             <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
