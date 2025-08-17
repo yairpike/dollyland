@@ -5,6 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import { Bot, Plus, MessageSquare, Users, TrendingUp, Activity, Globe, Lock, Settings, Edit, Trash2, ShoppingBag } from "lucide-react";
+import { BarChart, Bar, ResponsiveContainer } from "recharts";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { CreateAgentModal } from "@/components/CreateAgentModal";
@@ -137,62 +138,122 @@ export const Dashboard = () => {
 
         {/* Stats Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          <Card className="bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-950 dark:to-blue-900 border-blue-200 dark:border-blue-800">
+          <Card>
             <CardContent className="p-6">
-              <div className="flex items-center justify-between">
+              <div className="flex items-center justify-between mb-4">
                 <div>
-                  <p className="text-sm font-medium text-blue-700 dark:text-blue-300">Total Agents</p>
-                  <p className="text-3xl font-semibold text-blue-900 dark:text-blue-100">{agents.length}</p>
-                  <p className="text-xs text-blue-600 dark:text-blue-400 mt-1">+2 this week</p>
+                  <p className="text-sm font-medium text-muted-foreground">Total Agents</p>
+                  <p className="text-3xl font-semibold">{agents.length}</p>
+                  <p className="text-xs text-muted-foreground mt-1">+2 this week</p>
                 </div>
-                <div className="h-12 w-12 bg-blue-200 dark:bg-blue-800 rounded-xl flex items-center justify-center">
-                  <Bot className="h-6 w-6 text-blue-600 dark:text-blue-300" />
+                <div className="h-12 w-12 bg-muted rounded-xl flex items-center justify-center">
+                  <Bot className="h-6 w-6 text-primary" />
                 </div>
+              </div>
+              <div className="h-16">
+                <ResponsiveContainer width="100%" height="100%">
+                  <BarChart data={[
+                    { name: 'Mon', value: 2 },
+                    { name: 'Tue', value: 4 },
+                    { name: 'Wed', value: 3 },
+                    { name: 'Thu', value: 6 },
+                    { name: 'Fri', value: 5 },
+                    { name: 'Sat', value: 8 },
+                    { name: 'Sun', value: 7 }
+                  ]}>
+                    <Bar dataKey="value" fill="hsl(var(--primary))" radius={2} />
+                  </BarChart>
+                </ResponsiveContainer>
               </div>
             </CardContent>
           </Card>
 
-          <Card className="bg-gradient-to-br from-emerald-50 to-emerald-100 dark:from-emerald-950 dark:to-emerald-900 border-emerald-200 dark:border-emerald-800">
+          <Card>
             <CardContent className="p-6">
-              <div className="flex items-center justify-between">
+              <div className="flex items-center justify-between mb-4">
                 <div>
-                  <p className="text-sm font-medium text-emerald-700 dark:text-emerald-300">Conversations</p>
-                  <p className="text-3xl font-semibold text-emerald-900 dark:text-emerald-100">156</p>
-                  <p className="text-xs text-emerald-600 dark:text-emerald-400 mt-1">+12% vs last week</p>
+                  <p className="text-sm font-medium text-muted-foreground">Conversations</p>
+                  <p className="text-3xl font-semibold">156</p>
+                  <p className="text-xs text-muted-foreground mt-1">+12% vs last week</p>
                 </div>
-                <div className="h-12 w-12 bg-emerald-200 dark:bg-emerald-800 rounded-xl flex items-center justify-center">
-                  <MessageSquare className="h-6 w-6 text-emerald-600 dark:text-emerald-300" />
+                <div className="h-12 w-12 bg-muted rounded-xl flex items-center justify-center">
+                  <MessageSquare className="h-6 w-6 text-primary" />
                 </div>
+              </div>
+              <div className="h-16">
+                <ResponsiveContainer width="100%" height="100%">
+                  <BarChart data={[
+                    { name: 'Mon', value: 15 },
+                    { name: 'Tue', value: 22 },
+                    { name: 'Wed', value: 18 },
+                    { name: 'Thu', value: 28 },
+                    { name: 'Fri', value: 24 },
+                    { name: 'Sat', value: 30 },
+                    { name: 'Sun', value: 19 }
+                  ]}>
+                    <Bar dataKey="value" fill="hsl(var(--primary))" radius={2} />
+                  </BarChart>
+                </ResponsiveContainer>
               </div>
             </CardContent>
           </Card>
 
-          <Card className="bg-gradient-to-br from-violet-50 to-violet-100 dark:from-violet-950 dark:to-violet-900 border-violet-200 dark:border-violet-800">
+          <Card>
             <CardContent className="p-6">
-              <div className="flex items-center justify-between">
+              <div className="flex items-center justify-between mb-4">
                 <div>
-                  <p className="text-sm font-medium text-violet-700 dark:text-violet-300">Active Users</p>
-                  <p className="text-3xl font-semibold text-violet-900 dark:text-violet-100">89</p>
-                  <p className="text-xs text-violet-600 dark:text-violet-400 mt-1">+5 today</p>
+                  <p className="text-sm font-medium text-muted-foreground">Active Users</p>
+                  <p className="text-3xl font-semibold">89</p>
+                  <p className="text-xs text-muted-foreground mt-1">+5 today</p>
                 </div>
-                <div className="h-12 w-12 bg-violet-200 dark:bg-violet-800 rounded-xl flex items-center justify-center">
-                  <Users className="h-6 w-6 text-violet-600 dark:text-violet-300" />
+                <div className="h-12 w-12 bg-muted rounded-xl flex items-center justify-center">
+                  <Users className="h-6 w-6 text-primary" />
                 </div>
+              </div>
+              <div className="h-16">
+                <ResponsiveContainer width="100%" height="100%">
+                  <BarChart data={[
+                    { name: 'Mon', value: 12 },
+                    { name: 'Tue', value: 19 },
+                    { name: 'Wed', value: 16 },
+                    { name: 'Thu', value: 14 },
+                    { name: 'Fri', value: 18 },
+                    { name: 'Sat', value: 11 },
+                    { name: 'Sun', value: 9 }
+                  ]}>
+                    <Bar dataKey="value" fill="hsl(var(--primary))" radius={2} />
+                  </BarChart>
+                </ResponsiveContainer>
               </div>
             </CardContent>
           </Card>
 
-          <Card className="bg-gradient-to-br from-amber-50 to-amber-100 dark:from-amber-950 dark:to-amber-900 border-amber-200 dark:border-amber-800">
+          <Card>
             <CardContent className="p-6">
-              <div className="flex items-center justify-between">
+              <div className="flex items-center justify-between mb-4">
                 <div>
-                  <p className="text-sm font-medium text-amber-700 dark:text-amber-300">Performance</p>
-                  <p className="text-3xl font-semibold text-amber-900 dark:text-amber-100">98%</p>
-                  <p className="text-xs text-amber-600 dark:text-amber-400 mt-1">Uptime</p>
+                  <p className="text-sm font-medium text-muted-foreground">Performance</p>
+                  <p className="text-3xl font-semibold">98%</p>
+                  <p className="text-xs text-muted-foreground mt-1">Uptime</p>
                 </div>
-                <div className="h-12 w-12 bg-amber-200 dark:bg-amber-800 rounded-xl flex items-center justify-center">
-                  <TrendingUp className="h-6 w-6 text-amber-600 dark:text-amber-300" />
+                <div className="h-12 w-12 bg-muted rounded-xl flex items-center justify-center">
+                  <TrendingUp className="h-6 w-6 text-primary" />
                 </div>
+              </div>
+              <div className="h-16">
+                <ResponsiveContainer width="100%" height="100%">
+                  <BarChart data={[
+                    { name: 'Mon', value: 98 },
+                    { name: 'Tue', value: 99 },
+                    { name: 'Wed', value: 97 },
+                    { name: 'Thu', value: 100 },
+                    { name: 'Fri', value: 98 },
+                    { name: 'Sat', value: 99 },
+                    { name: 'Sun', value: 98 }
+                  ]}>
+                    <Bar dataKey="value" fill="hsl(var(--primary))" radius={2} />
+                  </BarChart>
+                </ResponsiveContainer>
               </div>
             </CardContent>
           </Card>
