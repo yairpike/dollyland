@@ -189,18 +189,25 @@ serve(async (req) => {
         if (file.source_type === 'url') {
           // Process URL using Firecrawl
           if (!firecrawlApiKey) {
+            console.error('Firecrawl API key not configured for file:', file.id);
             throw new Error('Firecrawl API key not configured');
           }
 
+          console.log('Processing URL with Firecrawl:', file.source_url);
           const firecrawl = new FirecrawlService(firecrawlApiKey);
           const result = await firecrawl.scrapeUrl(file.source_url);
 
+          console.log('Firecrawl result for', file.source_url, ':', result);
+
           if (!result.success) {
+            console.error('Firecrawl failed for', file.source_url, ':', result.error);
             throw new Error(result.error || 'Failed to scrape URL');
           }
 
           content = result.data?.markdown || result.data?.content || '';
           title = result.data?.metadata?.title || file.source_url;
+          
+          console.log('Extracted content length:', content.length, 'Title:', title);
         } else {
           // Process file from storage
           const { data: fileData, error: downloadError } = await supabase.storage
@@ -275,18 +282,19 @@ serve(async (req) => {
         return { success: true, fileId: file.id, chunksCreated: chunks.length };
 
       } catch (error) {
-        // File processing error occurred
+        console.error('File processing error for file', file.id, ':', error);
+        const errorMessage = error instanceof Error ? error.message : 'Unknown error';
         
-        // Mark as failed
+        // Mark as failed with detailed error
         await supabase
           .from('knowledge_files')
           .update({ 
             processing_status: 'failed',
-            processed_content: 'Processing failed'
+            processed_content: `Processing failed: ${errorMessage}`
           })
           .eq('id', file.id);
 
-        return { success: false, fileId: file.id, error: 'Processing failed' };
+        return { success: false, fileId: file.id, error: errorMessage };
       }
     });
 
