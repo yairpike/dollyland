@@ -3,11 +3,12 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Progress } from "@/components/ui/progress";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
-import { Upload, File, X, Brain, Loader2 } from "lucide-react";
+import { Upload, File, X, Brain, Loader2, Globe, Link as LinkIcon } from "lucide-react";
 
 interface KnowledgeBaseUploadProps {
   agentId: string;
@@ -26,8 +27,10 @@ export const KnowledgeBaseUpload = ({ agentId, onKnowledgeAdded }: KnowledgeBase
   const { user } = useAuth();
   const [knowledgeBaseName, setKnowledgeBaseName] = useState("");
   const [files, setFiles] = useState<UploadFile[]>([]);
+  const [urls, setUrls] = useState<string[]>([""]);
   const [isDragOver, setIsDragOver] = useState(false);
   const [isCreating, setIsCreating] = useState(false);
+  const [activeTab, setActiveTab] = useState("files");
 
   const acceptedTypes = [
     'application/pdf',
@@ -79,9 +82,25 @@ export const KnowledgeBaseUpload = ({ agentId, onKnowledgeAdded }: KnowledgeBase
     setFiles(prev => prev.filter(f => f.id !== id));
   };
 
+  const addUrl = () => {
+    setUrls(prev => [...prev, ""]);
+  };
+
+  const removeUrl = (index: number) => {
+    setUrls(prev => prev.filter((_, i) => i !== index));
+  };
+
+  const updateUrl = (index: number, value: string) => {
+    setUrls(prev => prev.map((url, i) => i === index ? value : url));
+  };
+
   const createKnowledgeBase = async () => {
-    if (!user || !knowledgeBaseName.trim() || files.length === 0) {
-      toast.error("Please provide a name and upload at least one file");
+    const validUrls = urls.filter(url => url.trim().length > 0);
+    const hasFiles = files.length > 0;
+    const hasUrls = validUrls.length > 0;
+
+    if (!user || !knowledgeBaseName.trim() || (!hasFiles && !hasUrls)) {
+      toast.error("Please provide a name and either upload files or add URLs");
       return;
     }
 
@@ -95,12 +114,41 @@ export const KnowledgeBaseUpload = ({ agentId, onKnowledgeAdded }: KnowledgeBase
           user_id: user.id,
           agent_id: agentId,
           name: knowledgeBaseName.trim(),
-          description: `Knowledge base with ${files.length} file(s)`
+          description: `Knowledge base with ${files.length} file(s) and ${validUrls.length} URL(s)`
         })
         .select()
         .single();
 
       if (kbError) throw kbError;
+
+      // Process URLs first
+      for (const [index, url] of validUrls.entries()) {
+        try {
+          console.log(`Processing URL: ${url}`);
+          
+          // Save URL record
+          const { error: urlError } = await supabase
+            .from('knowledge_files')
+            .insert({
+              knowledge_base_id: knowledgeBase.id,
+              user_id: user.id,
+              file_name: `Website Content ${index + 1}`,
+              file_path: url,
+              file_size: 0,
+              mime_type: 'text/html',
+              source_type: 'url',
+              source_url: url,
+              processing_status: 'pending'
+            });
+
+          if (urlError) throw urlError;
+          
+          console.log(`URL record saved: ${url}`);
+        } catch (error: any) {
+          console.error('Error processing URL:', error);
+          toast.error(`Failed to process URL: ${url}`);
+        }
+      }
 
       // Upload files
       for (const uploadFile of files) {
@@ -163,6 +211,7 @@ export const KnowledgeBaseUpload = ({ agentId, onKnowledgeAdded }: KnowledgeBase
       toast.success("Knowledge base created successfully!");
       setKnowledgeBaseName("");
       setFiles([]);
+      setUrls([""]);
       onKnowledgeAdded?.();
 
     } catch (error: any) {
@@ -181,7 +230,7 @@ export const KnowledgeBaseUpload = ({ agentId, onKnowledgeAdded }: KnowledgeBase
           Add Knowledge Base
         </CardTitle>
         <CardDescription>
-          Upload documents to train your agent with your professional expertise
+          Upload documents or add website URLs to train your agent with your professional expertise
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-6">
@@ -195,94 +244,159 @@ export const KnowledgeBaseUpload = ({ agentId, onKnowledgeAdded }: KnowledgeBase
           />
         </div>
 
-        <div
-          className={`border-2 border-dashed rounded-lg p-8 text-center transition-colors ${
-            isDragOver 
-              ? 'border-primary bg-primary/5' 
-              : 'border-muted-foreground/25 hover:border-primary/50'
-          }`}
-          onDrop={handleDrop}
-          onDragOver={(e) => {
-            e.preventDefault();
-            setIsDragOver(true);
-          }}
-          onDragLeave={() => setIsDragOver(false)}
-        >
-          <Upload className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
-          <h3 className="text-lg font-semibold mb-2">Upload Documents</h3>
-          <p className="text-muted-foreground mb-4">
-            Drag and drop files here, or click to browse
-          </p>
-          <Input
-            type="file"
-            multiple
-            accept={acceptedTypes.join(',')}
-            onChange={handleFileSelect}
-            className="hidden"
-            id="file-upload"
-          />
-          <Button
-            variant="outline"
-            onClick={() => document.getElementById('file-upload')?.click()}
-          >
-            Choose Files
-          </Button>
-          <p className="text-xs text-muted-foreground mt-2">
-            Supports PDF, TXT, DOC, DOCX, MD (max 10MB each)
-          </p>
-        </div>
+        <Tabs value={activeTab} onValueChange={setActiveTab}>
+          <TabsList className="grid w-full grid-cols-2">
+            <TabsTrigger value="files" className="flex items-center gap-2">
+              <Upload className="w-4 h-4" />
+              Upload Files
+            </TabsTrigger>
+            <TabsTrigger value="urls" className="flex items-center gap-2">
+              <Globe className="w-4 h-4" />
+              Add URLs
+            </TabsTrigger>
+          </TabsList>
 
-        {files.length > 0 && (
-          <div className="space-y-3">
-            <h4 className="font-medium">Files to Upload</h4>
-            {files.map((uploadFile) => (
-              <div key={uploadFile.id} className="flex items-center gap-3 p-3 border rounded-lg">
-                <File className="w-4 h-4 text-muted-foreground" />
-                <div className="flex-1 min-w-0">
-                  <p className="text-sm font-medium truncate">{uploadFile.file.name}</p>
-                  <p className="text-xs text-muted-foreground">
-                    {(uploadFile.file.size / 1024 / 1024).toFixed(2)} MB
-                  </p>
-                  {uploadFile.status === 'uploading' && (
-                    <Progress value={uploadFile.progress} className="mt-1 h-1" />
-                  )}
-                  {uploadFile.status === 'error' && (
-                    <p className="text-xs text-destructive mt-1">{uploadFile.error}</p>
-                  )}
-                </div>
-                <div className="flex items-center gap-2">
-                  {uploadFile.status === 'pending' && (
-                    <span className="text-xs text-muted-foreground">Pending</span>
-                  )}
-                  {uploadFile.status === 'uploading' && (
-                    <Loader2 className="w-4 h-4 animate-spin text-primary" />
-                  )}
-                  {uploadFile.status === 'processing' && (
-                    <span className="text-xs text-yellow-600">Processing</span>
-                  )}
-                  {uploadFile.status === 'completed' && (
-                    <span className="text-xs text-green-600">✓ Complete</span>
-                  )}
-                  {uploadFile.status === 'error' && (
-                    <span className="text-xs text-destructive">Error</span>
-                  )}
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={() => removeFile(uploadFile.id)}
-                    disabled={isCreating}
-                  >
-                    <X className="w-4 h-4" />
+          <TabsContent value="files" className="space-y-4">
+            <div
+              className={`border-2 border-dashed rounded-lg p-8 text-center transition-colors ${
+                isDragOver 
+                  ? 'border-primary bg-primary/5' 
+                  : 'border-muted-foreground/25 hover:border-primary/50'
+              }`}
+              onDrop={handleDrop}
+              onDragOver={(e) => {
+                e.preventDefault();
+                setIsDragOver(true);
+              }}
+              onDragLeave={() => setIsDragOver(false)}
+            >
+              <Upload className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
+              <h3 className="text-lg font-semibold mb-2">Upload Documents</h3>
+              <p className="text-muted-foreground mb-4">
+                Drag and drop files here, or click to browse
+              </p>
+              <Input
+                type="file"
+                multiple
+                accept={acceptedTypes.join(',')}
+                onChange={handleFileSelect}
+                className="hidden"
+                id="file-upload"
+              />
+              <Button
+                variant="outline"
+                onClick={() => document.getElementById('file-upload')?.click()}
+              >
+                Choose Files
+              </Button>
+              <p className="text-xs text-muted-foreground mt-2">
+                Supports PDF, TXT, DOC, DOCX, MD (max 10MB each)
+              </p>
+            </div>
+
+            {files.length > 0 && (
+              <div className="space-y-3">
+                <h4 className="font-medium">Files to Upload</h4>
+                {files.map((uploadFile) => (
+                  <div key={uploadFile.id} className="flex items-center gap-3 p-3 border rounded-lg">
+                    <File className="w-4 h-4 text-muted-foreground" />
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm font-medium truncate">{uploadFile.file.name}</p>
+                      <p className="text-xs text-muted-foreground">
+                        {(uploadFile.file.size / 1024 / 1024).toFixed(2)} MB
+                      </p>
+                      {uploadFile.status === 'uploading' && (
+                        <Progress value={uploadFile.progress} className="mt-1 h-1" />
+                      )}
+                      {uploadFile.status === 'error' && (
+                        <p className="text-xs text-destructive mt-1">{uploadFile.error}</p>
+                      )}
+                    </div>
+                    <div className="flex items-center gap-2">
+                      {uploadFile.status === 'pending' && (
+                        <span className="text-xs text-muted-foreground">Pending</span>
+                      )}
+                      {uploadFile.status === 'uploading' && (
+                        <Loader2 className="w-4 h-4 animate-spin text-primary" />
+                      )}
+                      {uploadFile.status === 'processing' && (
+                        <span className="text-xs text-yellow-600">Processing</span>
+                      )}
+                      {uploadFile.status === 'completed' && (
+                        <span className="text-xs text-green-600">✓ Complete</span>
+                      )}
+                      {uploadFile.status === 'error' && (
+                        <span className="text-xs text-destructive">Error</span>
+                      )}
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => removeFile(uploadFile.id)}
+                        disabled={isCreating}
+                      >
+                        <X className="w-4 h-4" />
+                      </Button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </TabsContent>
+
+          <TabsContent value="urls" className="space-y-4">
+            <div className="space-y-4">
+              <div className="text-center p-6 border-2 border-dashed border-muted-foreground/25 rounded-lg">
+                <Globe className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
+                <h3 className="text-lg font-semibold mb-2">Add Website Content</h3>
+                <p className="text-muted-foreground mb-4">
+                  Enter URLs to crawl and extract content from websites
+                </p>
+                <p className="text-xs text-muted-foreground">
+                  Supports blogs, documentation, articles, and other text-based web content
+                </p>
+              </div>
+
+              <div className="space-y-3">
+                <div className="flex items-center justify-between">
+                  <Label>Website URLs</Label>
+                  <Button variant="outline" size="sm" onClick={addUrl}>
+                    <LinkIcon className="w-4 h-4 mr-2" />
+                    Add URL
                   </Button>
                 </div>
+                
+                {urls.map((url, index) => (
+                  <div key={index} className="flex items-center gap-2">
+                    <Input
+                      placeholder="https://example.com/page"
+                      value={url}
+                      onChange={(e) => updateUrl(index, e.target.value)}
+                      className="flex-1"
+                    />
+                    {urls.length > 1 && (
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => removeUrl(index)}
+                        disabled={isCreating}
+                      >
+                        <X className="w-4 h-4" />
+                      </Button>
+                    )}
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
-        )}
+            </div>
+          </TabsContent>
+        </Tabs>
 
         <Button
           onClick={createKnowledgeBase}
-          disabled={!knowledgeBaseName.trim() || files.length === 0 || isCreating}
+          disabled={
+            !knowledgeBaseName.trim() || 
+            (files.length === 0 && urls.filter(url => url.trim()).length === 0) || 
+            isCreating
+          }
           className="w-full"
         >
           {isCreating ? (
