@@ -54,7 +54,7 @@ export function AppSidebar({ onNavigate }: AppSidebarProps) {
                 className={({ isActive: navIsActive }) =>
                   `flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 ${
                     isActive(item.url) 
-                      ? "bg-primary text-[#29EAC2] font-medium" 
+                      ? "bg-primary text-[hsl(var(--button-primary-text))] font-medium" 
                       : "text-foreground hover:bg-accent hover:text-accent-foreground"
                   }`
                 }
