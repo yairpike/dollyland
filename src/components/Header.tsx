@@ -44,9 +44,6 @@ export const Header = () => {
                   <Link to="/dashboard" className="text-foreground hover:text-primary transition-colors">
                     Agents
                   </Link>
-                  <Link to="/settings" className="text-foreground hover:text-primary transition-colors">
-                    Settings
-                  </Link>
                 </>
               ) : (
                 <>
@@ -66,7 +63,7 @@ export const Header = () => {
                     </AvatarFallback>
                   </Avatar>
                   
-                  {/* Desktop Settings Button */}
+                  {/* Settings Button */}
                   <Button variant="ghost" size="sm" onClick={() => navigate('/settings')} className="hidden sm:inline-flex">
                     <Settings className="w-4 h-4 mr-2" />
                     <span className="hidden md:inline">Settings</span>
@@ -78,8 +75,16 @@ export const Header = () => {
                     Sign Out
                   </Button>
                   
-                  {/* Mobile Menu Button */}
-                  <Button variant="ghost" size="icon" className="lg:hidden">
+                  {/* Mobile Menu Button - with click handler */}
+                  <Button 
+                    variant="ghost" 
+                    size="icon" 
+                    className="lg:hidden"
+                    onClick={() => {
+                      // For now, navigate to settings - you can implement a proper mobile menu later
+                      navigate('/settings');
+                    }}
+                  >
                     <Menu className="w-4 h-4 sm:w-5 sm:h-5" />
                   </Button>
                 </>
