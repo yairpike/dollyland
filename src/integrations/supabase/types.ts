@@ -14,6 +14,45 @@ export type Database = {
   }
   public: {
     Tables: {
+      agent_action_executions: {
+        Row: {
+          action_type: string
+          agent_id: string
+          completed_at: string | null
+          created_at: string
+          error: string | null
+          id: string
+          parameters: Json | null
+          result: Json | null
+          status: string
+          user_id: string
+        }
+        Insert: {
+          action_type: string
+          agent_id: string
+          completed_at?: string | null
+          created_at?: string
+          error?: string | null
+          id?: string
+          parameters?: Json | null
+          result?: Json | null
+          status?: string
+          user_id: string
+        }
+        Update: {
+          action_type?: string
+          agent_id?: string
+          completed_at?: string | null
+          created_at?: string
+          error?: string | null
+          id?: string
+          parameters?: Json | null
+          result?: Json | null
+          status?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       agent_analytics: {
         Row: {
           agent_id: string
@@ -218,6 +257,36 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      integration_logs: {
+        Row: {
+          action: string
+          created_at: string
+          id: string
+          integration_type: string
+          metadata: Json | null
+          success: boolean
+          user_id: string
+        }
+        Insert: {
+          action: string
+          created_at?: string
+          id?: string
+          integration_type: string
+          metadata?: Json | null
+          success?: boolean
+          user_id: string
+        }
+        Update: {
+          action?: string
+          created_at?: string
+          id?: string
+          integration_type?: string
+          metadata?: Json | null
+          success?: boolean
+          user_id?: string
+        }
+        Relationships: []
       }
       knowledge_bases: {
         Row: {
@@ -496,6 +565,182 @@ export type Database = {
           last_accessed_at?: string | null
           model_name?: string
           provider_name?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      webhook_deliveries: {
+        Row: {
+          delivered_at: string
+          error: string | null
+          event: string
+          id: string
+          is_retry: boolean
+          original_delivery_id: string | null
+          payload: Json
+          response_body: string | null
+          status_code: number | null
+          success: boolean
+          webhook_id: string
+        }
+        Insert: {
+          delivered_at?: string
+          error?: string | null
+          event: string
+          id?: string
+          is_retry?: boolean
+          original_delivery_id?: string | null
+          payload: Json
+          response_body?: string | null
+          status_code?: number | null
+          success?: boolean
+          webhook_id: string
+        }
+        Update: {
+          delivered_at?: string
+          error?: string | null
+          event?: string
+          id?: string
+          is_retry?: boolean
+          original_delivery_id?: string | null
+          payload?: Json
+          response_body?: string | null
+          status_code?: number | null
+          success?: boolean
+          webhook_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "webhook_deliveries_original_delivery_id_fkey"
+            columns: ["original_delivery_id"]
+            isOneToOne: false
+            referencedRelation: "webhook_deliveries"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "webhook_deliveries_webhook_id_fkey"
+            columns: ["webhook_id"]
+            isOneToOne: false
+            referencedRelation: "webhooks"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      webhooks: {
+        Row: {
+          agent_id: string
+          created_at: string
+          events: string[]
+          headers: Json | null
+          id: string
+          is_active: boolean
+          secret: string | null
+          updated_at: string
+          url: string
+          user_id: string
+        }
+        Insert: {
+          agent_id: string
+          created_at?: string
+          events: string[]
+          headers?: Json | null
+          id?: string
+          is_active?: boolean
+          secret?: string | null
+          updated_at?: string
+          url: string
+          user_id: string
+        }
+        Update: {
+          agent_id?: string
+          created_at?: string
+          events?: string[]
+          headers?: Json | null
+          id?: string
+          is_active?: boolean
+          secret?: string | null
+          updated_at?: string
+          url?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      workflow_executions: {
+        Row: {
+          completed_at: string | null
+          context: Json
+          created_at: string
+          current_step: string | null
+          id: string
+          status: string
+          user_id: string
+          workflow_id: string
+        }
+        Insert: {
+          completed_at?: string | null
+          context?: Json
+          created_at?: string
+          current_step?: string | null
+          id?: string
+          status?: string
+          user_id: string
+          workflow_id: string
+        }
+        Update: {
+          completed_at?: string | null
+          context?: Json
+          created_at?: string
+          current_step?: string | null
+          id?: string
+          status?: string
+          user_id?: string
+          workflow_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "workflow_executions_workflow_id_fkey"
+            columns: ["workflow_id"]
+            isOneToOne: false
+            referencedRelation: "workflows"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      workflows: {
+        Row: {
+          agent_id: string
+          created_at: string
+          description: string | null
+          id: string
+          is_active: boolean
+          name: string
+          steps: Json
+          triggers: Json
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          agent_id: string
+          created_at?: string
+          description?: string | null
+          id?: string
+          is_active?: boolean
+          name: string
+          steps?: Json
+          triggers?: Json
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          agent_id?: string
+          created_at?: string
+          description?: string | null
+          id?: string
+          is_active?: boolean
+          name?: string
+          steps?: Json
+          triggers?: Json
           updated_at?: string
           user_id?: string
         }
