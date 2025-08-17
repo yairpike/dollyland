@@ -218,8 +218,8 @@ export const KnowledgeBaseManager = ({ agentId }: KnowledgeBaseManagerProps) => 
   }
 
   return (
-    <div className="flex flex-col h-full">
-      <div className="flex items-center justify-between mb-6">
+    <div className="space-y-6">
+      <div className="flex items-center justify-between">
         <div>
           <h3 className="text-lg font-semibold">Knowledge Bases</h3>
           <p className="text-sm text-muted-foreground">
@@ -247,8 +247,6 @@ export const KnowledgeBaseManager = ({ agentId }: KnowledgeBaseManagerProps) => 
           </DialogContent>
         </Dialog>
       </div>
-
-      <div className="flex-1 overflow-y-auto min-h-0">
 
       {knowledgeBases.length === 0 ? (
         <Card>
@@ -359,7 +357,6 @@ export const KnowledgeBaseManager = ({ agentId }: KnowledgeBaseManagerProps) => 
           ))}
         </div>
       )}
-      </div>
     </div>
   );
 };

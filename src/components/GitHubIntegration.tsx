@@ -95,8 +95,8 @@ export const GitHubIntegration: React.FC<GitHubIntegrationProps> = ({ agentId })
   };
 
   return (
-    <div className="flex flex-col h-full">
-      <div className="flex items-center justify-between mb-6">
+    <div className="space-y-6">
+      <div className="flex items-center justify-between">
         <div>
           <h3 className="text-lg font-semibold">GitHub Integration</h3>
           <p className="text-sm text-muted-foreground">
@@ -186,7 +186,6 @@ export const GitHubIntegration: React.FC<GitHubIntegrationProps> = ({ agentId })
       </div>
 
       
-      <div className="flex-1 overflow-y-auto min-h-0">
       {repositories.length === 0 ? (
         <Card>
           <CardContent className="flex flex-col items-center justify-center py-12">
@@ -239,7 +238,6 @@ export const GitHubIntegration: React.FC<GitHubIntegrationProps> = ({ agentId })
           ))}
         </div>
       )}
-      </div>
     </div>
   );
 };
