@@ -74,61 +74,63 @@ export const Dashboard = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-background to-accent/20">
       <Header />
-      <div className="max-w-7xl mx-auto p-6 pt-24">
+      <div className="max-w-7xl mx-auto p-4 sm:p-6 pt-20 sm:pt-24">
         {/* Header */}
-        <div className="flex justify-between items-center mb-8">
-          <div>
-            <h1 className="text-3xl font-bold">Your AI Agents</h1>
-            <p className="text-muted-foreground">Manage and chat with your custom AI assistants</p>
+        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-4 mb-8">
+          <div className="flex-1 min-w-0">
+            <h1 className="text-2xl sm:text-3xl font-bold">Your AI Agents</h1>
+            <p className="text-muted-foreground mt-1">Manage and chat with your custom AI assistants</p>
           </div>
-          <Button variant="default" size="lg" onClick={() => setCreateModalOpen(true)}>
-            <Plus className="w-5 h-5 mr-2" />
-            Create Agent
-          </Button>
+          <div className="flex-shrink-0">
+            <Button variant="default" size="lg" onClick={() => setCreateModalOpen(true)} className="w-full sm:w-auto">
+              <Plus className="w-5 h-5 mr-2" />
+              Create Agent
+            </Button>
+          </div>
         </div>
 
         {/* Stats */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-8">
           <Card>
-            <CardContent className="p-6">
+            <CardContent className="p-4 sm:p-6">
               <div className="flex items-center">
-                <Sparkles className="h-8 w-8 text-primary" />
-                <div className="ml-4">
-                  <p className="text-sm font-medium text-muted-foreground">Total Agents</p>
-                  <p className="text-2xl font-bold">{agents.length}</p>
+                <Sparkles className="h-6 w-6 sm:h-8 sm:w-8 text-primary flex-shrink-0" />
+                <div className="ml-3 sm:ml-4 min-w-0">
+                  <p className="text-xs sm:text-sm font-medium text-muted-foreground">Total Agents</p>
+                  <p className="text-xl sm:text-2xl font-bold">{agents.length}</p>
                 </div>
               </div>
             </CardContent>
           </Card>
           <Card>
-            <CardContent className="p-6">
+            <CardContent className="p-4 sm:p-6">
               <div className="flex items-center">
-                <MessageCircle className="h-8 w-8 text-neural" />
-                <div className="ml-4">
-                  <p className="text-sm font-medium text-muted-foreground">Conversations</p>
-                  <p className="text-2xl font-bold">24</p>
+                <MessageCircle className="h-6 w-6 sm:h-8 sm:w-8 text-neural flex-shrink-0" />
+                <div className="ml-3 sm:ml-4 min-w-0">
+                  <p className="text-xs sm:text-sm font-medium text-muted-foreground">Conversations</p>
+                  <p className="text-xl sm:text-2xl font-bold">24</p>
                 </div>
               </div>
             </CardContent>
           </Card>
           <Card>
-            <CardContent className="p-6">
+            <CardContent className="p-4 sm:p-6">
               <div className="flex items-center">
-                <Users className="h-8 w-8 text-agent-primary" />
-                <div className="ml-4">
-                  <p className="text-sm font-medium text-muted-foreground">Private Agents</p>
-                  <p className="text-2xl font-bold">{agents.length}</p>
+                <Users className="h-6 w-6 sm:h-8 sm:w-8 text-agent-primary flex-shrink-0" />
+                <div className="ml-3 sm:ml-4 min-w-0">
+                  <p className="text-xs sm:text-sm font-medium text-muted-foreground">Private Agents</p>
+                  <p className="text-xl sm:text-2xl font-bold">{agents.length}</p>
                 </div>
               </div>
             </CardContent>
           </Card>
           <Card>
-            <CardContent className="p-6">
+            <CardContent className="p-4 sm:p-6">
               <div className="flex items-center">
-                <Settings className="h-8 w-8 text-agent-secondary" />
-                <div className="ml-4">
-                  <p className="text-sm font-medium text-muted-foreground">Active</p>
-                  <p className="text-2xl font-bold">{agents.length}</p>
+                <Settings className="h-6 w-6 sm:h-8 sm:w-8 text-agent-secondary flex-shrink-0" />
+                <div className="ml-3 sm:ml-4 min-w-0">
+                  <p className="text-xs sm:text-sm font-medium text-muted-foreground">Active</p>
+                  <p className="text-xl sm:text-2xl font-bold">{agents.length}</p>
                 </div>
               </div>
             </CardContent>
@@ -149,7 +151,7 @@ export const Dashboard = () => {
             </CardContent>
           </Card>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
             {agents.map((agent) => (
               <Card key={agent.id} className="hover:shadow-elegant transition-shadow cursor-pointer">
                 <CardHeader>
@@ -174,7 +176,7 @@ export const Dashboard = () => {
                   <p className="text-sm text-muted-foreground mb-4">
                     {agent.description || "No description"}
                   </p>
-                  <div className="flex space-x-2">
+                  <div className="flex flex-col sm:flex-row gap-2">
                     <Button 
                       size="sm" 
                       className="flex-1"
@@ -190,8 +192,10 @@ export const Dashboard = () => {
                         setSelectedAgent(agent);
                         setEditModalOpen(true);
                       }}
+                      className="sm:w-auto"
                     >
-                      <Settings className="w-4 h-4" />
+                      <Settings className="w-4 h-4 sm:mr-0" />
+                      <span className="sm:hidden ml-2">Settings</span>
                     </Button>
                   </div>
                 </CardContent>

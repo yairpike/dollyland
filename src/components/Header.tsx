@@ -21,26 +21,32 @@ export const Header = () => {
   return (
     <>
       <header className="fixed top-0 left-0 right-0 z-50 bg-background/90 backdrop-blur-xl border-b border-border/30">
-        <div className="max-w-7xl mx-auto px-6 py-4">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
           <div className="flex items-center justify-between">
             {/* Logo */}
-            <Link to="/" className="flex items-center gap-3">
-              <div className="w-12 h-12 bg-gradient-hero rounded-3xl flex items-center justify-center shadow-soft">
-                <Sparkles className="w-6 h-6 text-white" />
+            <Link to="/" className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
+              <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-hero rounded-3xl flex items-center justify-center shadow-soft">
+                <Sparkles className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
               </div>
-              <div>
-                <h1 className="text-xl font-medium">AgentHub</h1>
+              <div className="hidden sm:block">
+                <h1 className="text-lg sm:text-xl font-medium">AgentHub</h1>
                 <p className="text-xs text-muted-foreground">AI Agent Creation</p>
+              </div>
+              <div className="sm:hidden">
+                <h1 className="text-lg font-medium">AgentHub</h1>
               </div>
             </Link>
             
-            {/* Navigation */}
-            <nav className="hidden md:flex items-center gap-8">
+            {/* Navigation - Hidden on mobile, replaced by mobile menu */}
+            <nav className="hidden lg:flex items-center gap-6 xl:gap-8">
               {user ? (
                 <>
-                  <Link to="/dashboard" className="text-foreground hover:text-primary transition-colors">Dashboard</Link>
-                  <Link to="/settings" className="text-foreground hover:text-primary transition-colors">Settings</Link>
-                  <a href="#agents" className="text-foreground hover:text-primary transition-colors">Agents</a>
+                  <Link to="/dashboard" className="text-foreground hover:text-primary transition-colors">
+                    Agents
+                  </Link>
+                  <Link to="/settings" className="text-foreground hover:text-primary transition-colors">
+                    Settings
+                  </Link>
                 </>
               ) : (
                 <>
@@ -51,21 +57,30 @@ export const Header = () => {
             </nav>
             
             {/* CTA Buttons */}
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2 sm:gap-3">
               {user ? (
                 <>
-                  <Avatar className="w-8 h-8">
+                  <Avatar className="w-7 h-7 sm:w-8 sm:h-8">
                     <AvatarFallback className="text-xs">
                       {user.email?.slice(0, 2).toUpperCase()}
                     </AvatarFallback>
                   </Avatar>
-                  <Button variant="ghost" size="sm" onClick={() => navigate('/settings')}>
+                  
+                  {/* Desktop Settings Button */}
+                  <Button variant="ghost" size="sm" onClick={() => navigate('/settings')} className="hidden sm:inline-flex">
                     <Settings className="w-4 h-4 mr-2" />
-                    Settings
+                    <span className="hidden md:inline">Settings</span>
                   </Button>
-                  <Button variant="ghost" size="sm" onClick={handleSignOut}>
+                  
+                  {/* Desktop Sign Out */}
+                  <Button variant="ghost" size="sm" onClick={handleSignOut} className="hidden lg:inline-flex">
                     <LogOut className="w-4 h-4 mr-2" />
                     Sign Out
+                  </Button>
+                  
+                  {/* Mobile Menu Button */}
+                  <Button variant="ghost" size="icon" className="lg:hidden">
+                    <Menu className="w-4 h-4 sm:w-5 sm:h-5" />
                   </Button>
                 </>
               ) : (
@@ -73,14 +88,12 @@ export const Header = () => {
                   <Button variant="ghost" className="hidden sm:inline-flex" onClick={() => navigate('/auth')}>
                     Sign In
                   </Button>
-                  <Button variant="default" onClick={() => navigate('/auth')}>
-                    Get Started
+                  <Button variant="default" size="sm" onClick={() => navigate('/auth')}>
+                    <span className="hidden sm:inline">Get Started</span>
+                    <span className="sm:hidden">Start</span>
                   </Button>
                 </>
               )}
-              <Button variant="ghost" size="icon" className="md:hidden">
-                <Menu className="w-5 h-5" />
-              </Button>
             </div>
           </div>
         </div>
