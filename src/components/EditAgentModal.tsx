@@ -7,6 +7,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { KnowledgeBaseManager } from "@/components/KnowledgeBaseManager";
@@ -14,8 +15,12 @@ import { AIProviderManager } from "@/components/AIProviderManager";
 import { PublishAgentModal } from "@/components/PublishAgentModal";
 import { GitHubIntegration } from "@/components/GitHubIntegration";
 import { VercelIntegration } from "@/components/VercelIntegration";
+import { LinearIntegration } from "@/components/LinearIntegration";
+import { AgentActions } from "@/components/AgentActions";
+import { WebhookManager } from "@/components/WebhookManager";
+import { WorkflowBuilder } from "@/components/WorkflowBuilder";
 import { toast } from "sonner";
-import { Trash2, Loader2, Settings, Database, Zap, Globe, GitBranch, Rocket } from "lucide-react";
+import { Trash2, Loader2, Settings, Database, Zap, Globe, GitBranch, Rocket, ExternalLink, Webhook, Workflow } from "lucide-react";
 
 interface Agent {
   id: string;
@@ -40,7 +45,6 @@ export const EditAgentModal = ({ agent, open, onOpenChange, onAgentUpdated }: Ed
   const { user } = useAuth();
   const [loading, setLoading] = useState(false);
   const [deleteLoading, setDeleteLoading] = useState(false);
-  const [publishModalOpen, setPublishModalOpen] = useState(false);
   const [formData, setFormData] = useState({
     name: agent?.name || "",
     description: agent?.description || "",
@@ -116,227 +120,173 @@ export const EditAgentModal = ({ agent, open, onOpenChange, onAgentUpdated }: Ed
   if (!agent) return null;
 
   return (
-    <>
-      <Dialog open={open} onOpenChange={onOpenChange}>
-        <DialogContent className="sm:max-w-[700px] max-h-[90vh] overflow-y-auto">
-          <DialogHeader>
-            <DialogTitle>Edit Agent: {agent.name}</DialogTitle>
-          </DialogHeader>
-          
-          <Tabs defaultValue="settings" className="w-full">
-            <TabsList className="grid w-full grid-cols-6">
-              <TabsTrigger value="settings" className="flex items-center gap-2">
-                <Settings className="w-4 h-4" />
-                Settings
-              </TabsTrigger>
-              <TabsTrigger value="knowledge" className="flex items-center gap-2">
-                <Database className="w-4 h-4" />
-                Knowledge
-              </TabsTrigger>
-              <TabsTrigger value="ai-setup" className="flex items-center gap-2">
-                <Zap className="w-4 h-4" />
-                AI Setup
-              </TabsTrigger>
-              <TabsTrigger value="github" className="flex items-center gap-2">
-                <GitBranch className="w-4 h-4" />
-                GitHub
-              </TabsTrigger>
-              <TabsTrigger value="deploy" className="flex items-center gap-2">
-                <Rocket className="w-4 h-4" />
-                Deploy
-              </TabsTrigger>
-              <TabsTrigger value="marketplace" className="flex items-center gap-2">
-                <Globe className="w-4 h-4" />
-                Marketplace
-              </TabsTrigger>
-            </TabsList>
+    <Dialog open={open} onOpenChange={onOpenChange}>
+      <DialogContent className="max-w-6xl max-h-[90vh] overflow-y-auto">
+        <DialogHeader>
+          <DialogTitle>Edit Agent: {agent.name}</DialogTitle>
+        </DialogHeader>
+        
+        <Tabs defaultValue="settings" className="w-full">
+          <TabsList className="grid w-full grid-cols-9">
+            <TabsTrigger value="settings" className="flex items-center gap-2">
+              <Settings className="w-4 h-4" />
+              Settings
+            </TabsTrigger>
+            <TabsTrigger value="knowledge" className="flex items-center gap-2">
+              <Database className="w-4 h-4" />
+              Knowledge
+            </TabsTrigger>
+            <TabsTrigger value="ai-setup" className="flex items-center gap-2">
+              <Zap className="w-4 h-4" />
+              AI Setup
+            </TabsTrigger>
+            <TabsTrigger value="actions" className="flex items-center gap-2">
+              <Zap className="w-4 h-4" />
+              Actions
+            </TabsTrigger>
+            <TabsTrigger value="workflows" className="flex items-center gap-2">
+              <Workflow className="w-4 h-4" />
+              Workflows
+            </TabsTrigger>
+            <TabsTrigger value="webhooks" className="flex items-center gap-2">
+              <Webhook className="w-4 h-4" />
+              Webhooks
+            </TabsTrigger>
+            <TabsTrigger value="linear" className="flex items-center gap-2">
+              <ExternalLink className="w-4 h-4" />
+              Linear
+            </TabsTrigger>
+            <TabsTrigger value="github" className="flex items-center gap-2">
+              <GitBranch className="w-4 h-4" />
+              GitHub
+            </TabsTrigger>
+            <TabsTrigger value="deploy" className="flex items-center gap-2">
+              <Rocket className="w-4 h-4" />
+              Deploy
+            </TabsTrigger>
+          </TabsList>
 
-            <TabsContent value="settings" className="space-y-4">
-              <form onSubmit={handleSubmit} className="space-y-4">
-                <div className="space-y-2">
-                  <Label htmlFor="name">Agent Name</Label>
-                  <Input
-                    id="name"
-                    value={formData.name}
-                    onChange={(e) => handleChange("name", e.target.value)}
-                    placeholder="Enter agent name"
-                    required
-                  />
-                </div>
-                
-                <div className="space-y-2">
-                  <Label htmlFor="description">Description</Label>
-                  <Textarea
-                    id="description"
-                    value={formData.description}
-                    onChange={(e) => handleChange("description", e.target.value)}
-                    placeholder="Describe what your agent does"
-                    rows={3}
-                  />
-                </div>
-                
-                <div className="space-y-2">
-                  <Label htmlFor="systemPrompt">System Prompt</Label>
-                  <Textarea
-                    id="systemPrompt"
-                    value={formData.systemPrompt}
-                    onChange={(e) => handleChange("systemPrompt", e.target.value)}
-                    placeholder="Define your agent's role and behavior"
-                    rows={6}
-                  />
-                </div>
-                
-                <div className="flex gap-3">
-                  <Button 
-                    type="submit" 
-                    disabled={loading}
-                    className="flex-1"
-                  >
-                    {loading ? (
-                      <>
-                        <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                        Updating...
-                      </>
-                    ) : (
-                      "Update Agent"
-                    )}
-                  </Button>
-                  
-                  <AlertDialog>
-                    <AlertDialogTrigger asChild>
-                      <Button variant="destructive" disabled={loading || deleteLoading}>
-                        <Trash2 className="w-4 h-4 mr-2" />
-                        Delete
-                      </Button>
-                    </AlertDialogTrigger>
-                    <AlertDialogContent>
-                      <AlertDialogHeader>
-                        <AlertDialogTitle>Delete Agent</AlertDialogTitle>
-                        <AlertDialogDescription>
-                          Are you sure you want to delete "{agent.name}"? This action cannot be undone.
-                        </AlertDialogDescription>
-                      </AlertDialogHeader>
-                      <AlertDialogFooter>
-                        <AlertDialogCancel disabled={deleteLoading}>Cancel</AlertDialogCancel>
-                        <AlertDialogAction
-                          onClick={handleDelete}
-                          disabled={deleteLoading}
-                          className="bg-destructive hover:bg-destructive/90"
-                        >
-                          {deleteLoading ? (
-                            <>
-                              <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                              Deleting...
-                            </>
-                          ) : (
-                            "Delete Agent"
-                          )}
-                        </AlertDialogAction>
-                      </AlertDialogFooter>
-                    </AlertDialogContent>
-                  </AlertDialog>
-                </div>
-              </form>
-            </TabsContent>
-
-            <TabsContent value="knowledge" className="space-y-4">
-              <KnowledgeBaseManager agentId={agent.id} />
-            </TabsContent>
-
-            <TabsContent value="ai-setup" className="space-y-4">
-              <AIProviderManager />
-            </TabsContent>
-
-            <TabsContent value="github" className="space-y-4">
-              <GitHubIntegration agentId={agent.id} />
-            </TabsContent>
-
-            <TabsContent value="deploy" className="space-y-4">
-              <VercelIntegration agentId={agent.id} />
-            </TabsContent>
-
-            <TabsContent value="marketplace" className="space-y-4">
-              <div className="space-y-4">
-                {/* Marketplace Status */}
-                <div className="p-4 bg-muted/30 rounded-lg">
-                  <div className="flex items-center justify-between mb-2">
-                    <h3 className="font-medium">Marketplace Status</h3>
-                    <Badge variant={agent.is_public ? "default" : "secondary"}>
-                      {agent.is_public ? "Published" : "Private"}
-                    </Badge>
-                  </div>
-                  <p className="text-sm text-muted-foreground mb-4">
-                    {agent.is_public 
-                      ? "Your agent is live in the marketplace and available for others to discover and use."
-                      : "Your agent is private and only accessible to you."
-                    }
-                  </p>
-                  
-                  {agent.is_public && (
-                    <div className="grid grid-cols-2 gap-4 mb-4">
-                      <div className="text-center p-3 bg-background rounded-lg">
-                        <div className="font-semibold text-lg">{agent.user_count || 0}</div>
-                        <div className="text-xs text-muted-foreground">Total Users</div>
-                      </div>
-                      <div className="text-center p-3 bg-background rounded-lg">
-                        <div className="font-semibold text-lg flex items-center justify-center gap-1">
-                          {agent.rating || 0}
-                          <span className="text-yellow-500">★</span>
-                        </div>
-                        <div className="text-xs text-muted-foreground">Rating</div>
-                      </div>
-                    </div>
-                  )}
-                  
-                  <Button 
-                    onClick={() => setPublishModalOpen(true)}
-                    className="w-full"
-                    variant={agent.is_public ? "outline" : "default"}
-                  >
-                    <Globe className="w-4 h-4 mr-2" />
-                    {agent.is_public ? "Manage Marketplace Settings" : "Publish to Marketplace"}
-                  </Button>
-                </div>
-
-                {/* Categories & Tags */}
-                {agent.is_public && (
-                  <div className="space-y-3">
-                    <div>
-                      <Label className="text-sm font-medium">Category</Label>
-                      <p className="text-sm text-muted-foreground">
-                        {agent.category || "No category set"}
-                      </p>
-                    </div>
-                    
-                    <div>
-                      <Label className="text-sm font-medium">Tags</Label>
-                      <div className="flex flex-wrap gap-1 mt-1">
-                        {agent.tags && agent.tags.length > 0 ? (
-                          agent.tags.map((tag) => (
-                            <Badge key={tag} variant="outline" className="text-xs">
-                              {tag}
-                            </Badge>
-                          ))
-                        ) : (
-                          <p className="text-sm text-muted-foreground">No tags set</p>
-                        )}
-                      </div>
-                    </div>
-                  </div>
-                )}
+          <TabsContent value="settings" className="space-y-4">
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <div className="space-y-2">
+                <Label htmlFor="name">Agent Name</Label>
+                <Input
+                  id="name"
+                  value={formData.name}
+                  onChange={(e) => handleChange("name", e.target.value)}
+                  placeholder="Enter agent name"
+                  required
+                />
               </div>
-            </TabsContent>
-          </Tabs>
-        </DialogContent>
-      </Dialog>
+              
+              <div className="space-y-2">
+                <Label htmlFor="description">Description</Label>
+                <Textarea
+                  id="description"
+                  value={formData.description}
+                  onChange={(e) => handleChange("description", e.target.value)}
+                  placeholder="Describe what your agent does"
+                  rows={3}
+                />
+              </div>
+              
+              <div className="space-y-2">
+                <Label htmlFor="systemPrompt">System Prompt</Label>
+                <Textarea
+                  id="systemPrompt"
+                  value={formData.systemPrompt}
+                  onChange={(e) => handleChange("systemPrompt", e.target.value)}
+                  placeholder="Define your agent's role and behavior"
+                  rows={6}
+                />
+              </div>
+              
+              <div className="flex gap-3">
+                <Button 
+                  type="submit" 
+                  disabled={loading}
+                  className="flex-1"
+                >
+                  {loading ? (
+                    <>
+                      <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                      Updating...
+                    </>
+                  ) : (
+                    "Update Agent"
+                  )}
+                </Button>
+                
+                <AlertDialog>
+                  <AlertDialogTrigger asChild>
+                    <Button variant="destructive" disabled={loading || deleteLoading}>
+                      <Trash2 className="w-4 h-4 mr-2" />
+                      Delete
+                    </Button>
+                  </AlertDialogTrigger>
+                  <AlertDialogContent>
+                    <AlertDialogHeader>
+                      <AlertDialogTitle>Delete Agent</AlertDialogTitle>
+                      <AlertDialogDescription>
+                        Are you sure you want to delete "{agent.name}"? This action cannot be undone.
+                      </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                      <AlertDialogCancel disabled={deleteLoading}>Cancel</AlertDialogCancel>
+                      <AlertDialogAction
+                        onClick={handleDelete}
+                        disabled={deleteLoading}
+                        className="bg-destructive hover:bg-destructive/90"
+                      >
+                        {deleteLoading ? (
+                          <>
+                            <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                            Deleting...
+                          </>
+                        ) : (
+                          "Delete Agent"
+                        )}
+                      </AlertDialogAction>
+                    </AlertDialogFooter>
+                  </AlertDialogContent>
+                </AlertDialog>
+              </div>
+            </form>
+          </TabsContent>
 
-      {/* Publish Modal */}
-      <PublishAgentModal
-        open={publishModalOpen}
-        onOpenChange={setPublishModalOpen}
-        agent={agent}
-        onAgentUpdated={onAgentUpdated}
-      />
-    </>
+          <TabsContent value="knowledge" className="space-y-4">
+            <KnowledgeBaseManager agentId={agent.id} />
+          </TabsContent>
+
+          <TabsContent value="ai-setup" className="space-y-4">
+            <AIProviderManager />
+          </TabsContent>
+
+          <TabsContent value="actions" className="space-y-4">
+            <AgentActions agentId={agent.id} />
+          </TabsContent>
+
+          <TabsContent value="workflows" className="space-y-4">
+            <WorkflowBuilder agentId={agent.id} />
+          </TabsContent>
+
+          <TabsContent value="webhooks" className="space-y-4">
+            <WebhookManager agentId={agent.id} />
+          </TabsContent>
+
+          <TabsContent value="linear" className="space-y-4">
+            <LinearIntegration agentId={agent.id} />
+          </TabsContent>
+
+          <TabsContent value="github" className="space-y-4">
+            <GitHubIntegration agentId={agent.id} />
+          </TabsContent>
+
+          <TabsContent value="deploy" className="space-y-4">
+            <VercelIntegration agentId={agent.id} />
+          </TabsContent>
+        </Tabs>
+      </DialogContent>
+    </Dialog>
   );
 };
