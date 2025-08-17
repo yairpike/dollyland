@@ -8,7 +8,7 @@ import { Bot, Plus, MessageSquare, Users, TrendingUp, Activity, Globe, Lock, Set
 import { BarChart, Bar, ResponsiveContainer, Cell } from "recharts";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
-import { CreateAgentModal } from "@/components/CreateAgentModal";
+
 import { EditAgentModal } from "@/components/EditAgentModal";
 import { PublishAgentModal } from "@/components/PublishAgentModal";
 import { toast } from "sonner";
@@ -35,7 +35,7 @@ export const Dashboard = () => {
   const navigate = useNavigate();
   const [agents, setAgents] = useState<Agent[]>([]);
   const [loading, setLoading] = useState(true);
-  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
+  
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isPublishModalOpen, setIsPublishModalOpen] = useState(false);
   const [editingAgent, setEditingAgent] = useState<Agent | null>(null);
@@ -45,16 +45,6 @@ export const Dashboard = () => {
     fetchAgents();
   }, [user]);
 
-  useEffect(() => {
-    const handleOpenCreateModal = () => {
-      setIsCreateModalOpen(true);
-    };
-
-    window.addEventListener('openCreateAgentModal', handleOpenCreateModal);
-    return () => {
-      window.removeEventListener('openCreateAgentModal', handleOpenCreateModal);
-    };
-  }, []);
 
   const fetchAgents = async () => {
     if (!user) return;
@@ -76,10 +66,6 @@ export const Dashboard = () => {
     }
   };
 
-  const handleAgentCreated = () => {
-    fetchAgents();
-    setIsCreateModalOpen(false);
-  };
 
   const handleAgentUpdated = () => {
     fetchAgents();
@@ -133,7 +119,7 @@ export const Dashboard = () => {
   }
 
   return (
-    <DashboardLayout onCreateAgent={() => setIsCreateModalOpen(true)}>
+    <DashboardLayout onCreateAgent={() => navigate('/create-agent')}>
       <div className="space-y-6">
         {/* Header */}
         <div className="flex items-center justify-between">
@@ -141,7 +127,7 @@ export const Dashboard = () => {
             <h1 className="text-3xl font-semibold">Dashboard</h1>
             <p className="text-muted-foreground">Welcome back! Here's what's happening with your agents.</p>
           </div>
-          <Button onClick={() => setIsCreateModalOpen(true)}>
+          <Button onClick={() => navigate('/create-agent')}>
             <Plus className="w-4 h-4 mr-2" />
             Create Agent
           </Button>
@@ -349,7 +335,7 @@ export const Dashboard = () => {
                   <p className="text-muted-foreground mb-6">
                     Create your first AI agent to get started
                   </p>
-                  <Button onClick={() => setIsCreateModalOpen(true)}>
+                  <Button onClick={() => navigate('/create-agent')}>
                     <Plus className="w-4 h-4 mr-2" />
                     Create Your First Agent
                   </Button>
@@ -452,11 +438,6 @@ export const Dashboard = () => {
         </Tabs>
 
         {/* Modals */}
-        <CreateAgentModal
-          open={isCreateModalOpen}
-          onOpenChange={setIsCreateModalOpen}
-          onAgentCreated={handleAgentCreated}
-        />
 
         {editingAgent && (
           <EditAgentModal
