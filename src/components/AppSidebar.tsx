@@ -45,7 +45,7 @@ export function AppSidebar() {
       className={`transition-all duration-300 ${state === "collapsed" ? "w-16" : "w-72"}`}
       collapsible="icon"
     >
-      <SidebarContent className="bg-card border-none shadow-lg rounded-r-3xl pr-6">
+      <SidebarContent className={`bg-card border-none shadow-lg rounded-r-3xl ${state === "collapsed" ? "pr-4" : "pr-6"}`}>
         {/* Logo Section */}
         <div className={`p-6 border-none ${state === "collapsed" ? "px-2 py-4" : ""}`}>
           <div className="flex items-center gap-3 justify-center">
