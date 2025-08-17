@@ -55,7 +55,7 @@ export function AppSidebar({ onNavigate }: AppSidebarProps) {
                   `flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 ${
                     isActive(item.url) 
                       ? "bg-primary text-[#29EAC2] font-medium" 
-                      : "text-muted-foreground hover:bg-accent hover:text-accent-foreground"
+                      : "text-foreground hover:bg-accent hover:text-accent-foreground"
                   }`
                 }
               >
