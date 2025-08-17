@@ -1,75 +1,73 @@
-import { useState } from "react"
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Textarea } from "@/components/ui/textarea"
-import { Switch } from "@/components/ui/switch"
-import { useAuth } from "@/hooks/useAuth"
-import { supabase } from "@/lib/supabase"
-import { toast } from "sonner"
-import { Loader2, Brain } from "lucide-react"
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { useAuth } from "@/hooks/useAuth";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "sonner";
+import { Brain, Loader2 } from "lucide-react";
 
 interface CreateAgentModalProps {
-  open: boolean
-  onOpenChange: (open: boolean) => void
-  onAgentCreated?: () => void
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+  onAgentCreated: () => void;
 }
 
 export const CreateAgentModal = ({ open, onOpenChange, onAgentCreated }: CreateAgentModalProps) => {
-  const [loading, setLoading] = useState(false)
-  const [name, setName] = useState("")
-  const [description, setDescription] = useState("")
-  const [instructions, setInstructions] = useState("")
-  const [isPublic, setIsPublic] = useState(false)
-  
-  const { user } = useAuth()
+  const { user } = useAuth();
+  const [loading, setLoading] = useState(false);
+  const [formData, setFormData] = useState({
+    name: "",
+    description: "",
+    systemPrompt: ""
+  });
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    if (!user || !supabase) return
-    
-    setLoading(true)
+    e.preventDefault();
+    if (!user) return;
 
+    setLoading(true);
     try {
       const { error } = await supabase
         .from('agents')
-        .insert([
-          {
-            user_id: user.id,
-            name,
-            description,
-            instructions,
-            is_public: isPublic,
-          }
-        ])
+        .insert({
+          name: formData.name,
+          description: formData.description,
+          system_prompt: formData.systemPrompt,
+          user_id: user.id
+        });
 
-      if (error) throw error
-      
-      toast.success("Agent created successfully!")
-      onAgentCreated?.()
-      onOpenChange(false)
-      
-      // Reset form
-      setName("")
-      setDescription("")
-      setInstructions("")
-      setIsPublic(false)
+      if (error) throw error;
+
+      toast.success("Agent created successfully!");
+      setFormData({ name: "", description: "", systemPrompt: "" });
+      onOpenChange(false);
+      onAgentCreated();
     } catch (error: any) {
-      toast.error(error.message)
+      console.error('Error creating agent:', error);
+      toast.error("Failed to create agent");
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
+
+  const handleChange = (field: string, value: string) => {
+    setFormData(prev => ({ ...prev, [field]: value }));
+  };
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-2xl">
+      <DialogContent className="sm:max-w-[600px]">
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
             <Brain className="w-5 h-5 text-primary" />
-            Create New Agent
+            Create New AI Agent
           </DialogTitle>
+          <DialogDescription>
+            Create a custom AI agent with your own personality and expertise.
+          </DialogDescription>
         </DialogHeader>
         
         <form onSubmit={handleSubmit} className="space-y-6">
@@ -77,68 +75,64 @@ export const CreateAgentModal = ({ open, onOpenChange, onAgentCreated }: CreateA
             <Label htmlFor="name">Agent Name *</Label>
             <Input
               id="name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              placeholder="My AI Assistant"
+              placeholder="e.g., Marketing Expert, Code Reviewer"
+              value={formData.name}
+              onChange={(e) => handleChange("name", e.target.value)}
               required
             />
           </div>
-          
+
           <div className="space-y-2">
             <Label htmlFor="description">Description</Label>
-            <Input
+            <Textarea
               id="description"
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-              placeholder="Brief description of what this agent does"
+              placeholder="Describe what this agent specializes in..."
+              value={formData.description}
+              onChange={(e) => handleChange("description", e.target.value)}
+              rows={3}
             />
           </div>
-          
+
           <div className="space-y-2">
-            <Label htmlFor="instructions">Instructions *</Label>
+            <Label htmlFor="systemPrompt">System Prompt *</Label>
             <Textarea
-              id="instructions"
-              value={instructions}
-              onChange={(e) => setInstructions(e.target.value)}
-              placeholder="You are a helpful AI assistant that..."
-              rows={8}
+              id="systemPrompt"
+              placeholder="You are an expert marketing professional with 10+ years of experience. You help with content strategy, social media campaigns, and brand messaging. Always provide actionable insights and specific recommendations..."
+              value={formData.systemPrompt}
+              onChange={(e) => handleChange("systemPrompt", e.target.value)}
+              rows={6}
               required
             />
             <p className="text-sm text-muted-foreground">
-              Define how your agent should behave, its personality, and any specific capabilities.
+              Define how your agent should behave, its expertise, and response style.
             </p>
           </div>
 
-          <div className="flex items-center space-x-2">
-            <Switch
-              id="isPublic"
-              checked={isPublic}
-              onCheckedChange={setIsPublic}
-            />
-            <Label htmlFor="isPublic">Make this agent public</Label>
-          </div>
-          
-          <div className="flex gap-3">
+          <div className="flex justify-end gap-3">
             <Button
               type="button"
               variant="outline"
               onClick={() => onOpenChange(false)}
-              className="flex-1"
+              disabled={loading}
             >
               Cancel
             </Button>
-            <Button 
-              type="submit" 
-              variant="hero"
-              disabled={loading}
-              className="flex-1"
-            >
-              {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-              Create Agent
+            <Button type="submit" disabled={loading || !formData.name || !formData.systemPrompt}>
+              {loading ? (
+                <>
+                  <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                  Creating...
+                </>
+              ) : (
+                <>
+                  <Brain className="w-4 h-4 mr-2" />
+                  Create Agent
+                </>
+              )}
             </Button>
           </div>
         </form>
       </DialogContent>
     </Dialog>
-  )
-}
+  );
+};
