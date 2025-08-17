@@ -31,12 +31,14 @@ export const Settings = () => {
     <DashboardLayout>
       <div className="space-y-6">
         {/* Header */}
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
           <div>
             <h1 className="text-3xl font-semibold">Settings</h1>
             <p className="text-muted-foreground">Manage your account and preferences</p>
           </div>
-          <ThemeToggle />
+          <div className="flex justify-end sm:justify-start">
+            <ThemeToggle />
+          </div>
         </div>
 
         <Tabs defaultValue="account" className="w-full">
