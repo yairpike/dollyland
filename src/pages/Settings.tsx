@@ -50,7 +50,7 @@ export const Settings = () => {
         <p className="text-muted-foreground mb-6">Manage your account and preferences</p>
 
         <Tabs defaultValue="account" className="w-full">
-          <TabsList className="grid w-full max-w-md grid-cols-3 bg-card border">
+          <TabsList className="grid w-full max-w-md grid-cols-3 bg-card border py-2">
             <TabsTrigger value="account" className="flex items-center gap-2">
               <User className="w-4 h-4" />
               Account
