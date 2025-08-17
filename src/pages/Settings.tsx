@@ -9,11 +9,13 @@ import { AIProviderManager } from "@/components/AIProviderManager";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { DashboardLayout } from "@/components/DashboardLayout";
 import { useAuth } from "@/hooks/useAuth";
-import { User, CreditCard, Bot, Palette } from "lucide-react";
+import { User, CreditCard, Bot, LogOut } from "lucide-react";
 import { toast } from "sonner";
+import { useNavigate } from "react-router-dom";
 
 export const Settings = () => {
-  const { user } = useAuth();
+  const { user, signOut } = useAuth();
+  const navigate = useNavigate();
   const [fullName, setFullName] = useState(user?.user_metadata?.full_name || "");
   const [email, setEmail] = useState(user?.email || "");
 
@@ -25,6 +27,16 @@ export const Settings = () => {
   const handleManagePayment = () => {
     // Payment management functionality would go here
     toast.info("Payment management coming soon");
+  };
+
+  const handleSignOut = async () => {
+    const { error } = await signOut();
+    if (error) {
+      toast.error("Failed to sign out");
+    } else {
+      toast.success("Signed out successfully");
+      navigate("/auth");
+    }
   };
 
   return (
@@ -99,6 +111,21 @@ export const Settings = () => {
                       Member since {new Date(user?.created_at || '').toLocaleDateString()}
                     </div>
                   </div>
+                </div>
+
+                <Separator />
+                
+                <div className="flex justify-between items-center">
+                  <div>
+                    <h4 className="font-medium">Account Actions</h4>
+                    <p className="text-sm text-muted-foreground">
+                      Manage your account settings
+                    </p>
+                  </div>
+                  <Button variant="outline" onClick={handleSignOut} className="flex items-center gap-2">
+                    <LogOut className="w-4 h-4" />
+                    Sign Out
+                  </Button>
                 </div>
 
                 <div className="flex justify-end">
