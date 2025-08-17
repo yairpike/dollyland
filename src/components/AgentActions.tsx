@@ -285,7 +285,7 @@ export const AgentActions: React.FC<AgentActionsProps> = ({ agentId }) => {
         </CardHeader>
         <CardContent>
           <Tabs defaultValue="executions" className="w-full">
-            <TabsList className="grid w-full grid-cols-2">
+            <TabsList className="grid w-full grid-cols-2 bg-white border p-1 h-12 items-center">
               <TabsTrigger value="executions">Executions</TabsTrigger>
               <TabsTrigger value="templates">Action Templates</TabsTrigger>
             </TabsList>

@@ -414,7 +414,7 @@ export const WorkflowBuilder: React.FC<WorkflowBuilderProps> = ({ agentId }) => 
         </CardHeader>
         <CardContent>
           <Tabs defaultValue="workflows" className="w-full">
-            <TabsList className="grid w-full grid-cols-2">
+            <TabsList className="grid w-full grid-cols-2 bg-white border p-1 h-12 items-center">
               <TabsTrigger value="workflows">Workflows</TabsTrigger>
               <TabsTrigger value="executions">Executions</TabsTrigger>
             </TabsList>
