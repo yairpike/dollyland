@@ -128,7 +128,7 @@ export const Settings = () => {
                   </Button>
                 </div>
 
-                <div className="flex justify-end">
+                <div className="flex justify-start">
                   <Button onClick={handleSaveProfile}>
                     Save Changes
                   </Button>
