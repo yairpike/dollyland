@@ -257,7 +257,7 @@ export const EditAgentModal = ({ agent, open, onOpenChange, onAgentUpdated }: Ed
             </form>
           </TabsContent>
 
-          <TabsContent value="knowledge" className="space-y-4 flex-1 overflow-y-auto p-1 max-h-0">
+          <TabsContent value="knowledge" className="space-y-4 flex-1 overflow-y-auto p-1 min-h-0">
             <KnowledgeBaseManager agentId={agent.id} />
           </TabsContent>
 
