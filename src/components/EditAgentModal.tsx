@@ -13,8 +13,9 @@ import { KnowledgeBaseManager } from "@/components/KnowledgeBaseManager";
 import { AIProviderManager } from "@/components/AIProviderManager";
 import { PublishAgentModal } from "@/components/PublishAgentModal";
 import { GitHubIntegration } from "@/components/GitHubIntegration";
+import { VercelIntegration } from "@/components/VercelIntegration";
 import { toast } from "sonner";
-import { Trash2, Loader2, Settings, Database, Zap, Globe, GitBranch } from "lucide-react";
+import { Trash2, Loader2, Settings, Database, Zap, Globe, GitBranch, Rocket } from "lucide-react";
 
 interface Agent {
   id: string;
@@ -123,7 +124,7 @@ export const EditAgentModal = ({ agent, open, onOpenChange, onAgentUpdated }: Ed
           </DialogHeader>
           
           <Tabs defaultValue="settings" className="w-full">
-            <TabsList className="grid w-full grid-cols-5">
+            <TabsList className="grid w-full grid-cols-6">
               <TabsTrigger value="settings" className="flex items-center gap-2">
                 <Settings className="w-4 h-4" />
                 Settings
@@ -139,6 +140,10 @@ export const EditAgentModal = ({ agent, open, onOpenChange, onAgentUpdated }: Ed
               <TabsTrigger value="github" className="flex items-center gap-2">
                 <GitBranch className="w-4 h-4" />
                 GitHub
+              </TabsTrigger>
+              <TabsTrigger value="deploy" className="flex items-center gap-2">
+                <Rocket className="w-4 h-4" />
+                Deploy
               </TabsTrigger>
               <TabsTrigger value="marketplace" className="flex items-center gap-2">
                 <Globe className="w-4 h-4" />
@@ -244,6 +249,10 @@ export const EditAgentModal = ({ agent, open, onOpenChange, onAgentUpdated }: Ed
 
             <TabsContent value="github" className="space-y-4">
               <GitHubIntegration agentId={agent.id} />
+            </TabsContent>
+
+            <TabsContent value="deploy" className="space-y-4">
+              <VercelIntegration agentId={agent.id} />
             </TabsContent>
 
             <TabsContent value="marketplace" className="space-y-4">

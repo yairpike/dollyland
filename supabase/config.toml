@@ -53,3 +53,6 @@ verify_jwt = false
 
 [functions.github-integration]
 verify_jwt = true
+
+[functions.vercel-integration]
+verify_jwt = true
