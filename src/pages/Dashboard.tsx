@@ -136,9 +136,15 @@ export const Dashboard = () => {
     <DashboardLayout onCreateAgent={() => setIsCreateModalOpen(true)}>
       <div className="space-y-6">
         {/* Header */}
-        <div>
-          <h1 className="text-3xl font-semibold">Dashboard</h1>
-          <p className="text-muted-foreground">Welcome back! Here's what's happening with your agents.</p>
+        <div className="flex items-center justify-between">
+          <div>
+            <h1 className="text-3xl font-semibold">Dashboard</h1>
+            <p className="text-muted-foreground">Welcome back! Here's what's happening with your agents.</p>
+          </div>
+          <Button onClick={() => setIsCreateModalOpen(true)}>
+            <Plus className="w-4 h-4 mr-2" />
+            Create Agent
+          </Button>
         </div>
 
         {/* Stats Cards */}
