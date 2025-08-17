@@ -4,6 +4,7 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Sparkles, Menu, LogOut, Settings } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import { toast } from "sonner";
+import dollyLogo from "@/assets/dolly-logo.png";
 
 export const Header = () => {
   const { user, signOut } = useAuth();
@@ -20,38 +21,33 @@ export const Header = () => {
 
   return (
     <>
-      <header className="fixed top-0 left-0 right-0 z-50 bg-background/90 backdrop-blur-xl border-b border-border/30">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
+      <header className="fixed top-0 left-0 right-0 z-50 bg-card/80 backdrop-blur-lg border-b border-border/50 shadow-glass">
+        <div className="max-w-7xl mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
             {/* Logo */}
-            <Link to="/" className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
-              <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-hero rounded-3xl flex items-center justify-center shadow-soft">
-                <Sparkles className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
-              </div>
-              <div className="hidden sm:block">
-                <h1 className="text-lg sm:text-xl font-medium">AgentHub</h1>
-                <p className="text-xs text-muted-foreground">AI Agent Creation</p>
-              </div>
-              <div className="sm:hidden">
-                <h1 className="text-lg font-medium">AgentHub</h1>
+            <Link to="/" className="flex items-center gap-3 flex-shrink-0 hover:scale-105 transition-transform">
+              <img src={dollyLogo} alt="Dolly AI" className="w-10 h-10" />
+              <div>
+                <h1 className="text-xl font-bold bg-gradient-primary bg-clip-text text-transparent">Dolly</h1>
+                <p className="text-xs text-muted-foreground">AI Agent Platform</p>
               </div>
             </Link>
             
             {/* Navigation - Hidden on mobile, replaced by mobile menu */}
-            <nav className="hidden lg:flex items-center gap-6 xl:gap-8">
-              <Link to="/marketplace" className="text-foreground hover:text-primary transition-colors">
+            <nav className="hidden lg:flex items-center gap-8">
+              <Link to="/marketplace" className="text-muted-foreground hover:text-primary transition-all duration-300 font-medium px-3 py-2 rounded-lg hover:bg-accent/50">
                 Marketplace
               </Link>
               {user ? (
                 <>
-                  <Link to="/dashboard" className="text-foreground hover:text-primary transition-colors">
+                  <Link to="/dashboard" className="text-muted-foreground hover:text-primary transition-all duration-300 font-medium px-3 py-2 rounded-lg hover:bg-accent/50">
                     My Agents
                   </Link>
                 </>
               ) : (
                 <>
-                  <a href="#agents" className="text-foreground hover:text-primary transition-colors">Features</a>
-                  <a href="#upload" className="text-foreground hover:text-primary transition-colors">Upload</a>
+                  <a href="#agents" className="text-muted-foreground hover:text-primary transition-all duration-300 font-medium px-3 py-2 rounded-lg hover:bg-accent/50">Features</a>
+                  <a href="#upload" className="text-muted-foreground hover:text-primary transition-all duration-300 font-medium px-3 py-2 rounded-lg hover:bg-accent/50">Upload</a>
                 </>
               )}
             </nav>

@@ -57,16 +57,18 @@ export default {
 					DEFAULT: 'hsl(var(--success))',
 					foreground: 'hsl(var(--success-foreground))'
 				},
-				airbnb: {
-					coral: 'hsl(var(--airbnb-coral))',
+				dashboard: {
+					purple: 'hsl(var(--dashboard-purple))',
+					blue: 'hsl(var(--dashboard-blue))',
+					pink: 'hsl(var(--dashboard-pink))',
+					mint: 'hsl(var(--dashboard-mint))',
+					lavender: 'hsl(var(--dashboard-lavender))',
 					gray: {
-						50: 'hsl(var(--airbnb-gray-50))',
-						100: 'hsl(var(--airbnb-gray-100))',
-						200: 'hsl(var(--airbnb-gray-200))',
-						400: 'hsl(var(--airbnb-gray-400))',
-						600: 'hsl(var(--airbnb-gray-600))',
-						800: 'hsl(var(--airbnb-gray-800))',
-						900: 'hsl(var(--airbnb-gray-900))'
+						50: 'hsl(var(--dashboard-gray-50))',
+						100: 'hsl(var(--dashboard-gray-100))',
+						200: 'hsl(var(--dashboard-gray-200))',
+						600: 'hsl(var(--dashboard-gray-600))',
+						800: 'hsl(var(--dashboard-gray-800))'
 					}
 				},
 				sidebar: {
@@ -82,15 +84,26 @@ export default {
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
-				md: 'calc(var(--radius) - 2px)',
-				sm: 'calc(var(--radius) - 4px)'
+				md: 'calc(var(--radius) - 4px)',
+				sm: 'calc(var(--radius) - 8px)',
+				xl: 'calc(var(--radius) + 4px)',
+				'2xl': 'calc(var(--radius) + 8px)'
 			},
 			boxShadow: {
 				'sm': 'var(--shadow-sm)',
 				DEFAULT: 'var(--shadow)',
 				'md': 'var(--shadow-md)',
 				'lg': 'var(--shadow-lg)',
-				'xl': 'var(--shadow-xl)'
+				'xl': 'var(--shadow-xl)',
+				'glass': '0 8px 32px 0 hsl(262 75% 45% / 0.15)',
+				'card': '0 4px 24px 0 hsl(262 75% 45% / 0.1)'
+			},
+			backgroundImage: {
+				'gradient-primary': 'var(--gradient-primary)',
+				'gradient-card': 'var(--gradient-card)'
+			},
+			backdropBlur: {
+				'glass': 'var(--glass-blur)'
 			},
 			fontFamily: {
 				sans: ['Inter', 'system-ui', '-apple-system', 'BlinkMacSystemFont', '"Segoe UI"', 'Roboto', '"Helvetica Neue"', 'Arial', 'sans-serif'],

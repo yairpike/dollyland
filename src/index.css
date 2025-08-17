@@ -6,70 +6,55 @@
 
 @layer base {
   :root {
-    /* Base Colors - Clean white background like Airbnb */
-    --background: 0 0% 100%;             /* pure white background */
-    --foreground: 0 0% 9%;               /* almost black text for maximum contrast */
-
-    /* Card & Surface Colors - Clean white with subtle borders */
-    --card: 0 0% 100%;                   /* pure white cards */
-    --card-foreground: 0 0% 9%;          /* dark text for contrast */
-
+    /* Modern Dashboard Style - Purple/Blue Theme */
+    --background: 240 25% 96%;
+    --foreground: 235 15% 25%;
+    --card: 0 0% 100%;
+    --card-foreground: 235 15% 25%;
     --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 9%;
-
-    /* Primary - Airbnb's signature coral/red */
-    --primary: 3 100% 50%;               /* Airbnb coral red */
+    --popover-foreground: 235 15% 25%;
+    --primary: 262 75% 45%;
     --primary-foreground: 0 0% 100%;
-    --primary-glow: 3 85% 70%;
-
-    /* Secondary - Clean gray */
-    --secondary: 0 0% 96%;               /* light gray background */
-    --secondary-foreground: 0 0% 9%;
-
-    /* Muted tones - Airbnb's subtle grays */
-    --muted: 0 0% 96%;                   /* light gray for muted elements */
-    --muted-foreground: 0 0% 45%;        /* medium gray for secondary text */
-
-    /* Accent - Airbnb's subtle hover state */
-    --accent: 0 0% 96%;
-    --accent-foreground: 0 0% 9%;
-
-    /* Destructive - Clean error red */
+    --primary-glow: 262 75% 65%;
+    --secondary: 240 10% 92%;
+    --secondary-foreground: 235 15% 25%;
+    --muted: 240 8% 95%;
+    --muted-foreground: 235 8% 50%;
+    --accent: 270 95% 85%;
+    --accent-foreground: 235 15% 25%;
     --destructive: 0 84% 60%;
-    --destructive-foreground: 0 0% 100%;
-
-    /* Borders & Inputs - Airbnb's subtle borders */
-    --border: 0 0% 90%;                  /* light gray borders */
-    --input: 0 0% 90%;
-    --ring: 3 100% 50%;
-
-    /* Airbnb's rounded corners - not too rounded */
-    --radius: 0.75rem;
-
-    /* Clean Color Palette - Airbnb style */
-    --airbnb-coral: 3 100% 50%;          /* signature coral */
-    --airbnb-gray-50: 0 0% 98%;          /* lightest gray */
-    --airbnb-gray-100: 0 0% 96%;         /* light gray */
-    --airbnb-gray-200: 0 0% 90%;         /* medium light gray */
-    --airbnb-gray-400: 0 0% 64%;         /* medium gray */
-    --airbnb-gray-600: 0 0% 45%;         /* dark gray */
-    --airbnb-gray-800: 0 0% 18%;         /* darker gray */
-    --airbnb-gray-900: 0 0% 9%;          /* darkest gray */
+    --destructive-foreground: 0 0% 98%;
+    --border: 240 10% 88%;
+    --input: 0 0% 100%;
+    --ring: 262 75% 65%;
+    --success: 142 76% 36%;
+    --success-foreground: 0 0% 98%;
     
-    /* Success green */
-    --success: 142 71% 45%;
-    --success-foreground: 0 0% 100%;
+    /* Dashboard-inspired colors */
+    --dashboard-purple: 262 75% 45%;
+    --dashboard-blue: 210 95% 60%;
+    --dashboard-pink: 320 65% 75%;
+    --dashboard-mint: 160 70% 80%;
+    --dashboard-lavender: 270 95% 85%;
+    --dashboard-gray-50: 240 20% 98%;
+    --dashboard-gray-100: 240 15% 95%;
+    --dashboard-gray-200: 240 10% 88%;
+    --dashboard-gray-600: 235 15% 45%;
+    --dashboard-gray-800: 235 15% 25%;
     
-    /* Clean, subtle shadows - Airbnb style */
-    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-    --shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
-    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-    --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
-    
-    /* Airbnb's smooth transitions */
-    --transition-all: all 0.15s ease-in-out;
-    --transition-colors: color, background-color, border-color, text-decoration-color, fill, stroke 0.15s ease-in-out;
+    /* Design tokens */
+    --radius: 16px;
+    --shadow-sm: 0 1px 3px 0 hsl(262 75% 45% / 0.1);
+    --shadow: 0 4px 12px 0 hsl(262 75% 45% / 0.15);
+    --shadow-md: 0 8px 24px 0 hsl(262 75% 45% / 0.2);
+    --shadow-lg: 0 16px 32px 0 hsl(262 75% 45% / 0.25);
+    --shadow-xl: 0 24px 48px 0 hsl(262 75% 45% / 0.3);
+    --shadow-glass: 0 8px 32px 0 hsl(262 75% 45% / 0.15);
+    --shadow-card: 0 4px 24px 0 hsl(262 75% 45% / 0.1);
+    --gradient-primary: linear-gradient(135deg, hsl(262 75% 45%), hsl(270 95% 65%));
+    --gradient-card: linear-gradient(145deg, hsl(0 0% 100% / 0.8), hsl(270 95% 95% / 0.6));
+    --glass-blur: blur(12px);
+    --transition-all: all 0.3s ease;
 
     --sidebar-background: 0 0% 98%;
 
@@ -89,42 +74,51 @@
   }
 
   .dark {
-    --background: 0 0% 9%;               /* dark background */
-    --foreground: 0 0% 98%;              /* light text */
-
-    --card: 0 0% 12%;                    /* dark cards */
-    --card-foreground: 0 0% 98%;
-
-    --popover: 0 0% 12%;
-    --popover-foreground: 0 0% 98%;
-
-    --primary: 3 100% 50%;               /* keep coral primary */
+    --background: 235 20% 8%;
+    --foreground: 0 0% 95%;
+    --card: 235 15% 12%;
+    --card-foreground: 0 0% 95%;
+    --popover: 235 15% 12%;
+    --popover-foreground: 0 0% 95%;
+    --primary: 262 75% 55%;
     --primary-foreground: 0 0% 100%;
-
-    --secondary: 0 0% 18%;               /* dark secondary */
-    --secondary-foreground: 0 0% 98%;
-
-    --muted: 0 0% 18%;
-    --muted-foreground: 0 0% 64%;
-
-    --accent: 0 0% 18%;
-    --accent-foreground: 0 0% 98%;
-
+    --primary-glow: 262 75% 75%;
+    --secondary: 235 15% 15%;
+    --secondary-foreground: 0 0% 95%;
+    --muted: 235 10% 18%;
+    --muted-foreground: 240 5% 65%;
+    --accent: 270 95% 25%;
+    --accent-foreground: 0 0% 95%;
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 98%;
-
-    --border: 0 0% 18%;
-    --input: 0 0% 18%;
-    --ring: 3 100% 50%;
+    --border: 235 15% 20%;
+    --input: 235 15% 15%;
+    --ring: 262 75% 65%;
+    --success: 142 76% 45%;
+    --success-foreground: 0 0% 98%;
     
-    --sidebar-background: 0 0% 12%;
-    --sidebar-foreground: 0 0% 98%;
-    --sidebar-primary: 3 100% 50%;
+    --dashboard-purple: 262 75% 55%;
+    --dashboard-blue: 210 95% 65%;
+    --dashboard-pink: 320 65% 65%;
+    --dashboard-mint: 160 70% 65%;
+    --dashboard-lavender: 270 95% 45%;
+    --dashboard-gray-50: 235 15% 12%;
+    --dashboard-gray-100: 235 15% 15%;
+    --dashboard-gray-200: 235 15% 20%;
+    --dashboard-gray-600: 240 5% 65%;
+    --dashboard-gray-800: 0 0% 95%;
+    
+    --sidebar-background: 235 15% 10%;
+    --sidebar-foreground: 0 0% 95%;
+    --sidebar-primary: 262 75% 55%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 0 0% 18%;
-    --sidebar-accent-foreground: 0 0% 98%;
-    --sidebar-border: 0 0% 18%;
-    --sidebar-ring: 3 100% 50%;
+    --sidebar-accent: 270 95% 15%;
+    --sidebar-accent-foreground: 0 0% 95%;
+    --sidebar-border: 235 15% 20%;
+    --sidebar-ring: 262 75% 65%;
+    
+    --gradient-primary: linear-gradient(135deg, hsl(262 75% 55%), hsl(270 95% 45%));
+    --gradient-card: linear-gradient(145deg, hsl(235 15% 12% / 0.8), hsl(270 95% 15% / 0.6));
   }
 }
 
