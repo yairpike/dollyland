@@ -1,7 +1,7 @@
 import { Bot, Users, BarChart3, Settings, Plus, Home, ShoppingBag } from "lucide-react";
 import { NavLink, useLocation } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
-import dollyLogo from "@/assets/dolly-logo-final.png";
+// Using uploaded logo directly
 
 import {
   Sidebar,
@@ -49,7 +49,7 @@ export function AppSidebar() {
         {/* Logo Section */}
         <div className={`p-6 border-none ${state === "collapsed" ? "px-2 py-4" : ""}`}>
           <div className="flex items-center gap-3 justify-center">
-            <img src={dollyLogo} alt="dolly" className={`flex-shrink-0 ${state === "collapsed" ? "w-8 h-8" : "w-6 h-6"}`} />
+            <img src="/lovable-uploads/8dc3b4f9-4ebf-4b9b-90c7-c85727a0e166.png" alt="dolly" className={`flex-shrink-0 ${state === "collapsed" ? "w-8 h-8" : "w-6 h-6"}`} />
             {state !== "collapsed" && (
               <h2 className="font-semibold text-lg text-foreground">dolly</h2>
             )}
