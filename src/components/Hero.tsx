@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Zap, Sparkles, Brain } from "lucide-react";
+import { ArrowRight, Zap, Sparkles } from "lucide-react";
+import dollyLogo from "@/assets/dolly-logo.png";
 import hero3dBrain from "@/assets/hero-3d-brain.png";
 
 export const Hero = () => {
@@ -29,11 +30,7 @@ export const Hero = () => {
       
       <div className="relative z-10 text-center max-w-5xl mx-auto px-6">
         <div className="mb-12 animate-slide-up">
-          <div className="w-32 h-32 mx-auto mb-8 animate-float rounded-3xl shadow-xl bg-card backdrop-blur-glass p-4 flex items-center justify-center">
-            <div className="w-20 h-20 bg-gradient-to-br from-primary to-primary-glow rounded-2xl flex items-center justify-center">
-              <Brain className="w-12 h-12 text-white" />
-            </div>
-          </div>
+          <img src={dollyLogo} alt="dolly" className="w-32 h-32 mx-auto mb-8 animate-float rounded-3xl shadow-xl bg-card backdrop-blur-glass p-4" />
           <h1 className="text-6xl md:text-7xl font-semibold mb-8 leading-tight">
             <span className="text-foreground">Build & Deploy</span>
             <span className="block text-foreground mt-2">AI Agents</span>

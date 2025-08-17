@@ -1,7 +1,7 @@
 import { Bot, Users, BarChart3, Settings, Plus, Home, ShoppingBag } from "lucide-react";
 import { NavLink, useLocation } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
-import { Brain } from "lucide-react";
+import dollyLogo from "@/assets/dolly-logo.png";
 
 import {
   Sidebar,
@@ -46,9 +46,7 @@ export function AppSidebar() {
         {/* Logo Section */}
         <div className="p-6 border-none">
           <div className="flex items-center gap-3">
-            <div className="w-8 h-8 bg-gradient-to-br from-primary to-primary-glow rounded-lg flex items-center justify-center">
-              <Brain className="w-5 h-5 text-white" />
-            </div>
+            <img src={dollyLogo} alt="dolly" className="w-8 h-8" />
             {state !== "collapsed" && (
               <h2 className="font-semibold text-lg text-foreground">dolly</h2>
             )}

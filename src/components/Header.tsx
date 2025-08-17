@@ -1,10 +1,11 @@
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { Sparkles, Menu, LogOut, Settings, Brain } from "lucide-react";
+import { Sparkles, Menu, LogOut, Settings } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import { toast } from "sonner";
 import { ThemeToggle } from "./ThemeToggle";
+import dollyLogo from "@/assets/dolly-logo.png";
 
 export const Header = () => {
   const { user, signOut } = useAuth();
@@ -26,9 +27,7 @@ export const Header = () => {
           <div className="flex items-center justify-between">
             {/* Logo */}
             <Link to="/" className="flex items-center gap-3 flex-shrink-0 hover:scale-105 transition-transform">
-              <div className="w-10 h-10 bg-gradient-to-br from-primary to-primary-glow rounded-lg flex items-center justify-center">
-                <Brain className="w-6 h-6 text-white" />
-              </div>
+              <img src={dollyLogo} alt="dolly" className="w-10 h-10" />
               <div>
                 <h1 className="text-xl font-semibold text-foreground">dolly</h1>
               </div>
