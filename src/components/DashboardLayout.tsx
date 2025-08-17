@@ -8,10 +8,10 @@ interface DashboardLayoutProps {
 
 export function DashboardLayout({ children }: DashboardLayoutProps) {
   return (
-    <SidebarProvider defaultOpen={true}>
+    <SidebarProvider defaultOpen={true} className="w-full">
       <div className="min-h-screen flex w-full bg-urbanist-light">
         <AppSidebar />
-        <div className="flex-1 flex flex-col">
+        <div className="flex-1 flex flex-col min-w-0">
           {/* Header */}
           <header className="h-20 border-none bg-card/80 backdrop-blur-sm flex items-center justify-between px-8 rounded-b-3xl shadow-sm">
             <div className="flex items-center gap-4">
@@ -32,7 +32,7 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
           </header>
 
           {/* Main Content */}
-          <main className="flex-1 p-8 bg-urbanist-light">
+          <main className="flex-1 p-8 bg-urbanist-light min-w-0">
             {children}
           </main>
         </div>

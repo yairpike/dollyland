@@ -41,19 +41,22 @@ export function AppSidebar() {
       : "text-muted-foreground hover:bg-muted/50 hover:text-foreground rounded-xl";
 
   return (
-    <Sidebar className={state === "collapsed" ? "w-16" : "w-72"}>
+    <Sidebar 
+      className={`transition-all duration-300 ${state === "collapsed" ? "w-16" : "w-72"}`}
+      collapsible="icon"
+    >
       <SidebarContent className="bg-card border-none shadow-lg rounded-r-3xl">
         {/* Logo Section */}
-        <div className="p-6 border-none">
+        <div className={`p-6 border-none ${state === "collapsed" ? "px-4" : ""}`}>
           <div className="flex items-center gap-3">
-            <img src={dollyLogo} alt="dolly" className="w-8 h-8" />
+            <img src={dollyLogo} alt="dolly" className="w-8 h-8 flex-shrink-0" />
             {state !== "collapsed" && (
               <h2 className="font-semibold text-lg text-foreground">dolly</h2>
             )}
           </div>
         </div>
 
-        {/* User Info */}
+        {/* User Info - Only show when expanded */}
         {state !== "collapsed" && user && (
           <div className="px-6 py-4 border-none bg-gradient-to-r from-urbanist-lavender/30 to-transparent rounded-2xl mx-4 mb-4">
             <div className="flex items-center gap-3">
@@ -72,18 +75,32 @@ export function AppSidebar() {
           </div>
         )}
 
+        {/* Collapsed User Avatar */}
+        {state === "collapsed" && user && (
+          <div className="px-4 py-2 mb-4">
+            <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-urbanist-lavender to-primary/20 flex items-center justify-center shadow-lg mx-auto">
+              <span className="text-xs font-semibold text-urbanist-dark">
+                {user.email?.slice(0, 1).toUpperCase()}
+              </span>
+            </div>
+          </div>
+        )}
+
         <SidebarGroup>
           <SidebarGroupContent>
-            <SidebarMenu className="px-4 py-6 space-y-2">
+            <SidebarMenu className={`space-y-2 ${state === "collapsed" ? "px-2 py-4" : "px-4 py-6"}`}>
               {mainItems.map((item) => (
                 <SidebarMenuItem key={item.title} className="mb-2">
                   <SidebarMenuButton asChild className="w-full">
                     <NavLink
                       to={item.url}
                       end
-                      className={`flex items-center gap-4 px-4 py-3 transition-all duration-200 w-full ${getNavCls(
-                        isActive(item.url)
-                      )}`}
+                      className={`flex items-center transition-all duration-200 w-full ${
+                        state === "collapsed" 
+                          ? `justify-center px-2 py-3 rounded-xl ${getNavCls(isActive(item.url))}`
+                          : `gap-4 px-4 py-3 ${getNavCls(isActive(item.url))}`
+                      }`}
+                      title={state === "collapsed" ? item.title : undefined}
                     >
                       <item.icon className="h-6 w-6 flex-shrink-0" />
                       {state !== "collapsed" && <span className="text-sm font-medium">{item.title}</span>}
