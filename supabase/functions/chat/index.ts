@@ -140,9 +140,42 @@ serve(async (req) => {
       // Failed to load conversation history - continuing with empty context
     }
 
-    // Prepare messages for AI API
+    // Get relevant knowledge base content for the agent
+    let knowledgeContext = '';
+    try {
+      // Get all knowledge bases for this agent
+      const { data: knowledgeBases } = await supabase
+        .from('knowledge_bases')
+        .select('id')
+        .eq('agent_id', agentId)
+        .eq('user_id', user.id);
+
+      if (knowledgeBases && knowledgeBases.length > 0) {
+        const kbIds = knowledgeBases.map(kb => kb.id);
+        
+        // Get knowledge chunks that might be relevant to the user's message
+        // For now, get all chunks - in production you'd want semantic search here
+        const { data: knowledgeChunks } = await supabase
+          .from('knowledge_chunks')
+          .select('content, metadata')
+          .in('knowledge_base_id', kbIds)
+          .eq('user_id', user.id)
+          .limit(10); // Limit to prevent context overflow
+
+        if (knowledgeChunks && knowledgeChunks.length > 0) {
+          knowledgeContext = '\n\nRelevant knowledge from your knowledge base:\n' + 
+            knowledgeChunks.map(chunk => chunk.content).join('\n\n');
+        }
+      }
+    } catch (error) {
+      console.error('Error retrieving knowledge base content:', error);
+      // Continue without knowledge context
+    }
+
+    // Prepare messages for AI API with knowledge context
+    const systemPrompt = (agent.system_prompt || 'You are a helpful AI assistant.') + knowledgeContext;
     const conversationMessages = [
-      { role: 'system', content: agent.system_prompt || 'You are a helpful AI assistant.' },
+      { role: 'system', content: systemPrompt },
       ...(messages || []).map(m => ({ role: m.role, content: m.content }))
     ];
 
