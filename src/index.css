@@ -2,84 +2,74 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Wellness-Inspired Design System - Soft, calming, pastel aesthetic */
+/* Airbnb-Inspired Design System - Clean, elegant, minimal */
 
 @layer base {
   :root {
-    /* Base Colors - Warm human skin tone background from the images */
-    --background: 15 25% 88%;           /* warm peachy-beige skin tone */
-    --foreground: 15 15% 15%;           /* dark text for AA accessibility */
+    /* Base Colors - Clean white background like Airbnb */
+    --background: 0 0% 100%;             /* pure white background */
+    --foreground: 0 0% 9%;               /* almost black text for maximum contrast */
 
-    /* Card & Surface Colors - Clean white cards */
-    --card: 0 0% 100%;                  /* pure white cards */
-    --card-foreground: 15 15% 15%;      /* dark text for contrast */
+    /* Card & Surface Colors - Clean white with subtle borders */
+    --card: 0 0% 100%;                   /* pure white cards */
+    --card-foreground: 0 0% 9%;          /* dark text for contrast */
 
     --popover: 0 0% 100%;
-    --popover-foreground: 15 15% 15%;
+    --popover-foreground: 0 0% 9%;
 
-    /* Primary - Strong blue for good contrast */
-    --primary: 210 70% 45%;             /* darker blue for AA accessibility */
+    /* Primary - Airbnb's signature coral/red */
+    --primary: 3 100% 50%;               /* Airbnb coral red */
     --primary-foreground: 0 0% 100%;
-    --primary-glow: 210 65% 75%;
+    --primary-glow: 3 85% 70%;
 
-    /* Secondary - Darker sage green for contrast */
-    --secondary: 140 35% 45%;           /* darker green for accessibility */
-    --secondary-foreground: 0 0% 100%;
+    /* Secondary - Clean gray */
+    --secondary: 0 0% 96%;               /* light gray background */
+    --secondary-foreground: 0 0% 9%;
 
-    /* Muted tones - ensuring good contrast */
-    --muted: 15 15% 82%;                /* darker muted for contrast */
-    --muted-foreground: 15 15% 35%;     /* dark enough for AA standard */
+    /* Muted tones - Airbnb's subtle grays */
+    --muted: 0 0% 96%;                   /* light gray for muted elements */
+    --muted-foreground: 0 0% 45%;        /* medium gray for secondary text */
 
-    /* Accent - Darker lavender for contrast */
-    --accent: 260 25% 75%;
-    --accent-foreground: 260 40% 25%;   /* dark text for contrast */
+    /* Accent - Airbnb's subtle hover state */
+    --accent: 0 0% 96%;
+    --accent-foreground: 0 0% 9%;
 
-    /* Destructive - Darker coral for accessibility */
-    --destructive: 15 65% 55%;          /* darker coral for contrast */
+    /* Destructive - Clean error red */
+    --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
-    /* Borders & Inputs - Good contrast */
-    --border: 15 15% 75%;               /* darker border for visibility */
-    --input: 15 15% 75%;
-    --ring: 210 70% 45%;
+    /* Borders & Inputs - Airbnb's subtle borders */
+    --border: 0 0% 90%;                  /* light gray borders */
+    --input: 0 0% 90%;
+    --ring: 3 100% 50%;
 
-    /* Extra rounded corners like in the images */
-    --radius: 2rem;
+    /* Airbnb's rounded corners - not too rounded */
+    --radius: 0.75rem;
 
-    /* Wellness Color Palette - AA Accessible versions */
-    --wellness-yellow: 45 85% 35%;      /* Dark yellow for good contrast */
-    --wellness-green: 140 60% 35%;      /* Dark green for AA accessibility */
-    --wellness-coral: 15 75% 40%;       /* Dark coral for contrast */
-    --wellness-blue: 210 80% 35%;       /* Dark blue for AA compliance */
-    --wellness-purple: 280 60% 35%;     /* Dark purple for readability */
-    --wellness-mint: 160 70% 35%;       /* Dark mint for contrast */
-    --wellness-pink: 340 50% 65%;       /* Medium pink accent */
-    --wellness-sage: 120 50% 35%;       /* Dark sage green */
+    /* Clean Color Palette - Airbnb style */
+    --airbnb-coral: 3 100% 50%;          /* signature coral */
+    --airbnb-gray-50: 0 0% 98%;          /* lightest gray */
+    --airbnb-gray-100: 0 0% 96%;         /* light gray */
+    --airbnb-gray-200: 0 0% 90%;         /* medium light gray */
+    --airbnb-gray-400: 0 0% 64%;         /* medium gray */
+    --airbnb-gray-600: 0 0% 45%;         /* dark gray */
+    --airbnb-gray-800: 0 0% 18%;         /* darker gray */
+    --airbnb-gray-900: 0 0% 9%;          /* darkest gray */
     
-    /* Neural/AI Colors - AA Accessible */
-    --neural: 210 80% 35%;              /* Dark for accessibility */
-    --neural-glow: 210 65% 50%;
-    --agent-primary: 140 60% 35%;       /* Dark green for contrast */
-    --agent-secondary: 210 70% 40%;
+    /* Success green */
+    --success: 142 71% 45%;
+    --success-foreground: 0 0% 100%;
     
-    /* Accessible Gradients */
-    --gradient-hero: linear-gradient(135deg, hsl(210 80% 45%), hsl(160 70% 45%));
-    --gradient-card: linear-gradient(145deg, hsl(var(--card)), hsl(var(--wellness-pink) / 0.3));
-    --gradient-agent: linear-gradient(135deg, hsl(var(--wellness-mint) / 0.8), hsl(var(--wellness-yellow) / 0.6));
-    --gradient-wellness: linear-gradient(135deg, hsl(var(--wellness-green) / 0.6), hsl(var(--wellness-blue) / 0.5));
-    --gradient-background: radial-gradient(circle at 30% 20%, hsl(var(--wellness-pink) / 0.15), transparent 60%), 
-                          radial-gradient(circle at 70% 80%, hsl(var(--wellness-yellow) / 0.1), transparent 60%);
+    /* Clean, subtle shadows - Airbnb style */
+    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+    --shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+    --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
     
-    /* Very Soft Shadows - Barely visible, organic feel */
-    --shadow-glow: 0 8px 32px hsl(var(--wellness-blue) / 0.12);
-    --shadow-neural: 0 12px 40px hsl(var(--wellness-green) / 0.1);
-    --shadow-elegant: 0 4px 24px hsl(var(--foreground) / 0.06);
-    --shadow-card: 0 2px 20px hsl(var(--foreground) / 0.04);
-    --shadow-soft: 0 1px 12px hsl(var(--foreground) / 0.03);
-    
-    /* Smooth, Natural Animations */
-    --transition-smooth: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    --transition-bounce: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    /* Airbnb's smooth transitions */
+    --transition-all: all 0.15s ease-in-out;
+    --transition-colors: color, background-color, border-color, text-decoration-color, fill, stroke 0.15s ease-in-out;
 
     --sidebar-background: 0 0% 98%;
 
@@ -99,41 +89,42 @@
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
+    --background: 0 0% 9%;               /* dark background */
+    --foreground: 0 0% 98%;              /* light text */
 
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
+    --card: 0 0% 12%;                    /* dark cards */
+    --card-foreground: 0 0% 98%;
 
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
+    --popover: 0 0% 12%;
+    --popover-foreground: 0 0% 98%;
 
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
+    --primary: 3 100% 50%;               /* keep coral primary */
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
+    --secondary: 0 0% 18%;               /* dark secondary */
+    --secondary-foreground: 0 0% 98%;
 
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
+    --muted: 0 0% 18%;
+    --muted-foreground: 0 0% 64%;
 
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
+    --accent: 0 0% 18%;
+    --accent-foreground: 0 0% 98%;
 
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 98%;
 
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
+    --border: 0 0% 18%;
+    --input: 0 0% 18%;
+    --ring: 3 100% 50%;
+    
+    --sidebar-background: 0 0% 12%;
+    --sidebar-foreground: 0 0% 98%;
+    --sidebar-primary: 3 100% 50%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --sidebar-accent: 0 0% 18%;
+    --sidebar-accent-foreground: 0 0% 98%;
+    --sidebar-border: 0 0% 18%;
+    --sidebar-ring: 3 100% 50%;
   }
 }
 

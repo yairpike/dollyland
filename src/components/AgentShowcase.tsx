@@ -72,7 +72,7 @@ export const AgentShowcase = () => {
               <h3 className="text-xl font-bold mb-2">{agent.name}</h3>
               <p className="text-sm mb-6 leading-relaxed text-muted-foreground">{agent.description}</p>
               
-              <Button variant="agent" size="sm" className="w-full">
+              <Button variant="outline" size="sm" className="w-full">
                 <MessageSquare className="w-4 h-4" />
                 Chat
               </Button>
@@ -90,7 +90,7 @@ export const AgentShowcase = () => {
               <p className="text-muted-foreground max-w-md">
                 Upload your knowledge to create custom agents.
               </p>
-              <Button variant="neural" className="mt-2">
+              <Button variant="default" className="mt-2">
                 <Zap className="w-4 h-4" />
                 Get Started
               </Button>

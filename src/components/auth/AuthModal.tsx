@@ -92,7 +92,7 @@ export const AuthModal = ({ open, onOpenChange }: AuthModalProps) => {
             type="submit" 
             className="w-full" 
             disabled={loading}
-            variant="hero"
+            variant="default"
           >
             {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
             {isSignUp ? "Create Account" : "Sign In"}

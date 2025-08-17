@@ -233,7 +233,7 @@ export const KnowledgeUpload = () => {
               
               {completedFiles.length > 0 && (
                 <div className="pt-4">
-                  <Button className="w-full" variant="hero">
+                  <Button className="w-full" variant="default">
                     <Sparkles className="w-4 h-4 mr-2" />
                     Create Agent from Knowledge
                   </Button>

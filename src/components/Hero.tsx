@@ -33,11 +33,11 @@ export const Hero = () => {
         </p>
         
         <div className="flex flex-col sm:flex-row gap-6 justify-center items-center animate-slide-up" style={{ animationDelay: '0.4s' }}>
-          <Button variant="soft" size="lg" onClick={() => navigate('/auth')}>
+          <Button variant="default" size="lg" onClick={() => navigate('/auth')}>
             <Zap className="w-4 h-4" />
             Get Started
           </Button>
-          <Button variant="calm" size="lg" onClick={() => navigate('/auth')}>
+          <Button variant="outline" size="lg" onClick={() => navigate('/auth')}>
             Learn More
           </Button>
         </div>

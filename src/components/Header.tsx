@@ -68,7 +68,7 @@ export const Header = () => {
                   <Button variant="ghost" className="hidden sm:inline-flex" onClick={() => navigate('/auth')}>
                     Sign In
                   </Button>
-                  <Button variant="hero" onClick={() => navigate('/auth')}>
+                  <Button variant="default" onClick={() => navigate('/auth')}>
                     Get Started
                   </Button>
                 </>

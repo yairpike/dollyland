@@ -79,7 +79,7 @@ export const Dashboard = () => {
             <h1 className="text-3xl font-bold">Your AI Agents</h1>
             <p className="text-muted-foreground">Manage and chat with your custom AI assistants</p>
           </div>
-          <Button variant="hero" size="lg" onClick={() => setCreateModalOpen(true)}>
+          <Button variant="default" size="lg" onClick={() => setCreateModalOpen(true)}>
             <Plus className="w-5 h-5 mr-2" />
             Create Agent
           </Button>
@@ -140,7 +140,7 @@ export const Dashboard = () => {
               <Sparkles className="w-16 h-16 text-muted-foreground mx-auto mb-4" />
               <h3 className="text-xl font-semibold mb-2">No agents yet</h3>
               <p className="text-muted-foreground mb-6">Create your first AI agent to get started</p>
-              <Button variant="hero" onClick={() => setCreateModalOpen(true)}>
+              <Button variant="default" onClick={() => setCreateModalOpen(true)}>
                 <Plus className="w-4 h-4 mr-2" />
                 Create Your First Agent
               </Button>

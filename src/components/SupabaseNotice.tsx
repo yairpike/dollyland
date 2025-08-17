@@ -86,7 +86,7 @@ export const SupabaseNotice = () => {
             <p className="text-sm text-muted-foreground mb-4">
               Click the green Supabase button in the top-right corner to activate the integration
             </p>
-            <Button variant="hero" size="lg" className="text-lg">
+            <Button variant="default" size="lg" className="text-lg">
               <Database className="w-5 h-5" />
               Connect to Supabase
               <ArrowRight className="w-5 h-5" />

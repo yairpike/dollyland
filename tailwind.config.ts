@@ -53,21 +53,21 @@ export default {
 					DEFAULT: 'hsl(var(--card))',
 					foreground: 'hsl(var(--card-foreground))'
 				},
-				neural: {
-					DEFAULT: 'hsl(var(--neural))',
-					glow: 'hsl(var(--neural-glow))'
+				success: {
+					DEFAULT: 'hsl(var(--success))',
+					foreground: 'hsl(var(--success-foreground))'
 				},
-				agent: {
-					primary: 'hsl(var(--agent-primary))',
-					secondary: 'hsl(var(--agent-secondary))'
-				},
-				wellness: {
-					yellow: 'hsl(var(--wellness-yellow))',
-					green: 'hsl(var(--wellness-green))',
-					coral: 'hsl(var(--wellness-coral))',
-					blue: 'hsl(var(--wellness-blue))',
-					purple: 'hsl(var(--wellness-purple))',
-					mint: 'hsl(var(--wellness-mint))'
+				airbnb: {
+					coral: 'hsl(var(--airbnb-coral))',
+					gray: {
+						50: 'hsl(var(--airbnb-gray-50))',
+						100: 'hsl(var(--airbnb-gray-100))',
+						200: 'hsl(var(--airbnb-gray-200))',
+						400: 'hsl(var(--airbnb-gray-400))',
+						600: 'hsl(var(--airbnb-gray-600))',
+						800: 'hsl(var(--airbnb-gray-800))',
+						900: 'hsl(var(--airbnb-gray-900))'
+					}
 				},
 				sidebar: {
 					DEFAULT: 'hsl(var(--sidebar-background))',
@@ -85,17 +85,18 @@ export default {
 				md: 'calc(var(--radius) - 2px)',
 				sm: 'calc(var(--radius) - 4px)'
 			},
-			backgroundImage: {
-				'gradient-hero': 'var(--gradient-hero)',
-				'gradient-card': 'var(--gradient-card)',
-				'gradient-agent': 'var(--gradient-agent)',
-				'gradient-wellness': 'var(--gradient-wellness)'
-			},
 			boxShadow: {
-				'glow': 'var(--shadow-glow)',
-				'neural': 'var(--shadow-neural)',
-				'elegant': 'var(--shadow-elegant)',
-				'card': 'var(--shadow-card)'
+				'sm': 'var(--shadow-sm)',
+				DEFAULT: 'var(--shadow)',
+				'md': 'var(--shadow-md)',
+				'lg': 'var(--shadow-lg)',
+				'xl': 'var(--shadow-xl)'
+			},
+			fontFamily: {
+				sans: ['Inter', 'system-ui', '-apple-system', 'BlinkMacSystemFont', '"Segoe UI"', 'Roboto', '"Helvetica Neue"', 'Arial', 'sans-serif'],
+			},
+			fontSize: {
+				'2xs': ['0.625rem', { lineHeight: '0.75rem' }],
 			},
 			keyframes: {
 				'accordion-down': {

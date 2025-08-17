@@ -27,7 +27,7 @@ export const SupabaseConnectionNotice = () => {
               <span>Authentication & Database Required</span>
             </div>
             
-            <Button variant="hero" className="w-full">
+            <Button variant="default" className="w-full">
               Connect to Supabase
             </Button>
             
