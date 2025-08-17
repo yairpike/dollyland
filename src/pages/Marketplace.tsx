@@ -299,8 +299,9 @@ export const Marketplace = () => {
 
                     <div className="flex gap-2">
                       <Button 
+                        variant="secondary"
                         size="sm" 
-                        className="flex-1 bg-primary hover:bg-primary/90 text-primary-foreground"
+                        className="flex-1"
                         onClick={() => handleTryAgent(agent.id)}
                       >
                         <Play className="w-4 h-4 mr-2" />
