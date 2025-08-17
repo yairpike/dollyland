@@ -49,7 +49,7 @@ export function AppSidebar() {
         {/* Logo Section */}
         <div className={`p-6 border-none ${state === "collapsed" ? "px-2 py-4" : ""}`}>
           <div className="flex items-center gap-3 justify-center">
-            <img src={dollyLogo} alt="dolly" className={`flex-shrink-0 ${state === "collapsed" ? "w-10 h-10" : "w-8 h-8"}`} />
+            {/* Logo removed */}
             {state !== "collapsed" && (
               <h2 className="font-semibold text-lg text-foreground">dolly</h2>
             )}
