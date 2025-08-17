@@ -218,7 +218,7 @@ export const KnowledgeBaseManager = ({ agentId }: KnowledgeBaseManagerProps) => 
   }
 
   return (
-    <div className="space-y-6 h-full flex flex-col">
+    <div className="space-y-6 flex-1 flex flex-col">
       <div className="flex items-center justify-between">
         <div>
           <h3 className="text-lg font-semibold">Knowledge Bases</h3>
