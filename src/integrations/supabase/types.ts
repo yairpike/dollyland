@@ -14,38 +14,131 @@ export type Database = {
   }
   public: {
     Tables: {
+      agent_analytics: {
+        Row: {
+          agent_id: string
+          created_at: string
+          event_type: string
+          id: string
+          metadata: Json | null
+          session_id: string | null
+          user_id: string
+        }
+        Insert: {
+          agent_id: string
+          created_at?: string
+          event_type: string
+          id?: string
+          metadata?: Json | null
+          session_id?: string | null
+          user_id: string
+        }
+        Update: {
+          agent_id?: string
+          created_at?: string
+          event_type?: string
+          id?: string
+          metadata?: Json | null
+          session_id?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
+      agent_deployments: {
+        Row: {
+          agent_id: string
+          api_key: string | null
+          config: Json
+          created_at: string
+          deployment_type: string
+          id: string
+          last_used_at: string | null
+          status: string
+          updated_at: string
+          usage_count: number | null
+          user_id: string
+        }
+        Insert: {
+          agent_id: string
+          api_key?: string | null
+          config?: Json
+          created_at?: string
+          deployment_type: string
+          id?: string
+          last_used_at?: string | null
+          status?: string
+          updated_at?: string
+          usage_count?: number | null
+          user_id: string
+        }
+        Update: {
+          agent_id?: string
+          api_key?: string | null
+          config?: Json
+          created_at?: string
+          deployment_type?: string
+          id?: string
+          last_used_at?: string | null
+          status?: string
+          updated_at?: string
+          usage_count?: number | null
+          user_id?: string
+        }
+        Relationships: []
+      }
       agents: {
         Row: {
           ai_provider_id: string | null
           avatar_url: string | null
+          category: string | null
           created_at: string
           description: string | null
           id: string
+          is_featured: boolean | null
+          is_public: boolean | null
           name: string
+          rating: number | null
           system_prompt: string | null
+          tags: string[] | null
+          template_id: string | null
           updated_at: string
+          user_count: number | null
           user_id: string
         }
         Insert: {
           ai_provider_id?: string | null
           avatar_url?: string | null
+          category?: string | null
           created_at?: string
           description?: string | null
           id?: string
+          is_featured?: boolean | null
+          is_public?: boolean | null
           name: string
+          rating?: number | null
           system_prompt?: string | null
+          tags?: string[] | null
+          template_id?: string | null
           updated_at?: string
+          user_count?: number | null
           user_id: string
         }
         Update: {
           ai_provider_id?: string | null
           avatar_url?: string | null
+          category?: string | null
           created_at?: string
           description?: string | null
           id?: string
+          is_featured?: boolean | null
+          is_public?: boolean | null
           name?: string
+          rating?: number | null
           system_prompt?: string | null
+          tags?: string[] | null
+          template_id?: string | null
           updated_at?: string
+          user_count?: number | null
           user_id?: string
         }
         Relationships: [

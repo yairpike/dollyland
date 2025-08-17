@@ -39,15 +39,18 @@ export const Header = () => {
             
             {/* Navigation - Hidden on mobile, replaced by mobile menu */}
             <nav className="hidden lg:flex items-center gap-6 xl:gap-8">
+              <Link to="/marketplace" className="text-foreground hover:text-primary transition-colors">
+                Marketplace
+              </Link>
               {user ? (
                 <>
                   <Link to="/dashboard" className="text-foreground hover:text-primary transition-colors">
-                    Agents
+                    My Agents
                   </Link>
                 </>
               ) : (
                 <>
-                  <a href="#agents" className="text-foreground hover:text-primary transition-colors">Agents</a>
+                  <a href="#agents" className="text-foreground hover:text-primary transition-colors">Features</a>
                   <a href="#upload" className="text-foreground hover:text-primary transition-colors">Upload</a>
                 </>
               )}

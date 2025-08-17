@@ -7,6 +7,8 @@ import Index from "./pages/Index";
 import { Dashboard } from "./pages/Dashboard";
 import { Settings } from "./pages/Settings";
 import { Chat } from "./pages/Chat";
+import { Marketplace } from "./pages/Marketplace";
+import { AgentTrial } from "./pages/AgentTrial";
 import Auth from "./pages/Auth";
 import NotFound from "./pages/NotFound";
 import { ProtectedRoute } from "./components/ProtectedRoute";
@@ -22,6 +24,8 @@ const App = () => (
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/auth" element={<Auth />} />
+          <Route path="/marketplace" element={<Marketplace />} />
+          <Route path="/trial/:agentId" element={<AgentTrial />} />
           <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
           <Route path="/settings" element={<ProtectedRoute><Settings /></ProtectedRoute>} />
           <Route path="/chat/:agentId" element={<ProtectedRoute><Chat /></ProtectedRoute>} />
