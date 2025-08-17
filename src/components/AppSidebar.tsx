@@ -29,13 +29,13 @@ export function AppSidebar({ onNavigate }: AppSidebarProps) {
     <div className="w-72 h-screen bg-card border-r flex flex-col">
       {/* Logo Section */}
       <div className="p-6 border-b">
-        <div className="flex flex-col gap-2">
+        <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
             <img src="/lovable-uploads/8dc3b4f9-4ebf-4b9b-90c7-c85727a0e166.png" alt="dolly" className="flex-shrink-0 w-16 h-16" />
             <h2 className="font-semibold text-lg text-foreground">dolly</h2>
           </div>
           {user && (
-            <p className="text-sm text-muted-foreground ml-19">
+            <p className="text-sm text-muted-foreground">
               {user.email}
             </p>
           )}
