@@ -50,10 +50,10 @@ export function DashboardLayout({ children, onCreateAgent }: DashboardLayoutProp
           {/* Create Agent Button */}
           <Button 
             onClick={() => onCreateAgent ? onCreateAgent() : window.dispatchEvent(new CustomEvent('openCreateAgentModal'))} 
-            size="sm" 
-            className="ml-2 px-4"
+            size="default" 
+            className="ml-4"
           >
-            <Plus className="w-4 h-4 mr-1" />
+            <Plus className="w-4 h-4 mr-2" />
             Create Agent
           </Button>
         </header>
