@@ -5,7 +5,8 @@ import { Input } from "@/components/ui/input"
 import { Card } from "@/components/ui/card"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { useAuth } from "@/hooks/useAuth"
-import { supabase } from "@/lib/supabase"
+import { supabase, isSupabaseConfigured } from "@/lib/supabase"
+import { SupabaseConnectionNotice } from "@/components/SupabaseConnectionNotice"
 import { Send, ArrowLeft } from "lucide-react"
 import { toast } from "sonner"
 
@@ -46,7 +47,7 @@ export const Chat = () => {
   }, [messages])
 
   const fetchAgent = async () => {
-    if (!agentId) return
+    if (!agentId || !supabase) return
 
     try {
       const { data, error } = await supabase
@@ -63,7 +64,7 @@ export const Chat = () => {
   }
 
   const createOrFetchConversation = async () => {
-    if (!agentId || !user) return
+    if (!agentId || !user || !supabase) return
 
     try {
       // Check for existing conversation
@@ -104,6 +105,7 @@ export const Chat = () => {
   }
 
   const fetchMessages = async (convId: string) => {
+    if (!supabase) return
     try {
       const { data, error } = await supabase
         .from('messages')
@@ -120,7 +122,7 @@ export const Chat = () => {
 
   const sendMessage = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (!newMessage.trim() || !conversationId || loading) return
+    if (!newMessage.trim() || !conversationId || loading || !supabase) return
 
     const userMessage = newMessage.trim()
     setNewMessage("")
@@ -167,6 +169,10 @@ export const Chat = () => {
     } finally {
       setLoading(false)
     }
+  }
+
+  if (!isSupabaseConfigured()) {
+    return <SupabaseConnectionNotice />;
   }
 
   if (!agent) {

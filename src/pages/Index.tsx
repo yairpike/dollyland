@@ -4,17 +4,24 @@ import { Header } from "@/components/Header";
 import { Hero } from "@/components/Hero";
 import { AgentShowcase } from "@/components/AgentShowcase";
 import { KnowledgeUpload } from "@/components/KnowledgeUpload";
+import { SupabaseConnectionNotice } from "@/components/SupabaseConnectionNotice";
 import { useAuth } from "@/hooks/useAuth";
+import { isSupabaseConfigured } from "@/lib/supabase";
 
 const Index = () => {
   const { user, loading } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!loading && user) {
+    if (!loading && user && isSupabaseConfigured()) {
       navigate('/dashboard');
     }
   }, [user, loading, navigate]);
+
+  // Show connection notice if Supabase is not configured
+  if (!isSupabaseConfigured()) {
+    return <SupabaseConnectionNotice />;
+  }
 
   if (loading) {
     return (

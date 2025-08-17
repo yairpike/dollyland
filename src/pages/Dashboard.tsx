@@ -5,8 +5,9 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { useAuth } from "@/hooks/useAuth"
-import { supabase } from "@/lib/supabase"
+import { supabase, isSupabaseConfigured } from "@/lib/supabase"
 import { CreateAgentModal } from "@/components/CreateAgentModal"
+import { SupabaseConnectionNotice } from "@/components/SupabaseConnectionNotice"
 import { Plus, MessageCircle, Settings, Users, Brain } from "lucide-react"
 import { toast } from "sonner"
 
@@ -31,7 +32,7 @@ export const Dashboard = () => {
   }, [user])
 
   const fetchAgents = async () => {
-    if (!user) return
+    if (!user || !supabase) return
 
     try {
       const { data, error } = await supabase
@@ -47,6 +48,10 @@ export const Dashboard = () => {
     } finally {
       setLoading(false)
     }
+  }
+
+  if (!isSupabaseConfigured()) {
+    return <SupabaseConnectionNotice />;
   }
 
   if (loading) {
