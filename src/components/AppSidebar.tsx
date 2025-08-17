@@ -1,7 +1,7 @@
 import { Bot, Users, BarChart3, Settings, Plus, Home, ShoppingBag } from "lucide-react";
 import { NavLink, useLocation } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
-import dollyLogo from "@/assets/dolly-logo.png";
+import dollyLogo from "@/assets/dolly-logo-new.png";
 
 import {
   Sidebar,
