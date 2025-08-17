@@ -47,9 +47,9 @@ export function AppSidebar() {
     >
       <SidebarContent className="bg-card border-none rounded-r-3xl">
         {/* Logo Section */}
-        <div className={`p-6 border-none ${state === "collapsed" ? "px-2 py-4" : ""}`}>
-          <div className="flex items-center gap-3 justify-center">
-            <img src="/lovable-uploads/8dc3b4f9-4ebf-4b9b-90c7-c85727a0e166.png" alt="dolly" className="flex-shrink-0 w-[72px] h-[72px]" />
+        <div className={`p-6 border-none ${state === "collapsed" ? "px-3 py-4" : ""}`}>
+          <div className={`flex items-center gap-3 ${state === "collapsed" ? "justify-center" : ""}`}>
+            <img src="/lovable-uploads/8dc3b4f9-4ebf-4b9b-90c7-c85727a0e166.png" alt="dolly" className={`flex-shrink-0 ${state === "collapsed" ? "w-8 h-8" : "w-[72px] h-[72px]"}`} />
             {state !== "collapsed" && (
               <h2 className="font-semibold text-lg text-foreground">dolly</h2>
             )}
