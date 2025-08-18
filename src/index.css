@@ -81,6 +81,13 @@
     --sidebar-border: 220 13% 91%;
 
     --sidebar-ring: 217.2 91.2% 59.8%;
+    
+    /* Chart colors - WCAG AA compliant */
+    --chart-1: 142 76% 36%;  /* Green primary - AA compliant on light backgrounds */
+    --chart-2: 142 69% 30%;  /* Green secondary - darker for contrast */
+    --chart-3: 158 64% 35%;  /* Teal variant */
+    --chart-4: 128 70% 40%;  /* Forest green */
+    --chart-5: 173 80% 30%;  /* Deep teal */
   }
 
   .dark {
@@ -133,6 +140,13 @@
     
     --gradient-primary: linear-gradient(135deg, hsl(163 77% 52%), hsl(163 77% 62%));
     --gradient-card: linear-gradient(145deg, hsl(240 10% 12% / 0.8), hsl(240 10% 15% / 0.6));
+    
+    /* Chart colors for dark mode - WCAG AA compliant */
+    --chart-1: 142 76% 45%;  /* Green primary - lighter for dark backgrounds */
+    --chart-2: 142 70% 50%;  /* Green secondary */
+    --chart-3: 158 64% 45%;  /* Teal variant */
+    --chart-4: 128 70% 50%;  /* Forest green */
+    --chart-5: 173 80% 40%;  /* Deep teal */
   }
 }
 
