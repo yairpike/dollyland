@@ -158,13 +158,13 @@ export const Marketplace = () => {
   return (
     <div className="space-y-8">
       {/* Header */}
-      <div className="text-center max-w-3xl mx-auto">
+      <div className="text-center max-w-3xl">
         <h1 className="text-4xl md:text-5xl font-semibold mb-4">Agent Marketplace</h1>
         <p className="text-xl text-muted-foreground">Discover and try AI agents built by expert designers and developers</p>
       </div>
 
       {/* Search and Filter */}
-      <div className="flex flex-col sm:flex-row gap-4 max-w-2xl mx-auto">
+      <div className="flex flex-col sm:flex-row gap-4 max-w-2xl">
         <div className="relative flex-1">
           <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
           <Input
@@ -195,7 +195,7 @@ export const Marketplace = () => {
       </div>
 
       {/* Results count */}
-      <div className="text-center">
+      <div>
         <p className="text-muted-foreground">
           Showing {filteredAgents.length} of {agents.length} agents
           {selectedCategory !== 'all' && (
