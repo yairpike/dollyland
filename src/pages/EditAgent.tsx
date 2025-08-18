@@ -21,6 +21,7 @@ import { AgentActions } from "@/components/AgentActions";
 import { WebhookManager } from "@/components/WebhookManager";
 import { WorkflowBuilder } from "@/components/WorkflowBuilder";
 import { DollyCopilot } from "@/components/DollyCopilot";
+import { DashboardLayout } from "@/components/DashboardLayout";
 import { toast } from "sonner";
 import { ArrowLeft, Trash2, Loader2, Settings, Database, Zap, Globe, GitBranch, Rocket, ExternalLink, Webhook, Workflow } from "lucide-react";
 
@@ -158,10 +159,10 @@ export const EditAgent = () => {
   }
 
   return (
-    <div className="min-h-screen bg-background">
+    <DashboardLayout>
       {/* Header */}
-      <div className="border-b bg-card/50 backdrop-blur-sm sticky top-0 z-10">
-        <div className="container mx-auto px-4 py-4">
+      <div className="border-b bg-card/50 backdrop-blur-sm sticky top-0 z-10 -mx-4 lg:-mx-8 px-4 lg:px-8 mb-6">
+        <div className="py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
               <Button
@@ -192,7 +193,7 @@ export const EditAgent = () => {
       </div>
 
       {/* Main Content */}
-      <div className="container mx-auto px-4 py-8">
+      <div className="space-y-6">
         <Tabs defaultValue="settings" className="w-full">
           <TabsList className="flex w-full bg-card border p-1 h-12 items-center overflow-x-auto scrollbar-hide gap-1">
             <TabsTrigger value="settings" className="flex items-center gap-2 whitespace-nowrap" data-tour="edit-agent-settings">
@@ -376,6 +377,6 @@ export const EditAgent = () => {
 
       {/* Dolly Copilot */}
       <DollyCopilot context="edit-agent" />
-    </div>
+    </DashboardLayout>
   );
 };
