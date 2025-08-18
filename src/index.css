@@ -83,11 +83,11 @@
     --sidebar-ring: 217.2 91.2% 59.8%;
     
     /* Chart colors - WCAG AA compliant */
-    --chart-1: 163 77% 35%;  /* Darker mint for light theme accessibility */
-    --chart-2: 163 77% 30%;  /* Even darker mint secondary */
-    --chart-3: 158 64% 32%;  /* Darker teal variant */
-    --chart-4: 160 70% 28%;  /* Darker teal */
-    --chart-5: 173 80% 25%;  /* Deep teal */
+    --chart-1: 170 77% 35%;  /* Darker mint/cyan for light theme accessibility */
+    --chart-2: 170 77% 30%;  /* Even darker mint secondary */
+    --chart-3: 168 64% 32%;  /* Darker mint-teal variant */
+    --chart-4: 172 70% 28%;  /* Darker mint-teal */
+    --chart-5: 175 80% 25%;  /* Deep mint-teal */
   }
 
   .dark {
