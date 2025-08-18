@@ -5,6 +5,7 @@ import { Hero } from "@/components/Hero";
 import { AgentShowcase } from "@/components/AgentShowcase";
 import { KnowledgeUpload } from "@/components/KnowledgeUpload";
 import { SupabaseConnectionNotice } from "@/components/SupabaseConnectionNotice";
+import { PageLoader } from "@/components/PageLoader";
 import { useAuth } from "@/hooks/useAuth";
 
 const Index = () => {
@@ -18,11 +19,7 @@ const Index = () => {
   }, [user, loading, navigate]);
 
   if (loading) {
-    return (
-      <div className="min-h-screen bg-background flex items-center justify-center">
-        <div className="animate-pulse text-muted-foreground">Loading...</div>
-      </div>
-    );
+    return <PageLoader message="Loading..." />;
   }
 
   return (
