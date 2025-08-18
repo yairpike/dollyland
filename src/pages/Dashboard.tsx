@@ -8,7 +8,6 @@ import { Bot, Plus, MessageSquare, Users, TrendingUp, Activity, Globe, Lock, Set
 import { BarChart, Bar, ResponsiveContainer, Cell } from "recharts";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
-
 import { PublishAgentModal } from "@/components/PublishAgentModal";
 import { toast } from "sonner";
 import { DashboardLayout } from "@/components/DashboardLayout";
@@ -52,7 +51,6 @@ export const Dashboard = () => {
     fetchAgents();
   }, [user]);
 
-
   const fetchAgents = async () => {
     if (!user) return;
 
@@ -72,7 +70,6 @@ export const Dashboard = () => {
       setLoading(false);
     }
   };
-
 
   const handleAgentPublished = () => {
     fetchAgents();
