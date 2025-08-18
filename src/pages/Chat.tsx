@@ -65,9 +65,12 @@ export const Chat = () => {
       <DashboardLayout>
         <div className="text-center py-16">
           <h2 className="text-2xl font-semibold mb-4">Agent not found</h2>
-          <Button onClick={() => navigate('/dashboard')}>
-            <ArrowLeft className="w-4 h-4 mr-2" />
-            Back to Home
+          <Button 
+            variant="ghost" 
+            size="icon" 
+            onClick={() => navigate('/dashboard')}
+          >
+            <ArrowLeft className="w-4 h-4" />
           </Button>
         </div>
       </DashboardLayout>
@@ -80,11 +83,11 @@ export const Chat = () => {
         {/* Back Button */}
         <Button 
           variant="ghost" 
+          size="icon"
           onClick={() => navigate('/dashboard')}
           className="mb-4"
         >
-          <ArrowLeft className="w-4 h-4 mr-2" />
-          Back to Home
+          <ArrowLeft className="w-4 h-4" />
         </Button>
 
         {/* Chat Interface */}

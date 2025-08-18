@@ -98,12 +98,10 @@ export const CreateAgent = () => {
         <div className="flex items-center gap-4">
           <Button
             variant="ghost"
-            size="sm"
+            size="icon"
             onClick={handleBack}
-            className="flex items-center gap-2"
           >
             <ChevronLeft className="w-4 h-4" />
-            {step === 'template' ? 'Back to Home' : 'Back to Templates'}
           </Button>
         </div>
 
