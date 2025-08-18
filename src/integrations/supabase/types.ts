@@ -266,13 +266,6 @@ export type Database = {
             foreignKeyName: "agents_ai_provider_id_fkey"
             columns: ["ai_provider_id"]
             isOneToOne: false
-            referencedRelation: "safe_user_ai_providers"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "agents_ai_provider_id_fkey"
-            columns: ["ai_provider_id"]
-            isOneToOne: false
             referencedRelation: "user_ai_providers"
             referencedColumns: ["id"]
           },
@@ -647,13 +640,6 @@ export type Database = {
             foreignKeyName: "secure_api_keys_provider_id_fkey"
             columns: ["provider_id"]
             isOneToOne: false
-            referencedRelation: "safe_user_ai_providers"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "secure_api_keys_provider_id_fkey"
-            columns: ["provider_id"]
-            isOneToOne: false
             referencedRelation: "user_ai_providers"
             referencedColumns: ["id"]
           },
@@ -753,13 +739,6 @@ export type Database = {
             columns: ["original_delivery_id"]
             isOneToOne: false
             referencedRelation: "webhook_deliveries"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "webhook_deliveries_webhook_id_fkey"
-            columns: ["webhook_id"]
-            isOneToOne: false
-            referencedRelation: "safe_webhooks"
             referencedColumns: ["id"]
           },
           {
@@ -892,123 +871,7 @@ export type Database = {
       }
     }
     Views: {
-      safe_agent_deployments: {
-        Row: {
-          agent_id: string | null
-          config: Json | null
-          created_at: string | null
-          deployment_type: string | null
-          id: string | null
-          last_used_at: string | null
-          status: string | null
-          updated_at: string | null
-          usage_count: number | null
-          user_id: string | null
-        }
-        Insert: {
-          agent_id?: string | null
-          config?: Json | null
-          created_at?: string | null
-          deployment_type?: string | null
-          id?: string | null
-          last_used_at?: string | null
-          status?: string | null
-          updated_at?: string | null
-          usage_count?: number | null
-          user_id?: string | null
-        }
-        Update: {
-          agent_id?: string | null
-          config?: Json | null
-          created_at?: string | null
-          deployment_type?: string | null
-          id?: string | null
-          last_used_at?: string | null
-          status?: string | null
-          updated_at?: string | null
-          usage_count?: number | null
-          user_id?: string | null
-        }
-        Relationships: []
-      }
-      safe_user_ai_providers: {
-        Row: {
-          access_count: number | null
-          created_at: string | null
-          display_name: string | null
-          id: string | null
-          is_active: boolean | null
-          is_default: boolean | null
-          last_accessed_at: string | null
-          model_name: string | null
-          provider_name: string | null
-          updated_at: string | null
-          user_id: string | null
-        }
-        Insert: {
-          access_count?: number | null
-          created_at?: string | null
-          display_name?: string | null
-          id?: string | null
-          is_active?: boolean | null
-          is_default?: boolean | null
-          last_accessed_at?: string | null
-          model_name?: string | null
-          provider_name?: string | null
-          updated_at?: string | null
-          user_id?: string | null
-        }
-        Update: {
-          access_count?: number | null
-          created_at?: string | null
-          display_name?: string | null
-          id?: string | null
-          is_active?: boolean | null
-          is_default?: boolean | null
-          last_accessed_at?: string | null
-          model_name?: string | null
-          provider_name?: string | null
-          updated_at?: string | null
-          user_id?: string | null
-        }
-        Relationships: []
-      }
-      safe_webhooks: {
-        Row: {
-          agent_id: string | null
-          created_at: string | null
-          events: string[] | null
-          headers: Json | null
-          id: string | null
-          is_active: boolean | null
-          updated_at: string | null
-          url: string | null
-          user_id: string | null
-        }
-        Insert: {
-          agent_id?: string | null
-          created_at?: string | null
-          events?: string[] | null
-          headers?: Json | null
-          id?: string | null
-          is_active?: boolean | null
-          updated_at?: string | null
-          url?: string | null
-          user_id?: string | null
-        }
-        Update: {
-          agent_id?: string | null
-          created_at?: string | null
-          events?: string[] | null
-          headers?: Json | null
-          id?: string | null
-          is_active?: boolean | null
-          updated_at?: string | null
-          url?: string | null
-          user_id?: string | null
-        }
-        Relationships: []
-      }
+      [_ in never]: never
     }
     Functions: {
       create_deployment_secure: {
@@ -1071,6 +934,51 @@ export type Database = {
           masked_ip: string
           provider_name: string
           success: boolean
+        }[]
+      }
+      get_safe_ai_providers: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          access_count: number
+          created_at: string
+          display_name: string
+          id: string
+          is_active: boolean
+          is_default: boolean
+          last_accessed_at: string
+          model_name: string
+          provider_name: string
+          updated_at: string
+          user_id: string
+        }[]
+      }
+      get_safe_deployments: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          agent_id: string
+          config: Json
+          created_at: string
+          deployment_type: string
+          id: string
+          last_used_at: string
+          status: string
+          updated_at: string
+          usage_count: number
+          user_id: string
+        }[]
+      }
+      get_safe_webhooks: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          agent_id: string
+          created_at: string
+          events: string[]
+          headers: Json
+          id: string
+          is_active: boolean
+          updated_at: string
+          url: string
+          user_id: string
         }[]
       }
       get_user_ai_providers_safe: {
@@ -1175,6 +1083,10 @@ export type Database = {
           new_url?: string
           webhook_id: string
         }
+        Returns: boolean
+      }
+      validate_sensitive_access: {
+        Args: { access_type?: string; record_id: string; table_name: string }
         Returns: boolean
       }
     }
