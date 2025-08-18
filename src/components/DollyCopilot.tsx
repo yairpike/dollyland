@@ -146,7 +146,7 @@ Always be encouraging and provide clear next steps.`
     }
   };
 
-  const logoSrc = theme === 'dark' ? '/lovable-uploads/cloud-brain-dark.png' : '/lovable-uploads/85abbc87-fafc-4307-86a1-f85ed74b639e.png';
+  const logoSrc = theme === 'dark' ? '/lovable-uploads/85abbc87-fafc-4307-86a1-f85ed74b639e.png' : '/lovable-uploads/c8c73254-3940-4a5b-b990-cb30d21dc890.png';
 
   if (!isOpen) {
     return (
