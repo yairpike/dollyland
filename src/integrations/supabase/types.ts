@@ -337,6 +337,13 @@ export type Database = {
             referencedRelation: "agents"
             referencedColumns: ["id"]
           },
+          {
+            foreignKeyName: "conversations_agent_id_fkey"
+            columns: ["agent_id"]
+            isOneToOne: false
+            referencedRelation: "public_agents_safe"
+            referencedColumns: ["id"]
+          },
         ]
       }
       detailed_analytics: {
@@ -874,7 +881,51 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      public_agents_safe: {
+        Row: {
+          agent_type: string | null
+          avatar_url: string | null
+          category: string | null
+          created_at: string | null
+          description: string | null
+          id: string | null
+          is_featured: boolean | null
+          name: string | null
+          rating: number | null
+          tags: string[] | null
+          updated_at: string | null
+          user_count: number | null
+        }
+        Insert: {
+          agent_type?: never
+          avatar_url?: string | null
+          category?: string | null
+          created_at?: string | null
+          description?: string | null
+          id?: string | null
+          is_featured?: boolean | null
+          name?: string | null
+          rating?: number | null
+          tags?: string[] | null
+          updated_at?: string | null
+          user_count?: number | null
+        }
+        Update: {
+          agent_type?: never
+          avatar_url?: string | null
+          category?: string | null
+          created_at?: string | null
+          description?: string | null
+          id?: string | null
+          is_featured?: boolean | null
+          name?: string | null
+          rating?: number | null
+          tags?: string[] | null
+          updated_at?: string | null
+          user_count?: number | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
       create_deployment_secure: {
@@ -920,6 +971,10 @@ export type Database = {
         Args: { api_key: string; user_id: string }
         Returns: string
       }
+      generate_secure_api_key: {
+        Args: Record<PropertyKey, never>
+        Returns: string
+      }
       get_ai_provider_key_secure: {
         Args: { provider_uuid: string }
         Returns: string
@@ -945,6 +1000,22 @@ export type Database = {
           masked_ip: string
           provider_name: string
           success: boolean
+        }[]
+      }
+      get_public_agent_safe: {
+        Args: { agent_uuid: string }
+        Returns: {
+          agent_type: string
+          avatar_url: string
+          category: string
+          created_at: string
+          description: string
+          id: string
+          is_featured: boolean
+          name: string
+          rating: number
+          tags: string[]
+          user_count: number
         }[]
       }
       get_safe_ai_providers: {
