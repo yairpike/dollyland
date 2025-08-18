@@ -4,15 +4,27 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { AgentTemplates } from "@/components/AgentTemplates";
 import { toast } from "sonner";
-import { Sparkles, Loader2, ArrowLeft, ChevronLeft } from "lucide-react";
+import { Sparkles, Loader2, ArrowLeft, ChevronLeft, Briefcase, Code, Palette, BarChart, MessageSquare, FileText, Brain, Zap } from "lucide-react";
 import { DashboardLayout } from "@/components/DashboardLayout";
 import { CreateAgentTour } from "@/components/tours/CreateAgentTour";
 import { useTourManager } from "@/components/OnboardingTour";
+
+const AGENT_CATEGORIES = [
+  { id: 'business', name: 'Business', icon: Briefcase },
+  { id: 'development', name: 'Development', icon: Code },
+  { id: 'design', name: 'Design', icon: Palette },
+  { id: 'analytics', name: 'Analytics', icon: BarChart },
+  { id: 'communication', name: 'Communication', icon: MessageSquare },
+  { id: 'content', name: 'Content', icon: FileText },
+  { id: 'ai', name: 'AI & ML', icon: Brain },
+  { id: 'productivity', name: 'Productivity', icon: Zap }
+];
 
 export const CreateAgent = () => {
   const navigate = useNavigate();
@@ -163,6 +175,31 @@ export const CreateAgent = () => {
                   />
                   <p className="text-sm text-muted-foreground">
                     This prompt defines how your agent will behave and respond to users.
+                  </p>
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="category">Category</Label>
+                  <Select value={formData.category} onValueChange={(value) => handleChange("category", value)}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select a category for your agent" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {AGENT_CATEGORIES.map((category) => {
+                        const IconComponent = category.icon;
+                        return (
+                          <SelectItem key={category.id} value={category.id}>
+                            <div className="flex items-center gap-2">
+                              <IconComponent className="w-4 h-4" />
+                              {category.name}
+                            </div>
+                          </SelectItem>
+                        );
+                      })}
+                    </SelectContent>
+                  </Select>
+                  <p className="text-sm text-muted-foreground">
+                    Choose a category to help users discover your agent in the marketplace.
                   </p>
                 </div>
 
