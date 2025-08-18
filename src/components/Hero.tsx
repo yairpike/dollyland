@@ -53,7 +53,10 @@ export const Hero = () => {
             <Sparkles className="w-4 h-4 mr-2" />
             Start Building Agents
           </Button>
-          <Button variant="outline" size="lg" onClick={() => navigate('/marketplace')} className="backdrop-blur-sm">
+          <Button variant="outline" size="lg" onClick={() => {
+            const marketplaceSection = document.getElementById('marketplace');
+            marketplaceSection?.scrollIntoView({ behavior: 'smooth' });
+          }} className="backdrop-blur-sm">
             Browse Marketplace
             <ArrowRight className="w-4 h-4 ml-2" />
           </Button>
