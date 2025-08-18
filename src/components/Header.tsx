@@ -7,52 +7,57 @@ import { toast } from "sonner";
 import { ThemeToggle } from "./ThemeToggle";
 import { LoadingAnimation } from "./LoadingAnimation";
 import { useTheme } from "next-themes";
-
 export const Header = () => {
-  const { user, signOut, loading, initializing } = useAuth();
-  const { theme } = useTheme();
+  const {
+    user,
+    signOut,
+    loading,
+    initializing
+  } = useAuth();
+  const {
+    theme
+  } = useTheme();
   const navigate = useNavigate();
-
   const logoSrc = theme === 'dark' ? '/lovable-uploads/c8c73254-3940-4a5b-b990-cb30d21dc890.png' : '/lovable-uploads/85abbc87-fafc-4307-86a1-f85ed74b639e.png';
-
   const handleSignOut = async () => {
     try {
       console.log('Header: Starting sign out process');
-      const { error } = await signOut();
-      
+      const {
+        error
+      } = await signOut();
       if (error) {
         console.error('Header: Sign out error:', error);
         // Even if there's an error, try to clear state and redirect
         localStorage.clear();
-        navigate("/auth", { replace: true });
+        navigate("/auth", {
+          replace: true
+        });
         toast.error("Sign out completed with issues - you have been logged out");
       } else {
         console.log('Header: Sign out successful');
         toast.success("Signed out successfully");
         localStorage.clear();
-        navigate("/auth", { replace: true });
+        navigate("/auth", {
+          replace: true
+        });
       }
     } catch (err) {
       console.error('Header: Unexpected sign out error:', err);
       // Force sign out by clearing everything
       localStorage.clear();
-      navigate("/auth", { replace: true });
+      navigate("/auth", {
+        replace: true
+      });
       toast.info("Signed out (forced)");
     }
   };
-
-  return (
-    <>
+  return <>
       <header className="fixed top-0 left-0 right-0 z-50 backdrop-blur-md bg-background/80 border-b border-border/50">
         <div className="max-w-7xl mx-auto px-4 lg:px-8 py-4">
           <div className="flex items-center justify-between">
             {/* Logo */}
             <Link to="/" className="flex items-center gap-3 flex-shrink-0 hover:scale-105 transition-transform">
-              {loading || initializing ? (
-                <LoadingAnimation size="md" />
-              ) : (
-                <img src={logoSrc} alt="dolly" className="h-12 w-auto object-contain" />
-              )}
+              {loading || initializing ? <LoadingAnimation size="md" /> : <img src={logoSrc} alt="dolly" className="h-12 w-auto object-contain" />}
               <div>
                 <h1 className="text-xl font-semibold text-foreground">dolly</h1>
               </div>
@@ -60,28 +65,21 @@ export const Header = () => {
             
             {/* Navigation - Hidden on mobile, replaced by mobile menu */}
             <nav className="hidden lg:flex items-center gap-8">
-              <Link to="/marketplace" className="text-muted-foreground hover:text-primary transition-all duration-300 font-medium px-3 py-2 rounded-lg hover:bg-accent/50">
-                Marketplace
-              </Link>
-              {user ? (
-                <>
+              <Link to="/marketplace" className="text-muted-foreground hover:text-primary transition-all duration-300 font-medium px-3 py-2 rounded-lg hover:bg-accent/50">on clickMarketplace</Link>
+              {user ? <>
                   <Link to="/dashboard" className="text-muted-foreground hover:text-primary transition-all duration-300 font-medium px-3 py-2 rounded-lg hover:bg-accent/50">
                     My Agents
                   </Link>
-                </>
-              ) : (
-                <>
+                </> : <>
                   <a href="#features" className="text-muted-foreground hover:text-primary transition-all duration-300 font-medium px-3 py-2 rounded-lg hover:bg-accent/50">Features</a>
                   <a href="#use-cases" className="text-muted-foreground hover:text-primary transition-all duration-300 font-medium px-3 py-2 rounded-lg hover:bg-accent/50">Use Cases</a>
                   <a href="#upload" className="text-muted-foreground hover:text-primary transition-all duration-300 font-medium px-3 py-2 rounded-lg hover:bg-accent/50">Upload</a>
-                </>
-              )}
+                </>}
             </nav>
             
             {/* CTA Buttons */}
             <div className="flex items-center gap-2 sm:gap-3">
-              {user ? (
-                <>
+              {user ? <>
                   <Avatar className="w-7 h-7 sm:w-8 sm:h-8">
                     <AvatarFallback className="text-xs">
                       {user.email?.slice(0, 2).toUpperCase()}
@@ -104,20 +102,13 @@ export const Header = () => {
                   </Button>
                   
                   {/* Mobile Menu Button - with click handler */}
-                  <Button 
-                    variant="ghost" 
-                    size="icon" 
-                    className="lg:hidden"
-                    onClick={() => {
-                      // For now, navigate to settings - you can implement a proper mobile menu later
-                      navigate('/settings');
-                    }}
-                  >
+                  <Button variant="ghost" size="icon" className="lg:hidden" onClick={() => {
+                // For now, navigate to settings - you can implement a proper mobile menu later
+                navigate('/settings');
+              }}>
                     <Menu className="w-4 h-4 sm:w-5 sm:h-5" />
                   </Button>
-                </>
-              ) : (
-                <>
+                </> : <>
                   {/* Theme Toggle for logged-out users */}
                   <ThemeToggle iconOnly />
                   
@@ -128,12 +119,10 @@ export const Header = () => {
                     <span className="hidden sm:inline">Get Started</span>
                     <span className="sm:hidden">Start</span>
                   </Button>
-                </>
-              )}
+                </>}
             </div>
           </div>
         </div>
       </header>
-    </>
-  );
+    </>;
 };
