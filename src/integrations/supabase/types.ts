@@ -1410,6 +1410,10 @@ export type Database = {
         Args: { p_email: string; p_invite_code?: string }
         Returns: boolean
       }
+      validate_invite_code_secure: {
+        Args: { p_invite_code: string }
+        Returns: boolean
+      }
       validate_sensitive_access: {
         Args: { access_type?: string; record_id: string; table_name: string }
         Returns: boolean
