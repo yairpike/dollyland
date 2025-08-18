@@ -17,7 +17,7 @@ import { useTourManager } from "@/components/OnboardingTour";
 export const CreateAgent = () => {
   const navigate = useNavigate();
   const { user } = useAuth();
-  const { shouldShowTour } = useTourManager();
+  const { shouldShowTour, markTourAsCompleted } = useTourManager();
   const [loading, setLoading] = useState(false);
   const [step, setStep] = useState<'template' | 'customize'>('template');
   const [selectedTemplate, setSelectedTemplate] = useState<any>(null);
@@ -198,9 +198,15 @@ export const CreateAgent = () => {
         {/* Create Agent Tour */}
         <CreateAgentTour 
           isOpen={showCreateTour}
-          onClose={() => setShowCreateTour(false)}
+          onClose={() => {
+            setShowCreateTour(false);
+            markTourAsCompleted('create-agent');
+          }}
           currentStep={step}
-          onTemplateSelected={() => setShowCreateTour(false)}
+          onTemplateSelected={() => {
+            setShowCreateTour(false);
+            markTourAsCompleted('create-agent');
+          }}
         />
       </div>
     </DashboardLayout>
