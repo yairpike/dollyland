@@ -1,11 +1,14 @@
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Zap, Sparkles } from "lucide-react";
-import dollyLogo from "/lovable-uploads/8dc3b4f9-4ebf-4b9b-90c7-c85727a0e166.png";
+import { useTheme } from "next-themes";
 import hero3dBrain from "@/assets/hero-3d-brain.png";
 
 export const Hero = () => {
   const navigate = useNavigate();
+  const { theme } = useTheme();
+
+  const logoSrc = theme === 'dark' ? '/lovable-uploads/c8c73254-3940-4a5b-b990-cb30d21dc890.png' : '/lovable-uploads/85abbc87-fafc-4307-86a1-f85ed74b639e.png';
   
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-background via-dashboard-lavender/10 to-dashboard-mint/10">
@@ -30,7 +33,7 @@ export const Hero = () => {
       
       <div className="relative z-10 text-center max-w-5xl mx-auto px-6">
         <div className="mb-12 animate-slide-up">
-          <img src={dollyLogo} alt="dolly" className="w-32 h-32 mx-auto mb-8 animate-float rounded-3xl shadow-xl bg-card backdrop-blur-glass p-6" />
+          <img src={logoSrc} alt="dolly" className="w-32 h-32 mx-auto mb-8 animate-float rounded-3xl shadow-xl bg-card backdrop-blur-glass p-6" />
           <h1 className="text-6xl md:text-7xl font-semibold mb-8 leading-tight">
             <span className="text-foreground">Build & Deploy</span>
             <span className="block text-foreground mt-2">AI Agents</span>

@@ -3,7 +3,7 @@ import { AppSidebar } from "./AppSidebar";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { Menu } from "lucide-react";
-import dollyLogo from "/lovable-uploads/8dc3b4f9-4ebf-4b9b-90c7-c85727a0e166.png";
+import { useTheme } from "next-themes";
 
 interface DashboardLayoutProps {
   children: React.ReactNode;
@@ -12,6 +12,9 @@ interface DashboardLayoutProps {
 
 export function DashboardLayout({ children, onCreateAgent }: DashboardLayoutProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { theme } = useTheme();
+
+  const logoSrc = theme === 'dark' ? '/lovable-uploads/c8c73254-3940-4a5b-b990-cb30d21dc890.png' : '/lovable-uploads/85abbc87-fafc-4307-86a1-f85ed74b639e.png';
   
   return (
     <div className="min-h-screen flex w-full bg-background">
@@ -39,7 +42,7 @@ export function DashboardLayout({ children, onCreateAgent }: DashboardLayoutProp
             
             {/* Logo and App Name */}
             <div className="flex items-center gap-3">
-              <img src={dollyLogo} alt="dolly" className="w-8 h-8 lg:w-10 lg:h-10 rounded-lg" />
+              <img src={logoSrc} alt="dolly" className="w-8 h-8 lg:w-10 lg:h-10 rounded-lg" />
               <h1 className="text-lg lg:text-xl font-semibold">dolly</h1>
             </div>
           </div>
