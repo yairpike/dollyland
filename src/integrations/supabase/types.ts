@@ -269,13 +269,6 @@ export type Database = {
             referencedRelation: "user_ai_providers"
             referencedColumns: ["id"]
           },
-          {
-            foreignKeyName: "agents_ai_provider_id_fkey"
-            columns: ["ai_provider_id"]
-            isOneToOne: false
-            referencedRelation: "user_ai_providers_safe"
-            referencedColumns: ["id"]
-          },
         ]
       }
       api_key_access_logs: {
@@ -650,13 +643,6 @@ export type Database = {
             referencedRelation: "user_ai_providers"
             referencedColumns: ["id"]
           },
-          {
-            foreignKeyName: "secure_api_keys_provider_id_fkey"
-            columns: ["provider_id"]
-            isOneToOne: false
-            referencedRelation: "user_ai_providers_safe"
-            referencedColumns: ["id"]
-          },
         ]
       }
       user_ai_providers: {
@@ -885,48 +871,7 @@ export type Database = {
       }
     }
     Views: {
-      user_ai_providers_safe: {
-        Row: {
-          access_count: number | null
-          created_at: string | null
-          display_name: string | null
-          id: string | null
-          is_active: boolean | null
-          is_default: boolean | null
-          last_accessed_at: string | null
-          model_name: string | null
-          provider_name: string | null
-          updated_at: string | null
-          user_id: string | null
-        }
-        Insert: {
-          access_count?: number | null
-          created_at?: string | null
-          display_name?: string | null
-          id?: string | null
-          is_active?: boolean | null
-          is_default?: boolean | null
-          last_accessed_at?: string | null
-          model_name?: string | null
-          provider_name?: string | null
-          updated_at?: string | null
-          user_id?: string | null
-        }
-        Update: {
-          access_count?: number | null
-          created_at?: string | null
-          display_name?: string | null
-          id?: string | null
-          is_active?: boolean | null
-          is_default?: boolean | null
-          last_accessed_at?: string | null
-          model_name?: string | null
-          provider_name?: string | null
-          updated_at?: string | null
-          user_id?: string | null
-        }
-        Relationships: []
-      }
+      [_ in never]: never
     }
     Functions: {
       create_deployment_secure: {
@@ -1137,6 +1082,10 @@ export type Database = {
           new_url?: string
           webhook_id: string
         }
+        Returns: boolean
+      }
+      validate_ai_provider_access: {
+        Args: { provider_id: string }
         Returns: boolean
       }
       validate_sensitive_access: {
