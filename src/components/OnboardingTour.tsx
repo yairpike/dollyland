@@ -43,28 +43,29 @@ export const OnboardingTour: React.FC<OnboardingTourProps> = ({
     const tooltipRect = tooltipElement.getBoundingClientRect();
     const position = currentStepData.position || 'bottom';
 
-    // Account for scroll position
+    // Account for scroll position and fixed header offset
     const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
     const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
+    const headerOffset = 28; // Adjust for fixed header/navbar
 
     let top = 0;
     let left = 0;
 
     switch (position) {
       case 'top':
-        top = rect.top + scrollTop - tooltipRect.height - 20;
+        top = rect.top + scrollTop - tooltipRect.height - 20 - headerOffset;
         left = rect.left + scrollLeft + (rect.width - tooltipRect.width) / 2;
         break;
       case 'bottom':
-        top = rect.bottom + scrollTop + 20;
+        top = rect.bottom + scrollTop + 20 - headerOffset;
         left = rect.left + scrollLeft + (rect.width - tooltipRect.width) / 2;
         break;
       case 'left':
-        top = rect.top + scrollTop + (rect.height - tooltipRect.height) / 2;
+        top = rect.top + scrollTop + (rect.height - tooltipRect.height) / 2 - headerOffset;
         left = rect.left + scrollLeft - tooltipRect.width - 20;
         break;
       case 'right':
-        top = rect.top + scrollTop + (rect.height - tooltipRect.height) / 2;
+        top = rect.top + scrollTop + (rect.height - tooltipRect.height) / 2 - headerOffset;
         left = rect.right + scrollLeft + 20;
         break;
     }
@@ -76,7 +77,7 @@ export const OnboardingTour: React.FC<OnboardingTourProps> = ({
 
     setTooltipPosition({ top, left });
     setHighlightPosition({
-      top: rect.top + scrollTop,
+      top: rect.top + scrollTop - headerOffset,
       left: rect.left + scrollLeft,
       width: rect.width,
       height: rect.height
