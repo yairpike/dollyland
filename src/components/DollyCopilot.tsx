@@ -8,7 +8,8 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, Di
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
-import { Bot, Send, MessageCircle, X, Minimize2, Maximize2, Loader2, Sparkles } from "lucide-react";
+import { LoadingAnimation } from "./LoadingAnimation";
+import { Send, MessageCircle, X, Minimize2, Maximize2, Loader2, Sparkles } from "lucide-react";
 
 interface Message {
   id: string;
@@ -151,7 +152,7 @@ Always be encouraging and provide clear next steps.`
           className="h-14 w-14 rounded-full shadow-lg bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 transition-all duration-200"
           size="lg"
         >
-          <Bot className="w-6 h-6" />
+          <LoadingAnimation size="md" />
         </Button>
       </div>
     );
@@ -164,7 +165,7 @@ Always be encouraging and provide clear next steps.`
           <CardHeader className="pb-2">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <Bot className="w-5 h-5 text-primary" />
+                <LoadingAnimation size="sm" />
                 <CardTitle className="text-sm">Dolly Copilot</CardTitle>
                 <Badge variant="secondary" className="text-xs">Online</Badge>
               </div>
@@ -200,7 +201,7 @@ Always be encouraging and provide clear next steps.`
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
               <div className="relative">
-                <Bot className="w-5 h-5 text-primary" />
+                <LoadingAnimation size="sm" />
                 <Sparkles className="w-3 h-3 text-yellow-500 absolute -top-1 -right-1" />
               </div>
               <CardTitle className="text-sm">Dolly Copilot</CardTitle>
