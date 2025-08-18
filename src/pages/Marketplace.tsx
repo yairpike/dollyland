@@ -204,14 +204,14 @@ export const Marketplace = () => {
             placeholder="Search agents, skills, or tools..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="pl-10 bg-background border-input"
+            className="pl-10 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600"
           />
         </div>
         <Select value={selectedCategory} onValueChange={setSelectedCategory}>
-          <SelectTrigger className="w-full sm:w-[200px] bg-background border-input">
+          <SelectTrigger className="w-full sm:w-[200px] bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600">
             <SelectValue placeholder="Category" />
           </SelectTrigger>
-          <SelectContent className="bg-background border-input">
+          <SelectContent className="bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 z-50">
             {AGENT_CATEGORIES.map((category) => {
               const IconComponent = category.icon
               return (
