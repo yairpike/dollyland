@@ -107,19 +107,20 @@ export const GitHubIntegration: React.FC<GitHubIntegrationProps> = ({ agentId })
         </CardDescription>
       </CardHeader>
       <CardContent className="flex-1 overflow-y-auto space-y-6">
-        <div className="flex gap-2">
+        <div className="flex flex-col sm:flex-row gap-2">
           <Button
             variant="outline"
             size="sm"
             onClick={loadRepositories}
             disabled={loading}
+            className="w-full sm:w-auto"
           >
             <RefreshCw className={`w-4 h-4 mr-2 ${loading ? 'animate-spin' : ''}`} />
             Refresh
           </Button>
           <Dialog open={showCreateDialog} onOpenChange={setShowCreateDialog}>
             <DialogTrigger asChild>
-              <Button size="sm">
+              <Button size="sm" className="w-full sm:w-auto">
                 <Plus className="w-4 h-4 mr-2" />
                 Create Repository
               </Button>
@@ -176,11 +177,11 @@ export const GitHubIntegration: React.FC<GitHubIntegrationProps> = ({ agentId })
                   <Label htmlFor="repo-private">Make repository private</Label>
                 </div>
               </div>
-              <DialogFooter>
-                <Button variant="outline" onClick={() => setShowCreateDialog(false)}>
+              <DialogFooter className="flex flex-col sm:flex-row gap-2">
+                <Button variant="outline" onClick={() => setShowCreateDialog(false)} className="w-full sm:w-auto">
                   Cancel
                 </Button>
-                <Button onClick={createRepository} disabled={loading}>
+                <Button onClick={createRepository} disabled={loading} className="w-full sm:w-auto">
                   {loading ? 'Creating...' : 'Create Repository'}
                 </Button>
               </DialogFooter>
@@ -221,8 +222,8 @@ export const GitHubIntegration: React.FC<GitHubIntegrationProps> = ({ agentId })
                   </div>
                 </CardHeader>
                 <CardContent>
-                  <div className="flex gap-2">
-                    <Button variant="outline" size="sm" asChild>
+                  <div className="flex flex-col sm:flex-row gap-2">
+                    <Button variant="outline" size="sm" asChild className="w-full sm:w-auto">
                       <a href={repo.url} target="_blank" rel="noopener noreferrer">
                         <ExternalLink className="w-4 h-4 mr-2" />
                         View on GitHub
@@ -231,7 +232,7 @@ export const GitHubIntegration: React.FC<GitHubIntegrationProps> = ({ agentId })
                     <Button variant="outline" size="sm" onClick={() => {
                       navigator.clipboard.writeText(repo.cloneUrl);
                       toast.success('Clone URL copied to clipboard');
-                    }}>
+                    }} className="w-full sm:w-auto">
                       Copy Clone URL
                     </Button>
                   </div>

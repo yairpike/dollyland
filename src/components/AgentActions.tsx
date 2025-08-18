@@ -291,20 +291,20 @@ export const AgentActions: React.FC<AgentActionsProps> = ({ agentId }) => {
             </TabsList>
 
             <TabsContent value="executions" className="space-y-4">
-              <div className="flex justify-between items-center">
+              <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
                 <div className="flex items-center gap-2">
                   <h3 className="text-lg font-medium">Recent Executions</h3>
                   <Badge variant="secondary">{executions.length}</Badge>
                 </div>
                 
-                <div className="flex gap-2">
-                  <Button onClick={fetchExecutions} disabled={loading} variant="outline">
+                <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
+                  <Button onClick={fetchExecutions} disabled={loading} variant="outline" className="w-full sm:w-auto">
                     <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
                   </Button>
                   
                   <Dialog open={createActionOpen} onOpenChange={setCreateActionOpen}>
                     <DialogTrigger asChild>
-                      <Button>
+                      <Button className="w-full sm:w-auto">
                         <Plus className="w-4 h-4 mr-2" />
                         Execute Action
                       </Button>
@@ -398,11 +398,11 @@ export const AgentActions: React.FC<AgentActionsProps> = ({ agentId }) => {
                           </div>
                         )}
                         
-                        <div className="flex justify-end gap-2">
-                          <Button variant="outline" onClick={() => setCreateActionOpen(false)}>
+                        <div className="flex flex-col sm:flex-row justify-end gap-2">
+                          <Button variant="outline" onClick={() => setCreateActionOpen(false)} className="w-full sm:w-auto">
                             Cancel
                           </Button>
-                          <Button onClick={executeAction} disabled={loading || !selectedActionType}>
+                          <Button onClick={executeAction} disabled={loading || !selectedActionType} className="w-full sm:w-auto">
                             <Play className="w-4 h-4 mr-2" />
                             Execute
                           </Button>
@@ -417,8 +417,8 @@ export const AgentActions: React.FC<AgentActionsProps> = ({ agentId }) => {
                 <div className="space-y-3">
                   {executions.map((execution) => (
                     <Card key={execution.id} className="p-4">
-                      <div className="flex items-start justify-between">
-                        <div className="flex-1">
+                      <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-4">
+                        <div className="flex-1 min-w-0">
                           <div className="flex items-center gap-2 mb-2">
                             {getStatusIcon(execution.status)}
                             <Badge className={getStatusColor(execution.status)}>

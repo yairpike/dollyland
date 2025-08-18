@@ -420,20 +420,20 @@ export const WorkflowBuilder: React.FC<WorkflowBuilderProps> = ({ agentId }) => 
             </TabsList>
 
             <TabsContent value="workflows" className="space-y-4">
-              <div className="flex justify-between items-center">
+              <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
                 <div className="flex items-center gap-2">
                   <h3 className="text-lg font-medium">Workflows</h3>
                   <Badge variant="secondary">{workflows.length}</Badge>
                 </div>
                 
-                <div className="flex gap-2">
-                  <Button onClick={fetchWorkflows} disabled={loading} variant="outline">
+                <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
+                  <Button onClick={fetchWorkflows} disabled={loading} variant="outline" className="w-full sm:w-auto">
                     <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
                   </Button>
                   
                   <Dialog open={createWorkflowOpen} onOpenChange={setCreateWorkflowOpen}>
                     <DialogTrigger asChild>
-                      <Button onClick={resetCurrentWorkflow}>
+                      <Button onClick={resetCurrentWorkflow} className="w-full sm:w-auto">
                         <Plus className="w-4 h-4 mr-2" />
                         Create Workflow
                       </Button>
@@ -460,10 +460,10 @@ export const WorkflowBuilder: React.FC<WorkflowBuilderProps> = ({ agentId }) => 
                 </div>
               </div>
 
-              <div className="grid gap-4">
+                <div className="grid gap-4">
                 {workflows.map((workflow) => (
                   <Card key={workflow.id} className="p-4">
-                    <div className="flex items-start justify-between">
+                    <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-4">
                       <div className="flex-1">
                         <div className="flex items-center gap-2 mb-2">
                           <Workflow className="w-4 h-4" />
@@ -495,7 +495,7 @@ export const WorkflowBuilder: React.FC<WorkflowBuilderProps> = ({ agentId }) => 
                         </p>
                       </div>
                       
-                      <div className="flex gap-2">
+                      <div className="flex flex-col sm:flex-row gap-2 mt-4 lg:mt-0 lg:flex-shrink-0">
                         <Button 
                           variant="outline" 
                           size="sm"

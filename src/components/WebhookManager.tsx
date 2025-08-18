@@ -390,20 +390,20 @@ export const WebhookManager: React.FC<WebhookManagerProps> = ({ agentId }) => {
             </TabsList>
 
             <TabsContent value="webhooks" className="space-y-4">
-              <div className="flex justify-between items-center">
+              <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
                 <div className="flex items-center gap-2">
                   <h3 className="text-lg font-medium">Webhooks</h3>
                   <Badge variant="secondary">{webhooks.length}</Badge>
                 </div>
                 
-                <div className="flex gap-2">
-                  <Button onClick={fetchWebhooks} disabled={loading} variant="outline">
+                <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
+                  <Button onClick={fetchWebhooks} disabled={loading} variant="outline" className="w-full sm:w-auto">
                     <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
                   </Button>
                   
                   <Dialog open={createWebhookOpen} onOpenChange={setCreateWebhookOpen}>
                     <DialogTrigger asChild>
-                      <Button onClick={resetCurrentWebhook}>
+                      <Button onClick={resetCurrentWebhook} className="w-full sm:w-auto">
                         <Plus className="w-4 h-4 mr-2" />
                         Create Webhook
                       </Button>
@@ -431,7 +431,7 @@ export const WebhookManager: React.FC<WebhookManagerProps> = ({ agentId }) => {
               <div className="grid gap-4">
                 {webhooks.map((webhook) => (
                   <Card key={webhook.id} className="p-4">
-                    <div className="flex items-start justify-between">
+                    <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-4">
                       <div className="flex-1">
                         <div className="flex items-center gap-2 mb-2">
                           <Globe className="w-4 h-4" />
@@ -460,7 +460,7 @@ export const WebhookManager: React.FC<WebhookManagerProps> = ({ agentId }) => {
                         </p>
                       </div>
                       
-                      <div className="flex gap-2">
+                      <div className="flex flex-wrap gap-2 mt-4 lg:mt-0 lg:flex-shrink-0">
                         <Button 
                           variant="outline" 
                           size="sm"
@@ -468,6 +468,7 @@ export const WebhookManager: React.FC<WebhookManagerProps> = ({ agentId }) => {
                             setSelectedWebhook(webhook.id)
                             setTestWebhookOpen(true)
                           }}
+                          className="min-w-0 flex-shrink-0"
                         >
                           <Send className="w-4 h-4" />
                         </Button>
@@ -479,6 +480,7 @@ export const WebhookManager: React.FC<WebhookManagerProps> = ({ agentId }) => {
                             setCurrentWebhook(webhook)
                             setEditWebhookOpen(true)
                           }}
+                          className="min-w-0 flex-shrink-0"
                         >
                           <Edit className="w-4 h-4" />
                         </Button>
@@ -487,6 +489,7 @@ export const WebhookManager: React.FC<WebhookManagerProps> = ({ agentId }) => {
                           variant="outline" 
                           size="sm"
                           onClick={() => deleteWebhook(webhook.id)}
+                          className="min-w-0 flex-shrink-0"
                         >
                           <Trash2 className="w-4 h-4" />
                         </Button>
@@ -495,6 +498,7 @@ export const WebhookManager: React.FC<WebhookManagerProps> = ({ agentId }) => {
                           variant="outline" 
                           size="sm"
                           onClick={() => setSelectedWebhook(webhook.id)}
+                          className="min-w-0 flex-shrink-0"
                         >
                           <Eye className="w-4 h-4" />
                         </Button>

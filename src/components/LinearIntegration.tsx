@@ -252,44 +252,47 @@ export const LinearIntegration: React.FC<LinearIntegrationProps> = ({ agentId })
             </TabsList>
 
             <TabsContent value="issues" className="space-y-4">
-              <div className="flex items-center gap-4">
-                <div className="flex-1 flex items-center gap-2">
-                  <Search className="w-4 h-4" />
-                  <Input
-                    placeholder="Search issues..."
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    onKeyPress={(e) => e.key === 'Enter' && searchIssues()}
-                  />
-                  <Button onClick={searchIssues} disabled={loading}>
+              <div className="flex flex-col gap-4">
+                <div className="flex flex-col sm:flex-row sm:items-center gap-4">
+                  <div className="flex-1 flex items-center gap-2">
                     <Search className="w-4 h-4" />
-                  </Button>
+                    <Input
+                      placeholder="Search issues..."
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                      onKeyPress={(e) => e.key === 'Enter' && searchIssues()}
+                    />
+                    <Button onClick={searchIssues} disabled={loading} className="flex-shrink-0">
+                      <Search className="w-4 h-4" />
+                    </Button>
+                  </div>
                 </div>
                 
-                <Select value={selectedTeam} onValueChange={setSelectedTeam}>
-                  <SelectTrigger className="w-48">
-                    <SelectValue placeholder="Select team" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {teams.map((team) => (
-                      <SelectItem key={team.id} value={team.id}>
-                        {team.name}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
+                <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
+                  <Select value={selectedTeam} onValueChange={setSelectedTeam}>
+                    <SelectTrigger className="w-full sm:w-48">
+                      <SelectValue placeholder="Select team" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {teams.map((team) => (
+                        <SelectItem key={team.id} value={team.id}>
+                          {team.name}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
 
-                <Button onClick={() => fetchIssues()} disabled={loading}>
-                  <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
-                </Button>
+                  <Button onClick={() => fetchIssues()} disabled={loading} className="w-full sm:w-auto">
+                    <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
+                  </Button>
 
-                <Dialog open={createIssueOpen} onOpenChange={setCreateIssueOpen}>
-                  <DialogTrigger asChild>
-                    <Button>
-                      <Plus className="w-4 h-4 mr-2" />
-                      Create Issue
-                    </Button>
-                  </DialogTrigger>
+                  <Dialog open={createIssueOpen} onOpenChange={setCreateIssueOpen}>
+                    <DialogTrigger asChild>
+                      <Button className="w-full sm:w-auto">
+                        <Plus className="w-4 h-4 mr-2" />
+                        Create Issue
+                      </Button>
+                    </DialogTrigger>
                   <DialogContent>
                     <DialogHeader>
                       <DialogTitle>Create New Issue</DialogTitle>
@@ -352,11 +355,11 @@ export const LinearIntegration: React.FC<LinearIntegrationProps> = ({ agentId })
                         </Select>
                       </div>
                       
-                      <div className="flex justify-end gap-2">
-                        <Button variant="outline" onClick={() => setCreateIssueOpen(false)}>
+                      <div className="flex flex-col sm:flex-row justify-end gap-2">
+                        <Button variant="outline" onClick={() => setCreateIssueOpen(false)} className="w-full sm:w-auto">
                           Cancel
                         </Button>
-                        <Button onClick={createIssue} disabled={loading}>
+                        <Button onClick={createIssue} disabled={loading} className="w-full sm:w-auto">
                           Create Issue
                         </Button>
                       </div>
@@ -442,12 +445,13 @@ export const LinearIntegration: React.FC<LinearIntegrationProps> = ({ agentId })
                   )}
                 </div>
               </ScrollArea>
+              </div>
             </TabsContent>
 
             <TabsContent value="teams" className="space-y-4">
-              <div className="flex justify-between items-center">
+              <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
                 <h3 className="text-lg font-medium">Teams ({teams.length})</h3>
-                <Button onClick={fetchTeams} disabled={loading}>
+                <Button onClick={fetchTeams} disabled={loading} className="w-full sm:w-auto">
                   <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
                   Refresh
                 </Button>
