@@ -239,8 +239,8 @@ Always be encouraging, patient, and thorough. For external setups, provide actua
   }
 
   return (
-    <div className="fixed bottom-6 right-6 z-50">
-      <Card className="w-96 h-[600px] shadow-xl flex flex-col">
+    <div className="fixed bottom-6 right-6 z-50 max-h-[calc(100vh-3rem)]">
+      <Card className="w-96 h-[600px] max-h-[calc(100vh-6rem)] shadow-xl flex flex-col overflow-hidden">
         <CardHeader className="pb-2 border-b">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
@@ -276,8 +276,8 @@ Always be encouraging, patient, and thorough. For external setups, provide actua
           </div>
         </CardHeader>
         
-        <CardContent className="flex-1 flex flex-col p-0">
-          <ScrollArea className="flex-1 p-4" ref={scrollAreaRef}>
+        <CardContent className="flex-1 flex flex-col p-0 overflow-hidden min-h-0">
+          <ScrollArea className="flex-1 p-4 overflow-y-auto" ref={scrollAreaRef}>
             <div className="space-y-4">
               {messages.map((message) => (
                 <div
@@ -312,7 +312,7 @@ Always be encouraging, patient, and thorough. For external setups, provide actua
             </div>
           </ScrollArea>
           
-          <div className="border-t p-4">
+          <div className="border-t p-4 flex-shrink-0">
             <div className="flex gap-2">
               <Input
                 value={inputMessage}
