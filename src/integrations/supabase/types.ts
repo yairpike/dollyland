@@ -979,36 +979,7 @@ export type Database = {
       }
     }
     Views: {
-      safe_invites_view: {
-        Row: {
-          created_at: string | null
-          created_by: string | null
-          expires_at: string | null
-          id: string | null
-          invite_code: string | null
-          status: string | null
-          used_at: string | null
-        }
-        Insert: {
-          created_at?: string | null
-          created_by?: string | null
-          expires_at?: string | null
-          id?: string | null
-          invite_code?: string | null
-          status?: never
-          used_at?: string | null
-        }
-        Update: {
-          created_at?: string | null
-          created_by?: string | null
-          expires_at?: string | null
-          id?: string | null
-          invite_code?: string | null
-          status?: never
-          used_at?: string | null
-        }
-        Relationships: []
-      }
+      [_ in never]: never
     }
     Functions: {
       access_encrypted_key_secure: {
@@ -1329,6 +1300,17 @@ export type Database = {
         }[]
       }
       get_user_invites_safe: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          created_at: string
+          expires_at: string
+          id: string
+          invite_code: string
+          status: string
+          used_at: string
+        }[]
+      }
+      get_user_invites_secure: {
         Args: Record<PropertyKey, never>
         Returns: {
           created_at: string
