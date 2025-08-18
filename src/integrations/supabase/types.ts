@@ -1058,6 +1058,21 @@ export type Database = {
           user_count_range: string
         }[]
       }
+      get_marketplace_safe: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          avatar_url: string
+          category: string
+          created_at: string
+          description: string
+          id: string
+          is_featured: boolean
+          name: string
+          rating: number
+          tags: string[]
+          user_count: number
+        }[]
+      }
       get_masked_access_logs: {
         Args: { user_uuid: string }
         Returns: {

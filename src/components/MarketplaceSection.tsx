@@ -112,40 +112,16 @@ export const MarketplaceSection = () => {
 
   const fetchPublicAgents = async () => {
     try {
-      // Use secure RPC function for authenticated users
-      const { data, error } = await supabase.rpc('get_marketplace_authenticated')
+      // Use the secure marketplace function that never exposes system prompts
+      const { data, error } = await supabase.rpc('get_marketplace_safe')
 
       if (error) {
         console.error('Error fetching marketplace agents:', error)
-        
-        // Fallback to public preview RPC function if authentication fails
-        try {
-          const { data: previewData, error: previewError } = await supabase.rpc('get_marketplace_preview')
-          
-          if (previewError) throw previewError
-          
-          const transformedPreview = previewData?.map(agent => ({
-            id: agent.id,
-            name: agent.name,
-            description: agent.description,
-            avatar_url: agent.avatar_url,
-            category: agent.category || 'ui-ux',
-            rating: agent.rating || 4.5,
-            user_count: 500, // Use placeholder for preview
-            creator_name: 'Dolly Expert',
-            tags: Array.isArray(agent.tags) ? agent.tags : ['AI Agent'],
-            is_featured: agent.is_featured || false
-          })) || []
-          
-          setAgents(transformedPreview.length > 0 ? transformedPreview : FEATURED_AGENTS)
-          return
-        } catch (fallbackError) {
-          setAgents(FEATURED_AGENTS)
-          return
-        }
+        setAgents(FEATURED_AGENTS)
+        return
       }
 
-      // Transform authenticated data to match our interface
+      // Transform data to match our interface
       const transformedAgents = data?.map(agent => ({
         id: agent.id,
         name: agent.name,
