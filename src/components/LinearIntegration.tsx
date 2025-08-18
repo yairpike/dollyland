@@ -246,7 +246,7 @@ export const LinearIntegration: React.FC<LinearIntegrationProps> = ({ agentId })
         </CardHeader>
         <CardContent>
           <Tabs defaultValue="issues" className="w-full">
-            <TabsList className="grid w-full grid-cols-2 bg-white border p-1 h-12 items-center">
+            <TabsList className="grid w-full grid-cols-2 bg-card border p-1 h-12 items-center">
               <TabsTrigger value="issues">Issues</TabsTrigger>
               <TabsTrigger value="teams">Teams</TabsTrigger>
             </TabsList>

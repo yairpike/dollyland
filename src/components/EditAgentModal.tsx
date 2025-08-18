@@ -127,7 +127,7 @@ export const EditAgentModal = ({ agent, open, onOpenChange, onAgentUpdated }: Ed
         </DialogHeader>
         
         <Tabs defaultValue="settings" className="w-full flex-1 flex flex-col min-h-0">
-          <TabsList className="grid w-full grid-cols-9 bg-white border p-1 h-12 items-center">
+          <TabsList className="grid w-full grid-cols-9 bg-card border p-1 h-12 items-center">
             <TabsTrigger value="settings" className="flex items-center gap-2">
               <Settings className="w-4 h-4" />
               Settings
@@ -175,7 +175,7 @@ export const EditAgentModal = ({ agent, open, onOpenChange, onAgentUpdated }: Ed
                   value={formData.name}
                   onChange={(e) => handleChange("name", e.target.value)}
                   placeholder="Enter agent name"
-                  className="bg-white"
+                  className="bg-input"
                   required
                 />
               </div>
@@ -187,7 +187,7 @@ export const EditAgentModal = ({ agent, open, onOpenChange, onAgentUpdated }: Ed
                   value={formData.description}
                   onChange={(e) => handleChange("description", e.target.value)}
                   placeholder="Describe what your agent does"
-                  className="bg-white"
+                  className="bg-input"
                   rows={3}
                 />
               </div>
@@ -199,7 +199,7 @@ export const EditAgentModal = ({ agent, open, onOpenChange, onAgentUpdated }: Ed
                   value={formData.systemPrompt}
                   onChange={(e) => handleChange("systemPrompt", e.target.value)}
                   placeholder="Define your agent's role and behavior"
-                  className="bg-white"
+                  className="bg-input"
                   rows={6}
                 />
               </div>

@@ -288,7 +288,7 @@ export const AIProviderManager = () => {
                   id="apiKey"
                   type="password"
                   placeholder="Enter your API key"
-                  className="bg-white"
+                  className="bg-input"
                   value={formData.apiKey}
                   onChange={(e) => setFormData(prev => ({ ...prev, apiKey: e.target.value }))}
                   required
@@ -300,7 +300,7 @@ export const AIProviderManager = () => {
                 <Input
                   id="displayName"
                   placeholder="e.g., My Personal OpenAI"
-                  className="bg-white"
+                  className="bg-input"
                   value={formData.displayName}
                   onChange={(e) => setFormData(prev => ({ ...prev, displayName: e.target.value }))}
                 />
