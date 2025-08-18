@@ -218,7 +218,7 @@ export const KnowledgeBaseManager = ({ agentId }: KnowledgeBaseManagerProps) => 
   }
 
   return (
-    <Card className="flex flex-col h-full">
+    <Card>
       <CardHeader>
         <div className="flex items-center justify-between">
           <div>
@@ -252,7 +252,7 @@ export const KnowledgeBaseManager = ({ agentId }: KnowledgeBaseManagerProps) => 
           </Dialog>
         </div>
       </CardHeader>
-      <CardContent className="space-y-6 flex-1 overflow-y-auto">
+      <CardContent className="space-y-6">
 
       {knowledgeBases.length === 0 ? (
         <Card>
