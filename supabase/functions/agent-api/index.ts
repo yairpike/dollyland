@@ -21,6 +21,74 @@ interface DeploymentConfig {
   allowed_origins?: string[];
 }
 
+// Input validation and security functions
+function validateMessage(message: string): { isValid: boolean; error?: string } {
+  if (!message || typeof message !== 'string') {
+    return { isValid: false, error: 'Message is required and must be a string' };
+  }
+  
+  if (message.length === 0) {
+    return { isValid: false, error: 'Message cannot be empty' };
+  }
+  
+  if (message.length > 4000) {
+    return { isValid: false, error: 'Message exceeds maximum length of 4000 characters' };
+  }
+  
+  // Enhanced injection pattern detection
+  const dangerousPatterns = [
+    /ignore.*(previous|above|system|instructions)/i,
+    /forget.*(instructions|prompt|context)/i,
+    /you.*(are|must).*(now|instead|actually)/i,
+    /override.*system/i,
+    /jailbreak/i,
+    /roleplay.*admin/i,
+    /<script|javascript:|eval\(/i,
+    /document\.cookie|localStorage|sessionStorage/i,
+    /exec|sudo|rm -rf|drop table/i
+  ];
+  
+  for (const pattern of dangerousPatterns) {
+    if (pattern.test(message)) {
+      return { isValid: false, error: 'Message contains potentially harmful content' };
+    }
+  }
+  
+  return { isValid: true };
+}
+
+function validateApiKey(apiKey: string): { isValid: boolean; error?: string } {
+  if (!apiKey || typeof apiKey !== 'string') {
+    return { isValid: false, error: 'API key is required' };
+  }
+  
+  if (apiKey.length < 20) {
+    return { isValid: false, error: 'Invalid API key format' };
+  }
+  
+  return { isValid: true };
+}
+
+function validateUUID(uuid: string): { isValid: boolean; error?: string } {
+  if (!uuid || typeof uuid !== 'string') {
+    return { isValid: false, error: 'ID is required and must be a string' };
+  }
+  
+  const uuidPattern = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+  if (!uuidPattern.test(uuid)) {
+    return { isValid: false, error: 'Invalid ID format' };
+  }
+  
+  return { isValid: true };
+}
+
+function rateLimitCheck(requests: number, maxRequests: number): { allowed: boolean; error?: string } {
+  if (requests >= maxRequests) {
+    return { allowed: false, error: 'Rate limit exceeded. Please try again later.' };
+  }
+  return { allowed: true };
+}
+
 serve(async (req) => {
   // Handle CORS preflight requests
   if (req.method === 'OPTIONS') {
@@ -68,12 +136,27 @@ serve(async (req) => {
     // Route: POST /api/agents/{agent_id}/chat - Chat with agent via API
     if (pathname.startsWith('/api/agents/') && pathname.endsWith('/chat') && req.method === 'POST') {
       const agentId = pathname.split('/')[3];
-      const apiKey = req.headers.get('x-agent-api-key');
       
-      if (!apiKey) {
+      // Validate agent ID
+      const agentIdValidation = validateUUID(agentId);
+      if (!agentIdValidation.isValid) {
         return new Response(JSON.stringify({ 
           success: false, 
-          error: 'API key required' 
+          error: agentIdValidation.error 
+        }), {
+          status: 400,
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        });
+      }
+      
+      const apiKey = req.headers.get('x-agent-api-key');
+      
+      // Validate API key
+      const apiKeyValidation = validateApiKey(apiKey || '');
+      if (!apiKeyValidation.isValid) {
+        return new Response(JSON.stringify({ 
+          success: false, 
+          error: apiKeyValidation.error 
         }), {
           status: 401,
           headers: { ...corsHeaders, 'Content-Type': 'application/json' },
@@ -99,7 +182,43 @@ serve(async (req) => {
         });
       }
 
-      const requestBody: AgentAPIRequest = await req.json();
+      // Parse and validate request body
+      let requestBody: AgentAPIRequest;
+      try {
+        requestBody = await req.json();
+      } catch (error) {
+        return new Response(JSON.stringify({ 
+          success: false, 
+          error: 'Invalid JSON in request body' 
+        }), {
+          status: 400,
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        });
+      }
+      
+      // Validate message content
+      const messageValidation = validateMessage(requestBody.message);
+      if (!messageValidation.isValid) {
+        return new Response(JSON.stringify({ 
+          success: false, 
+          error: messageValidation.error 
+        }), {
+          status: 400,
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        });
+      }
+      
+      // Check rate limiting
+      const rateCheck = rateLimitCheck(deployment.usage_count, deployment.config?.max_requests_per_hour || 1000);
+      if (!rateCheck.allowed) {
+        return new Response(JSON.stringify({ 
+          success: false, 
+          error: rateCheck.error 
+        }), {
+          status: 429,
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        });
+      }
       
       // Log API usage
       await supabase.from('agent_analytics').insert({

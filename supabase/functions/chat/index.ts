@@ -17,6 +17,64 @@ interface ChatRequest {
   agentId: string;
 }
 
+// Input validation functions
+function validateMessage(message: string): { isValid: boolean; error?: string } {
+  if (!message || typeof message !== 'string') {
+    return { isValid: false, error: 'Message is required and must be a string' };
+  }
+  
+  if (message.length === 0) {
+    return { isValid: false, error: 'Message cannot be empty' };
+  }
+  
+  if (message.length > 4000) {
+    return { isValid: false, error: 'Message exceeds maximum length of 4000 characters' };
+  }
+  
+  // Check for potential injection patterns
+  const dangerousPatterns = [
+    /ignore.*(previous|above|system|instructions)/i,
+    /forget.*(instructions|prompt|context)/i,
+    /you.*(are|must).*(now|instead|actually)/i,
+    /override.*system/i,
+    /jailbreak/i,
+    /roleplay.*admin/i,
+    /<script|javascript:|eval\(/i,
+    /document\.cookie|localStorage|sessionStorage/i
+  ];
+  
+  for (const pattern of dangerousPatterns) {
+    if (pattern.test(message)) {
+      return { isValid: false, error: 'Message contains potentially harmful content' };
+    }
+  }
+  
+  return { isValid: true };
+}
+
+function validateAgentId(agentId: string): { isValid: boolean; error?: string } {
+  if (!agentId || typeof agentId !== 'string') {
+    return { isValid: false, error: 'Agent ID is required and must be a string' };
+  }
+  
+  // UUID pattern validation
+  const uuidPattern = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+  if (!uuidPattern.test(agentId)) {
+    return { isValid: false, error: 'Invalid agent ID format' };
+  }
+  
+  return { isValid: true };
+}
+
+function sanitizeInput(input: string): string {
+  return input
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#x27;')
+    .replace(/\//g, '&#x2F;');
+}
+
 serve(async (req) => {
   // Handle CORS preflight requests
   if (req.method === 'OPTIONS') {
@@ -24,7 +82,44 @@ serve(async (req) => {
   }
 
   try {
-    const { message, conversationId, agentId }: ChatRequest = await req.json();
+    // Parse and validate request body
+    let requestBody: ChatRequest;
+    try {
+      requestBody = await req.json();
+    } catch (error) {
+      return new Response(JSON.stringify({ 
+        error: 'Invalid JSON in request body' 
+      }), {
+        status: 400,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
+    }
+
+    const { message, conversationId, agentId } = requestBody;
+    
+    // Validate inputs
+    const messageValidation = validateMessage(message);
+    if (!messageValidation.isValid) {
+      return new Response(JSON.stringify({ 
+        error: messageValidation.error 
+      }), {
+        status: 400,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
+    }
+    
+    const agentIdValidation = validateAgentId(agentId);
+    if (!agentIdValidation.isValid) {
+      return new Response(JSON.stringify({ 
+        error: agentIdValidation.error 
+      }), {
+        status: 400,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
+    }
+    
+    // Sanitize message content
+    const sanitizedMessage = sanitizeInput(message);
     
     // Get authorization header
     const authHeader = req.headers.get('Authorization');
@@ -118,11 +213,11 @@ serve(async (req) => {
     // Save user message
     const { error: userMessageError } = await supabase
       .from('messages')
-      .insert({
-        conversation_id: currentConversationId,
-        content: message,
-        role: 'user'
-      });
+        .insert({
+          conversation_id: currentConversationId,
+          content: sanitizedMessage,
+          role: 'user'
+        });
 
     if (userMessageError) {
       throw new Error('Failed to save user message');
