@@ -241,7 +241,7 @@ Always be encouraging, patient, and thorough. For external setups, provide actua
   return (
     <div className="fixed bottom-6 right-6 z-50 max-h-[calc(100vh-3rem)]">
       <Card className="w-96 h-[600px] max-h-[calc(100vh-6rem)] shadow-xl flex flex-col overflow-hidden">
-        <CardHeader className="pb-2 border-b">
+        <CardHeader className="pt-3 pb-2 border-b">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
               <div className="relative">
