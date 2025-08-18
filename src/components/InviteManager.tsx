@@ -56,11 +56,13 @@ export const InviteManager = () => {
       if (codeError) throw codeError;
 
       // Create invite
+      const { data: currentUser } = await supabase.auth.getUser();
       const { data, error } = await supabase
         .from('invites')
         .insert({
           email: newEmail.toLowerCase().trim(),
-          invite_code: inviteCode
+          invite_code: inviteCode,
+          created_by: currentUser?.user?.id
         })
         .select()
         .single();
