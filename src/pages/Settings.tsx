@@ -313,7 +313,7 @@ export const Settings = () => {
 
                 <Separator />
 
-                <div className="bg-muted rounded-lg p-4">
+                <div className="bg-muted rounded-lg p-4 hidden">
                   <h5 className="font-medium mb-2 flex items-center gap-2">
                     <GraduationCap className="w-4 h-4" />
                     Learning Resources
