@@ -2,9 +2,10 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Header } from "@/components/Header";
 import { Hero } from "@/components/Hero";
-import { AgentShowcase } from "@/components/AgentShowcase";
-import { KnowledgeUpload } from "@/components/KnowledgeUpload";
-import { SupabaseConnectionNotice } from "@/components/SupabaseConnectionNotice";
+import { Features } from "@/components/Features";
+import { UseCases } from "@/components/UseCases";
+import { SocialProof } from "@/components/SocialProof";
+import { CTA } from "@/components/CTA";
 import { PageLoader } from "@/components/PageLoader";
 import { useAuth } from "@/hooks/useAuth";
 
@@ -27,8 +28,10 @@ const Index = () => {
       <Header />
       <main>
         <Hero />
-        <AgentShowcase />
-        <KnowledgeUpload />
+        <Features />
+        <UseCases />
+        <SocialProof />
+        <CTA />
       </main>
     </div>
   );
