@@ -161,9 +161,9 @@ export const EditAgent = () => {
   return (
     <DashboardLayout>
       {/* Header */}
-      <div className="border-b bg-card/50 backdrop-blur-sm sticky top-0 z-10 -mx-4 lg:-mx-8 px-4 lg:px-8 mb-6">
+      <div className="border-b bg-card/50 backdrop-blur-sm sticky top-0 z-10 -mx-4 lg:-mx-8 px-4 lg:px-8">
         <div className="py-4">
-          <div className="flex items-center justify-between">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div className="flex items-center gap-4">
               <Button
                 variant="ghost"
@@ -173,12 +173,12 @@ export const EditAgent = () => {
                 <ArrowLeft className="w-4 h-4" />
               </Button>
               <div>
-                <h1 className="text-2xl font-bold">Edit Agent: {agent.name}</h1>
-                <p className="text-muted-foreground">Configure your AI agent</p>
+                <h1 className="text-xl sm:text-2xl font-bold break-words">Edit Agent: {agent.name}</h1>
+                <p className="text-muted-foreground text-sm">Configure your AI agent</p>
               </div>
             </div>
             
-            <div className="flex items-center gap-2">
+            <div className="flex flex-wrap items-center gap-2">
               <Badge variant={agent.is_public ? 'default' : 'secondary'}>
                 {agent.is_public ? 'Public' : 'Private'}
               </Badge>
