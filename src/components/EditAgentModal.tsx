@@ -126,7 +126,7 @@ export const EditAgentModal = ({ agent, open, onOpenChange, onAgentUpdated }: Ed
           <DialogTitle>Edit Agent: {agent.name}</DialogTitle>
         </DialogHeader>
         
-        <Tabs defaultValue="settings" className="w-full flex-1 flex flex-col">
+        <Tabs defaultValue="settings" className="w-full flex-1 flex flex-col min-h-0">
           <TabsList className="grid w-full grid-cols-9 bg-white border p-1 h-12 items-center">
             <TabsTrigger value="settings" className="flex items-center gap-2">
               <Settings className="w-4 h-4" />
@@ -257,7 +257,7 @@ export const EditAgentModal = ({ agent, open, onOpenChange, onAgentUpdated }: Ed
             </form>
           </TabsContent>
 
-          <TabsContent value="knowledge" className="space-y-4 flex-1 overflow-y-auto">
+          <TabsContent value="knowledge" className="space-y-4 flex-1 overflow-y-auto min-h-0">
             <KnowledgeBaseManager agentId={agent.id} />
           </TabsContent>
 
@@ -281,7 +281,7 @@ export const EditAgentModal = ({ agent, open, onOpenChange, onAgentUpdated }: Ed
             <LinearIntegration agentId={agent.id} />
           </TabsContent>
 
-          <TabsContent value="github" className="space-y-4 flex-1 overflow-y-auto">
+          <TabsContent value="github" className="space-y-4 flex-1 overflow-y-auto min-h-0">
             <GitHubIntegration agentId={agent.id} />
           </TabsContent>
 
