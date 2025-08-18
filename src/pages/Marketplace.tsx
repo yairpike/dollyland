@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Header } from "@/components/Header";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -157,163 +156,158 @@ export const Marketplace = () => {
   }
 
   return (
-    <div className="min-h-screen bg-background">
-      <Header />
-      <main className="pt-20 pb-12">
-        <div className="max-w-7xl mx-auto px-6 space-y-8">
-          {/* Header */}
-          <div className="text-center max-w-3xl mx-auto">
-            <h1 className="text-4xl md:text-5xl font-semibold mb-4">Agent Marketplace</h1>
-            <p className="text-xl text-muted-foreground">Discover and try AI agents built by expert designers and developers</p>
-          </div>
+    <div className="space-y-8">
+      {/* Header */}
+      <div className="text-center max-w-3xl mx-auto">
+        <h1 className="text-4xl md:text-5xl font-semibold mb-4">Agent Marketplace</h1>
+        <p className="text-xl text-muted-foreground">Discover and try AI agents built by expert designers and developers</p>
+      </div>
 
-          {/* Search and Filter */}
-          <div className="flex flex-col sm:flex-row gap-4 max-w-2xl mx-auto">
-            <div className="relative flex-1">
-              <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-              <Input
-                placeholder="Search agents, skills, or tools..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-10"
-              />
-            </div>
-            <Select value={selectedCategory} onValueChange={setSelectedCategory}>
-              <SelectTrigger className="w-full sm:w-[200px]">
-                <SelectValue placeholder="Category" />
-              </SelectTrigger>
-              <SelectContent>
-                {AGENT_CATEGORIES.map((category) => {
-                  const IconComponent = category.icon
-                  return (
-                    <SelectItem key={category.id} value={category.id}>
-                      <div className="flex items-center gap-2">
-                        <IconComponent className="w-4 h-4" />
-                        {category.name}
-                      </div>
-                    </SelectItem>
-                  )
-                })}
-              </SelectContent>
-            </Select>
-          </div>
-
-          {/* Results count */}
-          <div className="text-center">
-            <p className="text-muted-foreground">
-              Showing {filteredAgents.length} of {agents.length} agents
-              {selectedCategory !== 'all' && (
-                <span> in {AGENT_CATEGORIES.find(cat => cat.id === selectedCategory)?.name}</span>
-              )}
-            </p>
-          </div>
-
-          {/* Agents Grid */}
-          {filteredAgents.length === 0 ? (
-            <Card className="p-12">
-              <div className="text-center">
-                <Search className="w-16 h-16 mx-auto text-muted-foreground mb-4" />
-                <h3 className="text-xl font-semibold mb-2">No agents found</h3>
-                <p className="text-muted-foreground mb-6">
-                  Try adjusting your search or filter criteria
-                </p>
-                <Button 
-                  variant="outline" 
-                  onClick={() => {
-                    setSearchQuery('')
-                    setSelectedCategory('all')
-                  }}
-                >
-                  Clear filters
-                </Button>
-              </div>
-            </Card>
-          ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {filteredAgents.map((agent) => {
-                const CategoryIcon = getCategoryIcon(agent.category)
-                return (
-                  <Card key={agent.id} className="group hover:shadow-lg transition-all duration-200 hover:-translate-y-1">
-                    <CardHeader className="pb-3">
-                      <div className="flex items-start justify-between">
-                        <div className="flex items-center gap-3">
-                          <div className="p-2 rounded-lg bg-primary/10">
-                            <CategoryIcon className="w-5 h-5 text-primary" />
-                          </div>
-                          <div>
-                            <CardTitle className="text-lg group-hover:text-primary transition-colors">
-                              {agent.name}
-                            </CardTitle>
-                            <div className="flex items-center gap-2 mt-1">
-                              <div className="flex items-center">
-                                <Star className="w-3 h-3 fill-yellow-400 text-yellow-400" />
-                                <span className="text-sm text-muted-foreground ml-1">
-                                  {agent.rating}
-                                </span>
-                              </div>
-                              <div className="flex items-center text-muted-foreground">
-                                <Users className="w-3 h-3" />
-                                <span className="text-sm ml-1">
-                                  {agent.user_count.toLocaleString()}
-                                </span>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        {agent.is_featured && (
-                          <Badge variant="secondary" className="text-xs">
-                            Featured
-                          </Badge>
-                        )}
-                      </div>
-                    </CardHeader>
-                    <CardContent className="space-y-4">
-                      <CardDescription className="text-sm leading-relaxed">
-                        {agent.description}
-                      </CardDescription>
-                      
-                      <div className="flex flex-wrap gap-1">
-                        {agent.tags.slice(0, 3).map((tag, index) => (
-                          <Badge key={index} variant="outline" className="text-xs">
-                            {tag}
-                          </Badge>
-                        ))}
-                        {agent.tags.length > 3 && (
-                          <Badge variant="outline" className="text-xs">
-                            +{agent.tags.length - 3}
-                          </Badge>
-                        )}
-                      </div>
-
-                      <div className="flex items-center justify-between pt-2">
-                        <div className="flex items-center gap-2">
-                          <Avatar className="w-6 h-6">
-                            <AvatarFallback className="text-xs">
-                              {agent.creator_name.slice(0, 2).toUpperCase()}
-                            </AvatarFallback>
-                          </Avatar>
-                          <span className="text-sm text-muted-foreground">
-                            {agent.creator_name}
-                          </span>
-                        </div>
-                        
-                        <Button 
-                          size="sm" 
-                          onClick={() => handleTryAgent(agent.id)}
-                          className="gap-1"
-                        >
-                          <Play className="w-3 h-3" />
-                          Try Now
-                        </Button>
-                      </div>
-                    </CardContent>
-                  </Card>
-                )
-              })}
-            </div>
-          )}
+      {/* Search and Filter */}
+      <div className="flex flex-col sm:flex-row gap-4 max-w-2xl mx-auto">
+        <div className="relative flex-1">
+          <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+          <Input
+            placeholder="Search agents, skills, or tools..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="pl-10"
+          />
         </div>
-      </main>
+        <Select value={selectedCategory} onValueChange={setSelectedCategory}>
+          <SelectTrigger className="w-full sm:w-[200px]">
+            <SelectValue placeholder="Category" />
+          </SelectTrigger>
+          <SelectContent>
+            {AGENT_CATEGORIES.map((category) => {
+              const IconComponent = category.icon
+              return (
+                <SelectItem key={category.id} value={category.id}>
+                  <div className="flex items-center gap-2">
+                    <IconComponent className="w-4 h-4" />
+                    {category.name}
+                  </div>
+                </SelectItem>
+              )
+            })}
+          </SelectContent>
+        </Select>
+      </div>
+
+      {/* Results count */}
+      <div className="text-center">
+        <p className="text-muted-foreground">
+          Showing {filteredAgents.length} of {agents.length} agents
+          {selectedCategory !== 'all' && (
+            <span> in {AGENT_CATEGORIES.find(cat => cat.id === selectedCategory)?.name}</span>
+          )}
+        </p>
+      </div>
+
+      {/* Agents Grid */}
+      {filteredAgents.length === 0 ? (
+        <Card className="p-12">
+          <div className="text-center">
+            <Search className="w-16 h-16 mx-auto text-muted-foreground mb-4" />
+            <h3 className="text-xl font-semibold mb-2">No agents found</h3>
+            <p className="text-muted-foreground mb-6">
+              Try adjusting your search or filter criteria
+            </p>
+            <Button 
+              variant="outline" 
+              onClick={() => {
+                setSearchQuery('')
+                setSelectedCategory('all')
+              }}
+            >
+              Clear filters
+            </Button>
+          </div>
+        </Card>
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {filteredAgents.map((agent) => {
+            const CategoryIcon = getCategoryIcon(agent.category)
+            return (
+              <Card key={agent.id} className="group hover:shadow-lg transition-all duration-200 hover:-translate-y-1">
+                <CardHeader className="pb-3">
+                  <div className="flex items-start justify-between">
+                    <div className="flex items-center gap-3">
+                      <div className="p-2 rounded-lg bg-primary/10">
+                        <CategoryIcon className="w-5 h-5 text-primary" />
+                      </div>
+                      <div>
+                        <CardTitle className="text-lg group-hover:text-primary transition-colors">
+                          {agent.name}
+                        </CardTitle>
+                        <div className="flex items-center gap-2 mt-1">
+                          <div className="flex items-center">
+                            <Star className="w-3 h-3 fill-yellow-400 text-yellow-400" />
+                            <span className="text-sm text-muted-foreground ml-1">
+                              {agent.rating}
+                            </span>
+                          </div>
+                          <div className="flex items-center text-muted-foreground">
+                            <Users className="w-3 h-3" />
+                            <span className="text-sm ml-1">
+                              {agent.user_count.toLocaleString()}
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    {agent.is_featured && (
+                      <Badge variant="secondary" className="text-xs">
+                        Featured
+                      </Badge>
+                    )}
+                  </div>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <CardDescription className="text-sm leading-relaxed">
+                    {agent.description}
+                  </CardDescription>
+                  
+                  <div className="flex flex-wrap gap-1">
+                    {agent.tags.slice(0, 3).map((tag, index) => (
+                      <Badge key={index} variant="outline" className="text-xs">
+                        {tag}
+                      </Badge>
+                    ))}
+                    {agent.tags.length > 3 && (
+                      <Badge variant="outline" className="text-xs">
+                        +{agent.tags.length - 3}
+                      </Badge>
+                    )}
+                  </div>
+
+                  <div className="flex items-center justify-between pt-2">
+                    <div className="flex items-center gap-2">
+                      <Avatar className="w-6 h-6">
+                        <AvatarFallback className="text-xs">
+                          {agent.creator_name.slice(0, 2).toUpperCase()}
+                        </AvatarFallback>
+                      </Avatar>
+                      <span className="text-sm text-muted-foreground">
+                        {agent.creator_name}
+                      </span>
+                    </div>
+                    
+                    <Button 
+                      size="sm" 
+                      onClick={() => handleTryAgent(agent.id)}
+                      className="gap-1"
+                    >
+                      <Play className="w-3 h-3" />
+                      Try Now
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+            )
+          })}
+        </div>
+      )}
     </div>
   )
 }

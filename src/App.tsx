@@ -17,6 +17,7 @@ import { Chat } from "./pages/Chat";
 import CreateAgent from "./pages/CreateAgent";
 import { EditAgent } from "./pages/EditAgent";
 import { ProtectedRoute } from "./components/ProtectedRoute";
+import { DashboardLayout } from "./components/DashboardLayout";
 import { DollyCopilot } from "./components/DollyCopilot";
 
 const queryClient = new QueryClient();
@@ -31,15 +32,15 @@ const App = () => (
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/auth" element={<Auth />} />
-          <Route path="/marketplace" element={<Marketplace />} />
+          <Route path="/marketplace" element={<ProtectedRoute><DashboardLayout><Marketplace /></DashboardLayout></ProtectedRoute>} />
           
           <Route path="/trial/:agentId" element={<AgentTrial />} />
           <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
-          <Route path="/create-agent" element={<ProtectedRoute><CreateAgent /></ProtectedRoute>} />
-          <Route path="/edit-agent/:agentId" element={<ProtectedRoute><EditAgent /></ProtectedRoute>} />
-          <Route path="/settings" element={<ProtectedRoute><Settings /></ProtectedRoute>} />
-          <Route path="/analytics" element={<ProtectedRoute><Analytics /></ProtectedRoute>} />
-          <Route path="/chat/:agentId" element={<ProtectedRoute><Chat /></ProtectedRoute>} />
+          <Route path="/create-agent" element={<ProtectedRoute><DashboardLayout><CreateAgent /></DashboardLayout></ProtectedRoute>} />
+          <Route path="/edit-agent/:agentId" element={<ProtectedRoute><DashboardLayout><EditAgent /></DashboardLayout></ProtectedRoute>} />
+          <Route path="/settings" element={<ProtectedRoute><DashboardLayout><Settings /></DashboardLayout></ProtectedRoute>} />
+          <Route path="/analytics" element={<ProtectedRoute><DashboardLayout><Analytics /></DashboardLayout></ProtectedRoute>} />
+          <Route path="/chat/:agentId" element={<ProtectedRoute><DashboardLayout><Chat /></DashboardLayout></ProtectedRoute>} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
