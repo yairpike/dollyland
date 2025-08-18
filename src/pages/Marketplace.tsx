@@ -192,7 +192,7 @@ export const Marketplace = () => {
     <div className="space-y-8">
       {/* Header */}
       <div>
-        <h1 className="text-xl sm:text-2xl font-semibold mb-4">Agent Marketplace</h1>
+        <h1 className="text-3xl font-semibold mb-4">Agent Marketplace</h1>
         <p className="text-sm text-muted-foreground">Discover and try AI agents built by expert designers and developers</p>
       </div>
 
