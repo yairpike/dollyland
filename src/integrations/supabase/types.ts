@@ -87,6 +87,7 @@ export type Database = {
         Row: {
           agent_id: string
           api_key: string | null
+          api_key_encrypted: string | null
           config: Json
           created_at: string
           deployment_type: string
@@ -100,6 +101,7 @@ export type Database = {
         Insert: {
           agent_id: string
           api_key?: string | null
+          api_key_encrypted?: string | null
           config?: Json
           created_at?: string
           deployment_type: string
@@ -113,6 +115,7 @@ export type Database = {
         Update: {
           agent_id?: string
           api_key?: string | null
+          api_key_encrypted?: string | null
           config?: Json
           created_at?: string
           deployment_type?: string
@@ -129,6 +132,7 @@ export type Database = {
         Row: {
           agent_id: string
           api_key: string | null
+          api_key_encrypted: string | null
           config: Json
           created_at: string
           id: string
@@ -143,6 +147,7 @@ export type Database = {
         Insert: {
           agent_id: string
           api_key?: string | null
+          api_key_encrypted?: string | null
           config?: Json
           created_at?: string
           id?: string
@@ -157,6 +162,7 @@ export type Database = {
         Update: {
           agent_id?: string
           api_key?: string | null
+          api_key_encrypted?: string | null
           config?: Json
           created_at?: string
           id?: string
@@ -977,6 +983,14 @@ export type Database = {
         Args: { api_key: string; user_id: string }
         Returns: string
       }
+      encrypt_deployment_key: {
+        Args: { api_key: string; deployment_id: string }
+        Returns: string
+      }
+      encrypt_integration_key: {
+        Args: { api_key: string; integration_id: string }
+        Returns: string
+      }
       generate_secure_api_key: {
         Args: Record<PropertyKey, never>
         Returns: string
@@ -1006,6 +1020,10 @@ export type Database = {
         Args: { provider_uuid: string; requesting_user_id: string }
         Returns: string
       }
+      get_deployment_key_safe: {
+        Args: { deployment_id: string }
+        Returns: string
+      }
       get_deployment_key_secure: {
         Args: { deployment_uuid: string }
         Returns: string
@@ -1023,6 +1041,10 @@ export type Database = {
           updated_at: string
           usage_count: number
         }[]
+      }
+      get_integration_key_safe: {
+        Args: { integration_id: string }
+        Returns: string
       }
       get_integration_key_secure: {
         Args: { integration_uuid: string }
