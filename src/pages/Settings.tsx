@@ -132,6 +132,7 @@ export const Settings = () => {
                       value={fullName}
                       onChange={(e) => setFullName(e.target.value)}
                       placeholder="Enter your full name"
+                      className="h-9"
                     />
                   </div>
                   <div className="space-y-2">
@@ -141,7 +142,7 @@ export const Settings = () => {
                         id="email"
                         value={email}
                         disabled
-                        className="bg-muted flex-1"
+                        className="bg-muted flex-1 h-9"
                       />
                       <Button 
                         variant="outline" 
