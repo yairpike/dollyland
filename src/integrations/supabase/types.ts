@@ -1013,6 +1013,10 @@ export type Database = {
         Args: { p_email: string }
         Returns: string
       }
+      create_invite_with_email_secure: {
+        Args: { p_email: string }
+        Returns: Json
+      }
       create_webhook_secure: {
         Args: {
           p_agent_id: string
@@ -1295,6 +1299,17 @@ export type Database = {
           usage_count: number
           user_id: string
           webhook_url: string
+        }[]
+      }
+      get_user_invites_safe: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          created_at: string
+          expires_at: string
+          id: string
+          invite_code: string
+          status: string
+          used_at: string
         }[]
       }
       get_user_role: {

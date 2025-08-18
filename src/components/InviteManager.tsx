@@ -10,11 +10,18 @@ import { supabase } from "@/integrations/supabase/client";
 
 interface Invite {
   id: string;
-  email: string;
   invite_code: string;
+  status: string;
   used_at: string | null;
   expires_at: string;
   created_at: string;
+}
+
+interface InviteCreateResponse {
+  id: string;
+  invite_code: string;
+  email: string;
+  status: string;
 }
 
 export const InviteManager = () => {
@@ -29,9 +36,7 @@ export const InviteManager = () => {
   const fetchInvites = async () => {
     try {
       const { data, error } = await supabase
-        .from('invites')
-        .select('*')
-        .order('created_at', { ascending: false });
+        .rpc('get_user_invites_safe');
 
       if (error) throw error;
       setInvites(data || []);
@@ -49,33 +54,24 @@ export const InviteManager = () => {
 
     setLoading(true);
     try {
-      // Generate invite code
-      const { data: inviteCode, error: codeError } = await supabase
-        .rpc('generate_invite_code');
-
-      if (codeError) throw codeError;
-
-      // Create invite
-      const { data: currentUser } = await supabase.auth.getUser();
+      // Use secure function to create invite
       const { data, error } = await supabase
-        .from('invites')
-        .insert({
-          email: newEmail.toLowerCase().trim(),
-          invite_code: inviteCode,
-          created_by: currentUser?.user?.id
-        })
-        .select()
-        .single();
+        .rpc('create_invite_with_email_secure', { 
+          p_email: newEmail.toLowerCase().trim() 
+        });
 
       if (error) {
-        if (error.code === '23505') {
+        if (error.message?.includes('already exists')) {
           toast.error("An invite for this email already exists");
+        } else if (error.message?.includes('Too many invites')) {
+          toast.error("Rate limit exceeded. Please wait before creating more invites.");
         } else {
           throw error;
         }
         return;
       }
 
+      const response = data as unknown as InviteCreateResponse;
       toast.success(`Invite created for ${newEmail}`);
       setNewEmail("");
       fetchInvites();
@@ -154,14 +150,14 @@ export const InviteManager = () => {
                 >
                   <div className="flex-1">
                     <div className="flex items-center gap-2">
-                      <span className="font-medium">{invite.email}</span>
-                      {invite.used_at ? (
-                        <Badge variant="secondary">Used</Badge>
-                      ) : new Date(invite.expires_at) < new Date() ? (
-                        <Badge variant="destructive">Expired</Badge>
-                      ) : (
-                        <Badge variant="default">Active</Badge>
-                      )}
+                      <span className="font-medium">Invite #{invite.id.slice(0, 8)}</span>
+                      <Badge variant={
+                        invite.status === 'Used' ? 'secondary' :
+                        invite.status === 'Expired' ? 'destructive' :
+                        'default'
+                      }>
+                        {invite.status}
+                      </Badge>
                     </div>
                     <div className="text-sm text-muted-foreground">
                       Code: <code className="bg-muted px-1 rounded">{invite.invite_code}</code>
