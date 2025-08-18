@@ -417,6 +417,42 @@ export type Database = {
         }
         Relationships: []
       }
+      invites: {
+        Row: {
+          created_at: string | null
+          created_by: string | null
+          email: string
+          expires_at: string | null
+          id: string
+          invite_code: string
+          updated_at: string | null
+          used_at: string | null
+          used_by: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          created_by?: string | null
+          email: string
+          expires_at?: string | null
+          id?: string
+          invite_code: string
+          updated_at?: string | null
+          used_at?: string | null
+          used_by?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          created_by?: string | null
+          email?: string
+          expires_at?: string | null
+          id?: string
+          invite_code?: string
+          updated_at?: string | null
+          used_at?: string | null
+          used_by?: string | null
+        }
+        Relationships: []
+      }
       knowledge_bases: {
         Row: {
           agent_id: string
@@ -991,6 +1027,10 @@ export type Database = {
         Args: { api_key: string; integration_id: string }
         Returns: string
       }
+      generate_invite_code: {
+        Args: Record<PropertyKey, never>
+        Returns: string
+      }
       generate_secure_api_key: {
         Args: Record<PropertyKey, never>
         Returns: string
@@ -1323,8 +1363,16 @@ export type Database = {
         }
         Returns: boolean
       }
+      use_invite: {
+        Args: { p_email: string; p_user_id: string }
+        Returns: undefined
+      }
       validate_ai_provider_access: {
         Args: { provider_id: string }
+        Returns: boolean
+      }
+      validate_invite: {
+        Args: { p_email: string; p_invite_code?: string }
         Returns: boolean
       }
       validate_sensitive_access: {
