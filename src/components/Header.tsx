@@ -16,11 +16,21 @@ export const Header = () => {
   const logoSrc = theme === 'dark' ? '/lovable-uploads/c8c73254-3940-4a5b-b990-cb30d21dc890.png' : '/lovable-uploads/85abbc87-fafc-4307-86a1-f85ed74b639e.png';
 
   const handleSignOut = async () => {
-    const { error } = await signOut();
-    if (error) {
-      toast.error("Failed to sign out");
-    } else {
-      toast.success("Signed out successfully");
+    try {
+      const { error } = await signOut();
+      if (error) {
+        console.error('Sign out error:', error);
+        toast.error("Failed to sign out: " + error.message);
+      } else {
+        toast.success("Signed out successfully");
+        // Clear any local storage
+        localStorage.clear();
+        // Force navigation to auth page
+        navigate("/auth", { replace: true });
+      }
+    } catch (err) {
+      console.error('Unexpected sign out error:', err);
+      toast.error("An unexpected error occurred during sign out");
     }
   };
 
