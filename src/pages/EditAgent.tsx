@@ -167,11 +167,12 @@ export const EditAgent = () => {
             <div className="flex items-center gap-4">
               <Button
                 variant="ghost"
-                size="icon"
+                size="sm"
                 onClick={() => navigate('/dashboard')}
-                className="flex items-center"
+                className="flex items-center gap-2"
               >
                 <ArrowLeft className="w-4 h-4" />
+                Back to Dashboard
               </Button>
               <div>
                 <h1 className="text-2xl font-bold">Edit Agent: {agent.name}</h1>
