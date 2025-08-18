@@ -208,10 +208,10 @@ export const Marketplace = () => {
           />
         </div>
         <Select value={selectedCategory} onValueChange={setSelectedCategory}>
-          <SelectTrigger className="w-full sm:w-[200px]">
+          <SelectTrigger className="w-full sm:w-[200px] bg-background border-input">
             <SelectValue placeholder="Category" />
           </SelectTrigger>
-          <SelectContent>
+          <SelectContent className="bg-background border-input">
             {AGENT_CATEGORIES.map((category) => {
               const IconComponent = category.icon
               return (
