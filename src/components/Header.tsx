@@ -73,7 +73,7 @@ export const Header = () => {
                 <>
                   <a href="#features" className="text-muted-foreground hover:text-primary transition-all duration-300 font-medium px-3 py-2 rounded-lg hover:bg-accent/50">Features</a>
                   <a href="#use-cases" className="text-muted-foreground hover:text-primary transition-all duration-300 font-medium px-3 py-2 rounded-lg hover:bg-accent/50">Use Cases</a>
-                  <a href="#testimonials" className="text-muted-foreground hover:text-primary transition-all duration-300 font-medium px-3 py-2 rounded-lg hover:bg-accent/50">Reviews</a>
+                  <a href="#upload" className="text-muted-foreground hover:text-primary transition-all duration-300 font-medium px-3 py-2 rounded-lg hover:bg-accent/50">Upload</a>
                 </>
               )}
             </nav>

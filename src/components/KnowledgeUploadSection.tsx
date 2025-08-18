@@ -26,7 +26,7 @@ export const KnowledgeUpload = () => {
   const navigate = useNavigate();
 
   return (
-    <section className="py-24 px-6 bg-gradient-to-br from-accent/5 to-primary/5">
+    <section id="upload" className="py-24 px-6 bg-gradient-to-br from-accent/5 to-primary/5">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-16">
           <Badge variant="outline" className="mb-4">Knowledge Upload</Badge>
