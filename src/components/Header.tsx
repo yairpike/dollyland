@@ -65,7 +65,6 @@ export const Header = () => {
             
             {/* Navigation - Hidden on mobile, replaced by mobile menu */}
             <nav className="hidden lg:flex items-center gap-8">
-              <Link to="/marketplace" className="text-muted-foreground hover:text-primary transition-all duration-300 font-medium px-3 py-2 rounded-lg hover:bg-accent/50">on clickMarketplace</Link>
               {user ? <>
                   <Link to="/dashboard" className="text-muted-foreground hover:text-primary transition-all duration-300 font-medium px-3 py-2 rounded-lg hover:bg-accent/50">
                     My Agents
@@ -74,6 +73,7 @@ export const Header = () => {
                   <a href="#features" className="text-muted-foreground hover:text-primary transition-all duration-300 font-medium px-3 py-2 rounded-lg hover:bg-accent/50">Features</a>
                   <a href="#use-cases" className="text-muted-foreground hover:text-primary transition-all duration-300 font-medium px-3 py-2 rounded-lg hover:bg-accent/50">Use Cases</a>
                   <a href="#upload" className="text-muted-foreground hover:text-primary transition-all duration-300 font-medium px-3 py-2 rounded-lg hover:bg-accent/50">Upload</a>
+                  <a href="#marketplace" className="text-muted-foreground hover:text-primary transition-all duration-300 font-medium px-3 py-2 rounded-lg hover:bg-accent/50">Marketplace</a>
                 </>}
             </nav>
             

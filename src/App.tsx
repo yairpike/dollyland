@@ -8,7 +8,7 @@ import Index from "./pages/Index";
 import { Dashboard } from "./pages/Dashboard";
 import { Analytics } from "./pages/Analytics";
 import { Settings } from "./pages/Settings";
-import Marketplace from "./pages/Marketplace";
+
 import AgentTrial from "./pages/AgentTrial";
 import Auth from "./pages/Auth";
 import NotFound from "./pages/NotFound";
@@ -30,7 +30,7 @@ const App = () => (
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/auth" element={<Auth />} />
-          <Route path="/marketplace" element={<Marketplace />} />
+          
           <Route path="/trial/:agentId" element={<AgentTrial />} />
           <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
           <Route path="/create-agent" element={<ProtectedRoute><CreateAgent /></ProtectedRoute>} />
