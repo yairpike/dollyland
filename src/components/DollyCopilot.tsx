@@ -149,10 +149,14 @@ Always be encouraging and provide clear next steps.`
       <div className="fixed bottom-6 right-6 z-50">
         <Button
           onClick={() => setIsOpen(true)}
-          className="h-14 w-14 rounded-full shadow-lg bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 transition-all duration-200"
+          className="h-14 w-14 rounded-full shadow-lg bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 transition-all duration-200 p-2"
           size="lg"
         >
-          <LoadingAnimation size="md" />
+          <img 
+            src="/lovable-uploads/eb1dabfc-b5a4-4928-bf12-e80fd327c5e0.png" 
+            alt="Dolly" 
+            className="w-8 h-8"
+          />
         </Button>
       </div>
     );
@@ -165,7 +169,11 @@ Always be encouraging and provide clear next steps.`
           <CardHeader className="pb-2">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <LoadingAnimation size="sm" />
+                <img 
+                  src="/lovable-uploads/eb1dabfc-b5a4-4928-bf12-e80fd327c5e0.png" 
+                  alt="Dolly" 
+                  className="w-5 h-5"
+                />
                 <CardTitle className="text-sm">Dolly Copilot</CardTitle>
                 <Badge variant="secondary" className="text-xs">Online</Badge>
               </div>
@@ -201,7 +209,11 @@ Always be encouraging and provide clear next steps.`
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
               <div className="relative">
-                <LoadingAnimation size="sm" />
+                <img 
+                  src="/lovable-uploads/eb1dabfc-b5a4-4928-bf12-e80fd327c5e0.png" 
+                  alt="Dolly" 
+                  className="w-5 h-5"
+                />
                 <Sparkles className="w-3 h-3 text-yellow-500 absolute -top-1 -right-1" />
               </div>
               <CardTitle className="text-sm">Dolly Copilot</CardTitle>
