@@ -262,27 +262,27 @@ export const Marketplace = () => {
           {filteredAgents.map((agent) => {
             const CategoryIcon = getCategoryIcon(agent.category)
             return (
-              <Card key={agent.id} className="group hover:shadow-lg transition-all duration-200 hover:-translate-y-1">
-                <CardHeader className="pb-3">
-                  <div className="flex items-start justify-between">
-                    <div className="flex items-center gap-3">
-                      <div className="p-2 rounded-lg bg-primary/10">
-                        <CategoryIcon className="w-5 h-5 text-primary" />
+              <Card key={agent.id} className="group hover:shadow-xl transition-all duration-300 hover:-translate-y-2 border-0 bg-gradient-to-br from-card to-card/50 backdrop-blur-sm">
+                <CardHeader className="pb-4">
+                  <div className="flex items-start justify-between mb-3">
+                    <div className="flex items-start gap-4 flex-1">
+                      <div className="p-3 rounded-xl bg-gradient-to-br from-primary/20 to-primary/10 border border-primary/20">
+                        <CategoryIcon className="w-6 h-6 text-primary" />
                       </div>
-                      <div>
-                        <CardTitle className="text-lg group-hover:text-primary transition-colors">
+                      <div className="flex-1 min-w-0">
+                        <CardTitle className="text-xl font-semibold group-hover:text-primary transition-colors mb-2 line-clamp-2">
                           {agent.name}
                         </CardTitle>
-                        <div className="flex items-center gap-2 mt-1">
-                          <div className="flex items-center">
-                            <Star className="w-3 h-3 fill-yellow-400 text-yellow-400" />
-                            <span className="text-sm text-muted-foreground ml-1">
-                              {agent.rating}
+                        <div className="flex items-center gap-3">
+                          <div className="flex items-center gap-1">
+                            <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
+                            <span className="text-sm font-medium text-foreground">
+                              {agent.rating.toFixed(1)}
                             </span>
                           </div>
-                          <div className="flex items-center text-muted-foreground">
-                            <Users className="w-3 h-3" />
-                            <span className="text-sm ml-1">
+                          <div className="flex items-center gap-1 text-muted-foreground">
+                            <Users className="w-4 h-4" />
+                            <span className="text-sm font-medium">
                               {agent.user_count.toLocaleString()}
                             </span>
                           </div>
@@ -290,48 +290,51 @@ export const Marketplace = () => {
                       </div>
                     </div>
                     {agent.is_featured && (
-                      <Badge variant="secondary" className="text-xs">
-                        Featured
+                      <Badge variant="secondary" className="text-xs font-semibold bg-gradient-to-r from-primary/20 to-primary/10 text-primary border-primary/30">
+                        ⭐ Featured
                       </Badge>
                     )}
                   </div>
                 </CardHeader>
-                <CardContent className="space-y-4">
-                  <CardDescription className="text-sm leading-relaxed">
+                <CardContent className="space-y-5 pt-0">
+                  <CardDescription className="text-sm leading-relaxed text-muted-foreground line-clamp-3">
                     {agent.description}
                   </CardDescription>
                   
-                  <div className="flex flex-wrap gap-1">
+                  <div className="flex flex-wrap gap-2">
                     {agent.tags.slice(0, 3).map((tag, index) => (
-                      <Badge key={index} variant="outline" className="text-xs">
+                      <Badge key={index} variant="outline" className="text-xs font-medium bg-background/80 border-border/50 hover:bg-primary/10 hover:border-primary/30 transition-colors">
                         {tag}
                       </Badge>
                     ))}
                     {agent.tags.length > 3 && (
-                      <Badge variant="outline" className="text-xs">
-                        +{agent.tags.length - 3}
+                      <Badge variant="outline" className="text-xs font-medium bg-muted/50 border-border/50">
+                        +{agent.tags.length - 3} more
                       </Badge>
                     )}
                   </div>
 
-                  <div className="flex items-center justify-between pt-2">
-                    <div className="flex items-center gap-2">
-                      <Avatar className="w-6 h-6">
-                        <AvatarFallback className="text-xs">
+                  <div className="flex items-center justify-between pt-3 border-t border-border/50">
+                    <div className="flex items-center gap-3">
+                      <Avatar className="w-8 h-8 border-2 border-background shadow-sm">
+                        <AvatarFallback className="text-xs font-semibold bg-gradient-to-br from-primary/20 to-primary/10 text-primary">
                           {agent.creator_name.slice(0, 2).toUpperCase()}
                         </AvatarFallback>
                       </Avatar>
-                      <span className="text-sm text-muted-foreground">
-                        {agent.creator_name}
-                      </span>
+                      <div>
+                        <span className="text-sm font-medium text-foreground">
+                          {agent.creator_name}
+                        </span>
+                        <p className="text-xs text-muted-foreground">Creator</p>
+                      </div>
                     </div>
                     
                     <Button 
                       size="sm" 
                       onClick={() => handleTryAgent(agent.id)}
-                      className="gap-1"
+                      className="gap-2 font-semibold shadow-sm hover:shadow-md transition-all duration-200 bg-gradient-to-r from-primary to-primary/90"
                     >
-                      <Play className="w-3 h-3" />
+                      <Play className="w-4 h-4" />
                       Try Now
                     </Button>
                   </div>
