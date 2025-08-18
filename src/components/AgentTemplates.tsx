@@ -385,16 +385,6 @@ interface AgentTemplatesProps {
 export const AgentTemplates = ({ onSelectTemplate }: AgentTemplatesProps) => {
   return (
     <div className="space-y-8">
-      <div className="text-center">
-        <h2 className="text-3xl font-semibold mb-4">
-          Choose Your Agent
-          <span className="bg-gradient-hero bg-clip-text text-transparent"> Template</span>
-        </h2>
-        <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-          Start with proven agent templates designed for specific roles and workflows. 
-          Each template includes specialized knowledge and capabilities.
-        </p>
-      </div>
 
       <div className="grid md:grid-cols-2 gap-6">
         {AGENT_TEMPLATES.map((template) => (
