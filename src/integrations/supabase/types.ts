@@ -1053,6 +1053,20 @@ export type Database = {
         Args: { deployment_uuid: string }
         Returns: string
       }
+      get_deployment_safe_info: {
+        Args: { deployment_uuid: string }
+        Returns: {
+          agent_id: string
+          config: Json
+          created_at: string
+          deployment_type: string
+          id: string
+          last_used_at: string
+          status: string
+          updated_at: string
+          usage_count: number
+        }[]
+      }
       get_integration_key_secure: {
         Args: { integration_uuid: string }
         Returns: string
@@ -1188,6 +1202,19 @@ export type Database = {
           updated_at: string
           url: string
           user_id: string
+        }[]
+      }
+      get_webhook_safe_info: {
+        Args: { webhook_uuid: string }
+        Returns: {
+          agent_id: string
+          created_at: string
+          events: string[]
+          headers: Json
+          id: string
+          is_active: boolean
+          updated_at: string
+          url: string
         }[]
       }
       get_webhook_secret_secure: {
