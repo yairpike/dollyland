@@ -218,6 +218,7 @@ export const KnowledgeBaseManager = ({ agentId }: KnowledgeBaseManagerProps) => 
   }
 
   return (
+    <div className="space-y-6 flex-1 flex flex-col overflow-hidden">
     <Card>
       <CardHeader>
         <div className="flex items-center justify-between">
@@ -365,5 +366,6 @@ export const KnowledgeBaseManager = ({ agentId }: KnowledgeBaseManagerProps) => 
       )}
       </CardContent>
     </Card>
+    </div>
   );
 };

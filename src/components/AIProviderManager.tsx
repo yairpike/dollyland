@@ -203,6 +203,7 @@ export const AIProviderManager = () => {
   }
 
   return (
+    <div className="space-y-6 flex-1 flex flex-col overflow-hidden">
     <Card>
       <CardHeader>
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
@@ -424,5 +425,6 @@ export const AIProviderManager = () => {
       )}
       </CardContent>
     </Card>
+    </div>
   );
 };
