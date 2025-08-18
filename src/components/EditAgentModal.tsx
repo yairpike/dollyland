@@ -9,6 +9,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { useAuth } from "@/hooks/useAuth";
+import { useIsMobile } from "@/hooks/use-mobile";
 import { supabase } from "@/integrations/supabase/client";
 import { KnowledgeBaseManager } from "@/components/KnowledgeBaseManager";
 import { AIProviderManager } from "@/components/AIProviderManager";
@@ -43,6 +44,7 @@ interface EditAgentModalProps {
 
 export const EditAgentModal = ({ agent, open, onOpenChange, onAgentUpdated }: EditAgentModalProps) => {
   const { user } = useAuth();
+  const isMobile = useIsMobile();
   const [loading, setLoading] = useState(false);
   const [deleteLoading, setDeleteLoading] = useState(false);
   const [formData, setFormData] = useState({
@@ -121,9 +123,9 @@ export const EditAgentModal = ({ agent, open, onOpenChange, onAgentUpdated }: Ed
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-6xl h-[90vh] flex flex-col overflow-hidden">
-        <DialogHeader>
-          <DialogTitle>Edit Agent: {agent.name}</DialogTitle>
+      <DialogContent className={`${isMobile ? 'max-w-[95vw] w-[95vw] h-[95vh] m-2' : 'max-w-6xl h-[90vh]'} flex flex-col overflow-hidden`}>
+        <DialogHeader className={isMobile ? 'pb-2' : ''}>
+          <DialogTitle className={`${isMobile ? 'text-lg' : ''} break-words`}>Edit Agent: {agent.name}</DialogTitle>
         </DialogHeader>
         
         <Tabs defaultValue="settings" className="w-full flex-1 flex flex-col min-h-0">
@@ -204,7 +206,7 @@ export const EditAgentModal = ({ agent, open, onOpenChange, onAgentUpdated }: Ed
                 />
               </div>
               
-              <div className="flex gap-3">
+              <div className={`flex gap-3 ${isMobile ? 'flex-col' : ''}`}>
                 <Button 
                   type="submit" 
                   disabled={loading}
@@ -213,7 +215,7 @@ export const EditAgentModal = ({ agent, open, onOpenChange, onAgentUpdated }: Ed
                   {loading ? (
                     <>
                       <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                      Updating...
+                      {isMobile ? 'Updating...' : 'Updating...'}
                     </>
                   ) : (
                     "Update Agent"
@@ -222,7 +224,7 @@ export const EditAgentModal = ({ agent, open, onOpenChange, onAgentUpdated }: Ed
                 
                 <AlertDialog>
                   <AlertDialogTrigger asChild>
-                    <Button variant="destructive" disabled={loading || deleteLoading}>
+                    <Button variant="destructive" disabled={loading || deleteLoading} className={isMobile ? 'w-full' : ''}>
                       <Trash2 className="w-4 h-4 mr-2" />
                       Delete
                     </Button>
