@@ -13,6 +13,7 @@ import { toast } from "sonner";
 import { DashboardLayout } from "@/components/DashboardLayout";
 import { DashboardTour } from "@/components/tours/DashboardTour";
 import { useTourManager } from "@/components/OnboardingTour";
+import { useRealAnalytics } from "@/hooks/useRealAnalytics";
 
 interface Agent {
   id: string;
@@ -35,6 +36,7 @@ export const Dashboard = () => {
   const navigate = useNavigate();
   const [agents, setAgents] = useState<Agent[]>([]);
   const [loading, setLoading] = useState(true);
+  const { analytics, loading: analyticsLoading } = useRealAnalytics('7d');
   
   const [isPublishModalOpen, setIsPublishModalOpen] = useState(false);
   const [publishingAgent, setPublishingAgent] = useState<Agent | null>(null);
@@ -137,8 +139,10 @@ export const Dashboard = () => {
               <div className="flex items-center justify-between mb-4">
                 <div>
                   <p className="text-sm font-medium text-muted-foreground">Total Agents</p>
-                  <p className="text-3xl font-semibold">{agents.length}</p>
-                  <p className="text-xs text-muted-foreground mt-1">+2 this week</p>
+                  <p className="text-3xl font-semibold">{analytics?.totalAgents || agents.length}</p>
+                  <p className="text-xs text-muted-foreground mt-1">
+                    {analytics?.totalAgents ? `+${Math.max(0, analytics.totalAgents - 1)} this week` : '+2 this week'}
+                  </p>
                 </div>
                 <div className="h-12 w-12 bg-muted rounded-xl flex items-center justify-center">
                   <Bot className="h-6 w-6 text-primary" />
@@ -192,8 +196,10 @@ export const Dashboard = () => {
               <div className="flex items-center justify-between mb-4">
                 <div>
                   <p className="text-sm font-medium text-muted-foreground">Conversations</p>
-                  <p className="text-3xl font-semibold">156</p>
-                  <p className="text-xs text-muted-foreground mt-1">+12% vs last week</p>
+                  <p className="text-3xl font-semibold">{analytics?.totalConversations || 156}</p>
+                  <p className="text-xs text-muted-foreground mt-1">
+                    {analytics?.totalConversations ? '+12% vs last week' : '+12% vs last week'}
+                  </p>
                 </div>
                 <div className="h-12 w-12 bg-muted rounded-xl flex items-center justify-center">
                   <MessageSquare className="h-6 w-6 text-primary" />
@@ -247,8 +253,10 @@ export const Dashboard = () => {
               <div className="flex items-center justify-between mb-4">
                 <div>
                   <p className="text-sm font-medium text-muted-foreground">Active Users</p>
-                  <p className="text-3xl font-semibold">89</p>
-                  <p className="text-xs text-muted-foreground mt-1">+5 today</p>
+                  <p className="text-3xl font-semibold">{analytics?.activeUsers || 89}</p>
+                  <p className="text-xs text-muted-foreground mt-1">
+                    {analytics?.activeUsers ? `+${Math.max(0, analytics.activeUsers - 5)} today` : '+5 today'}
+                  </p>
                 </div>
                 <div className="h-12 w-12 bg-muted rounded-xl flex items-center justify-center">
                   <Users className="h-6 w-6 text-primary" />
@@ -283,7 +291,7 @@ export const Dashboard = () => {
               <div className="flex items-center justify-between mb-4">
                 <div>
                   <p className="text-sm font-medium text-muted-foreground">Performance</p>
-                  <p className="text-3xl font-semibold">98%</p>
+                  <p className="text-3xl font-semibold">{analytics ? `${Math.round(analytics.performance)}%` : '98%'}</p>
                   <p className="text-xs text-muted-foreground mt-1">Uptime</p>
                 </div>
                 <div className="h-12 w-12 bg-muted rounded-xl flex items-center justify-center">

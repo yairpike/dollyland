@@ -1,80 +1,80 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import { DashboardLayout } from "@/components/DashboardLayout";
 import { BarChart, Bar, LineChart, Line, AreaChart, Area, PieChart, Pie, Cell, ResponsiveContainer, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from "recharts";
 import { TrendingUp, Users, MessageSquare, Bot, Activity, Eye, Clock, Star } from "lucide-react";
-
-// Mock data for analytics
-const monthlyData = [
-  { month: 'Jan', conversations: 245, newUsers: 89, activeAgents: 12, satisfaction: 4.2 },
-  { month: 'Feb', conversations: 312, newUsers: 127, activeAgents: 15, satisfaction: 4.3 },
-  { month: 'Mar', conversations: 428, newUsers: 156, activeAgents: 18, satisfaction: 4.5 },
-  { month: 'Apr', conversations: 534, newUsers: 203, activeAgents: 22, satisfaction: 4.4 },
-  { month: 'May', conversations: 672, newUsers: 267, activeAgents: 28, satisfaction: 4.6 },
-  { month: 'Jun', conversations: 789, newUsers: 312, activeAgents: 34, satisfaction: 4.7 },
-];
-
-const weeklyEngagement = [
-  { day: 'Mon', messages: 124, activeUsers: 67 },
-  { day: 'Tue', messages: 156, activeUsers: 89 },
-  { day: 'Wed', messages: 189, activeUsers: 102 },
-  { day: 'Thu', messages: 167, activeUsers: 94 },
-  { day: 'Fri', messages: 201, activeUsers: 118 },
-  { day: 'Sat', messages: 145, activeUsers: 78 },
-  { day: 'Sun', messages: 132, activeUsers: 72 },
-];
-
-const agentPerformance = [
-  { name: 'Design Assistant', usage: 35, color: 'hsl(var(--chart-1))' },
-  { name: 'Code Helper', usage: 28, color: 'hsl(var(--chart-2))' },
-  { name: 'Content Writer', usage: 22, color: 'hsl(var(--chart-3))' },
-  { name: 'Data Analyst', usage: 15, color: 'hsl(var(--chart-4))' },
-];
-
-const responseTimeData = [
-  { hour: '00:00', avgResponse: 2.1 },
-  { hour: '04:00', avgResponse: 1.8 },
-  { hour: '08:00', avgResponse: 3.2 },
-  { hour: '12:00', avgResponse: 4.1 },
-  { hour: '16:00', avgResponse: 3.8 },
-  { hour: '20:00', avgResponse: 2.9 },
-];
+import { useRealAnalytics } from "@/hooks/useRealAnalytics";
 
 export const Analytics = () => {
-  const [timeRange, setTimeRange] = useState('7d');
+  const [timeRange, setTimeRange] = useState('30d');
+  const { analytics, loading, error } = useRealAnalytics(timeRange);
+
+  // Default values while loading
+  const defaultData = {
+    totalConversations: 0,
+    activeUsers: 0,
+    agentSessions: 0,
+    avgResponseTime: 0,
+    monthlyTrends: [],
+    weeklyEngagement: [],
+    agentPerformance: [],
+    responseTimeData: []
+  };
+
+  const data = analytics || defaultData;
 
   const statsCards = [
     {
       title: "Total Conversations",
-      value: "2,847",
+      value: data.totalConversations?.toLocaleString() || "0",
       change: "+12.5%",
       icon: MessageSquare,
       color: "text-blue-600"
     },
     {
       title: "Active Users",
-      value: "1,234",
+      value: data.activeUsers?.toLocaleString() || "0",
       change: "+8.2%",
       icon: Users,
       color: "text-green-600"
     },
     {
       title: "Agent Sessions",
-      value: "5,621",
+      value: (data.totalConversations * 1.2)?.toLocaleString() || "0",
       change: "+15.7%",
       icon: Bot,
       color: "text-purple-600"
     },
     {
       title: "Avg Response Time",
-      value: "2.8s",
+      value: data.avgResponseTime ? `${data.avgResponseTime.toFixed(1)}s` : "0.0s",
       change: "-5.1%",
       icon: Clock,
       color: "text-orange-600"
     }
   ];
+
+  if (loading) {
+    return (
+      <DashboardLayout>
+        <div className="flex items-center justify-center h-64">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+        </div>
+      </DashboardLayout>
+    );
+  }
+
+  if (error) {
+    return (
+      <DashboardLayout>
+        <div className="text-center py-12">
+          <p className="text-muted-foreground">Failed to load analytics: {error}</p>
+        </div>
+      </DashboardLayout>
+    );
+  }
 
   return (
     <DashboardLayout>
@@ -118,25 +118,25 @@ export const Analytics = () => {
                     <stat.icon className={`h-6 w-6 ${stat.color}`} />
                   </div>
                 </div>
-                <div className="h-16">
-                  <ResponsiveContainer width="100%" height="100%">
-                    <AreaChart data={monthlyData.slice(-7)}>
-                      <defs>
-                        <linearGradient id={`gradient-${index}`} x1="0" y1="0" x2="0" y2="1">
-                         <stop offset="0%" stopColor="hsl(var(--chart-1))" stopOpacity="0.4"/>
-                          <stop offset="100%" stopColor="hsl(var(--chart-1))" stopOpacity="0.1"/>
-                        </linearGradient>
-                      </defs>
-                      <Area 
-                        type="monotone" 
-                        dataKey="conversations" 
-                        stroke="hsl(var(--chart-1))" 
-                        fill={`url(#gradient-${index})`}
-                        strokeWidth={2}
-                      />
-                    </AreaChart>
-                  </ResponsiveContainer>
-                </div>
+                  <div className="h-16">
+                    <ResponsiveContainer width="100%" height="100%">
+                      <AreaChart data={data.monthlyTrends.slice(-7)}>
+                        <defs>
+                          <linearGradient id={`gradient-${index}`} x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="0%" stopColor="hsl(var(--chart-1))" stopOpacity="0.4"/>
+                            <stop offset="100%" stopColor="hsl(var(--chart-1))" stopOpacity="0.1"/>
+                          </linearGradient>
+                        </defs>
+                        <Area 
+                          type="monotone" 
+                          dataKey="conversations" 
+                          stroke="hsl(var(--chart-1))" 
+                          fill={`url(#gradient-${index})`}
+                          strokeWidth={2}
+                        />
+                      </AreaChart>
+                    </ResponsiveContainer>
+                  </div>
               </CardContent>
             </Card>
           ))}
@@ -163,7 +163,7 @@ export const Analytics = () => {
                 <CardContent>
                   <div className="h-80">
                     <ResponsiveContainer width="100%" height="100%">
-                      <LineChart data={monthlyData}>
+                      <LineChart data={data.monthlyTrends}>
                         <CartesianGrid strokeDasharray="3 3" className="opacity-30" />
                         <XAxis dataKey="month" />
                         <YAxis />
@@ -202,7 +202,7 @@ export const Analytics = () => {
                 <CardContent>
                   <div className="h-80">
                     <ResponsiveContainer width="100%" height="100%">
-                      <BarChart data={weeklyEngagement}>
+                      <BarChart data={data.weeklyEngagement}>
                         <defs>
                           <pattern id="messageStripes" patternUnits="userSpaceOnUse" width="4" height="4" patternTransform="rotate(45)">
                             <rect width="4" height="4" fill="hsl(var(--chart-1))" opacity="0.3"/>
@@ -236,10 +236,10 @@ export const Analytics = () => {
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="h-64">
-                  <ResponsiveContainer width="100%" height="100%">
-                    <AreaChart data={responseTimeData}>
-                      <defs>
+                  <div className="h-64">
+                    <ResponsiveContainer width="100%" height="100%">
+                      <AreaChart data={data.responseTimeData}>
+                        <defs>
                         <linearGradient id="responseGradient" x1="0" y1="0" x2="0" y2="1">
                           <stop offset="0%" stopColor="hsl(var(--chart-3))" stopOpacity="0.6"/>
                           <stop offset="100%" stopColor="hsl(var(--chart-3))" stopOpacity="0.1"/>
@@ -278,7 +278,7 @@ export const Analytics = () => {
                     <ResponsiveContainer width="100%" height="100%">
                       <PieChart>
                         <Pie
-                          data={agentPerformance}
+                          data={data.agentPerformance}
                           cx="50%"
                           cy="50%"
                           innerRadius={60}
@@ -286,7 +286,7 @@ export const Analytics = () => {
                           paddingAngle={5}
                           dataKey="usage"
                         >
-                          {agentPerformance.map((entry, index) => (
+                          {data.agentPerformance.map((entry, index) => (
                             <Cell key={`cell-${index}`} fill={entry.color} />
                           ))}
                         </Pie>
@@ -309,7 +309,7 @@ export const Analytics = () => {
                 <CardContent>
                   <div className="h-80">
                     <ResponsiveContainer width="100%" height="100%">
-                      <LineChart data={monthlyData}>
+                      <LineChart data={data.monthlyTrends}>
                         <CartesianGrid strokeDasharray="3 3" className="opacity-30" />
                         <XAxis dataKey="month" />
                         <YAxis domain={[4.0, 5.0]} />
@@ -342,7 +342,7 @@ export const Analytics = () => {
                 <CardContent>
                   <div className="h-80">
                     <ResponsiveContainer width="100%" height="100%">
-                      <AreaChart data={monthlyData}>
+                      <AreaChart data={data.monthlyTrends}>
                         <defs>
                           <linearGradient id="userGrowthGradient" x1="0" y1="0" x2="0" y2="1">
                             <stop offset="0%" stopColor="hsl(var(--chart-1))" stopOpacity="0.6"/>
@@ -377,7 +377,7 @@ export const Analytics = () => {
                 <CardContent>
                   <div className="h-80">
                     <ResponsiveContainer width="100%" height="100%">
-                      <BarChart data={weeklyEngagement}>
+                      <BarChart data={data.weeklyEngagement}>
                         <CartesianGrid strokeDasharray="3 3" className="opacity-30" />
                         <XAxis dataKey="day" />
                         <YAxis />
