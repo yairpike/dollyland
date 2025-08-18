@@ -74,7 +74,11 @@ export const useAuth = () => {
       email,
       password,
       options: {
-        data: options,
+        data: {
+          full_name: options?.full_name,
+          invite_used: options?.invite_used || false,
+          invite_code: options?.invite_code
+        },
         emailRedirectTo: options?.options?.emailRedirectTo || `${window.location.origin}/`
       }
     })

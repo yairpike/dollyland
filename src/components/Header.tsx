@@ -5,6 +5,7 @@ import { Sparkles, Menu, LogOut, Settings } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import { toast } from "sonner";
 import { ThemeToggle } from "./ThemeToggle";
+import { UserRole } from "@/components/UserRole";
 import { LoadingAnimation } from "./LoadingAnimation";
 import { useTheme } from "next-themes";
 export const Header = () => {
@@ -83,6 +84,7 @@ export const Header = () => {
             {/* CTA Buttons */}
             <div className="flex items-center gap-2 sm:gap-3">
               {user ? <>
+                  <UserRole className="hidden sm:flex" />
                   <Avatar className="w-7 h-7 sm:w-8 sm:h-8">
                     <AvatarFallback className="text-xs">
                       {user.email?.slice(0, 2).toUpperCase()}
