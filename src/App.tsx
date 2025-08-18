@@ -36,7 +36,7 @@ const App = () => (
           
           <Route path="/trial/:agentId" element={<AgentTrial />} />
           <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
-          <Route path="/create-agent" element={<ProtectedRoute><DashboardLayout><CreateAgent /></DashboardLayout></ProtectedRoute>} />
+          <Route path="/create-agent" element={<ProtectedRoute><CreateAgent /></ProtectedRoute>} />
           <Route path="/edit-agent/:agentId" element={<ProtectedRoute><DashboardLayout><EditAgent /></DashboardLayout></ProtectedRoute>} />
           <Route path="/settings" element={<ProtectedRoute><Settings /></ProtectedRoute>} />
           <Route path="/analytics" element={<ProtectedRoute><Analytics /></ProtectedRoute>} />
