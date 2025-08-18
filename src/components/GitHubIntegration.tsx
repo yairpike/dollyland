@@ -96,7 +96,7 @@ export const GitHubIntegration: React.FC<GitHubIntegrationProps> = ({ agentId })
 
   return (
     <div className="space-y-6 flex-1 flex flex-col overflow-hidden">
-    <Card>
+    <Card className="flex-1 flex flex-col overflow-hidden">
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <GitBranch className="w-5 h-5" />
