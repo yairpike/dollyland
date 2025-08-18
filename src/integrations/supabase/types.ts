@@ -341,14 +341,7 @@ export type Database = {
             foreignKeyName: "conversations_agent_id_fkey"
             columns: ["agent_id"]
             isOneToOne: false
-            referencedRelation: "agents_public_safe"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "conversations_agent_id_fkey"
-            columns: ["agent_id"]
-            isOneToOne: false
-            referencedRelation: "public_agents_safe"
+            referencedRelation: "marketplace_agents"
             referencedColumns: ["id"]
           },
         ]
@@ -888,7 +881,7 @@ export type Database = {
       }
     }
     Views: {
-      agents_public_safe: {
+      marketplace_agents: {
         Row: {
           avatar_url: string | null
           category: string | null
@@ -916,51 +909,6 @@ export type Database = {
           user_count?: number | null
         }
         Update: {
-          avatar_url?: string | null
-          category?: string | null
-          created_at?: string | null
-          description?: string | null
-          id?: string | null
-          is_featured?: boolean | null
-          name?: string | null
-          rating?: number | null
-          tags?: string[] | null
-          updated_at?: string | null
-          user_count?: number | null
-        }
-        Relationships: []
-      }
-      public_agents_safe: {
-        Row: {
-          agent_type: string | null
-          avatar_url: string | null
-          category: string | null
-          created_at: string | null
-          description: string | null
-          id: string | null
-          is_featured: boolean | null
-          name: string | null
-          rating: number | null
-          tags: string[] | null
-          updated_at: string | null
-          user_count: number | null
-        }
-        Insert: {
-          agent_type?: never
-          avatar_url?: string | null
-          category?: string | null
-          created_at?: string | null
-          description?: string | null
-          id?: string | null
-          is_featured?: boolean | null
-          name?: string | null
-          rating?: number | null
-          tags?: string[] | null
-          updated_at?: string | null
-          user_count?: number | null
-        }
-        Update: {
-          agent_type?: never
           avatar_url?: string | null
           category?: string | null
           created_at?: string | null
