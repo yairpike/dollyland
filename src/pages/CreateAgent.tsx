@@ -107,7 +107,7 @@ export const CreateAgent = () => {
           </Button>
         </div>
 
-        <Card>
+        <Card data-tour="create-agent-card">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <Sparkles className="w-5 h-5 text-primary" />
@@ -123,13 +123,16 @@ export const CreateAgent = () => {
           
           <CardContent>
             {step === 'template' ? (
-              <AgentTemplates onSelectTemplate={handleTemplateSelect} />
+              <div data-tour="agent-templates">
+                <AgentTemplates onSelectTemplate={handleTemplateSelect} />
+              </div>
             ) : (
-              <form onSubmit={handleSubmit} className="space-y-6">
+              <form onSubmit={handleSubmit} className="space-y-6" data-tour="customize-form">
                 <div className="space-y-2">
                   <Label htmlFor="name">Agent Name *</Label>
                   <Input
                     id="name"
+                    data-tour="agent-name-input"
                     placeholder="e.g., Marketing Expert, Code Reviewer"
                     value={formData.name}
                     onChange={(e) => handleChange("name", e.target.value)}
@@ -141,6 +144,7 @@ export const CreateAgent = () => {
                   <Label htmlFor="description">Description</Label>
                   <Textarea
                     id="description"
+                    data-tour="agent-description-input"
                     placeholder="Describe what this agent specializes in..."
                     value={formData.description}
                     onChange={(e) => handleChange("description", e.target.value)}
@@ -152,6 +156,7 @@ export const CreateAgent = () => {
                   <Label htmlFor="systemPrompt">System Prompt *</Label>
                   <Textarea
                     id="systemPrompt"
+                    data-tour="agent-system-prompt-input"
                     placeholder="Define your agent's role, expertise, and behavior..."
                     value={formData.systemPrompt}
                     onChange={(e) => handleChange("systemPrompt", e.target.value)}
@@ -173,7 +178,7 @@ export const CreateAgent = () => {
                     <ArrowLeft className="w-4 h-4 mr-2" />
                     Back
                   </Button>
-                  <Button type="submit" disabled={loading || !formData.name || !formData.systemPrompt}>
+                  <Button type="submit" disabled={loading || !formData.name || !formData.systemPrompt} data-tour="create-agent-submit">
                     {loading ? (
                       <>
                         <Loader2 className="w-4 h-4 mr-2 animate-spin" />
@@ -196,6 +201,8 @@ export const CreateAgent = () => {
         <CreateAgentTour 
           isOpen={showCreateTour}
           onClose={() => setShowCreateTour(false)}
+          currentStep={step}
+          onTemplateSelected={() => setShowCreateTour(false)}
         />
       </div>
     </DashboardLayout>
