@@ -144,7 +144,7 @@ export const Marketplace = () => {
         category: agent.category || 'ui-ux',
         rating: agent.rating || 4.5,
         user_count: agent.user_count || Math.floor(Math.random() * 1000) + 100,
-        creator_name: 'Expert Creator', // We'll add proper creator names later
+        creator_name: 'Dolly Expert', // We'll add proper creator names later
         tags: agent.tags || ['AI Agent'],
         is_featured: agent.is_featured || false
       })) || []
