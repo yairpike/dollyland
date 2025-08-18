@@ -135,17 +135,44 @@ export const Marketplace = () => {
 
       if (publicAgents && publicAgents.length > 0) {
         // Transform the data to match our interface
-        const transformedAgents = publicAgents.map(agent => ({
-          id: agent.id,
-          name: agent.name || 'Unnamed Agent',
-          description: agent.description || 'No description available',
-          category: agent.category || 'general',
-          rating: 4.5 + Math.random() * 0.5, // Random rating between 4.5-5
-          user_count: Math.floor(Math.random() * 1000) + 100,
-          creator_name: 'Dolly Expert',
-          tags: Array.isArray(agent.tags) ? agent.tags : (agent.tags ? [agent.tags] : ['AI Agent']),
-          is_featured: Math.random() > 0.7
-        }))
+        const transformedAgents = publicAgents.map(agent => {
+          // Smart category assignment based on name/description if category is missing
+          let category = agent.category
+          if (!category || !AGENT_CATEGORIES.find(cat => cat.id === category)) {
+            const name = (agent.name || '').toLowerCase()
+            const desc = (agent.description || '').toLowerCase()
+            
+            if (name.includes('design') || desc.includes('design') || desc.includes('ui') || desc.includes('ux')) {
+              category = 'design'
+            } else if (name.includes('sales') || desc.includes('sales') || desc.includes('b2b')) {
+              category = 'business'
+            } else if (name.includes('success') || desc.includes('customer') || desc.includes('support')) {
+              category = 'communication'
+            } else if (name.includes('growth') || desc.includes('growth') || desc.includes('marketing')) {
+              category = 'analytics'
+            } else if (name.includes('api') || name.includes('dev') || desc.includes('developer') || desc.includes('code')) {
+              category = 'development'
+            } else if (name.includes('pm') || name.includes('product') || desc.includes('product management')) {
+              category = 'business'
+            } else if (name.includes('content') || desc.includes('content') || desc.includes('writing')) {
+              category = 'content'
+            } else {
+              category = 'productivity' // Default fallback
+            }
+          }
+
+          return {
+            id: agent.id,
+            name: agent.name || 'Unnamed Agent',
+            description: agent.description || 'No description available',
+            category,
+            rating: 4.5 + Math.random() * 0.5, // Random rating between 4.5-5
+            user_count: Math.floor(Math.random() * 1000) + 100,
+            creator_name: 'Dolly Expert',
+            tags: Array.isArray(agent.tags) ? agent.tags : (agent.tags ? [agent.tags] : ['AI Agent']),
+            is_featured: Math.random() > 0.7
+          }
+        })
 
         setAgents(transformedAgents)
       } else {
