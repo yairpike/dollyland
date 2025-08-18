@@ -121,21 +121,15 @@ export const Marketplace = () => {
 
   const fetchPublicAgents = async () => {
     try {
-      // Use the new security-hardened marketplace view for authenticated users
-      const { data: publicAgents, error } = await supabase
-        .from('marketplace_agents_authenticated')
-        .select('id, name, description, category, tags, rating, user_count, is_featured, created_at')
-        .order('created_at', { ascending: false })
+      // Use secure function for authenticated users
+      const { data: publicAgents, error } = await supabase.rpc('get_marketplace_authenticated')
 
       if (error) {
         console.error('Error fetching marketplace agents:', error)
         
-        // Fallback to public preview if authentication fails
+        // Fallback to public preview function if authentication fails
         try {
-          const { data: previewData, error: previewError } = await supabase
-            .from('marketplace_agents_preview')
-            .select('*')
-            .order('created_month', { ascending: false })
+          const { data: previewData, error: previewError } = await supabase.rpc('get_marketplace_preview')
           
           if (previewError) throw previewError
           

@@ -112,31 +112,15 @@ export const MarketplaceSection = () => {
 
   const fetchPublicAgents = async () => {
     try {
-      // Use the new security-hardened marketplace view for authenticated users
-      const { data, error } = await supabase
-        .from('marketplace_agents_authenticated')
-        .select(`
-          id,
-          name,
-          description,
-          avatar_url,
-          category,
-          tags,
-          rating,
-          user_count,
-          is_featured
-        `)
-        .order('user_count', { ascending: false })
+      // Use secure RPC function for authenticated users
+      const { data, error } = await supabase.rpc('get_marketplace_authenticated')
 
       if (error) {
         console.error('Error fetching marketplace agents:', error)
         
-        // Fallback to public preview if authentication fails
+        // Fallback to public preview RPC function if authentication fails
         try {
-          const { data: previewData, error: previewError } = await supabase
-            .from('marketplace_agents_preview')
-            .select('*')
-            .order('created_month', { ascending: false })
+          const { data: previewData, error: previewError } = await supabase.rpc('get_marketplace_preview')
           
           if (previewError) throw previewError
           
@@ -149,7 +133,7 @@ export const MarketplaceSection = () => {
             rating: agent.rating || 4.5,
             user_count: 500, // Use placeholder for preview
             creator_name: 'Dolly Expert',
-            tags: agent.tags || ['AI Agent'],
+            tags: Array.isArray(agent.tags) ? agent.tags : ['AI Agent'],
             is_featured: agent.is_featured || false
           })) || []
           
@@ -171,7 +155,7 @@ export const MarketplaceSection = () => {
         rating: agent.rating || 4.5,
         user_count: agent.user_count || 500,
         creator_name: 'Dolly Expert',
-        tags: agent.tags || ['AI Agent'],
+        tags: Array.isArray(agent.tags) ? agent.tags : ['AI Agent'],
         is_featured: agent.is_featured || false
       })) || []
 
