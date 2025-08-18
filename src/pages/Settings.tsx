@@ -9,6 +9,7 @@ import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, D
 import { AIProviderManager } from "@/components/AIProviderManager";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { DashboardLayout } from "@/components/DashboardLayout";
+import { InviteManager } from "@/components/InviteManager";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { User, CreditCard, Bot, LogOut, Mail, GraduationCap, PlayCircle, RotateCcw } from "lucide-react";
@@ -95,7 +96,7 @@ export const Settings = () => {
         <p className="text-muted-foreground mb-6">Manage your account and preferences</p>
 
         <Tabs defaultValue="account" className="w-full">
-          <TabsList className="grid w-full max-w-2xl grid-cols-4 bg-card border py-2 h-12 content-center">
+          <TabsList className="grid w-full max-w-2xl grid-cols-5 bg-card border py-2 h-12 content-center">
             <TabsTrigger value="account" className="flex items-center gap-2">
               <User className="w-4 h-4" />
               Account
@@ -111,6 +112,10 @@ export const Settings = () => {
             <TabsTrigger value="billing" className="flex items-center gap-2">
               <CreditCard className="w-4 h-4" />
               Billing
+            </TabsTrigger>
+            <TabsTrigger value="invites" className="flex items-center gap-2">
+              <User className="w-4 h-4" />
+              Invites
             </TabsTrigger>
           </TabsList>
 
@@ -411,6 +416,10 @@ export const Settings = () => {
                 </div>
               </CardContent>
             </Card>
+          </TabsContent>
+
+          <TabsContent value="invites">
+            <InviteManager />
           </TabsContent>
         </Tabs>
 

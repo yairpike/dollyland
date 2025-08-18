@@ -8,6 +8,7 @@ import { Separator } from "@/components/ui/separator";
 import { useAuth } from "@/hooks/useAuth";
 import { toast } from "sonner";
 import { useTheme } from "next-themes";
+import { supabase } from "@/integrations/supabase/client";
 
 const Auth = () => {
   const [isSignUp, setIsSignUp] = useState(false);
@@ -15,6 +16,8 @@ const Auth = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [fullName, setFullName] = useState("");
+  const [inviteCode, setInviteCode] = useState("");
+  const [showInviteError, setShowInviteError] = useState(false);
   const { signIn, signUp, signInWithGoogle, user, loading: authLoading, initializing } = useAuth();
   const { theme } = useTheme();
   const navigate = useNavigate();
@@ -44,11 +47,34 @@ const Auth = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
+    setShowInviteError(false);
 
     try {
       if (isSignUp) {
+        // First, validate the invite
+        const { data: isValidInvite, error: inviteError } = await supabase
+          .rpc('validate_invite', { 
+            p_email: email.toLowerCase(), 
+            p_invite_code: inviteCode.trim() || null 
+          });
+
+        if (inviteError) {
+          console.error('Invite validation error:', inviteError);
+          toast.error("Error validating invite. Please try again.");
+          setLoading(false);
+          return;
+        }
+
+        if (!isValidInvite) {
+          setShowInviteError(true);
+          toast.error("Invalid or expired invite code. dolly is currently invite-only.");
+          setLoading(false);
+          return;
+        }
+
+        // If invite is valid, proceed with signup
         const redirectUrl = `${window.location.origin}/`;
-        const { error } = await signUp(email, password, {
+        const { data: signUpData, error } = await signUp(email, password, {
           full_name: fullName,
           options: {
             emailRedirectTo: redirectUrl
@@ -63,6 +89,13 @@ const Auth = () => {
             toast.error(error.message);
           }
         } else {
+          // Mark invite as used
+          if (signUpData.user) {
+            await supabase.rpc('use_invite', {
+              p_email: email.toLowerCase(),
+              p_user_id: signUpData.user.id
+            });
+          }
           toast.success("Account created! Please check your email to verify.");
         }
       } else {
@@ -104,10 +137,18 @@ const Auth = () => {
           <Link to="/" className="inline-flex items-center space-x-3">
             <img src={logoSrc} alt="dolly" className="h-10 w-auto object-contain" />
             <span className="text-2xl font-semibold">dolly</span>
+            <span className="bg-gradient-to-r from-primary to-primary-glow text-primary-foreground text-xs font-bold px-2 py-1 rounded-full tracking-wide">
+              ALPHA
+            </span>
           </Link>
           <p className="text-muted-foreground">
             {isSignUp ? "Create your account" : "Welcome back"}
           </p>
+          {isSignUp && (
+            <div className="bg-primary/10 text-primary text-sm p-3 rounded-lg border border-primary/20">
+              🔒 dolly is currently in <strong>Closed Alpha</strong> - invite code required
+            </div>
+          )}
         </div>
 
         <Card>
@@ -123,17 +164,40 @@ const Auth = () => {
           <CardContent>
             <form onSubmit={handleSubmit} className="space-y-4">
               {isSignUp && (
-                <div className="space-y-2">
-                  <Label htmlFor="fullName">Full Name</Label>
-                  <Input
-                    id="fullName"
-                    type="text"
-                    placeholder="Enter your full name"
-                    value={fullName}
-                    onChange={(e) => setFullName(e.target.value)}
-                    required
-                  />
-                </div>
+                <>
+                  <div className="space-y-2">
+                    <Label htmlFor="inviteCode">Invite Code *</Label>
+                    <Input
+                      id="inviteCode"
+                      type="text"
+                      placeholder="Enter your invite code"
+                      value={inviteCode}
+                      onChange={(e) => {
+                        setInviteCode(e.target.value);
+                        setShowInviteError(false);
+                      }}
+                      required
+                      className={showInviteError ? "border-red-500" : ""}
+                    />
+                    {showInviteError && (
+                      <p className="text-sm text-red-500">
+                        Invalid invite code. dolly is currently invite-only. Contact the team for access.
+                      </p>
+                    )}
+                  </div>
+                  
+                  <div className="space-y-2">
+                    <Label htmlFor="fullName">Full Name</Label>
+                    <Input
+                      id="fullName"
+                      type="text"
+                      placeholder="Enter your full name"
+                      value={fullName}
+                      onChange={(e) => setFullName(e.target.value)}
+                      required
+                    />
+                  </div>
+                </>
               )}
               
               <div className="space-y-2">

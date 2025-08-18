@@ -36,7 +36,12 @@ export function AppSidebar({ onNavigate }: AppSidebarProps) {
         <div className="flex items-center gap-3">
           <img src={logoSrc} alt="dolly" className="h-16 w-auto object-contain" />
           <div className="flex flex-col">
-            <h2 className="font-semibold text-lg text-foreground">dolly</h2>
+            <div className="flex items-center gap-2">
+              <h2 className="font-semibold text-lg text-foreground">dolly</h2>
+              <span className="bg-gradient-to-r from-primary to-primary-glow text-primary-foreground text-xs font-bold px-2 py-1 rounded-full tracking-wide">
+                ALPHA
+              </span>
+            </div>
             {user && (
               <p className="text-sm text-muted-foreground">
                 {user.email}

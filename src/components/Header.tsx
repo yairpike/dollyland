@@ -58,8 +58,11 @@ export const Header = () => {
             {/* Logo */}
             <Link to="/" className="flex items-center gap-3 flex-shrink-0 hover:scale-105 transition-transform">
               {loading || initializing ? <LoadingAnimation size="md" /> : <img src={logoSrc} alt="dolly" className="h-12 w-auto object-contain" />}
-              <div>
+              <div className="flex items-center gap-2">
                 <h1 className="text-xl font-semibold text-foreground">dolly</h1>
+                <span className="bg-gradient-to-r from-primary to-primary-glow text-primary-foreground text-xs font-bold px-2 py-1 rounded-full tracking-wide">
+                  CLOSED ALPHA
+                </span>
               </div>
             </Link>
             

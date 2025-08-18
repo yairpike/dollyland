@@ -22,13 +22,18 @@ export const Hero = () => {
       
       <div className="relative z-10 text-center max-w-6xl mx-auto px-6">
         <div className="mb-12 animate-slide-up">
-          <img src={logoSrc} alt="dolly" className="h-20 w-auto mx-auto mb-8 object-contain" />
+          <div className="flex items-center justify-center gap-3 mb-8">
+            <img src={logoSrc} alt="dolly" className="h-20 w-auto object-contain" />
+            <span className="bg-gradient-to-r from-primary to-primary-glow text-primary-foreground text-sm font-bold px-3 py-2 rounded-full tracking-wide">
+              CLOSED ALPHA
+            </span>
+          </div>
           <h1 className="text-5xl md:text-7xl font-semibold mb-8 leading-tight">
             <span className="text-foreground">The AI Agent</span>
             <span className="block bg-gradient-primary bg-clip-text text-transparent mt-2">Marketplace</span>
           </h1>
           <p className="text-xl text-muted-foreground mb-10 max-w-4xl mx-auto leading-relaxed font-medium">
-            Create, train, and monetize AI agents with your expertise. Join thousands of professionals building the future of AI-powered solutions.
+            Create, train, and monetize AI agents with your expertise. Currently in closed alpha - invite only.
           </p>
         </div>
 
