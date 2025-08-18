@@ -43,37 +43,41 @@ export const OnboardingTour: React.FC<OnboardingTourProps> = ({
     const tooltipRect = tooltipElement.getBoundingClientRect();
     const position = currentStepData.position || 'bottom';
 
+    // Account for scroll position
+    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
+
     let top = 0;
     let left = 0;
 
     switch (position) {
       case 'top':
-        top = rect.top - tooltipRect.height - 16;
-        left = rect.left + (rect.width - tooltipRect.width) / 2;
+        top = rect.top + scrollTop - tooltipRect.height - 20;
+        left = rect.left + scrollLeft + (rect.width - tooltipRect.width) / 2;
         break;
       case 'bottom':
-        top = rect.bottom + 16;
-        left = rect.left + (rect.width - tooltipRect.width) / 2;
+        top = rect.bottom + scrollTop + 20;
+        left = rect.left + scrollLeft + (rect.width - tooltipRect.width) / 2;
         break;
       case 'left':
-        top = rect.top + (rect.height - tooltipRect.height) / 2;
-        left = rect.left - tooltipRect.width - 16;
+        top = rect.top + scrollTop + (rect.height - tooltipRect.height) / 2;
+        left = rect.left + scrollLeft - tooltipRect.width - 20;
         break;
       case 'right':
-        top = rect.top + (rect.height - tooltipRect.height) / 2;
-        left = rect.right + 16;
+        top = rect.top + scrollTop + (rect.height - tooltipRect.height) / 2;
+        left = rect.right + scrollLeft + 20;
         break;
     }
 
     // Keep tooltip within viewport
-    const padding = 16;
-    top = Math.max(padding, Math.min(window.innerHeight - tooltipRect.height - padding, top));
-    left = Math.max(padding, Math.min(window.innerWidth - tooltipRect.width - padding, left));
+    const padding = 20;
+    top = Math.max(padding, Math.min(window.innerHeight + scrollTop - tooltipRect.height - padding, top));
+    left = Math.max(padding, Math.min(window.innerWidth + scrollLeft - tooltipRect.width - padding, left));
 
     setTooltipPosition({ top, left });
     setHighlightPosition({
-      top: rect.top,
-      left: rect.left,
+      top: rect.top + scrollTop,
+      left: rect.left + scrollLeft,
       width: rect.width,
       height: rect.height
     });
@@ -96,13 +100,19 @@ export const OnboardingTour: React.FC<OnboardingTourProps> = ({
       // Wait for next tick to ensure DOM is updated
       setTimeout(() => {
         calculatePosition();
-      }, 100);
+      }, 150);
 
-      // Recalculate position on resize
-      const handleResize = () => calculatePosition();
-      window.addEventListener('resize', handleResize);
+      // Recalculate position on resize and scroll
+      const handleResize = () => setTimeout(calculatePosition, 100);
+      const handleScroll = () => setTimeout(calculatePosition, 50);
       
-      return () => window.removeEventListener('resize', handleResize);
+      window.addEventListener('resize', handleResize);
+      window.addEventListener('scroll', handleScroll, true);
+      
+      return () => {
+        window.removeEventListener('resize', handleResize);
+        window.removeEventListener('scroll', handleScroll, true);
+      };
     }
   }, [isOpen, currentStep, steps]);
 
@@ -117,14 +127,14 @@ export const OnboardingTour: React.FC<OnboardingTourProps> = ({
       <div 
         className="fixed z-50 pointer-events-none"
         style={{
-          top: highlightPosition.top - 4,
-          left: highlightPosition.left - 4,
-          width: highlightPosition.width + 8,
-          height: highlightPosition.height + 8,
+          top: highlightPosition.top - 8,
+          left: highlightPosition.left - 8,
+          width: highlightPosition.width + 16,
+          height: highlightPosition.height + 16,
           border: '3px solid hsl(var(--primary))',
-          borderRadius: '8px',
+          borderRadius: '12px',
           boxShadow: '0 0 0 9999px rgba(0, 0, 0, 0.5)',
-          transition: 'all 0.3s ease'
+          transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)'
         }}
       />
 
@@ -135,7 +145,8 @@ export const OnboardingTour: React.FC<OnboardingTourProps> = ({
         style={{
           top: tooltipPosition.top,
           left: tooltipPosition.left,
-          transition: 'all 0.3s ease'
+          position: 'absolute',
+          transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)'
         }}
       >
         <Card className="w-80 border-0 shadow-xl bg-background">
