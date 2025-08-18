@@ -27,7 +27,7 @@ const weeklyEngagement = [
 ];
 
 const agentPerformance = [
-  { name: 'Design Assistant', usage: 35, color: 'hsl(var(--primary))' },
+  { name: 'Design Assistant', usage: 35, color: 'hsl(var(--chart-1))' },
   { name: 'Code Helper', usage: 28, color: 'hsl(var(--chart-2))' },
   { name: 'Content Writer', usage: 22, color: 'hsl(var(--chart-3))' },
   { name: 'Data Analyst', usage: 15, color: 'hsl(var(--chart-4))' },
@@ -123,14 +123,14 @@ export const Analytics = () => {
                     <AreaChart data={monthlyData.slice(-7)}>
                       <defs>
                         <linearGradient id={`gradient-${index}`} x1="0" y1="0" x2="0" y2="1">
-                          <stop offset="0%" stopColor="hsl(var(--primary))" stopOpacity="0.4"/>
-                          <stop offset="100%" stopColor="hsl(var(--primary))" stopOpacity="0.1"/>
+                         <stop offset="0%" stopColor="hsl(var(--chart-1))" stopOpacity="0.4"/>
+                          <stop offset="100%" stopColor="hsl(var(--chart-1))" stopOpacity="0.1"/>
                         </linearGradient>
                       </defs>
                       <Area 
                         type="monotone" 
                         dataKey="conversations" 
-                        stroke="hsl(var(--primary))" 
+                        stroke="hsl(var(--chart-1))" 
                         fill={`url(#gradient-${index})`}
                         strokeWidth={2}
                       />
@@ -144,7 +144,7 @@ export const Analytics = () => {
 
         {/* Main Analytics */}
         <Tabs defaultValue="overview" className="space-y-6">
-          <TabsList className="grid w-full max-w-md grid-cols-3">
+          <TabsList className="grid w-full max-w-md grid-cols-3 bg-card border py-2 h-12">
             <TabsTrigger value="overview">Overview</TabsTrigger>
             <TabsTrigger value="agents">Agents</TabsTrigger>
             <TabsTrigger value="users">Users</TabsTrigger>
@@ -172,9 +172,10 @@ export const Analytics = () => {
                         <Line 
                           type="monotone" 
                           dataKey="conversations" 
-                          stroke="hsl(var(--primary))" 
+                          stroke="hsl(var(--chart-1))" 
                           strokeWidth={3}
                           name="Conversations"
+                          dot={{ fill: 'hsl(var(--chart-1))', strokeWidth: 2, r: 4 }}
                         />
                         <Line 
                           type="monotone" 
@@ -182,6 +183,7 @@ export const Analytics = () => {
                           stroke="hsl(var(--chart-2))" 
                           strokeWidth={3}
                           name="New Users"
+                          dot={{ fill: 'hsl(var(--chart-2))', strokeWidth: 2, r: 4 }}
                         />
                       </LineChart>
                     </ResponsiveContainer>
@@ -201,13 +203,23 @@ export const Analytics = () => {
                   <div className="h-80">
                     <ResponsiveContainer width="100%" height="100%">
                       <BarChart data={weeklyEngagement}>
+                        <defs>
+                          <pattern id="messageStripes" patternUnits="userSpaceOnUse" width="4" height="4" patternTransform="rotate(45)">
+                            <rect width="4" height="4" fill="hsl(var(--chart-1))" opacity="0.3"/>
+                            <rect width="2" height="4" fill="hsl(var(--chart-1))"/>
+                          </pattern>
+                          <pattern id="userDots" patternUnits="userSpaceOnUse" width="4" height="4">
+                            <rect width="4" height="4" fill="hsl(var(--chart-2))" opacity="0.3"/>
+                            <circle cx="2" cy="2" r="1" fill="hsl(var(--chart-2))"/>
+                          </pattern>
+                        </defs>
                         <CartesianGrid strokeDasharray="3 3" className="opacity-30" />
                         <XAxis dataKey="day" />
                         <YAxis />
                         <Tooltip />
                         <Legend />
-                        <Bar dataKey="messages" fill="hsl(var(--primary))" name="Messages" />
-                        <Bar dataKey="activeUsers" fill="hsl(var(--chart-3))" name="Active Users" />
+                        <Bar dataKey="messages" fill="url(#messageStripes)" name="Messages" radius={[2, 2, 0, 0]} />
+                        <Bar dataKey="activeUsers" fill="url(#userDots)" name="Active Users" radius={[2, 2, 0, 0]} />
                       </BarChart>
                     </ResponsiveContainer>
                   </div>
@@ -229,8 +241,8 @@ export const Analytics = () => {
                     <AreaChart data={responseTimeData}>
                       <defs>
                         <linearGradient id="responseGradient" x1="0" y1="0" x2="0" y2="1">
-                          <stop offset="0%" stopColor="hsl(var(--chart-4))" stopOpacity="0.6"/>
-                          <stop offset="100%" stopColor="hsl(var(--chart-4))" stopOpacity="0.1"/>
+                          <stop offset="0%" stopColor="hsl(var(--chart-3))" stopOpacity="0.6"/>
+                          <stop offset="100%" stopColor="hsl(var(--chart-3))" stopOpacity="0.1"/>
                         </linearGradient>
                       </defs>
                       <CartesianGrid strokeDasharray="3 3" className="opacity-30" />
@@ -240,7 +252,7 @@ export const Analytics = () => {
                       <Area 
                         type="monotone" 
                         dataKey="avgResponse" 
-                        stroke="hsl(var(--chart-4))" 
+                        stroke="hsl(var(--chart-3))" 
                         fill="url(#responseGradient)"
                         strokeWidth={2}
                       />
@@ -305,9 +317,9 @@ export const Analytics = () => {
                         <Line 
                           type="monotone" 
                           dataKey="satisfaction" 
-                          stroke="hsl(var(--chart-5))" 
+                          stroke="hsl(var(--chart-4))" 
                           strokeWidth={3}
-                          dot={{ fill: 'hsl(var(--chart-5))', strokeWidth: 2, r: 6 }}
+                          dot={{ fill: 'hsl(var(--chart-4))', strokeWidth: 2, r: 6 }}
                         />
                       </LineChart>
                     </ResponsiveContainer>
@@ -333,8 +345,8 @@ export const Analytics = () => {
                       <AreaChart data={monthlyData}>
                         <defs>
                           <linearGradient id="userGrowthGradient" x1="0" y1="0" x2="0" y2="1">
-                            <stop offset="0%" stopColor="hsl(var(--chart-2))" stopOpacity="0.6"/>
-                            <stop offset="100%" stopColor="hsl(var(--chart-2))" stopOpacity="0.1"/>
+                            <stop offset="0%" stopColor="hsl(var(--chart-1))" stopOpacity="0.6"/>
+                            <stop offset="100%" stopColor="hsl(var(--chart-1))" stopOpacity="0.1"/>
                           </linearGradient>
                         </defs>
                         <CartesianGrid strokeDasharray="3 3" className="opacity-30" />
@@ -344,7 +356,7 @@ export const Analytics = () => {
                         <Area 
                           type="monotone" 
                           dataKey="newUsers" 
-                          stroke="hsl(var(--chart-2))" 
+                          stroke="hsl(var(--chart-1))" 
                           fill="url(#userGrowthGradient)"
                           strokeWidth={2}
                         />
@@ -372,7 +384,7 @@ export const Analytics = () => {
                         <Tooltip />
                         <Bar 
                           dataKey="activeUsers" 
-                          fill="hsl(var(--primary))"
+                          fill="hsl(var(--chart-1))"
                           radius={[4, 4, 0, 0]}
                         />
                       </BarChart>
