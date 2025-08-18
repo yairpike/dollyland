@@ -658,6 +658,7 @@ export type Database = {
           last_accessed_at: string | null
           model_name: string
           provider_name: string
+          rotation_due_at: string | null
           updated_at: string
           user_id: string
         }
@@ -673,6 +674,7 @@ export type Database = {
           last_accessed_at?: string | null
           model_name: string
           provider_name: string
+          rotation_due_at?: string | null
           updated_at?: string
           user_id: string
         }
@@ -688,6 +690,7 @@ export type Database = {
           last_accessed_at?: string | null
           model_name?: string
           provider_name?: string
+          rotation_due_at?: string | null
           updated_at?: string
           user_id?: string
         }
@@ -901,11 +904,19 @@ export type Database = {
         Args: { encrypted_key: string; provider_id: string; user_id: string }
         Returns: string
       }
+      decrypt_api_key_secure: {
+        Args: { encrypted_key: string; provider_id: string; user_id: string }
+        Returns: string
+      }
       encrypt_api_key: {
         Args: { api_key: string; user_id: string }
         Returns: string
       }
       encrypt_api_key_enhanced: {
+        Args: { api_key: string; user_id: string }
+        Returns: string
+      }
+      encrypt_api_key_secure: {
         Args: { api_key: string; user_id: string }
         Returns: string
       }
