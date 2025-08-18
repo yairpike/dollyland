@@ -157,12 +157,12 @@ export const Dashboard = () => {
                   ]}>
                     <defs>
                       <pattern id="dots" patternUnits="userSpaceOnUse" width="4" height="4">
-                        <rect width="4" height="4" fill="hsl(var(--primary))" opacity="0.3"/>
-                        <circle cx="2" cy="2" r="1" fill="hsl(var(--primary))"/>
+                        <rect width="4" height="4" fill="hsl(var(--chart-1))" opacity="0.3"/>
+                        <circle cx="2" cy="2" r="1" fill="hsl(var(--chart-1))"/>
                       </pattern>
                       <pattern id="stripes" patternUnits="userSpaceOnUse" width="4" height="4" patternTransform="rotate(45)">
-                        <rect width="4" height="4" fill="hsl(var(--primary))" opacity="0.3"/>
-                        <rect width="2" height="4" fill="hsl(var(--primary))"/>
+                        <rect width="4" height="4" fill="hsl(var(--chart-1))" opacity="0.3"/>
+                        <rect width="2" height="4" fill="hsl(var(--chart-1))"/>
                       </pattern>
                     </defs>
                     <Bar dataKey="value" radius={2}>
@@ -177,7 +177,7 @@ export const Dashboard = () => {
                       ].map((entry, index) => (
                         <Cell 
                           key={`cell-${index}`} 
-                          fill={entry.pattern === 'solid' ? 'hsl(var(--primary))' : `url(#${entry.pattern})`} 
+                          fill={entry.pattern === 'solid' ? 'hsl(var(--chart-1))' : `url(#${entry.pattern})`} 
                         />
                       ))}
                     </Bar>
@@ -212,12 +212,12 @@ export const Dashboard = () => {
                   ]}>
                     <defs>
                       <pattern id="dots2" patternUnits="userSpaceOnUse" width="4" height="4">
-                        <rect width="4" height="4" fill="hsl(var(--primary))" opacity="0.3"/>
-                        <circle cx="2" cy="2" r="1" fill="hsl(var(--primary))"/>
+                        <rect width="4" height="4" fill="hsl(var(--chart-1))" opacity="0.3"/>
+                        <circle cx="2" cy="2" r="1" fill="hsl(var(--chart-1))"/>
                       </pattern>
                       <pattern id="stripes2" patternUnits="userSpaceOnUse" width="4" height="4" patternTransform="rotate(45)">
-                        <rect width="4" height="4" fill="hsl(var(--primary))" opacity="0.3"/>
-                        <rect width="2" height="4" fill="hsl(var(--primary))"/>
+                        <rect width="4" height="4" fill="hsl(var(--chart-1))" opacity="0.3"/>
+                        <rect width="2" height="4" fill="hsl(var(--chart-1))"/>
                       </pattern>
                     </defs>
                     <Bar dataKey="value" radius={2}>
@@ -232,7 +232,7 @@ export const Dashboard = () => {
                       ].map((entry, index) => (
                         <Cell 
                           key={`cell-${index}`} 
-                          fill={entry.pattern === 'solid' ? 'hsl(var(--primary))' : `url(#${entry.pattern})`} 
+                          fill={entry.pattern === 'solid' ? 'hsl(var(--chart-1))' : `url(#${entry.pattern})`} 
                         />
                       ))}
                     </Bar>
@@ -267,8 +267,8 @@ export const Dashboard = () => {
                   ]}>
                     <defs>
                       <linearGradient id="userGradient" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="0%" stopColor="hsl(var(--primary))" stopOpacity="1"/>
-                        <stop offset="100%" stopColor="hsl(var(--primary))" stopOpacity="0.6"/>
+                        <stop offset="0%" stopColor="hsl(var(--chart-1))" stopOpacity="1"/>
+                        <stop offset="100%" stopColor="hsl(var(--chart-1))" stopOpacity="0.6"/>
                       </linearGradient>
                     </defs>
                     <Bar dataKey="value" fill="url(#userGradient)" radius={2} />
@@ -303,9 +303,9 @@ export const Dashboard = () => {
                   ]}>
                     <defs>
                       <linearGradient id="performanceGradient" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="0%" stopColor="hsl(var(--primary))" stopOpacity="1"/>
-                        <stop offset="50%" stopColor="hsl(var(--primary))" stopOpacity="0.8"/>
-                        <stop offset="100%" stopColor="hsl(var(--primary))" stopOpacity="0.4"/>
+                        <stop offset="0%" stopColor="hsl(var(--chart-1))" stopOpacity="1"/>
+                        <stop offset="50%" stopColor="hsl(var(--chart-1))" stopOpacity="0.8"/>
+                        <stop offset="100%" stopColor="hsl(var(--chart-1))" stopOpacity="0.4"/>
                       </linearGradient>
                     </defs>
                     <Bar dataKey="value" fill="url(#performanceGradient)" radius={2} />
