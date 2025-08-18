@@ -204,7 +204,7 @@ export const Marketplace = () => {
             placeholder="Search agents, skills, or tools..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="pl-10 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600"
+            className="pl-10 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 h-9"
           />
         </div>
         <Select value={selectedCategory} onValueChange={setSelectedCategory}>
