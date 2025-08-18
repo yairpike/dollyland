@@ -153,7 +153,7 @@ Always be encouraging and provide clear next steps.`
           size="lg"
         >
           <img 
-            src="/lovable-uploads/eb1dabfc-b5a4-4928-bf12-e80fd327c5e0.png" 
+            src="/lovable-uploads/85abbc87-fafc-4307-86a1-f85ed74b639e.png" 
             alt="Dolly" 
             className="w-8 h-8"
           />
@@ -170,7 +170,7 @@ Always be encouraging and provide clear next steps.`
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <img 
-                  src="/lovable-uploads/eb1dabfc-b5a4-4928-bf12-e80fd327c5e0.png" 
+                  src="/lovable-uploads/85abbc87-fafc-4307-86a1-f85ed74b639e.png" 
                   alt="Dolly" 
                   className="w-5 h-5"
                 />
@@ -210,7 +210,7 @@ Always be encouraging and provide clear next steps.`
             <div className="flex items-center gap-2">
               <div className="relative">
                 <img 
-                  src="/lovable-uploads/eb1dabfc-b5a4-4928-bf12-e80fd327c5e0.png" 
+                  src="/lovable-uploads/85abbc87-fafc-4307-86a1-f85ed74b639e.png" 
                   alt="Dolly" 
                   className="w-5 h-5"
                 />
