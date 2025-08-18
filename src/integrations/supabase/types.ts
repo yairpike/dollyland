@@ -86,8 +86,7 @@ export type Database = {
       agent_deployments: {
         Row: {
           agent_id: string
-          api_key: string | null
-          api_key_encrypted: string | null
+          api_key_encrypted: string
           config: Json
           created_at: string
           deployment_type: string
@@ -100,8 +99,7 @@ export type Database = {
         }
         Insert: {
           agent_id: string
-          api_key?: string | null
-          api_key_encrypted?: string | null
+          api_key_encrypted: string
           config?: Json
           created_at?: string
           deployment_type: string
@@ -114,8 +112,7 @@ export type Database = {
         }
         Update: {
           agent_id?: string
-          api_key?: string | null
-          api_key_encrypted?: string | null
+          api_key_encrypted?: string
           config?: Json
           created_at?: string
           deployment_type?: string
@@ -131,8 +128,7 @@ export type Database = {
       agent_integrations: {
         Row: {
           agent_id: string
-          api_key: string | null
-          api_key_encrypted: string | null
+          api_key_encrypted: string
           config: Json
           created_at: string
           id: string
@@ -146,8 +142,7 @@ export type Database = {
         }
         Insert: {
           agent_id: string
-          api_key?: string | null
-          api_key_encrypted?: string | null
+          api_key_encrypted: string
           config?: Json
           created_at?: string
           id?: string
@@ -161,8 +156,7 @@ export type Database = {
         }
         Update: {
           agent_id?: string
-          api_key?: string | null
-          api_key_encrypted?: string | null
+          api_key_encrypted?: string
           config?: Json
           created_at?: string
           id?: string
@@ -985,7 +979,36 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      safe_invites_view: {
+        Row: {
+          created_at: string | null
+          created_by: string | null
+          expires_at: string | null
+          id: string | null
+          invite_code: string | null
+          status: string | null
+          used_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          created_by?: string | null
+          expires_at?: string | null
+          id?: string | null
+          invite_code?: string | null
+          status?: never
+          used_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          created_by?: string | null
+          expires_at?: string | null
+          id?: string | null
+          invite_code?: string | null
+          status?: never
+          used_at?: string | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
       access_encrypted_key_secure: {
@@ -1007,6 +1030,10 @@ export type Database = {
           p_config?: Json
           p_deployment_type: string
         }
+        Returns: string
+      }
+      create_deployment_secure_v2: {
+        Args: { p_agent_id: string; p_config?: Json; p_deployment_type: string }
         Returns: string
       }
       create_invite_secure: {
