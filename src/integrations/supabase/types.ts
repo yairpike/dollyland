@@ -923,11 +923,46 @@ export type Database = {
         }
         Relationships: []
       }
+      safe_secrets_metadata: {
+        Row: {
+          created_at: string | null
+          description: string | null
+          id: string | null
+          name: string | null
+          safe_access_instructions: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          description?: string | null
+          id?: string | null
+          name?: string | null
+          safe_access_instructions?: never
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          description?: string | null
+          id?: string | null
+          name?: string | null
+          safe_access_instructions?: never
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
       access_encrypted_key_secure: {
         Args: { provider_uuid: string; purpose?: string }
         Returns: string
+      }
+      audit_vault_usage: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          priority: string
+          recommendation: string
+          security_concern: string
+        }[]
       }
       create_deployment_secure: {
         Args: {
@@ -1095,6 +1130,10 @@ export type Database = {
           user_id: string
         }[]
       }
+      get_secret_safe: {
+        Args: { secret_name: string }
+        Returns: string
+      }
       get_user_ai_providers_safe: {
         Args: Record<PropertyKey, never>
         Returns: {
@@ -1195,6 +1234,16 @@ export type Database = {
         }
         Returns: undefined
       }
+      monitor_vault_security: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          access_time: string
+          access_type: string
+          secret_name: string
+          success: boolean
+          user_id: string
+        }[]
+      }
       regenerate_deployment_key: {
         Args: { deployment_id: string }
         Returns: string
@@ -1229,6 +1278,14 @@ export type Database = {
       validate_sensitive_access: {
         Args: { access_type?: string; record_id: string; table_name: string }
         Returns: boolean
+      }
+      validate_vault_security: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          check_name: string
+          details: string
+          status: string
+        }[]
       }
     }
     Enums: {
