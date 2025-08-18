@@ -51,13 +51,18 @@ export const EditAgent = () => {
   });
 
   useEffect(() => {
-    if (agentId) {
+    console.log('EditAgent useEffect triggered - agentId:', agentId, 'user:', user);
+    if (agentId && user) {
       fetchAgent();
     }
-  }, [agentId]);
+  }, [agentId, user]);
 
   const fetchAgent = async () => {
-    if (!agentId || !user) return;
+    console.log('fetchAgent called - agentId:', agentId, 'user:', user);
+    if (!agentId || !user) {
+      console.log('fetchAgent early return - missing agentId or user');
+      return;
+    }
 
     setLoading(true);
     try {
@@ -78,9 +83,11 @@ export const EditAgent = () => {
       });
     } catch (error: any) {
       console.error('Error fetching agent:', error);
+      console.log('Full error details:', { error, agentId, userId: user?.id });
       toast.error("Failed to load agent");
       navigate('/dashboard');
     } finally {
+      console.log('fetchAgent completed, setting loading to false');
       setLoading(false);
     }
   };
@@ -140,6 +147,8 @@ export const EditAgent = () => {
     setFormData(prev => ({ ...prev, [field]: value }));
   };
 
+  console.log('Render check - agent:', agent, 'loading:', loading, 'user:', user);
+  
   if (!agent) {
     return (
       <div className="flex items-center justify-center min-h-screen">
