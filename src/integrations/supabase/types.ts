@@ -783,6 +783,30 @@ export type Database = {
         }
         Relationships: []
       }
+      user_roles: {
+        Row: {
+          assigned_at: string | null
+          assigned_by: string | null
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          assigned_at?: string | null
+          assigned_by?: string | null
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          assigned_at?: string | null
+          assigned_by?: string | null
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
       webhook_deliveries: {
         Row: {
           delivered_at: string
@@ -1269,6 +1293,10 @@ export type Database = {
           webhook_url: string
         }[]
       }
+      get_user_role: {
+        Args: { _user_id: string }
+        Returns: Database["public"]["Enums"]["app_role"]
+      }
       get_user_webhooks_safe: {
         Args: Record<PropertyKey, never>
         Returns: {
@@ -1299,6 +1327,13 @@ export type Database = {
       get_webhook_secret_secure: {
         Args: { webhook_uuid: string }
         Returns: string
+      }
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
       }
       log_api_key_access: {
         Args: {
@@ -1389,7 +1424,7 @@ export type Database = {
       }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "god" | "gods_friends" | "user"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -1516,6 +1551,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["god", "gods_friends", "user"],
+    },
   },
 } as const
