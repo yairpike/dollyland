@@ -46,7 +46,7 @@ export function DashboardLayout({ children, onCreateAgent }: DashboardLayoutProp
         </header>
 
         {/* Main Content */}
-        <main className="flex-1 p-4 lg:p-8 bg-background">
+        <main className="flex-1 px-4 lg:px-8 pb-4 lg:pb-8 bg-background">
           {children}
         </main>
       </div>
