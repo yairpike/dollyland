@@ -17,20 +17,27 @@ export const Header = () => {
 
   const handleSignOut = async () => {
     try {
+      console.log('Header: Starting sign out process');
       const { error } = await signOut();
+      
       if (error) {
-        console.error('Sign out error:', error);
-        toast.error("Failed to sign out: " + error.message);
-      } else {
-        toast.success("Signed out successfully");
-        // Clear any local storage
+        console.error('Header: Sign out error:', error);
+        // Even if there's an error, try to clear state and redirect
         localStorage.clear();
-        // Force navigation to auth page
+        navigate("/auth", { replace: true });
+        toast.error("Sign out completed with issues - you have been logged out");
+      } else {
+        console.log('Header: Sign out successful');
+        toast.success("Signed out successfully");
+        localStorage.clear();
         navigate("/auth", { replace: true });
       }
     } catch (err) {
-      console.error('Unexpected sign out error:', err);
-      toast.error("An unexpected error occurred during sign out");
+      console.error('Header: Unexpected sign out error:', err);
+      // Force sign out by clearing everything
+      localStorage.clear();
+      navigate("/auth", { replace: true });
+      toast.info("Signed out (forced)");
     }
   };
 

@@ -93,11 +93,26 @@ export const useAuth = () => {
 
   const signOut = async () => {
     try {
-      const { error } = await supabase.auth.signOut()
-      return { error }
+      console.log('Attempting sign out. Current session:', !!session, 'Current user:', !!user);
+      
+      // Check if we have a session to sign out from
+      const { data: currentSession } = await supabase.auth.getSession();
+      console.log('Current session from Supabase:', !!currentSession.session);
+      
+      if (!currentSession.session) {
+        // No session exists, clear local state and redirect
+        console.log('No active session found, clearing local auth state');
+        setSession(null);
+        setUser(null);
+        return { error: null }; // Don't treat this as an error
+      }
+      
+      const { error } = await supabase.auth.signOut();
+      console.log('Sign out result:', { error });
+      return { error };
     } catch (err) {
       console.error('Sign out error:', err);
-      return { error: err }
+      return { error: err };
     }
   }
 
