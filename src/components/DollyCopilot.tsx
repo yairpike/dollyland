@@ -149,13 +149,13 @@ Always be encouraging and provide clear next steps.`
       <div className="fixed bottom-6 right-6 z-50">
         <Button
           onClick={() => setIsOpen(true)}
-          className="h-14 w-14 rounded-full shadow-lg bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 transition-all duration-200 p-2"
+          className="h-12 w-16 rounded-xl shadow-lg bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 transition-all duration-200 p-2"
           size="lg"
         >
           <img 
             src="/lovable-uploads/85abbc87-fafc-4307-86a1-f85ed74b639e.png" 
             alt="Dolly" 
-            className="w-8 h-8"
+            className="w-full h-full object-contain"
           />
         </Button>
       </div>

@@ -6,7 +6,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { toast } from "sonner";
 import { ThemeToggle } from "./ThemeToggle";
 import { LoadingAnimation } from "./LoadingAnimation";
-import dollyLogo from "/lovable-uploads/8dc3b4f9-4ebf-4b9b-90c7-c85727a0e166.png";
+import dollyLogo from "/lovable-uploads/85abbc87-fafc-4307-86a1-f85ed74b639e.png";
 
 export const Header = () => {
   const { user, signOut, loading, initializing } = useAuth();
