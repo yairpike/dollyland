@@ -119,7 +119,7 @@ export const Header = () => {
               ) : (
                 <>
                   {/* Theme Toggle for logged-out users */}
-                  <ThemeToggle />
+                  <ThemeToggle iconOnly />
                   
                   <Button variant="ghost" className="hidden sm:inline-flex" onClick={() => navigate('/auth')}>
                     Sign In

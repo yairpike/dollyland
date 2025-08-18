@@ -182,10 +182,10 @@ Always be encouraging, patient, and thorough. For external setups, provide actua
 
   if (!isOpen) {
     return (
-      <div className="fixed bottom-6 right-6 z-50">
+      <div className="fixed bottom-6 right-6 z-50 p-1">
         <Button
           onClick={() => setIsOpen(true)}
-          className="h-12 w-16 rounded-xl shadow-lg bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 transition-all duration-200 p-2"
+          className="h-14 w-14 rounded-full shadow-xl bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 transition-all duration-200 p-3 hover:scale-105"
           size="lg"
         >
           <img 
