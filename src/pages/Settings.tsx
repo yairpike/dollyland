@@ -11,13 +11,15 @@ import { ThemeToggle } from "@/components/ThemeToggle";
 import { DashboardLayout } from "@/components/DashboardLayout";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
-import { User, CreditCard, Bot, LogOut, Mail } from "lucide-react";
+import { User, CreditCard, Bot, LogOut, Mail, GraduationCap, PlayCircle, RotateCcw } from "lucide-react";
 import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
+import { useTourManager } from "@/components/OnboardingTour";
 
 export const Settings = () => {
   const { user, signOut } = useAuth();
   const navigate = useNavigate();
+  const { resetTours } = useTourManager();
   const [fullName, setFullName] = useState(user?.user_metadata?.full_name || "");
   const [email, setEmail] = useState(user?.email || "");
   const [showEmailChange, setShowEmailChange] = useState(false);
@@ -77,7 +79,7 @@ export const Settings = () => {
         <p className="text-muted-foreground mb-6">Manage your account and preferences</p>
 
         <Tabs defaultValue="account" className="w-full">
-          <TabsList className="grid w-full max-w-md grid-cols-3 bg-card border py-2 h-12 content-center">
+          <TabsList className="grid w-full max-w-2xl grid-cols-4 bg-card border py-2 h-12 content-center">
             <TabsTrigger value="account" className="flex items-center gap-2">
               <User className="w-4 h-4" />
               Account
@@ -85,6 +87,10 @@ export const Settings = () => {
             <TabsTrigger value="ai-providers" className="flex items-center gap-2">
               <Bot className="w-4 h-4" />
               AI Providers
+            </TabsTrigger>
+            <TabsTrigger value="tutorials" className="flex items-center gap-2">
+              <GraduationCap className="w-4 h-4" />
+              Tutorials
             </TabsTrigger>
             <TabsTrigger value="billing" className="flex items-center gap-2">
               <CreditCard className="w-4 h-4" />
@@ -175,7 +181,6 @@ export const Settings = () => {
             </Card>
           </TabsContent>
 
-
           {/* AI Providers Settings */}
           <TabsContent value="ai-providers" className="mt-6">
             <Card>
@@ -187,6 +192,134 @@ export const Settings = () => {
               </CardHeader>
               <CardContent>
                 <AIProviderManager />
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          {/* Tutorials Settings */}
+          <TabsContent value="tutorials" className="mt-6">
+            <Card>
+              <CardHeader>
+                <CardTitle>Tutorial Management</CardTitle>
+                <CardDescription>
+                  Replay onboarding tours and learn about platform features
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <Card className="p-4">
+                    <div className="flex items-center gap-3 mb-3">
+                      <PlayCircle className="w-5 h-5 text-primary" />
+                      <h4 className="font-medium">Dashboard Tour</h4>
+                    </div>
+                    <p className="text-sm text-muted-foreground mb-4">
+                      Learn about your dashboard features, stats, and agent management
+                    </p>
+                    <Button 
+                      variant="outline" 
+                      size="sm"
+                      onClick={() => {
+                        navigate('/dashboard');
+                        setTimeout(() => {
+                          localStorage.removeItem('tour_dashboard_completed');
+                          window.location.reload();
+                        }, 100);
+                      }}
+                    >
+                      Start Tour
+                    </Button>
+                  </Card>
+
+                  <Card className="p-4">
+                    <div className="flex items-center gap-3 mb-3">
+                      <PlayCircle className="w-5 h-5 text-primary" />
+                      <h4 className="font-medium">Create Agent Tour</h4>
+                    </div>
+                    <p className="text-sm text-muted-foreground mb-4">
+                      Step-by-step guide to creating your first AI agent
+                    </p>
+                    <Button 
+                      variant="outline" 
+                      size="sm"
+                      onClick={() => {
+                        navigate('/create-agent');
+                        setTimeout(() => {
+                          localStorage.removeItem('tour_create-agent_completed');
+                          window.location.reload();
+                        }, 100);
+                      }}
+                    >
+                      Start Tour
+                    </Button>
+                  </Card>
+
+                  <Card className="p-4">
+                    <div className="flex items-center gap-3 mb-3">
+                      <PlayCircle className="w-5 h-5 text-primary" />
+                      <h4 className="font-medium">Edit Agent Tour</h4>
+                    </div>
+                    <p className="text-sm text-muted-foreground mb-4">
+                      Learn to configure agents, set up integrations, and manage workflows
+                    </p>
+                    <Button 
+                      variant="outline" 
+                      size="sm"
+                      onClick={() => {
+                        navigate('/dashboard');
+                        toast.info('Create or select an agent first, then click edit to start the tour');
+                      }}
+                    >
+                      Start Tour
+                    </Button>
+                  </Card>
+
+                  <Card className="p-4">
+                    <div className="flex items-center gap-3 mb-3">
+                      <RotateCcw className="w-5 h-5 text-primary" />
+                      <h4 className="font-medium">Reset All Tours</h4>
+                    </div>
+                    <p className="text-sm text-muted-foreground mb-4">
+                      Reset all tutorial progress and see tours again
+                    </p>
+                    <Button 
+                      variant="outline" 
+                      size="sm"
+                      onClick={() => {
+                        resetTours();
+                        toast.success('All tours have been reset. They will appear when you visit their respective pages.');
+                      }}
+                    >
+                      Reset Tours
+                    </Button>
+                  </Card>
+                </div>
+
+                <Separator />
+
+                <div className="bg-muted rounded-lg p-4">
+                  <h5 className="font-medium mb-2 flex items-center gap-2">
+                    <GraduationCap className="w-4 h-4" />
+                    Learning Resources
+                  </h5>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                    <div>
+                      <div className="font-medium">Getting Started</div>
+                      <div className="text-muted-foreground">Learn the basics of agent creation</div>
+                    </div>
+                    <div>
+                      <div className="font-medium">Advanced Features</div>
+                      <div className="text-muted-foreground">Integrations, workflows, and more</div>
+                    </div>
+                    <div>
+                      <div className="font-medium">Best Practices</div>
+                      <div className="text-muted-foreground">Tips for effective agent management</div>
+                    </div>
+                    <div>
+                      <div className="font-medium">Troubleshooting</div>
+                      <div className="text-muted-foreground">Common issues and solutions</div>
+                    </div>
+                  </div>
+                </div>
               </CardContent>
             </Card>
           </TabsContent>

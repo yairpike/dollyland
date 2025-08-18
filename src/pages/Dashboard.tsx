@@ -9,10 +9,11 @@ import { BarChart, Bar, ResponsiveContainer, Cell } from "recharts";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 
-import { EditAgentModal } from "@/components/EditAgentModal";
 import { PublishAgentModal } from "@/components/PublishAgentModal";
 import { toast } from "sonner";
 import { DashboardLayout } from "@/components/DashboardLayout";
+import { DashboardTour } from "@/components/tours/DashboardTour";
+import { useTourManager } from "@/components/OnboardingTour";
 
 interface Agent {
   id: string;
@@ -36,10 +37,16 @@ export const Dashboard = () => {
   const [agents, setAgents] = useState<Agent[]>([]);
   const [loading, setLoading] = useState(true);
   
-  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isPublishModalOpen, setIsPublishModalOpen] = useState(false);
-  const [editingAgent, setEditingAgent] = useState<Agent | null>(null);
   const [publishingAgent, setPublishingAgent] = useState<Agent | null>(null);
+  const { shouldShowTour } = useTourManager();
+  const [showDashboardTour, setShowDashboardTour] = useState(false);
+
+  useEffect(() => {
+    if (shouldShowTour('dashboard')) {
+      setShowDashboardTour(true);
+    }
+  }, [shouldShowTour]);
 
   useEffect(() => {
     fetchAgents();
@@ -67,12 +74,6 @@ export const Dashboard = () => {
   };
 
 
-  const handleAgentUpdated = () => {
-    fetchAgents();
-    setIsEditModalOpen(false);
-    setEditingAgent(null);
-  };
-
   const handleAgentPublished = () => {
     fetchAgents();
     setIsPublishModalOpen(false);
@@ -80,8 +81,7 @@ export const Dashboard = () => {
   };
 
   const handleEditAgent = (agent: Agent) => {
-    setEditingAgent(agent);
-    setIsEditModalOpen(true);
+    navigate(`/edit-agent/${agent.id}`);
   };
 
   const handlePublishAgent = (agent: Agent) => {
@@ -122,19 +122,19 @@ export const Dashboard = () => {
     <DashboardLayout onCreateAgent={() => navigate('/create-agent')}>
       <div className="space-y-6">
         {/* Header */}
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between" data-tour="dashboard-header">
           <div>
             <h1 className="text-3xl font-semibold">Home</h1>
             <p className="text-muted-foreground">Welcome back! Here's what's happening with your agents.</p>
           </div>
-          <Button onClick={() => navigate('/create-agent')}>
+          <Button onClick={() => navigate('/create-agent')} data-tour="create-agent-button">
             <Plus className="w-4 h-4 mr-2" />
             Create Agent
           </Button>
         </div>
 
         {/* Stats Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6" data-tour="dashboard-stats">
           <Card>
             <CardContent className="p-6">
               <div className="flex items-center justify-between mb-4">
@@ -320,7 +320,7 @@ export const Dashboard = () => {
         </div>
 
         {/* Main Content */}
-        <Tabs defaultValue="agents" className="space-y-6">
+        <Tabs defaultValue="agents" className="space-y-6" data-tour="dashboard-tabs">
           <TabsList className="grid w-full max-w-md grid-cols-2 bg-card border py-2 h-12 content-center">
             <TabsTrigger value="agents">My Agents</TabsTrigger>
             <TabsTrigger value="marketplace">Marketplace</TabsTrigger>
@@ -342,9 +342,9 @@ export const Dashboard = () => {
                 </div>
               </Card>
             ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" data-tour="agents-grid">
                 {agents.map((agent) => (
-                  <Card key={agent.id} className="hover:shadow-lg transition-shadow duration-200">
+                  <Card key={agent.id} className="hover:shadow-lg transition-shadow duration-200" data-tour="agent-card">
                     <CardHeader className="pb-3">
                       <div className="flex items-start justify-between">
                         <div className="flex items-center gap-3">
@@ -438,19 +438,6 @@ export const Dashboard = () => {
         </Tabs>
 
         {/* Modals */}
-
-        {editingAgent && (
-          <EditAgentModal
-            agent={editingAgent}
-            open={isEditModalOpen}
-            onOpenChange={(open) => {
-              setIsEditModalOpen(open);
-              if (!open) setEditingAgent(null);
-            }}
-            onAgentUpdated={handleAgentUpdated}
-          />
-        )}
-
         {publishingAgent && (
           <PublishAgentModal
             agent={publishingAgent}
@@ -462,6 +449,12 @@ export const Dashboard = () => {
             onAgentUpdated={handleAgentPublished}
           />
         )}
+
+        {/* Dashboard Tour */}
+        <DashboardTour 
+          isOpen={showDashboardTour}
+          onClose={() => setShowDashboardTour(false)}
+        />
       </div>
     </DashboardLayout>
   );

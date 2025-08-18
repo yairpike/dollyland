@@ -14,7 +14,9 @@ import Auth from "./pages/Auth";
 import NotFound from "./pages/NotFound";
 import { Chat } from "./pages/Chat";
 import CreateAgent from "./pages/CreateAgent";
+import { EditAgent } from "./pages/EditAgent";
 import { ProtectedRoute } from "./components/ProtectedRoute";
+import { DollyCopilot } from "./components/DollyCopilot";
 
 const queryClient = new QueryClient();
 
@@ -32,12 +34,14 @@ const App = () => (
           <Route path="/trial/:agentId" element={<AgentTrial />} />
           <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
           <Route path="/create-agent" element={<ProtectedRoute><CreateAgent /></ProtectedRoute>} />
+          <Route path="/edit-agent/:agentId" element={<ProtectedRoute><EditAgent /></ProtectedRoute>} />
           <Route path="/settings" element={<ProtectedRoute><Settings /></ProtectedRoute>} />
           <Route path="/analytics" element={<ProtectedRoute><Analytics /></ProtectedRoute>} />
           <Route path="/chat/:agentId" element={<ProtectedRoute><Chat /></ProtectedRoute>} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
+        <DollyCopilot />
       </TooltipProvider>
     </BrowserRouter>
     </ThemeProvider>

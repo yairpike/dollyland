@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -11,13 +11,17 @@ import { AgentTemplates } from "@/components/AgentTemplates";
 import { toast } from "sonner";
 import { Sparkles, Loader2, ArrowLeft, ChevronLeft } from "lucide-react";
 import { DashboardLayout } from "@/components/DashboardLayout";
+import { CreateAgentTour } from "@/components/tours/CreateAgentTour";
+import { useTourManager } from "@/components/OnboardingTour";
 
 export const CreateAgent = () => {
   const navigate = useNavigate();
   const { user } = useAuth();
+  const { shouldShowTour } = useTourManager();
   const [loading, setLoading] = useState(false);
   const [step, setStep] = useState<'template' | 'customize'>('template');
   const [selectedTemplate, setSelectedTemplate] = useState<any>(null);
+  const [showCreateTour, setShowCreateTour] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     description: "",
@@ -25,6 +29,12 @@ export const CreateAgent = () => {
     category: "",
     tags: [] as string[]
   });
+
+  useEffect(() => {
+    if (shouldShowTour('create-agent')) {
+      setShowCreateTour(true);
+    }
+  }, [shouldShowTour]);
 
   const handleTemplateSelect = (template: any) => {
     setSelectedTemplate(template);
@@ -181,6 +191,12 @@ export const CreateAgent = () => {
             )}
           </CardContent>
         </Card>
+
+        {/* Create Agent Tour */}
+        <CreateAgentTour 
+          isOpen={showCreateTour}
+          onClose={() => setShowCreateTour(false)}
+        />
       </div>
     </DashboardLayout>
   );
