@@ -52,17 +52,43 @@ serve(async (req) => {
   // Fetch agent details if agentId provided
   if (agentId) {
     try {
+      // Get current user from the request
+      const authHeader = req.headers.get('authorization');
+      const { data: { user }, error: authError } = await supabase.auth.getUser(
+        authHeader?.replace('Bearer ', '') || ''
+      );
+
+      if (authError || !user) {
+        console.error('Authentication required for realtime chat');
+        socket.close(1008, 'Authentication required');
+        return response;
+      }
+
+      // Get agent details and verify user has access
       const { data: agent, error } = await supabase
         .from('agents')
-        .select('system_prompt, name')
+        .select('system_prompt, name, user_id, is_public')
         .eq('id', agentId)
         .single();
       
-      if (!error && agent) {
-        agentInstructions = agent.system_prompt || `You are ${agent.name}, a helpful AI assistant.`;
+      if (error) {
+        console.error('Error fetching agent:', error);
+        socket.close(1011, 'Agent not found');
+        return response;
       }
+
+      // Verify user has access to this agent (owner or public agent)
+      if (agent.user_id !== user.id && !agent.is_public) {
+        console.error('User does not have access to this agent');
+        socket.close(1008, 'Unauthorized access to agent');
+        return response;
+      }
+
+      agentInstructions = agent.system_prompt || `You are ${agent.name}, a helpful AI assistant.`;
     } catch (error) {
-      console.error('Error fetching agent:', error);
+      console.error('Error in agent authorization:', error);
+      socket.close(1008, 'Authorization error');
+      return response;
     }
   }
 
