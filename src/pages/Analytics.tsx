@@ -164,10 +164,24 @@ export const Analytics = () => {
                   <div className="h-80">
                     <ResponsiveContainer width="100%" height="100%">
                       <LineChart data={data.monthlyTrends}>
-                        <CartesianGrid strokeDasharray="3 3" className="opacity-30" />
-                        <XAxis dataKey="month" />
-                        <YAxis />
-                        <Tooltip />
+                        <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
+                        <XAxis 
+                          dataKey="month" 
+                          stroke="hsl(var(--muted-foreground))"
+                          fontSize={12}
+                        />
+                        <YAxis 
+                          stroke="hsl(var(--muted-foreground))"
+                          fontSize={12}
+                        />
+                        <Tooltip 
+                          contentStyle={{
+                            backgroundColor: 'hsl(var(--card))',
+                            border: '1px solid hsl(var(--border))',
+                            borderRadius: 'var(--radius)',
+                            color: 'hsl(var(--card-foreground))'
+                          }}
+                        />
                         <Legend />
                         <Line 
                           type="monotone" 
@@ -213,10 +227,24 @@ export const Analytics = () => {
                             <circle cx="2" cy="2" r="1" fill="hsl(var(--chart-2))"/>
                           </pattern>
                         </defs>
-                        <CartesianGrid strokeDasharray="3 3" className="opacity-30" />
-                        <XAxis dataKey="day" />
-                        <YAxis />
-                        <Tooltip />
+                        <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
+                        <XAxis 
+                          dataKey="day" 
+                          stroke="hsl(var(--muted-foreground))"
+                          fontSize={12}
+                        />
+                        <YAxis 
+                          stroke="hsl(var(--muted-foreground))"
+                          fontSize={12}
+                        />
+                        <Tooltip 
+                          contentStyle={{
+                            backgroundColor: 'hsl(var(--card))',
+                            border: '1px solid hsl(var(--border))',
+                            borderRadius: 'var(--radius)',
+                            color: 'hsl(var(--card-foreground))'
+                          }}
+                        />
                         <Legend />
                         <Bar dataKey="messages" fill="url(#messageStripes)" name="Messages" radius={[2, 2, 0, 0]} />
                         <Bar dataKey="activeUsers" fill="url(#userDots)" name="Active Users" radius={[2, 2, 0, 0]} />
@@ -245,10 +273,24 @@ export const Analytics = () => {
                           <stop offset="100%" stopColor="hsl(var(--chart-3))" stopOpacity="0.1"/>
                         </linearGradient>
                       </defs>
-                      <CartesianGrid strokeDasharray="3 3" className="opacity-30" />
-                      <XAxis dataKey="hour" />
-                      <YAxis />
-                      <Tooltip />
+                      <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
+                      <XAxis 
+                        dataKey="hour" 
+                        stroke="hsl(var(--muted-foreground))"
+                        fontSize={12}
+                      />
+                      <YAxis 
+                        stroke="hsl(var(--muted-foreground))"
+                        fontSize={12}
+                      />
+                      <Tooltip 
+                        contentStyle={{
+                          backgroundColor: 'hsl(var(--card))',
+                          border: '1px solid hsl(var(--border))',
+                          borderRadius: 'var(--radius)',
+                          color: 'hsl(var(--card-foreground))'
+                        }}
+                      />
                       <Area 
                         type="monotone" 
                         dataKey="avgResponse" 
@@ -287,10 +329,17 @@ export const Analytics = () => {
                           dataKey="usage"
                         >
                           {data.agentPerformance.map((entry, index) => (
-                            <Cell key={`cell-${index}`} fill={entry.color} />
+                            <Cell key={`cell-${index}`} fill={entry.color || `hsl(var(--chart-${(index % 5) + 1}))`} />
                           ))}
                         </Pie>
-                        <Tooltip />
+                        <Tooltip 
+                          contentStyle={{
+                            backgroundColor: 'hsl(var(--card))',
+                            border: '1px solid hsl(var(--border))',
+                            borderRadius: 'var(--radius)',
+                            color: 'hsl(var(--card-foreground))'
+                          }}
+                        />
                         <Legend />
                       </PieChart>
                     </ResponsiveContainer>
@@ -310,10 +359,25 @@ export const Analytics = () => {
                   <div className="h-80">
                     <ResponsiveContainer width="100%" height="100%">
                       <LineChart data={data.monthlyTrends}>
-                        <CartesianGrid strokeDasharray="3 3" className="opacity-30" />
-                        <XAxis dataKey="month" />
-                        <YAxis domain={[4.0, 5.0]} />
-                        <Tooltip />
+                        <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
+                        <XAxis 
+                          dataKey="month" 
+                          stroke="hsl(var(--muted-foreground))"
+                          fontSize={12}
+                        />
+                        <YAxis 
+                          domain={[4.0, 5.0]} 
+                          stroke="hsl(var(--muted-foreground))"
+                          fontSize={12}
+                        />
+                        <Tooltip 
+                          contentStyle={{
+                            backgroundColor: 'hsl(var(--card))',
+                            border: '1px solid hsl(var(--border))',
+                            borderRadius: 'var(--radius)',
+                            color: 'hsl(var(--card-foreground))'
+                          }}
+                        />
                         <Line 
                           type="monotone" 
                           dataKey="satisfaction" 
@@ -349,10 +413,24 @@ export const Analytics = () => {
                             <stop offset="100%" stopColor="hsl(var(--chart-1))" stopOpacity="0.1"/>
                           </linearGradient>
                         </defs>
-                        <CartesianGrid strokeDasharray="3 3" className="opacity-30" />
-                        <XAxis dataKey="month" />
-                        <YAxis />
-                        <Tooltip />
+                        <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
+                        <XAxis 
+                          dataKey="month" 
+                          stroke="hsl(var(--muted-foreground))"
+                          fontSize={12}
+                        />
+                        <YAxis 
+                          stroke="hsl(var(--muted-foreground))"
+                          fontSize={12}
+                        />
+                        <Tooltip 
+                          contentStyle={{
+                            backgroundColor: 'hsl(var(--card))',
+                            border: '1px solid hsl(var(--border))',
+                            borderRadius: 'var(--radius)',
+                            color: 'hsl(var(--card-foreground))'
+                          }}
+                        />
                         <Area 
                           type="monotone" 
                           dataKey="newUsers" 
@@ -378,10 +456,24 @@ export const Analytics = () => {
                   <div className="h-80">
                     <ResponsiveContainer width="100%" height="100%">
                       <BarChart data={data.weeklyEngagement}>
-                        <CartesianGrid strokeDasharray="3 3" className="opacity-30" />
-                        <XAxis dataKey="day" />
-                        <YAxis />
-                        <Tooltip />
+                        <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
+                        <XAxis 
+                          dataKey="day" 
+                          stroke="hsl(var(--muted-foreground))"
+                          fontSize={12}
+                        />
+                        <YAxis 
+                          stroke="hsl(var(--muted-foreground))"
+                          fontSize={12}
+                        />
+                        <Tooltip 
+                          contentStyle={{
+                            backgroundColor: 'hsl(var(--card))',
+                            border: '1px solid hsl(var(--border))',
+                            borderRadius: 'var(--radius)',
+                            color: 'hsl(var(--card-foreground))'
+                          }}
+                        />
                         <Bar 
                           dataKey="activeUsers" 
                           fill="hsl(var(--chart-1))"
