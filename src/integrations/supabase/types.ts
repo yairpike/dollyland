@@ -1002,7 +1002,7 @@ export type Database = {
           success: boolean
         }[]
       }
-      get_public_agent_safe: {
+      get_public_agent_info: {
         Args: { agent_uuid: string }
         Returns: {
           agent_type: string
