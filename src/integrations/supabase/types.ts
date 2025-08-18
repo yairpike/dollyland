@@ -1139,6 +1139,17 @@ export type Database = {
         }
         Returns: undefined
       }
+      log_security_event_enhanced: {
+        Args: {
+          p_event_type: string
+          p_ip_address?: unknown
+          p_metadata?: Json
+          p_resource_id?: string
+          p_user_agent?: string
+          p_user_id: string
+        }
+        Returns: undefined
+      }
       regenerate_deployment_key: {
         Args: { deployment_id: string }
         Returns: string
