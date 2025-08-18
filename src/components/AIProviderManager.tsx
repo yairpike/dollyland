@@ -209,16 +209,14 @@ export const AIProviderManager = () => {
   return (
     <Card>
       <CardHeader>
-        <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
-          <div>
-            <CardTitle className="flex items-center gap-2">
-              <Zap className="w-5 h-5" />
-              AI Providers
-            </CardTitle>
-            <CardDescription>
-              Configure multiple AI providers and choose your preferred models
-            </CardDescription>
-          </div>
+        <CardTitle className="flex items-center gap-2">
+          <Zap className="w-5 h-5" />
+          AI Providers
+        </CardTitle>
+        <CardDescription>
+          Configure multiple AI providers and choose your preferred models
+        </CardDescription>
+        <div className="flex justify-end pt-4">
           <Dialog open={addModalOpen} onOpenChange={setAddModalOpen}>
             <DialogTrigger asChild>
               <Button>
