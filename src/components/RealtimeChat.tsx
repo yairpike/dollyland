@@ -1,7 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
@@ -17,6 +16,9 @@ import {
   VolumeX
 } from 'lucide-react';
 import { AudioRecorder, encodeAudioForAPI, playAudioData } from '@/utils/RealtimeAudio';
+import { SecureInput } from '@/components/SecureInput';
+import { useRateLimiting } from '@/hooks/useRateLimiting';
+import { useInputValidation } from '@/hooks/useInputValidation';
 
 interface Message {
   id: string;
@@ -39,6 +41,17 @@ export const RealtimeChat: React.FC<RealtimeChatProps> = ({ agentId, agentName }
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [audioEnabled, setAudioEnabled] = useState(true);
   const [isConnecting, setIsConnecting] = useState(false);
+  
+  // Security features
+  const chatRateLimit = useRateLimiting({ 
+    maxRequests: 20, 
+    windowMs: 60000 // 20 messages per minute
+  });
+  
+  const { validate: validateMessage } = useInputValidation({
+    maxLength: 4000,
+    preventInjection: true
+  });
   
   const wsRef = useRef<WebSocket | null>(null);
   const audioContextRef = useRef<AudioContext | null>(null);
@@ -209,15 +222,15 @@ export const RealtimeChat: React.FC<RealtimeChatProps> = ({ agentId, agentName }
 
     const message = inputValue.trim();
     
-    // Input validation
-    if (message.length > 4000) {
-      toast.error('Message too long (max 4000 characters)');
+    // Rate limiting check
+    if (!chatRateLimit.checkRateLimit()) {
       return;
     }
     
-    // Basic content filtering
-    if (message.match(/(ignore.*(previous|above|system)|forget.*(instructions|prompt)|you.*(are|must).*(now|instead)|override|jailbreak)/i)) {
-      toast.error('Message contains prohibited content');
+    // Input validation
+    const validation = validateMessage(message);
+    if (!validation.isValid) {
+      toast.error(validation.errors[0] || 'Invalid message content');
       return;
     }
     
@@ -382,13 +395,22 @@ export const RealtimeChat: React.FC<RealtimeChatProps> = ({ agentId, agentName }
         <div className="border-t p-4">
           <div className="flex gap-2">
             <div className="flex-1 flex gap-2">
-              <Input
+              <SecureInput
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}
                 onKeyPress={handleKeyPress}
-                placeholder={isConnected ? "Type a message (max 4000 chars)..." : "Connect to start chatting"}
+                placeholder={isConnected ? "Type a message (secure mode)..." : "Connect to start chatting"}
                 disabled={!isConnected}
-                maxLength={4000}
+                validationConfig={{
+                  maxLength: 4000,
+                  preventInjection: true
+                }}
+                rateLimitConfig={{
+                  maxRequests: 20,
+                  windowMs: 60000
+                }}
+                showCharacterCount={true}
+                showValidationStatus={true}
               />
               <Button
                 onClick={sendTextMessage}
