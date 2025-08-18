@@ -60,7 +60,7 @@ const features = [
 
 export const Features = () => {
   return (
-    <section className="py-24 px-6 bg-gradient-to-br from-background to-muted/30">
+    <section id="features" className="py-24 px-6 bg-gradient-to-br from-background to-muted/30">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-20">
           <Badge variant="outline" className="mb-4">Platform Features</Badge>

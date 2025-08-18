@@ -32,7 +32,7 @@ const useCases = [
 
 export const UseCases = () => {
   return (
-    <section className="py-24 px-6 bg-gradient-to-br from-muted/20 to-background">
+    <section id="use-cases" className="py-24 px-6 bg-gradient-to-br from-muted/20 to-background">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-20">
           <Badge variant="outline" className="mb-4">Use Cases</Badge>

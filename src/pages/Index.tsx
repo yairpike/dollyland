@@ -5,6 +5,7 @@ import { Hero } from "@/components/Hero";
 import { Features } from "@/components/Features";
 import { UseCases } from "@/components/UseCases";
 import { SocialProof } from "@/components/SocialProof";
+import { KnowledgeUpload } from "@/components/KnowledgeUploadSection";
 import { CTA } from "@/components/CTA";
 import { PageLoader } from "@/components/PageLoader";
 import { useAuth } from "@/hooks/useAuth";
@@ -30,6 +31,7 @@ const Index = () => {
         <Hero />
         <Features />
         <UseCases />
+        <KnowledgeUpload />
         <SocialProof />
         <CTA />
       </main>

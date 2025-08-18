@@ -62,7 +62,7 @@ const testimonials = [
 
 export const SocialProof = () => {
   return (
-    <section className="py-24 px-6 bg-gradient-to-br from-background to-accent/10">
+    <section id="testimonials" className="py-24 px-6 bg-gradient-to-br from-background to-accent/10">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-20">
           <Badge variant="outline" className="mb-4">Customer Success</Badge>
