@@ -977,6 +977,10 @@ export type Database = {
       }
     }
     Functions: {
+      access_encrypted_key_secure: {
+        Args: { provider_uuid: string; purpose?: string }
+        Returns: string
+      }
       create_deployment_secure: {
         Args: {
           p_agent_id: string
