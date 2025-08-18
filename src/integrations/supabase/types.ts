@@ -341,6 +341,13 @@ export type Database = {
             foreignKeyName: "conversations_agent_id_fkey"
             columns: ["agent_id"]
             isOneToOne: false
+            referencedRelation: "agents_public_safe"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "conversations_agent_id_fkey"
+            columns: ["agent_id"]
+            isOneToOne: false
             referencedRelation: "public_agents_safe"
             referencedColumns: ["id"]
           },
@@ -881,6 +888,48 @@ export type Database = {
       }
     }
     Views: {
+      agents_public_safe: {
+        Row: {
+          avatar_url: string | null
+          category: string | null
+          created_at: string | null
+          description: string | null
+          id: string | null
+          is_featured: boolean | null
+          name: string | null
+          rating: number | null
+          tags: string[] | null
+          updated_at: string | null
+          user_count: number | null
+        }
+        Insert: {
+          avatar_url?: string | null
+          category?: string | null
+          created_at?: string | null
+          description?: string | null
+          id?: string | null
+          is_featured?: boolean | null
+          name?: string | null
+          rating?: number | null
+          tags?: string[] | null
+          updated_at?: string | null
+          user_count?: number | null
+        }
+        Update: {
+          avatar_url?: string | null
+          category?: string | null
+          created_at?: string | null
+          description?: string | null
+          id?: string | null
+          is_featured?: boolean | null
+          name?: string | null
+          rating?: number | null
+          tags?: string[] | null
+          updated_at?: string | null
+          user_count?: number | null
+        }
+        Relationships: []
+      }
       public_agents_safe: {
         Row: {
           agent_type: string | null
@@ -974,6 +1023,23 @@ export type Database = {
       generate_secure_api_key: {
         Args: Record<PropertyKey, never>
         Returns: string
+      }
+      get_agent_safe: {
+        Args: { agent_uuid: string }
+        Returns: {
+          avatar_url: string
+          category: string
+          created_at: string
+          description: string
+          id: string
+          is_featured: boolean
+          is_owner: boolean
+          name: string
+          rating: number
+          system_prompt: string
+          tags: string[]
+          user_count: number
+        }[]
       }
       get_ai_provider_key_secure: {
         Args: { provider_uuid: string }
