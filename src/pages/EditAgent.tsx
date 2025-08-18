@@ -161,7 +161,7 @@ export const EditAgent = () => {
   return (
     <DashboardLayout>
       {/* Header */}
-      <div className="bg-card/50 backdrop-blur-sm sticky top-0 z-10 -mx-4 lg:-mx-8 px-4 lg:px-8">
+      <div className="bg-background backdrop-blur-sm sticky top-0 z-10 -mx-4 lg:-mx-8 px-4 lg:px-8">
         <div className="py-4">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div className="flex items-center gap-4">
