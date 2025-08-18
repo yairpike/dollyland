@@ -127,40 +127,40 @@ export const EditAgentModal = ({ agent, open, onOpenChange, onAgentUpdated }: Ed
         </DialogHeader>
         
         <Tabs defaultValue="settings" className="w-full flex-1 flex flex-col min-h-0">
-          <TabsList className="grid w-full grid-cols-9 bg-card border p-1 h-12 items-center">
-            <TabsTrigger value="settings" className="flex items-center gap-2">
+          <TabsList className="flex w-full bg-card border p-1 h-12 items-center overflow-x-auto scrollbar-hide gap-1">
+            <TabsTrigger value="settings" className="flex items-center gap-2 whitespace-nowrap">
               <Settings className="w-4 h-4" />
               Settings
             </TabsTrigger>
-            <TabsTrigger value="knowledge" className="flex items-center gap-2">
+            <TabsTrigger value="knowledge" className="flex items-center gap-2 whitespace-nowrap">
               <Database className="w-4 h-4" />
               Knowledge
             </TabsTrigger>
-            <TabsTrigger value="ai-setup" className="flex items-center gap-2">
+            <TabsTrigger value="ai-setup" className="flex items-center gap-2 whitespace-nowrap">
               <Zap className="w-4 h-4" />
               AI Setup
             </TabsTrigger>
-            <TabsTrigger value="actions" className="flex items-center gap-2">
+            <TabsTrigger value="actions" className="flex items-center gap-2 whitespace-nowrap">
               <Zap className="w-4 h-4" />
               Actions
             </TabsTrigger>
-            <TabsTrigger value="workflows" className="flex items-center gap-2">
+            <TabsTrigger value="workflows" className="flex items-center gap-2 whitespace-nowrap">
               <Workflow className="w-4 h-4" />
               Workflows
             </TabsTrigger>
-            <TabsTrigger value="webhooks" className="flex items-center gap-2">
+            <TabsTrigger value="webhooks" className="flex items-center gap-2 whitespace-nowrap">
               <Webhook className="w-4 h-4" />
               Webhooks
             </TabsTrigger>
-            <TabsTrigger value="linear" className="flex items-center gap-2">
+            <TabsTrigger value="linear" className="flex items-center gap-2 whitespace-nowrap">
               <ExternalLink className="w-4 h-4" />
               Linear
             </TabsTrigger>
-            <TabsTrigger value="github" className="flex items-center gap-2">
+            <TabsTrigger value="github" className="flex items-center gap-2 whitespace-nowrap">
               <GitBranch className="w-4 h-4" />
               GitHub
             </TabsTrigger>
-            <TabsTrigger value="deploy" className="flex items-center gap-2">
+            <TabsTrigger value="deploy" className="flex items-center gap-2 whitespace-nowrap">
               <Rocket className="w-4 h-4" />
               Deploy
             </TabsTrigger>
