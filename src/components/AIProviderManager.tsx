@@ -66,7 +66,11 @@ export const AIProviderManager = () => {
 
   useEffect(() => {
     if (user) {
+      setLoading(true);
       fetchProviders();
+    } else {
+      setLoading(false);
+      setProviders([]);
     }
   }, [user]);
 
@@ -194,7 +198,7 @@ export const AIProviderManager = () => {
     }
   };
 
-  if (loading && providers.length === 0) {
+  if (loading) {
     return (
       <div className="flex items-center justify-center p-8">
         <Loader2 className="w-6 h-6 animate-spin text-muted-foreground" />
