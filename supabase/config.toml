@@ -58,13 +58,13 @@ verify_jwt = true
 verify_jwt = true
 
 [functions.linear-integration]
-verify_jwt = false
+verify_jwt = true
 
 [functions.agent-actions]
-verify_jwt = false
+verify_jwt = true
 
 [functions.webhook-manager]
-verify_jwt = false
+verify_jwt = true
 
 [functions.workflow-engine]
-verify_jwt = false
+verify_jwt = true

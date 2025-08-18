@@ -208,6 +208,19 @@ export const RealtimeChat: React.FC<RealtimeChatProps> = ({ agentId, agentName }
     if (!isConnected || !inputValue.trim()) return;
 
     const message = inputValue.trim();
+    
+    // Input validation
+    if (message.length > 4000) {
+      toast.error('Message too long (max 4000 characters)');
+      return;
+    }
+    
+    // Basic content filtering
+    if (message.match(/(ignore.*(previous|above|system)|forget.*(instructions|prompt)|you.*(are|must).*(now|instead)|override|jailbreak)/i)) {
+      toast.error('Message contains prohibited content');
+      return;
+    }
+    
     addMessage('user', message);
     
     // Send to OpenAI
@@ -373,8 +386,9 @@ export const RealtimeChat: React.FC<RealtimeChatProps> = ({ agentId, agentName }
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}
                 onKeyPress={handleKeyPress}
-                placeholder={isConnected ? "Type a message..." : "Connect to start chatting"}
+                placeholder={isConnected ? "Type a message (max 4000 chars)..." : "Connect to start chatting"}
                 disabled={!isConnected}
+                maxLength={4000}
               />
               <Button
                 onClick={sendTextMessage}
