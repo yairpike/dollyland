@@ -1041,7 +1041,6 @@ export type Database = {
         Returns: {
           access_count: number
           created_at: string
-          created_from_ip: unknown
           display_name: string
           id: string
           is_active: boolean
