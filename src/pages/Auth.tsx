@@ -19,7 +19,7 @@ const Auth = () => {
   const { theme } = useTheme();
   const navigate = useNavigate();
 
-  const logoSrc = theme === 'dark' ? '/lovable-uploads/c8c73254-3940-4a5b-b990-cb30d21dc890.png' : '/lovable-uploads/85abbc87-fafc-4307-86a1-f85ed74b639e.png';
+  const logoSrc = theme === 'dark' ? '/lovable-uploads/85abbc87-fafc-4307-86a1-f85ed74b639e.png' : '/lovable-uploads/c8c73254-3940-4a5b-b990-cb30d21dc890.png';
 
   // Redirect if already authenticated
   useEffect(() => {
@@ -102,7 +102,7 @@ const Auth = () => {
       <div className="w-full max-w-md space-y-6">
         <div className="text-center space-y-2">
           <Link to="/" className="inline-flex items-center space-x-3">
-            <img src={logoSrc} alt="dolly" className="w-10 h-10 rounded-xl object-contain" />
+            <img src={logoSrc} alt="dolly" className="h-10 w-auto object-contain" />
             <span className="text-2xl font-semibold">dolly</span>
           </Link>
           <p className="text-muted-foreground">

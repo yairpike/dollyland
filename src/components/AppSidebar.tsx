@@ -20,7 +20,7 @@ export function AppSidebar({ onNavigate }: AppSidebarProps) {
   const { theme } = useTheme();
   const currentPath = location.pathname;
 
-  const logoSrc = theme === 'dark' ? '/lovable-uploads/c8c73254-3940-4a5b-b990-cb30d21dc890.png' : '/lovable-uploads/85abbc87-fafc-4307-86a1-f85ed74b639e.png';
+  const logoSrc = theme === 'dark' ? '/lovable-uploads/85abbc87-fafc-4307-86a1-f85ed74b639e.png' : '/lovable-uploads/c8c73254-3940-4a5b-b990-cb30d21dc890.png';
 
   const isActive = (path: string) => {
     if (path === "/dashboard") {
@@ -34,7 +34,7 @@ export function AppSidebar({ onNavigate }: AppSidebarProps) {
       {/* Logo Section */}
       <div className="p-6 border-b">
         <div className="flex items-center gap-3">
-          <img src={logoSrc} alt="dolly" className="flex-shrink-0 w-16 h-16 object-contain" />
+          <img src={logoSrc} alt="dolly" className="h-16 w-auto object-contain" />
           <div className="flex flex-col">
             <h2 className="font-semibold text-lg text-foreground">dolly</h2>
             {user && (

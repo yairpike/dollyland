@@ -13,7 +13,7 @@ export const Header = () => {
   const { theme } = useTheme();
   const navigate = useNavigate();
 
-  const logoSrc = theme === 'dark' ? '/lovable-uploads/c8c73254-3940-4a5b-b990-cb30d21dc890.png' : '/lovable-uploads/85abbc87-fafc-4307-86a1-f85ed74b639e.png';
+  const logoSrc = theme === 'dark' ? '/lovable-uploads/85abbc87-fafc-4307-86a1-f85ed74b639e.png' : '/lovable-uploads/c8c73254-3940-4a5b-b990-cb30d21dc890.png';
 
   const handleSignOut = async () => {
     try {
@@ -51,7 +51,7 @@ export const Header = () => {
               {loading || initializing ? (
                 <LoadingAnimation size="md" />
               ) : (
-                <img src={logoSrc} alt="dolly" className="w-12 h-12 rounded-xl object-contain" />
+                <img src={logoSrc} alt="dolly" className="h-12 w-auto object-contain" />
               )}
               <div>
                 <h1 className="text-xl font-semibold text-foreground">dolly</h1>

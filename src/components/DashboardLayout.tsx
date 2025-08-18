@@ -14,7 +14,7 @@ export function DashboardLayout({ children, onCreateAgent }: DashboardLayoutProp
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { theme } = useTheme();
 
-  const logoSrc = theme === 'dark' ? '/lovable-uploads/c8c73254-3940-4a5b-b990-cb30d21dc890.png' : '/lovable-uploads/85abbc87-fafc-4307-86a1-f85ed74b639e.png';
+  const logoSrc = theme === 'dark' ? '/lovable-uploads/85abbc87-fafc-4307-86a1-f85ed74b639e.png' : '/lovable-uploads/c8c73254-3940-4a5b-b990-cb30d21dc890.png';
   
   return (
     <div className="min-h-screen flex w-full bg-background">
@@ -42,7 +42,7 @@ export function DashboardLayout({ children, onCreateAgent }: DashboardLayoutProp
             
             {/* Logo and App Name */}
             <div className="flex items-center gap-3">
-              <img src={logoSrc} alt="dolly" className="w-8 h-8 lg:w-10 lg:h-10 rounded-lg" />
+              <img src={logoSrc} alt="dolly" className="h-8 lg:h-10 w-auto object-contain" />
               <h1 className="text-lg lg:text-xl font-semibold">dolly</h1>
             </div>
           </div>
