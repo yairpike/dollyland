@@ -301,7 +301,6 @@ export const Settings = () => {
                   </Card>
                 </div>
 
-                <Separator />
 
                 <div className="bg-muted rounded-lg p-4 hidden">
                   <h5 className="font-medium mb-2 flex items-center gap-2">
