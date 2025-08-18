@@ -112,9 +112,9 @@ export const MarketplaceSection = () => {
 
   const fetchPublicAgents = async () => {
     try {
-      // Use the new secure marketplace view instead of direct agents table access
+      // Use the new security-hardened marketplace view for authenticated users
       const { data, error } = await supabase
-        .from('marketplace_agents_public')
+        .from('marketplace_agents_authenticated')
         .select(`
           id,
           name,
@@ -128,9 +128,40 @@ export const MarketplaceSection = () => {
         `)
         .order('user_count', { ascending: false })
 
-      if (error) throw error
+      if (error) {
+        console.error('Error fetching marketplace agents:', error)
+        
+        // Fallback to public preview if authentication fails
+        try {
+          const { data: previewData, error: previewError } = await supabase
+            .from('marketplace_agents_preview')
+            .select('*')
+            .order('created_month', { ascending: false })
+          
+          if (previewError) throw previewError
+          
+          const transformedPreview = previewData?.map(agent => ({
+            id: agent.id,
+            name: agent.name,
+            description: agent.description,
+            avatar_url: agent.avatar_url,
+            category: agent.category || 'ui-ux',
+            rating: agent.rating || 4.5,
+            user_count: 500, // Use placeholder for preview
+            creator_name: 'Dolly Expert',
+            tags: agent.tags || ['AI Agent'],
+            is_featured: agent.is_featured || false
+          })) || []
+          
+          setAgents(transformedPreview.length > 0 ? transformedPreview : FEATURED_AGENTS)
+          return
+        } catch (fallbackError) {
+          setAgents(FEATURED_AGENTS)
+          return
+        }
+      }
 
-      // Transform data to match our interface
+      // Transform authenticated data to match our interface
       const transformedAgents = data?.map(agent => ({
         id: agent.id,
         name: agent.name,
@@ -138,7 +169,7 @@ export const MarketplaceSection = () => {
         avatar_url: agent.avatar_url,
         category: agent.category || 'ui-ux',
         rating: agent.rating || 4.5,
-        user_count: agent.user_count || Math.floor(Math.random() * 1000) + 100,
+        user_count: agent.user_count || 500,
         creator_name: 'Dolly Expert',
         tags: agent.tags || ['AI Agent'],
         is_featured: agent.is_featured || false
@@ -151,7 +182,7 @@ export const MarketplaceSection = () => {
 
       setAgents(allAgents)
     } catch (error) {
-      console.error('Error fetching marketplace agents:', error)
+      console.error('Unexpected error fetching marketplace agents:', error)
       setAgents(FEATURED_AGENTS) // Fallback to demo data
     }
   }

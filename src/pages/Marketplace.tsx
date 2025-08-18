@@ -121,20 +121,46 @@ export const Marketplace = () => {
 
   const fetchPublicAgents = async () => {
     try {
-      // Use the new secure marketplace view instead of direct agents table access
+      // Use the new security-hardened marketplace view for authenticated users
       const { data: publicAgents, error } = await supabase
-        .from('marketplace_agents_public')
+        .from('marketplace_agents_authenticated')
         .select('id, name, description, category, tags, rating, user_count, is_featured, created_at')
         .order('created_at', { ascending: false })
 
       if (error) {
         console.error('Error fetching marketplace agents:', error)
-        setAgents(FEATURED_AGENTS)
-        return
+        
+        // Fallback to public preview if authentication fails
+        try {
+          const { data: previewData, error: previewError } = await supabase
+            .from('marketplace_agents_preview')
+            .select('*')
+            .order('created_month', { ascending: false })
+          
+          if (previewError) throw previewError
+          
+          const transformedPreview = previewData?.map(agent => ({
+            id: agent.id,
+            name: agent.name || 'Unnamed Agent',
+            description: agent.description || 'No description available',
+            category: agent.category || 'productivity',
+            rating: agent.rating || 4.5,
+            user_count: 500, // Use placeholder for preview
+            creator_name: 'Dolly Expert',
+            tags: Array.isArray(agent.tags) ? agent.tags : ['AI Agent'],
+            is_featured: agent.is_featured || false
+          })) || []
+          
+          setAgents(transformedPreview.length > 0 ? transformedPreview : FEATURED_AGENTS)
+          return
+        } catch (fallbackError) {
+          setAgents(FEATURED_AGENTS)
+          return
+        }
       }
 
       if (publicAgents && publicAgents.length > 0) {
-        // Transform the data to match our interface
+        // Transform the authenticated data to match our interface
         const transformedAgents = publicAgents.map(agent => {
           // Smart category assignment based on name/description if category is missing
           let category = agent.category

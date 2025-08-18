@@ -348,7 +348,14 @@ export type Database = {
             foreignKeyName: "conversations_agent_id_fkey"
             columns: ["agent_id"]
             isOneToOne: false
-            referencedRelation: "marketplace_agents_public"
+            referencedRelation: "marketplace_agents_authenticated"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "conversations_agent_id_fkey"
+            columns: ["agent_id"]
+            isOneToOne: false
+            referencedRelation: "marketplace_agents_preview"
             referencedColumns: ["id"]
           },
         ]
@@ -955,10 +962,10 @@ export type Database = {
           id?: string | null
           is_featured?: boolean | null
           name?: string | null
-          rating?: number | null
+          rating?: never
           tags?: string[] | null
           updated_at?: string | null
-          user_count?: number | null
+          user_count?: never
         }
         Update: {
           avatar_url?: string | null
@@ -968,14 +975,14 @@ export type Database = {
           id?: string | null
           is_featured?: boolean | null
           name?: string | null
-          rating?: number | null
+          rating?: never
           tags?: string[] | null
           updated_at?: string | null
-          user_count?: number | null
+          user_count?: never
         }
         Relationships: []
       }
-      marketplace_agents_public: {
+      marketplace_agents_authenticated: {
         Row: {
           avatar_url: string | null
           category: string | null
@@ -1014,6 +1021,45 @@ export type Database = {
           tags?: string[] | null
           updated_at?: string | null
           user_count?: number | null
+        }
+        Relationships: []
+      }
+      marketplace_agents_preview: {
+        Row: {
+          avatar_url: string | null
+          category: string | null
+          created_month: string | null
+          description: string | null
+          id: string | null
+          is_featured: boolean | null
+          name: string | null
+          rating: number | null
+          tags: string[] | null
+          user_count_range: string | null
+        }
+        Insert: {
+          avatar_url?: string | null
+          category?: string | null
+          created_month?: never
+          description?: never
+          id?: string | null
+          is_featured?: boolean | null
+          name?: string | null
+          rating?: never
+          tags?: never
+          user_count_range?: never
+        }
+        Update: {
+          avatar_url?: string | null
+          category?: string | null
+          created_month?: never
+          description?: never
+          id?: string | null
+          is_featured?: boolean | null
+          name?: string | null
+          rating?: never
+          tags?: never
+          user_count_range?: never
         }
         Relationships: []
       }
