@@ -6,11 +6,14 @@ import { useAuth } from "@/hooks/useAuth";
 import { toast } from "sonner";
 import { ThemeToggle } from "./ThemeToggle";
 import { LoadingAnimation } from "./LoadingAnimation";
-import dollyLogo from "/lovable-uploads/85abbc87-fafc-4307-86a1-f85ed74b639e.png";
+import { useTheme } from "next-themes";
 
 export const Header = () => {
   const { user, signOut, loading, initializing } = useAuth();
+  const { theme } = useTheme();
   const navigate = useNavigate();
+
+  const logoSrc = theme === 'dark' ? '/lovable-uploads/cloud-brain-dark.png' : '/lovable-uploads/85abbc87-fafc-4307-86a1-f85ed74b639e.png';
 
   const handleSignOut = async () => {
     const { error } = await signOut();
@@ -31,7 +34,7 @@ export const Header = () => {
               {loading || initializing ? (
                 <LoadingAnimation size="md" />
               ) : (
-                <img src={dollyLogo} alt="dolly" className="w-12 h-12 rounded-xl" />
+                <img src={logoSrc} alt="dolly" className="w-12 h-12 rounded-xl object-contain" />
               )}
               <div>
                 <h1 className="text-xl font-semibold text-foreground">dolly</h1>

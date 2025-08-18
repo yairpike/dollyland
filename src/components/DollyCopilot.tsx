@@ -10,6 +10,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { LoadingAnimation } from "./LoadingAnimation";
 import { Send, MessageCircle, X, Minimize2, Maximize2, Loader2, Sparkles } from "lucide-react";
+import { useTheme } from "next-themes";
 
 interface Message {
   id: string;
@@ -24,6 +25,7 @@ interface DollyCopilotProps {
 
 export const DollyCopilot = ({ context = 'general' }: DollyCopilotProps) => {
   const { user } = useAuth();
+  const { theme } = useTheme();
   const [isOpen, setIsOpen] = useState(false);
   const [isMinimized, setIsMinimized] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
@@ -144,6 +146,8 @@ Always be encouraging and provide clear next steps.`
     }
   };
 
+  const logoSrc = theme === 'dark' ? '/lovable-uploads/cloud-brain-dark.png' : '/lovable-uploads/85abbc87-fafc-4307-86a1-f85ed74b639e.png';
+
   if (!isOpen) {
     return (
       <div className="fixed bottom-6 right-6 z-50">
@@ -153,7 +157,7 @@ Always be encouraging and provide clear next steps.`
           size="lg"
         >
           <img 
-            src="/lovable-uploads/85abbc87-fafc-4307-86a1-f85ed74b639e.png" 
+            src={logoSrc}
             alt="Dolly" 
             className="w-full h-full object-contain"
           />
@@ -170,7 +174,7 @@ Always be encouraging and provide clear next steps.`
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <img 
-                  src="/lovable-uploads/85abbc87-fafc-4307-86a1-f85ed74b639e.png" 
+                  src={logoSrc}
                   alt="Dolly" 
                   className="w-5 h-5"
                 />
@@ -210,7 +214,7 @@ Always be encouraging and provide clear next steps.`
             <div className="flex items-center gap-2">
               <div className="relative">
                 <img 
-                  src="/lovable-uploads/85abbc87-fafc-4307-86a1-f85ed74b639e.png" 
+                  src={logoSrc}
                   alt="Dolly" 
                   className="w-5 h-5"
                 />
