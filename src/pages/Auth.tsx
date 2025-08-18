@@ -76,6 +76,8 @@ const Auth = () => {
         const redirectUrl = `${window.location.origin}/`;
         const { data: signUpData, error } = await signUp(email, password, {
           full_name: fullName,
+          invite_used: true,
+          invite_code: inviteCode.trim(),
           options: {
             emailRedirectTo: redirectUrl
           }

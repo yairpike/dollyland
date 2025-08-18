@@ -69,13 +69,13 @@ export const useAuth = () => {
     }
   }
 
-  const signUp = async (email: string, password: string, userData?: any) => {
+  const signUp = async (email: string, password: string, options?: any) => {
     const { data, error } = await supabase.auth.signUp({
       email,
       password,
       options: {
-        data: userData,
-        emailRedirectTo: `${window.location.origin}/`
+        data: options,
+        emailRedirectTo: options?.options?.emailRedirectTo || `${window.location.origin}/`
       }
     })
     return { data, error }
