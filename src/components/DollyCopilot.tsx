@@ -216,7 +216,7 @@ Always be encouraging and provide clear next steps.`
                 <img 
                   src={logoSrc}
                   alt="Dolly" 
-                  className="w-5 h-5"
+                  className="w-5 h-5 object-contain"
                 />
                 <Sparkles className="w-3 h-3 text-yellow-500 absolute -top-1 -right-1" />
               </div>
