@@ -159,7 +159,15 @@ export const OnboardingTour: React.FC<OnboardingTourProps> = ({
                   {currentStep + 1} of {steps.length}
                 </Badge>
               </div>
-              <Button variant="ghost" size="sm" onClick={onClose} className="h-8 w-8 p-0">
+              <Button 
+                variant="ghost" 
+                size="sm" 
+                onClick={() => {
+                  console.log('Tour close button clicked');
+                  onClose();
+                }} 
+                className="h-8 w-8 p-0"
+              >
                 <X className="w-4 h-4" />
               </Button>
             </div>
@@ -193,10 +201,12 @@ export const OnboardingTour: React.FC<OnboardingTourProps> = ({
               <Button
                 size="sm"
                 onClick={() => {
+                  console.log('Tour next/finish button clicked', { currentStep, totalSteps: steps.length });
                   if (currentStep < steps.length - 1) {
                     setCurrentStep(currentStep + 1);
                     steps[currentStep + 1]?.action?.();
                   } else {
+                    console.log('Calling onClose from finish button');
                     onClose();
                   }
                 }}
