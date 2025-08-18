@@ -200,17 +200,7 @@ export const Settings = () => {
 
           {/* AI Providers Settings */}
           <TabsContent value="ai-providers" className="mt-6 space-y-6">
-            <Card>
-              <CardHeader>
-                <CardTitle>AI Provider Settings</CardTitle>
-                <CardDescription>
-                  Configure your AI providers and API keys for your agents
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <AIProviderManager />
-              </CardContent>
-            </Card>
+            <AIProviderManager />
           </TabsContent>
 
           {/* Tutorials Settings */}
