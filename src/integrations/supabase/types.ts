@@ -344,6 +344,13 @@ export type Database = {
             referencedRelation: "marketplace_agents"
             referencedColumns: ["id"]
           },
+          {
+            foreignKeyName: "conversations_agent_id_fkey"
+            columns: ["agent_id"]
+            isOneToOne: false
+            referencedRelation: "marketplace_agents_public"
+            referencedColumns: ["id"]
+          },
         ]
       }
       detailed_analytics: {
@@ -551,6 +558,51 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      marketplace_agents_secure: {
+        Row: {
+          avatar_url: string | null
+          category: string | null
+          created_at: string | null
+          description: string | null
+          id: string
+          is_featured: boolean | null
+          name: string
+          rating: number | null
+          source_agent_id: string | null
+          tags: string[] | null
+          updated_at: string | null
+          user_count: number | null
+        }
+        Insert: {
+          avatar_url?: string | null
+          category?: string | null
+          created_at?: string | null
+          description?: string | null
+          id: string
+          is_featured?: boolean | null
+          name: string
+          rating?: number | null
+          source_agent_id?: string | null
+          tags?: string[] | null
+          updated_at?: string | null
+          user_count?: number | null
+        }
+        Update: {
+          avatar_url?: string | null
+          category?: string | null
+          created_at?: string | null
+          description?: string | null
+          id?: string
+          is_featured?: boolean | null
+          name?: string
+          rating?: number | null
+          source_agent_id?: string | null
+          tags?: string[] | null
+          updated_at?: string | null
+          user_count?: number | null
+        }
+        Relationships: []
       }
       messages: {
         Row: {
@@ -923,30 +975,45 @@ export type Database = {
         }
         Relationships: []
       }
-      safe_secrets_metadata: {
+      marketplace_agents_public: {
         Row: {
+          avatar_url: string | null
+          category: string | null
           created_at: string | null
           description: string | null
           id: string | null
+          is_featured: boolean | null
           name: string | null
-          safe_access_instructions: string | null
+          rating: number | null
+          tags: string[] | null
           updated_at: string | null
+          user_count: number | null
         }
         Insert: {
+          avatar_url?: string | null
+          category?: string | null
           created_at?: string | null
           description?: string | null
           id?: string | null
+          is_featured?: boolean | null
           name?: string | null
-          safe_access_instructions?: never
+          rating?: number | null
+          tags?: string[] | null
           updated_at?: string | null
+          user_count?: number | null
         }
         Update: {
+          avatar_url?: string | null
+          category?: string | null
           created_at?: string | null
           description?: string | null
           id?: string | null
+          is_featured?: boolean | null
           name?: string | null
-          safe_access_instructions?: never
+          rating?: number | null
+          tags?: string[] | null
           updated_at?: string | null
+          user_count?: number | null
         }
         Relationships: []
       }
@@ -1134,6 +1201,17 @@ export type Database = {
         Args: { secret_name: string }
         Returns: string
       }
+      get_secrets_metadata_secure: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          access_status: string
+          created_at: string
+          description: string
+          id: string
+          name: string
+          updated_at: string
+        }[]
+      }
       get_user_ai_providers_safe: {
         Args: Record<PropertyKey, never>
         Returns: {
@@ -1251,6 +1329,10 @@ export type Database = {
       regenerate_webhook_secret: {
         Args: { webhook_id: string }
         Returns: string
+      }
+      sync_marketplace_agents: {
+        Args: Record<PropertyKey, never>
+        Returns: undefined
       }
       update_deployment_safe: {
         Args: {

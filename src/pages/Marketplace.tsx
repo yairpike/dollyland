@@ -121,14 +121,14 @@ export const Marketplace = () => {
 
   const fetchPublicAgents = async () => {
     try {
+      // Use the new secure marketplace view instead of direct agents table access
       const { data: publicAgents, error } = await supabase
-        .from('agents')
-        .select('id, name, description, category, tags, created_at')
-        .eq('is_public', true)
+        .from('marketplace_agents_public')
+        .select('id, name, description, category, tags, rating, user_count, is_featured, created_at')
         .order('created_at', { ascending: false })
 
       if (error) {
-        console.error('Error fetching public agents:', error)
+        console.error('Error fetching marketplace agents:', error)
         setAgents(FEATURED_AGENTS)
         return
       }
@@ -166,11 +166,11 @@ export const Marketplace = () => {
             name: agent.name || 'Unnamed Agent',
             description: agent.description || 'No description available',
             category,
-            rating: 4.5 + Math.random() * 0.5, // Random rating between 4.5-5
-            user_count: Math.floor(Math.random() * 1000) + 100,
+            rating: agent.rating || (4.5 + Math.random() * 0.5), // Use actual rating or generate one
+            user_count: agent.user_count || Math.floor(Math.random() * 1000) + 100,
             creator_name: 'Dolly Expert',
             tags: Array.isArray(agent.tags) ? agent.tags : (agent.tags ? [agent.tags] : ['AI Agent']),
-            is_featured: Math.random() > 0.7
+            is_featured: agent.is_featured || Math.random() > 0.7
           }
         })
 
@@ -180,7 +180,7 @@ export const Marketplace = () => {
         setAgents(FEATURED_AGENTS)
       }
     } catch (error) {
-      console.error('Unexpected error fetching agents:', error)
+      console.error('Unexpected error fetching marketplace agents:', error)
       setAgents(FEATURED_AGENTS)
     }
   }

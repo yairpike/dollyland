@@ -112,8 +112,9 @@ export const MarketplaceSection = () => {
 
   const fetchPublicAgents = async () => {
     try {
+      // Use the new secure marketplace view instead of direct agents table access
       const { data, error } = await supabase
-        .from('agents')
+        .from('marketplace_agents_public')
         .select(`
           id,
           name,
@@ -125,7 +126,6 @@ export const MarketplaceSection = () => {
           user_count,
           is_featured
         `)
-        .eq('is_public', true)
         .order('user_count', { ascending: false })
 
       if (error) throw error
@@ -151,7 +151,7 @@ export const MarketplaceSection = () => {
 
       setAgents(allAgents)
     } catch (error) {
-      console.error('Error fetching agents:', error)
+      console.error('Error fetching marketplace agents:', error)
       setAgents(FEATURED_AGENTS) // Fallback to demo data
     }
   }
