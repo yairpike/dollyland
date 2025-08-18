@@ -261,7 +261,7 @@ export const EditAgentModal = ({ agent, open, onOpenChange, onAgentUpdated }: Ed
             <KnowledgeBaseManager agentId={agent.id} />
           </TabsContent>
 
-          <TabsContent value="ai-setup" className="space-y-4 flex-1 overflow-y-auto">
+          <TabsContent value="ai-setup" className="space-y-4 flex-1 overflow-y-auto min-h-0">
             <AIProviderManager />
           </TabsContent>
 
@@ -285,7 +285,7 @@ export const EditAgentModal = ({ agent, open, onOpenChange, onAgentUpdated }: Ed
             <GitHubIntegration agentId={agent.id} />
           </TabsContent>
 
-          <TabsContent value="deploy" className="space-y-4 flex-1 overflow-y-auto">
+          <TabsContent value="deploy" className="space-y-4 flex-1 overflow-y-auto min-h-0">
             <VercelIntegration agentId={agent.id} />
           </TabsContent>
         </Tabs>
