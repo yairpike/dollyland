@@ -207,205 +207,207 @@ export const AIProviderManager = () => {
   }
 
   return (
-    <div className="space-y-6">
-      {/* AI Providers Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-        <div>
-          <h3 className="text-lg font-semibold flex items-center gap-2">
-            <Zap className="w-5 h-5" />
-            AI Providers
-          </h3>
-          <p className="text-sm text-muted-foreground">
-            Configure multiple AI providers and choose your preferred models
-          </p>
-        </div>
-        <Dialog open={addModalOpen} onOpenChange={setAddModalOpen}>
-          <DialogTrigger asChild>
-            <Button>
-              <Plus className="w-4 h-4 mr-2" />
-              Add Provider
-            </Button>
-          </DialogTrigger>
-          <DialogContent className="max-w-md">
-            <DialogHeader>
-              <DialogTitle>Add AI Provider</DialogTitle>
-              <DialogDescription>
-                Configure a new AI provider with your API key
-              </DialogDescription>
-            </DialogHeader>
-            
-            <form onSubmit={handleAddProvider} className="space-y-4">
-              <div className="space-y-2">
-                <Label htmlFor="provider">Provider</Label>
-                <Select
-                  value={formData.provider}
-                  onValueChange={(value) => {
-                    setFormData(prev => ({ ...prev, provider: value, model: "" }));
-                  }}
-                >
-                  <SelectTrigger>
-                    <SelectValue placeholder="Choose AI provider" />
-                  </SelectTrigger>
-                  <SelectContent className="z-50">
-                    {Object.entries(AI_PROVIDERS).map(([key, provider]) => (
-                      <SelectItem key={key} value={key}>
-                        {provider.name}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-
-              {formData.provider && (
+    <Card>
+      <CardHeader>
+        <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
+          <div>
+            <CardTitle className="flex items-center gap-2">
+              <Zap className="w-5 h-5" />
+              AI Providers
+            </CardTitle>
+            <CardDescription>
+              Configure multiple AI providers and choose your preferred models
+            </CardDescription>
+          </div>
+          <Dialog open={addModalOpen} onOpenChange={setAddModalOpen}>
+            <DialogTrigger asChild>
+              <Button>
+                <Plus className="w-4 h-4 mr-2" />
+                Add Provider
+              </Button>
+            </DialogTrigger>
+            <DialogContent className="max-w-md">
+              <DialogHeader>
+                <DialogTitle>Add AI Provider</DialogTitle>
+                <DialogDescription>
+                  Configure a new AI provider with your API key
+                </DialogDescription>
+              </DialogHeader>
+              
+              <form onSubmit={handleAddProvider} className="space-y-4">
                 <div className="space-y-2">
-                  <Label htmlFor="model">Model</Label>
+                  <Label htmlFor="provider">Provider</Label>
                   <Select
-                    value={formData.model}
-                    onValueChange={(value) => setFormData(prev => ({ ...prev, model: value }))}
+                    value={formData.provider}
+                    onValueChange={(value) => {
+                      setFormData(prev => ({ ...prev, provider: value, model: "" }));
+                    }}
                   >
                     <SelectTrigger>
-                      <SelectValue placeholder="Choose model" />
+                      <SelectValue placeholder="Choose AI provider" />
                     </SelectTrigger>
                     <SelectContent className="z-50">
-                      {AI_PROVIDERS[formData.provider as keyof typeof AI_PROVIDERS]?.models.map((model) => (
-                        <SelectItem key={model.id} value={model.id}>
-                          <div className="flex items-center justify-between w-full">
-                            <span>{model.name}</span>
-                            <Badge 
-                              variant="secondary" 
-                              className={`ml-2 ${getCostBadgeColor(model.cost)}`}
-                            >
-                              {model.cost}
-                            </Badge>
-                          </div>
+                      {Object.entries(AI_PROVIDERS).map(([key, provider]) => (
+                        <SelectItem key={key} value={key}>
+                          {provider.name}
                         </SelectItem>
                       ))}
                     </SelectContent>
                   </Select>
                 </div>
-              )}
 
-              <div className="space-y-2">
-                <Label htmlFor="apiKey">API Key</Label>
-                <Input
-                  id="apiKey"
-                  type="password"
-                  placeholder="Enter your API key"
-                  className="bg-input"
-                  value={formData.apiKey}
-                  onChange={(e) => setFormData(prev => ({ ...prev, apiKey: e.target.value }))}
-                  required
-                />
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="displayName">Display Name (Optional)</Label>
-                <Input
-                  id="displayName"
-                  placeholder="e.g., My Personal OpenAI"
-                  className="bg-input"
-                  value={formData.displayName}
-                  onChange={(e) => setFormData(prev => ({ ...prev, displayName: e.target.value }))}
-                />
-              </div>
-
-              <div className="flex items-center space-x-2">
-                <Switch
-                  id="isDefault"
-                  checked={formData.isDefault}
-                  onCheckedChange={(checked) => setFormData(prev => ({ ...prev, isDefault: checked }))}
-                />
-                <Label htmlFor="isDefault">Set as default provider</Label>
-              </div>
-
-              <div className="flex justify-end gap-3">
-                <Button
-                  type="button"
-                  variant="outline"
-                  onClick={() => setAddModalOpen(false)}
-                >
-                  Cancel
-                </Button>
-                <Button type="submit" disabled={loading}>
-                  {loading ? (
-                    <>
-                      <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                      Adding...
-                    </>
-                  ) : (
-                    <>
-                      <Key className="w-4 h-4 mr-2" />
-                      Add Provider
-                    </>
-                  )}
-                </Button>
-              </div>
-            </form>
-          </DialogContent>
-        </Dialog>
-      </div>
-
-      {/* Providers List */}
-      {providers.length === 0 ? (
-        <div className="text-center p-8 text-muted-foreground">
-          <Settings className="w-12 h-12 mx-auto mb-4 opacity-50" />
-          <h3 className="text-lg font-medium mb-2">No AI Providers</h3>
-          <p className="text-sm mb-4">Add your first AI provider to start creating intelligent agents</p>
-          <Button onClick={() => setAddModalOpen(true)}>
-            <Plus className="w-4 h-4 mr-2" />
-            Add Your First Provider
-          </Button>
-        </div>
-      ) : (
-        <div className="space-y-4">
-          {providers.map((provider) => {
-            const providerInfo = AI_PROVIDERS[provider.provider_name as keyof typeof AI_PROVIDERS];
-            if (!providerInfo) return null;
-
-            return (
-              <Card key={provider.id} className={`transition-all ${provider.is_default ? 'ring-2 ring-primary' : ''}`}>
-                <CardHeader className="pb-3">
-                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-                    <div className="flex items-center gap-3">
-                      <div className="flex items-center gap-2">
-                        <CheckCircle className={`w-4 h-4 ${provider.is_default ? 'text-primary' : 'text-muted-foreground'}`} />
-                        <h4 className="font-medium">{provider.display_name || providerInfo.name}</h4>
-                        {provider.is_default && (
-                          <Badge variant="default" className="text-xs">Default</Badge>
-                        )}
-                      </div>
-                    </div>
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      onClick={() => deleteProvider(provider.id)}
+                {formData.provider && (
+                  <div className="space-y-2">
+                    <Label htmlFor="model">Model</Label>
+                    <Select
+                      value={formData.model}
+                      onValueChange={(value) => setFormData(prev => ({ ...prev, model: value }))}
                     >
-                      <Trash2 className="w-4 h-4 text-destructive" />
-                    </Button>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Choose model" />
+                      </SelectTrigger>
+                      <SelectContent className="z-50">
+                        {AI_PROVIDERS[formData.provider as keyof typeof AI_PROVIDERS]?.models.map((model) => (
+                          <SelectItem key={model.id} value={model.id}>
+                            <div className="flex items-center justify-between w-full">
+                              <span>{model.name}</span>
+                              <Badge 
+                                variant="secondary" 
+                                className={`ml-2 ${getCostBadgeColor(model.cost)}`}
+                              >
+                                {model.cost}
+                              </Badge>
+                            </div>
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
                   </div>
-                </CardHeader>
-                <CardContent>
-                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-                    <div className="text-sm text-muted-foreground">
-                      Model: {provider.model_name}
-                    </div>
-                    {!provider.is_default && (
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={() => toggleDefault(provider.id)}
-                        className="w-full sm:w-auto"
-                      >
-                        Set as Default
-                      </Button>
+                )}
+
+                <div className="space-y-2">
+                  <Label htmlFor="apiKey">API Key</Label>
+                  <Input
+                    id="apiKey"
+                    type="password"
+                    placeholder="Enter your API key"
+                    className="bg-input"
+                    value={formData.apiKey}
+                    onChange={(e) => setFormData(prev => ({ ...prev, apiKey: e.target.value }))}
+                    required
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="displayName">Display Name (Optional)</Label>
+                  <Input
+                    id="displayName"
+                    placeholder="e.g., My Personal OpenAI"
+                    className="bg-input"
+                    value={formData.displayName}
+                    onChange={(e) => setFormData(prev => ({ ...prev, displayName: e.target.value }))}
+                  />
+                </div>
+
+                <div className="flex items-center space-x-2">
+                  <Switch
+                    id="isDefault"
+                    checked={formData.isDefault}
+                    onCheckedChange={(checked) => setFormData(prev => ({ ...prev, isDefault: checked }))}
+                  />
+                  <Label htmlFor="isDefault">Set as default provider</Label>
+                </div>
+
+                <div className="flex justify-end gap-3">
+                  <Button
+                    type="button"
+                    variant="outline"
+                    onClick={() => setAddModalOpen(false)}
+                  >
+                    Cancel
+                  </Button>
+                  <Button type="submit" disabled={loading}>
+                    {loading ? (
+                      <>
+                        <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                        Adding...
+                      </>
+                    ) : (
+                      <>
+                        <Key className="w-4 h-4 mr-2" />
+                        Add Provider
+                      </>
                     )}
-                  </div>
-                </CardContent>
-              </Card>
-            );
-          })}
+                  </Button>
+                </div>
+              </form>
+            </DialogContent>
+          </Dialog>
         </div>
-      )}
-    </div>
+      </CardHeader>
+      <CardContent>
+        {/* Providers List */}
+        {providers.length === 0 ? (
+          <div className="text-center p-8 text-muted-foreground">
+            <Settings className="w-12 h-12 mx-auto mb-4 opacity-50" />
+            <h3 className="text-lg font-medium mb-2">No AI Providers</h3>
+            <p className="text-sm mb-4">Add your first AI provider to start creating intelligent agents</p>
+            <Button onClick={() => setAddModalOpen(true)}>
+              <Plus className="w-4 h-4 mr-2" />
+              Add Your First Provider
+            </Button>
+          </div>
+        ) : (
+          <div className="space-y-4">
+            {providers.map((provider) => {
+              const providerInfo = AI_PROVIDERS[provider.provider_name as keyof typeof AI_PROVIDERS];
+              if (!providerInfo) return null;
+
+              return (
+                <Card key={provider.id} className={`transition-all ${provider.is_default ? 'ring-2 ring-primary' : ''}`}>
+                  <CardHeader className="pb-3">
+                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                      <div className="flex items-center gap-3">
+                        <div className="flex items-center gap-2">
+                          <CheckCircle className={`w-4 h-4 ${provider.is_default ? 'text-primary' : 'text-muted-foreground'}`} />
+                          <h4 className="font-medium">{provider.display_name || providerInfo.name}</h4>
+                          {provider.is_default && (
+                            <Badge variant="default" className="text-xs">Default</Badge>
+                          )}
+                        </div>
+                      </div>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => deleteProvider(provider.id)}
+                      >
+                        <Trash2 className="w-4 h-4 text-destructive" />
+                      </Button>
+                    </div>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                      <div className="text-sm text-muted-foreground">
+                        Model: {provider.model_name}
+                      </div>
+                      {!provider.is_default && (
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() => toggleDefault(provider.id)}
+                          className="w-full sm:w-auto"
+                        >
+                          Set as Default
+                        </Button>
+                      )}
+                    </div>
+                  </CardContent>
+                </Card>
+              );
+            })}
+          </div>
+        )}
+      </CardContent>
+    </Card>
   );
 };
