@@ -1009,6 +1009,10 @@ export type Database = {
         }
         Returns: string
       }
+      create_invite_secure: {
+        Args: { p_email: string }
+        Returns: string
+      }
       create_webhook_secure: {
         Args: {
           p_agent_id: string
