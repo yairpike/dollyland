@@ -70,7 +70,7 @@ export const useRealAnalytics = (timeRange: string = '30d') => {
           startDate.setDate(now.getDate() - 30);
       }
 
-      // Fetch user's agents
+      // Fetch user's agents using safe function
       const { data: agents, error: agentsError } = await supabase
         .from('agents')
         .select('id, name, created_at, user_count, rating')
