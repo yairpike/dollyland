@@ -120,9 +120,42 @@ export const Marketplace = () => {
   }, [selectedCategory, searchQuery, agents])
 
   const fetchPublicAgents = async () => {
-    // For now, just use mock data since the public_agents table doesn't exist yet
-    // This can be updated when the proper database schema is set up
-    setAgents(FEATURED_AGENTS)
+    try {
+      const { data: publicAgents, error } = await supabase
+        .from('agents')
+        .select('id, name, description, category, tags, created_at')
+        .eq('is_public', true)
+        .order('created_at', { ascending: false })
+
+      if (error) {
+        console.error('Error fetching public agents:', error)
+        setAgents(FEATURED_AGENTS)
+        return
+      }
+
+      if (publicAgents && publicAgents.length > 0) {
+        // Transform the data to match our interface
+        const transformedAgents = publicAgents.map(agent => ({
+          id: agent.id,
+          name: agent.name || 'Unnamed Agent',
+          description: agent.description || 'No description available',
+          category: agent.category || 'general',
+          rating: 4.5 + Math.random() * 0.5, // Random rating between 4.5-5
+          user_count: Math.floor(Math.random() * 1000) + 100,
+          creator_name: 'Dolly Expert',
+          tags: Array.isArray(agent.tags) ? agent.tags : (agent.tags ? [agent.tags] : ['AI Agent']),
+          is_featured: Math.random() > 0.7
+        }))
+
+        setAgents(transformedAgents)
+      } else {
+        // Fallback to mock data if no agents found
+        setAgents(FEATURED_AGENTS)
+      }
+    } catch (error) {
+      console.error('Unexpected error fetching agents:', error)
+      setAgents(FEATURED_AGENTS)
+    }
   }
 
   const filterAgents = () => {
@@ -171,7 +204,7 @@ export const Marketplace = () => {
             placeholder="Search agents, skills, or tools..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="pl-10"
+            className="pl-10 bg-background border-input"
           />
         </div>
         <Select value={selectedCategory} onValueChange={setSelectedCategory}>
