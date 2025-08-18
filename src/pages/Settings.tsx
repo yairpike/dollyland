@@ -199,7 +199,7 @@ export const Settings = () => {
           </TabsContent>
 
           {/* AI Providers Settings */}
-          <TabsContent value="ai-providers" className="mt-6">
+          <TabsContent value="ai-providers" className="mt-6 space-y-6">
             <Card>
               <CardHeader>
                 <CardTitle>AI Provider Settings</CardTitle>

@@ -207,19 +207,18 @@ export const AIProviderManager = () => {
   }
 
   return (
-    <div className="space-y-6 flex-1 flex flex-col overflow-hidden">
-    <Card>
-      <CardHeader>
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-          <div>
-            <CardTitle className="flex items-center gap-2">
-              <Zap className="w-5 h-5" />
-              AI Providers
-            </CardTitle>
-            <CardDescription>
-              Configure multiple AI providers and choose your preferred models
-            </CardDescription>
-          </div>
+    <div className="space-y-6">
+      {/* AI Providers Header */}
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <div>
+          <h3 className="text-lg font-semibold flex items-center gap-2">
+            <Zap className="w-5 h-5" />
+            AI Providers
+          </h3>
+          <p className="text-sm text-muted-foreground">
+            Configure multiple AI providers and choose your preferred models
+          </p>
+        </div>
         <Dialog open={addModalOpen} onOpenChange={setAddModalOpen}>
           <DialogTrigger asChild>
             <Button>
@@ -345,64 +344,44 @@ export const AIProviderManager = () => {
           </DialogContent>
         </Dialog>
       </div>
-      </CardHeader>
-      <CardContent className="flex-1 overflow-y-auto space-y-6">
 
+      {/* Providers List */}
       {providers.length === 0 ? (
-        <Card>
-          <CardContent className="flex flex-col items-center justify-center py-12">
-            <Settings className="w-12 h-12 text-muted-foreground mb-4" />
-            <h3 className="text-lg font-semibold mb-2">No AI Providers Configured</h3>
-            <p className="text-muted-foreground text-center mb-4">
-              Add an AI provider to start using your agents. Choose from free or paid options.
-            </p>
-            <Button onClick={() => setAddModalOpen(true)}>
-              <Plus className="w-4 h-4 mr-2" />
-              Add Your First Provider
-            </Button>
-          </CardContent>
-        </Card>
+        <div className="text-center p-8 text-muted-foreground">
+          <Settings className="w-12 h-12 mx-auto mb-4 opacity-50" />
+          <h3 className="text-lg font-medium mb-2">No AI Providers</h3>
+          <p className="text-sm mb-4">Add your first AI provider to start creating intelligent agents</p>
+          <Button onClick={() => setAddModalOpen(true)}>
+            <Plus className="w-4 h-4 mr-2" />
+            Add Your First Provider
+          </Button>
+        </div>
       ) : (
-        <div className="grid gap-4 p-1">
+        <div className="space-y-4">
           {providers.map((provider) => {
             const providerInfo = AI_PROVIDERS[provider.provider_name as keyof typeof AI_PROVIDERS];
-            const modelInfo = providerInfo?.models.find(m => m.id === provider.model_name);
-            
+            if (!providerInfo) return null;
+
             return (
-              <Card key={provider.id} className={provider.is_default ? 'ring-2 ring-primary m-0.5' : 'm-0.5'}>
-                <CardHeader>
-                  <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
-                    <div>
-                      <CardTitle className="flex items-center gap-2">
-                        {providerInfo?.name || provider.provider_name}
+              <Card key={provider.id} className={`transition-all ${provider.is_default ? 'ring-2 ring-primary' : ''}`}>
+                <CardHeader className="pb-3">
+                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                    <div className="flex items-center gap-3">
+                      <div className="flex items-center gap-2">
+                        <CheckCircle className={`w-4 h-4 ${provider.is_default ? 'text-primary' : 'text-muted-foreground'}`} />
+                        <h4 className="font-medium">{provider.display_name || providerInfo.name}</h4>
                         {provider.is_default && (
-                          <Badge variant="default">
-                            <CheckCircle className="w-3 h-3 mr-1" />
-                            Default
-                          </Badge>
+                          <Badge variant="default" className="text-xs">Default</Badge>
                         )}
-                      </CardTitle>
-                      <CardDescription>
-                        {provider.display_name || `${provider.model_name} model`}
-                      </CardDescription>
+                      </div>
                     </div>
-                    <div className="flex flex-wrap items-center gap-2">
-                      {modelInfo && (
-                        <Badge 
-                          variant="secondary" 
-                          className={getCostBadgeColor(modelInfo.cost)}
-                        >
-                          {modelInfo.cost}
-                        </Badge>
-                      )}
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        onClick={() => deleteProvider(provider.id)}
-                      >
-                        <Trash2 className="w-4 h-4 text-destructive" />
-                      </Button>
-                    </div>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => deleteProvider(provider.id)}
+                    >
+                      <Trash2 className="w-4 h-4 text-destructive" />
+                    </Button>
                   </div>
                 </CardHeader>
                 <CardContent>
@@ -427,8 +406,6 @@ export const AIProviderManager = () => {
           })}
         </div>
       )}
-      </CardContent>
-    </Card>
     </div>
   );
 };
