@@ -32,15 +32,24 @@ export const DollyCopilot = ({ context = 'general' }: DollyCopilotProps) => {
     {
       id: '1',
       role: 'assistant',
-      content: `Hey there! 👋 I'm Dolly, your AI copilot. I'm here to help you navigate and get the most out of your agent management experience. 
+      content: `Hey there! 👋 I'm Dolly, your comprehensive AI copilot. I'm here to help you with everything - from basic Dolly features to complex external setups!
 
-What would you like help with today? I can guide you through:
-• Creating and configuring agents
-• Setting up integrations
-• Understanding workflows
-• Best practices and tips
+🚀 **I can help you with:**
 
-Just ask me anything!`,
+**Inside Dolly:**
+• Creating & configuring agents step-by-step
+• Setting up knowledge bases and file uploads
+• Configuring AI providers (OpenAI, Anthropic, etc.)
+• Setting up integrations & workflows
+• Publishing to marketplace
+
+**Outside Dolly (for non-technical users):**
+• Getting API keys from OpenAI, GitHub, Linear, Vercel
+• Setting up external accounts and services
+• Configuring webhooks and domains
+• Troubleshooting connection issues
+
+Just ask me anything - I'll break it down into simple steps you can follow! 🎯`,
       timestamp: new Date()
     }
   ]);
@@ -57,13 +66,17 @@ Just ask me anything!`,
   const getContextualGreeting = () => {
     switch (context) {
       case 'edit-agent':
-        return "I see you're editing an agent! Need help with configurations, integrations, or any specific features?";
+        return "I see you're editing an agent! I can help with setup, integrations, API keys, and step-by-step configuration.";
       case 'dashboard':
-        return "Welcome to your dashboard! Ready to create some amazing agents or need help with existing ones?";
+        return "Welcome! I can guide you through creating agents, setting up integrations, or getting API keys from external services.";
       case 'marketplace':
-        return "Browsing the marketplace? I can help you find the perfect agents or guide you to publish your own!";
+        return "Browsing agents? I can help you find the right one or guide you through publishing your own to the marketplace!";
+      case 'settings':
+        return "Need help with settings? I can guide you through AI providers, integrations, and external service setup.";
+      case 'create-agent':
+        return "Creating a new agent? I'll help you with every step, from basic setup to advanced integrations!";
       default:
-        return "I'm here to help! What would you like to know about managing your AI agents?";
+        return "I'm your complete guide for Dolly and all external setups! Ask me about anything - I'll break it down step by step.";
     }
   };
 
@@ -87,22 +100,41 @@ Just ask me anything!`,
           messages: [
             {
               role: 'system',
-              content: `You are Dolly, a helpful AI copilot for an AI agent management platform. You help users navigate the interface, understand features, and provide guidance on best practices. 
+              content: `You are Dolly, a comprehensive AI copilot for an AI agent management platform. You specialize in helping both technical and non-technical users navigate every aspect of the platform, including external setup steps.
 
 Current context: ${context}
 
-Be friendly, concise, and actionable. If users ask about specific features, guide them step by step. You can reference UI elements and provide specific instructions.
+You excel at providing step-by-step guidance for:
 
-Key features you can help with:
-- Creating and editing agents
-- Setting up knowledge bases
-- Configuring AI providers
-- Setting up integrations (GitHub, Linear, Vercel)
-- Creating workflows and actions
-- Managing webhooks
-- Publishing agents to marketplace
+**DOLLY PLATFORM FEATURES:**
+- Agent creation, configuration, and optimization
+- Knowledge base setup and file upload
+- AI provider configuration (OpenAI, Anthropic, DeepSeek)
+- Integration setup (GitHub, Linear, Vercel, webhooks)
+- Workflow and action creation
+- Analytics and monitoring
+- Publishing to marketplace
+- User settings and preferences
 
-Always be encouraging and provide clear next steps.`
+**EXTERNAL SETUP FOR NON-TECHNICAL USERS:**
+- Getting API keys from OpenAI, Anthropic, GitHub, Linear, Vercel
+- Setting up GitHub repositories and access tokens
+- Creating Linear workspaces and API keys
+- Vercel account setup and deployment
+- Webhook endpoint configuration
+- Domain and SSL setup
+- Third-party service account creation
+
+**YOUR APPROACH:**
+- Break complex tasks into simple, numbered steps
+- Provide exact button names and UI elements to click
+- Include screenshots when helpful (mention where they'd find things)
+- Explain technical terms in simple language
+- Offer alternatives for different skill levels
+- Proactively suggest next steps
+- Check user understanding before moving on
+
+Always be encouraging, patient, and thorough. For external setups, provide actual URLs and specific instructions they can follow outside of Dolly.`
             },
             {
               role: 'user',
