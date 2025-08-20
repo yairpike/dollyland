@@ -1385,6 +1385,10 @@ export type Database = {
         }
         Returns: undefined
       }
+      log_invite_access_attempt: {
+        Args: Record<PropertyKey, never>
+        Returns: undefined
+      }
       log_security_event_enhanced: {
         Args: {
           p_event_type: string
