@@ -160,7 +160,7 @@ export const AgentIntegrations: React.FC<AgentIntegrationsProps> = ({ agentId, a
   };
 
   const generateApiKey = () => {
-    return `dolly_${agentId.slice(0, 8)}_${Math.random().toString(36).substring(2, 15)}`;
+    return `dollyland_${agentId.slice(0, 8)}_${Math.random().toString(36).substring(2, 15)}`;
   };
 
   const copyToClipboard = (text: string) => {
@@ -627,9 +627,9 @@ export const AgentIntegrations: React.FC<AgentIntegrationsProps> = ({ agentId, a
                       <div className="mt-4 p-4 bg-muted rounded-lg">
                         <h4 className="font-medium mb-2">Embed Code:</h4>
                         <pre className="text-xs bg-background p-2 rounded overflow-x-auto">
-{`<script src="https://dolly-ai.com/widget.js"></script>
+{`<script src="https://dollyland.ai/widget.js"></script>
 <script>
-  DollyWidget.init({
+  DollylandWidget.init({
     agentId: "${agentId}",
     theme: "${integration.config.theme}",
     position: "${integration.config.position}"
@@ -640,7 +640,7 @@ export const AgentIntegrations: React.FC<AgentIntegrationsProps> = ({ agentId, a
                           variant="outline"
                           size="sm"
                           className="mt-2"
-                          onClick={() => copyToClipboard(`<script src="https://dolly-ai.com/widget.js"></script>\n<script>\n  DollyWidget.init({\n    agentId: "${agentId}",\n    theme: "${integration.config.theme}",\n    position: "${integration.config.position}"\n  });\n</script>`)}
+                          onClick={() => copyToClipboard(`<script src="https://dollyland.ai/widget.js"></script>\n<script>\n  DollylandWidget.init({\n    agentId: "${agentId}",\n    theme: "${integration.config.theme}",\n    position: "${integration.config.position}"\n  });\n</script>`)}
                         >
                           <Copy className="w-4 h-4 mr-2" />
                           Copy Code

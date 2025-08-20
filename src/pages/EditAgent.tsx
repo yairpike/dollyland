@@ -373,7 +373,7 @@ export const EditAgent = () => {
         </Tabs>
       </div>
 
-      {/* Dolly Copilot */}
+      {/* Dollyland.AI Copilot */}
       <DollyCopilot context="edit-agent" />
     </DashboardLayout>
   );

@@ -165,7 +165,7 @@ export const Marketplace = () => {
             category,
             rating: agent.rating || (4.5 + Math.random() * 0.5), // Use actual rating or generate one
             user_count: agent.user_count || Math.floor(Math.random() * 1000) + 100,
-            creator_name: 'Dolly Expert',
+            creator_name: 'Dollyland Expert',
             tags: Array.isArray(agent.tags) ? agent.tags : (agent.tags ? [agent.tags] : ['AI Agent']),
             is_featured: agent.is_featured || Math.random() > 0.7
           }

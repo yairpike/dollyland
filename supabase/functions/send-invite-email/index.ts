@@ -39,26 +39,26 @@ const handler = async (req: Request): Promise<Response> => {
 
     // Send the invitation email
     const emailResponse = await resend.emails.send({
-      from: "Dolly AI <noreply@dollyland.ai>",
+      from: "Dollyland AI <noreply@dollyland.ai>",
       to: [email],
-      subject: "You're invited to join Dolly AI! 🚀",
+      subject: "You're invited to join Dollyland AI! 🚀",
       html: `
         <!DOCTYPE html>
         <html>
         <head>
           <meta charset="utf-8">
           <meta name="viewport" content="width=device-width, initial-scale=1">
-          <title>Dolly AI Invitation</title>
+          <title>Dollyland AI Invitation</title>
         </head>
         <body style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px;">
           <div style="text-align: center; margin-bottom: 40px;">
-            <h1 style="color: #2563eb; margin-bottom: 10px;">🧠 Dolly AI</h1>
+            <h1 style="color: #2563eb; margin-bottom: 10px;">🧠 Dollyland AI</h1>
             <h2 style="color: #374151; font-weight: 600;">You're Invited!</h2>
           </div>
           
           <div style="background: #f8fafc; border-radius: 12px; padding: 30px; margin-bottom: 30px;">
             <p style="font-size: 18px; margin-bottom: 20px;">
-              ${inviterName ? `${inviterName} has invited you to` : 'You\'ve been invited to'} join <strong>Dolly AI</strong>, the platform for building and deploying intelligent AI agents.
+              ${inviterName ? `${inviterName} has invited you to` : 'You\'ve been invited to'} join <strong>Dollyland AI</strong>, the platform for building and deploying intelligent AI agents.
             </p>
             
             <div style="background: white; border: 2px dashed #e5e7eb; border-radius: 8px; padding: 20px; text-align: center; margin: 25px 0;">
@@ -80,7 +80,7 @@ const handler = async (req: Request): Promise<Response> => {
             <div style="text-align: center; margin: 30px 0;">
               <a href="https://dollyland.ai" 
                  style="background: #2563eb; color: white; padding: 15px 30px; text-decoration: none; border-radius: 8px; font-weight: 600; display: inline-block;">
-                Join Dolly AI →
+                Join Dollyland AI →
               </a>
             </div>
           </div>

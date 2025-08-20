@@ -42,8 +42,8 @@ export function DashboardLayout({ children, onCreateAgent }: DashboardLayoutProp
             
             {/* Logo and App Name */}
             <div className="flex items-center gap-3">
-              <img src={logoSrc} alt="dolly" className="h-8 lg:h-10 w-auto object-contain" />
-              <h1 className="text-lg lg:text-xl font-semibold">dolly</h1>
+              <img src={logoSrc} alt="dollyland.ai" className="h-8 lg:h-10 w-auto object-contain" />
+              <h1 className="text-lg lg:text-xl font-semibold">dollyland.ai</h1>
               <span className="bg-gradient-to-r from-primary to-primary-glow text-primary-foreground text-xs font-bold px-2 py-1 rounded-full tracking-wide">
                 ALPHA
               </span>

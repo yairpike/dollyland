@@ -130,7 +130,7 @@ export const MarketplaceSection = () => {
         category: agent.category || 'ui-ux',
         rating: agent.rating || 4.5,
         user_count: agent.user_count || 500,
-        creator_name: 'Dolly Expert',
+        creator_name: 'Dollyland Expert',
         tags: Array.isArray(agent.tags) ? agent.tags : ['AI Agent'],
         is_featured: agent.is_featured || false
       })) || []

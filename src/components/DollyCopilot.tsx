@@ -32,18 +32,18 @@ export const DollyCopilot = ({ context = 'general' }: DollyCopilotProps) => {
     {
       id: '1',
       role: 'assistant',
-      content: `Hey there! 👋 I'm Dolly, your comprehensive AI copilot. I'm here to help you with everything - from basic Dolly features to complex external setups!
+      content: `Hey there! 👋 I'm your comprehensive AI copilot for Dollyland.AI. I'm here to help you with everything - from basic platform features to complex external setups!
 
 🚀 **I can help you with:**
 
-**Inside Dolly:**
+**Inside Dollyland.AI:**
 • Creating & configuring agents step-by-step
 • Setting up knowledge bases and file uploads
 • Configuring AI providers (OpenAI, Anthropic, etc.)
 • Setting up integrations & workflows
 • Publishing to marketplace
 
-**Outside Dolly (for non-technical users):**
+**Outside Dollyland.AI (for non-technical users):**
 • Getting API keys from OpenAI, GitHub, Linear, Vercel
 • Setting up external accounts and services
 • Configuring webhooks and domains
@@ -76,7 +76,7 @@ Just ask me anything - I'll break it down into simple steps you can follow! 🎯
       case 'create-agent':
         return "Creating a new agent? I'll help you with every step, from basic setup to advanced integrations!";
       default:
-        return "I'm your complete guide for Dolly and all external setups! Ask me about anything - I'll break it down step by step.";
+        return "I'm your complete guide for Dollyland.AI and all external setups! Ask me about anything - I'll break it down step by step.";
     }
   };
 
@@ -100,13 +100,13 @@ Just ask me anything - I'll break it down into simple steps you can follow! 🎯
           messages: [
             {
               role: 'system',
-              content: `You are Dolly, a comprehensive AI copilot for an AI agent management platform. You specialize in helping both technical and non-technical users navigate every aspect of the platform, including external setup steps.
+              content: `You are an AI copilot for Dollyland.AI, a comprehensive AI agent management platform. You specialize in helping both technical and non-technical users navigate every aspect of the platform, including external setup steps.
 
 Current context: ${context}
 
 You excel at providing step-by-step guidance for:
 
-**DOLLY PLATFORM FEATURES:**
+**DOLLYLAND.AI PLATFORM FEATURES:**
 - Agent creation, configuration, and optimization
 - Knowledge base setup and file upload
 - AI provider configuration (OpenAI, Anthropic, DeepSeek)
@@ -134,7 +134,7 @@ You excel at providing step-by-step guidance for:
 - Proactively suggest next steps
 - Check user understanding before moving on
 
-Always be encouraging, patient, and thorough. For external setups, provide actual URLs and specific instructions they can follow outside of Dolly.`
+Always be encouraging, patient, and thorough. For external setups, provide actual URLs and specific instructions they can follow outside of Dollyland.AI.`
             },
             {
               role: 'user',
@@ -190,7 +190,7 @@ Always be encouraging, patient, and thorough. For external setups, provide actua
         >
           <img 
             src={logoSrc}
-            alt="Dolly" 
+             alt="Dollyland.AI Copilot"
             className="w-full h-full object-contain"
           />
         </Button>
@@ -207,10 +207,10 @@ Always be encouraging, patient, and thorough. For external setups, provide actua
               <div className="flex items-center gap-2">
                 <img 
                   src={logoSrc}
-                  alt="Dolly" 
+                  alt="Dollyland.AI Copilot" 
                   className="w-5 h-5"
                 />
-                <CardTitle className="text-sm">Dolly Copilot</CardTitle>
+                <CardTitle className="text-sm">Dollyland.AI Copilot</CardTitle>
                 <Badge variant="secondary" className="text-xs">Online</Badge>
               </div>
               <div className="flex items-center gap-1">
@@ -247,12 +247,12 @@ Always be encouraging, patient, and thorough. For external setups, provide actua
               <div className="relative">
                 <img 
                   src={logoSrc}
-                  alt="Dolly" 
+                  alt="Dollyland.AI Copilot" 
                   className="w-5 h-5 object-contain"
                 />
                 <Sparkles className="w-3 h-3 text-yellow-500 absolute -top-1 -right-1" />
               </div>
-              <CardTitle className="text-sm">Dolly Copilot</CardTitle>
+              <CardTitle className="text-sm">Dollyland.AI Copilot</CardTitle>
               <Badge variant="secondary" className="text-xs">Online</Badge>
             </div>
             <div className="flex items-center gap-1">
@@ -304,7 +304,7 @@ Always be encouraging, patient, and thorough. For external setups, provide actua
                   <div className="bg-muted rounded-lg px-3 py-2 text-sm">
                     <div className="flex items-center gap-2">
                       <Loader2 className="w-4 h-4 animate-spin" />
-                      Dolly is thinking...
+                      Copilot is thinking...
                     </div>
                   </div>
                 </div>
@@ -318,7 +318,7 @@ Always be encouraging, patient, and thorough. For external setups, provide actua
                 value={inputMessage}
                 onChange={(e) => setInputMessage(e.target.value)}
                 onKeyPress={handleKeyPress}
-                placeholder="Ask Dolly anything..."
+                placeholder="Ask your Dollyland.AI copilot anything..."
                 className="flex-1"
                 disabled={isTyping}
               />

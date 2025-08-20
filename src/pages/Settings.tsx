@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -21,14 +21,60 @@ export const Settings = () => {
   const { user, signOut } = useAuth();
   const navigate = useNavigate();
   const { resetTours } = useTourManager();
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [fullName, setFullName] = useState(user?.user_metadata?.full_name || "");
   const [email, setEmail] = useState(user?.email || "");
   const [showEmailChange, setShowEmailChange] = useState(false);
   const [newEmail, setNewEmail] = useState("");
 
+  // Fetch user profile data
+  useEffect(() => {
+    if (user) {
+      const fetchProfile = async () => {
+        const { data } = await supabase
+          .from('profiles')
+          .select('first_name, last_name, full_name')
+          .eq('user_id', user.id)
+          .single();
+        
+        if (data) {
+          setFirstName(data.first_name || "");
+          setLastName(data.last_name || "");
+          setFullName(data.full_name || "");
+        }
+      };
+      fetchProfile();
+    }
+  }, [user]);
+
   const handleSaveProfile = async () => {
-    // Profile update functionality would go here
-    toast.success("Profile updated successfully");
+    if (!user) return;
+
+    try {
+      const combinedFullName = `${firstName} ${lastName}`.trim();
+      
+      const { error } = await supabase
+        .from('profiles')
+        .update({
+          first_name: firstName,
+          last_name: lastName,
+          full_name: combinedFullName,
+          updated_at: new Date().toISOString()
+        })
+        .eq('user_id', user.id);
+
+      if (error) {
+        toast.error("Failed to update profile");
+        console.error("Profile update error:", error);
+      } else {
+        setFullName(combinedFullName);
+        toast.success("Profile updated successfully");
+      }
+    } catch (error) {
+      toast.error("Failed to update profile");
+      console.error("Profile update error:", error);
+    }
   };
 
   const handleChangeEmail = async () => {
@@ -131,16 +177,26 @@ export const Settings = () => {
               <CardContent className="space-y-6">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                   <div className="space-y-2">
-                    <Label htmlFor="fullName">Full Name</Label>
+                    <Label htmlFor="firstName">First Name</Label>
                     <Input
-                      id="fullName"
-                      value={fullName}
-                      onChange={(e) => setFullName(e.target.value)}
-                      placeholder="Enter your full name"
+                      id="firstName"
+                      value={firstName}
+                      onChange={(e) => setFirstName(e.target.value)}
+                      placeholder="Enter your first name"
                       className="h-9"
                     />
                   </div>
                   <div className="space-y-2">
+                    <Label htmlFor="lastName">Last Name</Label>
+                    <Input
+                      id="lastName"
+                      value={lastName}
+                      onChange={(e) => setLastName(e.target.value)}
+                      placeholder="Enter your last name"
+                      className="h-9"
+                    />
+                  </div>
+                  <div className="space-y-2 lg:col-span-2">
                     <Label htmlFor="email">Email</Label>
                     <div className="flex gap-2">
                       <Input
