@@ -53,18 +53,18 @@ export function AppSidebar({ onNavigate }: AppSidebarProps) {
   return (
     <div className="w-72 h-screen bg-card border-r flex flex-col">
       {/* Logo Section */}
-      <div className="p-6 border-b">
-        <div className="flex items-center gap-3">
-          <img src={logoSrc} alt="dollyland.ai" className="h-16 w-auto object-contain" />
-          <div className="flex flex-col">
+      <div className="p-4 sm:p-6 border-b">
+        <div className="flex items-center gap-2 sm:gap-3">
+          <img src={logoSrc} alt="dollyland.ai" className="h-12 sm:h-16 w-auto object-contain flex-shrink-0" />
+          <div className="flex flex-col min-w-0 flex-1">
             {user && userProfile?.first_name && (
-              <p className="text-sm font-medium text-foreground">
+              <p className="text-xs sm:text-sm font-medium text-foreground truncate">
                 {userProfile.first_name}'s
               </p>
             )}
-            <div className="flex items-center gap-2">
-              <h2 className="font-semibold text-lg text-foreground">dollyland.ai</h2>
-              <span className="bg-gradient-to-r from-primary to-primary-glow text-primary-foreground text-xs font-bold px-2 py-1 rounded-full tracking-wide">
+            <div className="flex items-center gap-1 sm:gap-2 min-w-0">
+              <h2 className="font-semibold text-sm sm:text-lg text-foreground truncate">dollyland.ai</h2>
+              <span className="bg-gradient-to-r from-primary to-primary-glow text-primary-foreground text-[10px] sm:text-xs font-bold px-1.5 sm:px-2 py-0.5 sm:py-1 rounded-full tracking-wide flex-shrink-0">
                 ALPHA
               </span>
             </div>
