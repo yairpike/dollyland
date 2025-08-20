@@ -1053,6 +1053,10 @@ export type Database = {
         Args: { api_key: string; deployment_id: string }
         Returns: string
       }
+      encrypt_email: {
+        Args: { email_text: string }
+        Returns: string
+      }
       encrypt_integration_key: {
         Args: { api_key: string; integration_id: string }
         Returns: string
@@ -1431,6 +1435,10 @@ export type Database = {
         Args: { p_email: string; p_user_id: string }
         Returns: undefined
       }
+      use_invite_secure: {
+        Args: { p_email: string; p_invite_code: string }
+        Returns: boolean
+      }
       validate_ai_provider_access: {
         Args: { provider_id: string }
         Returns: boolean
@@ -1440,6 +1448,10 @@ export type Database = {
         Returns: boolean
       }
       validate_invite_code_secure: {
+        Args: { p_invite_code: string }
+        Returns: boolean
+      }
+      validate_invite_secure: {
         Args: { p_invite_code: string }
         Returns: boolean
       }

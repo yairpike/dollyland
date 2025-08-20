@@ -51,11 +51,10 @@ const Auth = () => {
 
     try {
       if (isSignUp) {
-        // First, validate the invite
+        // First, validate the invite using secure function (no email required)
         const { data: isValidInvite, error: inviteError } = await supabase
-          .rpc('validate_invite', { 
-            p_email: email.toLowerCase(), 
-            p_invite_code: inviteCode.trim() || null 
+          .rpc('validate_invite_secure', { 
+            p_invite_code: inviteCode.trim()
           });
 
         if (inviteError) {
@@ -91,11 +90,11 @@ const Auth = () => {
             toast.error(error.message);
           }
         } else {
-          // Mark invite as used
+          // Mark invite as used using secure function
           if (signUpData.user) {
-            await supabase.rpc('use_invite', {
+            await supabase.rpc('use_invite_secure', {
               p_email: email.toLowerCase(),
-              p_user_id: signUpData.user.id
+              p_invite_code: inviteCode.trim()
             });
           }
           toast.success("Account created! Please check your email to verify.");
