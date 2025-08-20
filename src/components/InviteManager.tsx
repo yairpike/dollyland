@@ -11,6 +11,7 @@ import { supabase } from "@/integrations/supabase/client";
 interface Invite {
   id: string;
   invite_code: string;
+  email: string;
   status: string;
   used_at: string | null;
   expires_at: string;
@@ -149,8 +150,8 @@ export const InviteManager = () => {
                   className="flex items-center justify-between p-3 border rounded-lg"
                 >
                   <div className="flex-1">
-                    <div className="flex items-center gap-2">
-                      <span className="font-medium">Invite #{invite.id.slice(0, 8)}</span>
+                    <div className="flex items-center gap-2 mb-1">
+                      <span className="font-medium">{invite.email}</span>
                       <Badge variant={
                         invite.status === 'Used' ? 'secondary' :
                         invite.status === 'Expired' ? 'destructive' :
@@ -161,6 +162,7 @@ export const InviteManager = () => {
                     </div>
                     <div className="text-sm text-muted-foreground">
                       Code: <code className="bg-muted px-1 rounded">{invite.invite_code}</code>
+                      <span className="ml-2">• Created {new Date(invite.created_at).toLocaleDateString()}</span>
                       {invite.used_at && (
                         <span className="ml-2">• Used on {new Date(invite.used_at).toLocaleDateString()}</span>
                       )}
