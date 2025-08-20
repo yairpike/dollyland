@@ -43,19 +43,7 @@ export const InviteManager = () => {
 
       if (error) throw error;
       
-      console.log('Raw invite data:', data); // Debug log
-      
-      // Ensure data has email field, fallback to empty string if missing
-      const invitesWithEmail = (data || []).map((invite: any) => {
-        console.log('Processing invite:', invite); // Debug log
-        return {
-          ...invite,
-          email: invite.email || 'No email'
-        };
-      });
-      
-      console.log('Processed invites:', invitesWithEmail); // Debug log
-      setInvites(invitesWithEmail);
+      setInvites(data || []);
     } catch (error) {
       console.error('Error fetching invites:', error);
       toast.error("Failed to load invites");
@@ -92,16 +80,22 @@ export const InviteManager = () => {
       // If the invite was created successfully and needs email, send it
       if (response && response.invite_code) {
         try {
-          await supabase.functions.invoke('send-invite-email', {
+          const { error: emailError } = await supabase.functions.invoke('send-invite-email', {
             body: {
               email: newEmail,
               inviteCode: response.invite_code,
               inviterName: user?.user_metadata?.full_name || 'Someone'
             }
           });
-          toast.success(`Invite created and email sent to ${newEmail}`);
+          
+          if (emailError) {
+            console.error('Email sending error:', emailError);
+            toast.success(`Invite created for ${newEmail} (email sending failed - please share the code manually)`);
+          } else {
+            toast.success(`Invite created and email sent to ${newEmail}`);
+          }
         } catch (emailError) {
-          console.warn('Invite created but email failed to send:', emailError);
+          console.error('Email sending exception:', emailError);
           toast.success(`Invite created for ${newEmail} (email sending failed - please share the code manually)`);
         }
       } else {
