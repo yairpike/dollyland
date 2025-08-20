@@ -58,25 +58,14 @@ export function AppSidebar({ onNavigate }: AppSidebarProps) {
           <img src={logoSrc} alt="dollyland.ai" className="h-12 sm:h-16 w-auto object-contain flex-shrink-0" />
           <div className="flex flex-col min-w-0 flex-1">
             {user && userProfile?.first_name && (
-              <div className="flex items-center justify-between gap-2">
-                <p className="text-xs sm:text-sm font-medium text-foreground truncate">
-                  {userProfile.first_name}'s
-                </p>
-                <span className="bg-gradient-to-r from-primary to-primary-glow text-primary-foreground text-[10px] sm:text-xs font-bold px-1.5 sm:px-2 py-0.5 sm:py-1 rounded-full tracking-wide flex-shrink-0">
-                  ALPHA
-                </span>
-              </div>
+              <p className="text-xs sm:text-sm font-medium text-foreground truncate">
+                {userProfile.first_name}'s
+              </p>
             )}
-            {!user || !userProfile?.first_name ? (
-              <div className="flex items-center gap-1 sm:gap-2 min-w-0">
-                <h2 className="font-semibold text-sm sm:text-lg text-foreground">dollyland.ai</h2>
-                <span className="bg-gradient-to-r from-primary to-primary-glow text-primary-foreground text-[10px] sm:text-xs font-bold px-1.5 sm:px-2 py-0.5 sm:py-1 rounded-full tracking-wide flex-shrink-0">
-                  ALPHA
-                </span>
-              </div>
-            ) : (
-              <h2 className="font-semibold text-sm sm:text-lg text-foreground">dollyland.ai</h2>
-            )}
+            <h2 className="font-semibold text-sm sm:text-lg text-foreground">dollyland.ai</h2>
+            <span className="bg-gradient-to-r from-primary to-primary-glow text-primary-foreground text-[8px] sm:text-[10px] font-bold px-1 sm:px-1.5 py-0.5 rounded-full tracking-wide self-start mt-1">
+              ALPHA
+            </span>
           </div>
         </div>
       </div>
