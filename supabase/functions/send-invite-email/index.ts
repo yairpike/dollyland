@@ -39,7 +39,7 @@ const handler = async (req: Request): Promise<Response> => {
 
     // Send the invitation email
     const emailResponse = await resend.emails.send({
-      from: "Dolly AI <noreply@dolly.ai>", // Replace with your verified domain
+      from: "Dolly AI <noreply@dollyland.ai>",
       to: [email],
       subject: "You're invited to join Dolly AI! 🚀",
       html: `
@@ -78,7 +78,7 @@ const handler = async (req: Request): Promise<Response> => {
             </ol>
             
             <div style="text-align: center; margin: 30px 0;">
-              <a href="${Deno.env.get('SUPABASE_URL')?.replace('supabase.co', 'lovable.app') || 'https://app.lovable.app'}" 
+              <a href="https://dollyland.ai" 
                  style="background: #2563eb; color: white; padding: 15px 30px; text-decoration: none; border-radius: 8px; font-weight: 600; display: inline-block;">
                 Join Dolly AI →
               </a>
