@@ -40,7 +40,14 @@ export const InviteManager = () => {
         .rpc('get_user_invites_safe');
 
       if (error) throw error;
-      setInvites(data || []);
+      
+      // Ensure data has email field, fallback to empty string if missing
+      const invitesWithEmail = (data || []).map((invite: any) => ({
+        ...invite,
+        email: invite.email || 'No email'
+      }));
+      
+      setInvites(invitesWithEmail);
     } catch (error) {
       console.error('Error fetching invites:', error);
       toast.error("Failed to load invites");
