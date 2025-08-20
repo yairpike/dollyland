@@ -986,6 +986,10 @@ export type Database = {
         Args: { provider_uuid: string; purpose?: string }
         Returns: string
       }
+      armor: {
+        Args: { "": string }
+        Returns: string
+      }
       audit_vault_usage: {
         Args: Record<PropertyKey, never>
         Returns: {
@@ -1025,6 +1029,10 @@ export type Database = {
         }
         Returns: string
       }
+      dearmor: {
+        Args: { "": string }
+        Returns: string
+      }
       decrypt_api_key: {
         Args: { encrypted_key: string; user_id: string }
         Returns: string
@@ -1055,6 +1063,18 @@ export type Database = {
       }
       encrypt_integration_key: {
         Args: { api_key: string; integration_id: string }
+        Returns: string
+      }
+      gen_random_bytes: {
+        Args: { "": number }
+        Returns: string
+      }
+      gen_random_uuid: {
+        Args: Record<PropertyKey, never>
+        Returns: string
+      }
+      gen_salt: {
+        Args: { "": string }
         Returns: string
       }
       generate_invite_code: {
@@ -1395,6 +1415,14 @@ export type Database = {
           success: boolean
           user_id: string
         }[]
+      }
+      pgp_armor_headers: {
+        Args: { "": string }
+        Returns: Record<string, unknown>[]
+      }
+      pgp_key_id: {
+        Args: { "": string }
+        Returns: string
       }
       regenerate_deployment_key: {
         Args: { deployment_id: string }
