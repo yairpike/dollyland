@@ -72,7 +72,7 @@ export const InviteManager = () => {
       }
 
       const response = data as unknown as InviteCreateResponse;
-      toast.success(`Invite created for ${newEmail}`);
+      toast.success(`Invite created and email sent to ${newEmail}`);
       setNewEmail("");
       fetchInvites();
     } catch (error) {

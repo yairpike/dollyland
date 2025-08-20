@@ -95,7 +95,7 @@ export const AgentIntegrations: React.FC<AgentIntegrationsProps> = ({ agentId, a
         integration_type: type,
         config,
         webhook_url: webhookUrl,
-        api_key: type === 'api' ? generateApiKey() : null,
+        api_key_encrypted: type === 'api' ? generateApiKey() : '',
         is_active: true,
       };
 
