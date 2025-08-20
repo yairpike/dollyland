@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { Trash2, Copy, Plus } from "lucide-react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
+import { useAuth } from "@/hooks/useAuth";
 
 interface Invite {
   id: string;
@@ -26,6 +27,7 @@ interface InviteCreateResponse {
 }
 
 export const InviteManager = () => {
+  const { user } = useAuth();
   const [invites, setInvites] = useState<Invite[]>([]);
   const [loading, setLoading] = useState(false);
   const [newEmail, setNewEmail] = useState("");
@@ -80,7 +82,26 @@ export const InviteManager = () => {
       }
 
       const response = data as unknown as InviteCreateResponse;
-      toast.success(`Invite created and email sent to ${newEmail}`);
+      
+      // If the invite was created successfully and needs email, send it
+      if (response && response.invite_code) {
+        try {
+          await supabase.functions.invoke('send-invite-email', {
+            body: {
+              email: newEmail,
+              inviteCode: response.invite_code,
+              inviterName: user?.user_metadata?.full_name || 'Someone'
+            }
+          });
+          toast.success(`Invite created and email sent to ${newEmail}`);
+        } catch (emailError) {
+          console.warn('Invite created but email failed to send:', emailError);
+          toast.success(`Invite created for ${newEmail} (email sending failed - please share the code manually)`);
+        }
+      } else {
+        toast.success(`Invite created for ${newEmail}`);
+      }
+      
       setNewEmail("");
       fetchInvites();
     } catch (error) {
