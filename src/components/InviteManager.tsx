@@ -43,12 +43,18 @@ export const InviteManager = () => {
 
       if (error) throw error;
       
-      // Ensure data has email field, fallback to empty string if missing
-      const invitesWithEmail = (data || []).map((invite: any) => ({
-        ...invite,
-        email: invite.email || 'No email'
-      }));
+      console.log('Raw invite data:', data); // Debug log
       
+      // Ensure data has email field, fallback to empty string if missing
+      const invitesWithEmail = (data || []).map((invite: any) => {
+        console.log('Processing invite:', invite); // Debug log
+        return {
+          ...invite,
+          email: invite.email || 'No email'
+        };
+      });
+      
+      console.log('Processed invites:', invitesWithEmail); // Debug log
       setInvites(invitesWithEmail);
     } catch (error) {
       console.error('Error fetching invites:', error);
