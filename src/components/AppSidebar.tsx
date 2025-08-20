@@ -62,7 +62,7 @@ export function AppSidebar({ onNavigate }: AppSidebarProps) {
                 {userProfile.first_name}'s
               </p>
             )}
-            <h2 className="font-semibold text-sm sm:text-lg text-foreground">dollyland.ai</h2>
+            <h2 className="font-semibold text-sm sm:text-lg text-foreground -mt-1">dollyland.ai</h2>
             <span className="bg-gradient-to-r from-primary to-primary-glow text-primary-foreground text-[8px] sm:text-[10px] font-bold px-1 sm:px-1.5 py-0.5 rounded-full tracking-wide self-start mt-1">
               ALPHA
             </span>
