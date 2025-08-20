@@ -1303,6 +1303,7 @@ export type Database = {
         Args: Record<PropertyKey, never>
         Returns: {
           created_at: string
+          email: string
           expires_at: string
           id: string
           invite_code: string
