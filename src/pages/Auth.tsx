@@ -16,6 +16,8 @@ const Auth = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [fullName, setFullName] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [inviteCode, setInviteCode] = useState("");
   const [showInviteError, setShowInviteError] = useState(false);
   const { signIn, signUp, signInWithGoogle, user, loading: authLoading, initializing } = useAuth();
@@ -66,15 +68,18 @@ const Auth = () => {
 
         if (!isValidInvite) {
           setShowInviteError(true);
-          toast.error("Invalid or expired invite code. dolly is currently invite-only.");
+          toast.error("Invalid or expired invite code. dollyland.ai is currently invite-only.");
           setLoading(false);
           return;
         }
 
         // If invite is valid, proceed with signup
+        const combinedFullName = `${firstName} ${lastName}`.trim();
         const redirectUrl = `${window.location.origin}/`;
         const { data: signUpData, error } = await signUp(email, password, {
-          full_name: fullName,
+          full_name: combinedFullName,
+          first_name: firstName,
+          last_name: lastName,
           invite_used: true,
           invite_code: inviteCode.trim(),
           options: {
@@ -136,8 +141,8 @@ const Auth = () => {
       <div className="w-full max-w-md space-y-6">
         <div className="text-center space-y-2">
           <Link to="/" className="inline-flex items-center space-x-3">
-            <img src={logoSrc} alt="dolly" className="h-10 w-auto object-contain" />
-            <span className="text-2xl font-semibold">dolly</span>
+            <img src={logoSrc} alt="dollyland.ai" className="h-10 w-auto object-contain" />
+            <span className="text-2xl font-semibold">dollyland.ai</span>
             <span className="bg-gradient-to-r from-primary to-primary-glow text-primary-foreground text-xs font-bold px-2 py-1 rounded-full tracking-wide">
               ALPHA
             </span>
@@ -147,7 +152,7 @@ const Auth = () => {
           </p>
           {isSignUp && (
             <div className="bg-primary/10 text-primary text-sm p-3 rounded-lg border border-primary/20">
-              🔒 dolly is currently in <strong>Closed Alpha</strong> - invite code required
+              🔒 dollyland.ai is currently in <strong>Closed Alpha</strong> - invite code required
             </div>
           )}
         </div>
@@ -182,21 +187,35 @@ const Auth = () => {
                     />
                     {showInviteError && (
                       <p className="text-sm text-red-500">
-                        Invalid invite code. dolly is currently invite-only. Contact the team for access.
+                        Invalid invite code. dollyland.ai is currently invite-only. Contact the team for access.
                       </p>
                     )}
                   </div>
                   
-                  <div className="space-y-2">
-                    <Label htmlFor="fullName">Full Name</Label>
-                    <Input
-                      id="fullName"
-                      type="text"
-                      placeholder="Enter your full name"
-                      value={fullName}
-                      onChange={(e) => setFullName(e.target.value)}
-                      required
-                    />
+                  <div className="grid grid-cols-2 gap-3">
+                    <div className="space-y-2">
+                      <Label htmlFor="firstName">First Name</Label>
+                      <Input
+                        id="firstName"
+                        type="text"
+                        placeholder="Enter your first name"
+                        value={firstName}
+                        onChange={(e) => setFirstName(e.target.value)}
+                        required
+                      />
+                    </div>
+                    
+                    <div className="space-y-2">
+                      <Label htmlFor="lastName">Last Name</Label>
+                      <Input
+                        id="lastName"
+                        type="text"
+                        placeholder="Enter your last name"
+                        value={lastName}
+                        onChange={(e) => setLastName(e.target.value)}
+                        required
+                      />
+                    </div>
                   </div>
                 </>
               )}

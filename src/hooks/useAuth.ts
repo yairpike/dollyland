@@ -76,6 +76,8 @@ export const useAuth = () => {
       options: {
         data: {
           full_name: options?.full_name,
+          first_name: options?.first_name,
+          last_name: options?.last_name,
           invite_used: options?.invite_used || false,
           invite_code: options?.invite_code
         },

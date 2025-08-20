@@ -2,6 +2,8 @@ import { Bot, Users, BarChart3, Settings, Plus, Home, ShoppingBag } from "lucide
 import { NavLink, useLocation } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
 import { useTheme } from "next-themes";
+import { useEffect, useState } from "react";
+import { supabase } from "@/integrations/supabase/client";
 
 interface AppSidebarProps {
   onNavigate?: () => void;
@@ -19,8 +21,27 @@ export function AppSidebar({ onNavigate }: AppSidebarProps) {
   const { user } = useAuth();
   const { theme } = useTheme();
   const currentPath = location.pathname;
+  const [userProfile, setUserProfile] = useState<{ first_name?: string } | null>(null);
 
   const logoSrc = theme === 'dark' ? '/lovable-uploads/c8c73254-3940-4a5b-b990-cb30d21dc890.png' : '/lovable-uploads/85abbc87-fafc-4307-86a1-f85ed74b639e.png';
+
+  // Fetch user profile to get first name
+  useEffect(() => {
+    if (user) {
+      const fetchProfile = async () => {
+        const { data } = await supabase
+          .from('profiles')
+          .select('first_name, last_name')
+          .eq('user_id', user.id)
+          .single();
+        
+        if (data) {
+          setUserProfile(data);
+        }
+      };
+      fetchProfile();
+    }
+  }, [user]);
 
   const isActive = (path: string) => {
     if (path === "/dashboard") {
@@ -34,19 +55,19 @@ export function AppSidebar({ onNavigate }: AppSidebarProps) {
       {/* Logo Section */}
       <div className="p-6 border-b">
         <div className="flex items-center gap-3">
-          <img src={logoSrc} alt="dolly" className="h-16 w-auto object-contain" />
+          <img src={logoSrc} alt="dollyland.ai" className="h-16 w-auto object-contain" />
           <div className="flex flex-col">
+            {user && userProfile?.first_name && (
+              <p className="text-sm font-medium text-foreground">
+                {userProfile.first_name}'s
+              </p>
+            )}
             <div className="flex items-center gap-2">
-              <h2 className="font-semibold text-lg text-foreground">dolly</h2>
+              <h2 className="font-semibold text-lg text-foreground">dollyland.ai</h2>
               <span className="bg-gradient-to-r from-primary to-primary-glow text-primary-foreground text-xs font-bold px-2 py-1 rounded-full tracking-wide">
                 ALPHA
               </span>
             </div>
-            {user && (
-              <p className="text-sm text-muted-foreground">
-                {user.email}
-              </p>
-            )}
           </div>
         </div>
       </div>
