@@ -6,12 +6,15 @@ const corsHeaders = {
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
 
-interface AuthWebhookPayload {
-  type: string;
-  table: string;
-  record: any;
-  schema: string;
-  old_record?: any;
+interface AuthHookPayload {
+  event: string;
+  user: {
+    id: string;
+    email: string;
+    email_confirmed_at?: string;
+    confirmation_token?: string;
+    [key: string]: any;
+  };
 }
 
 const handler = async (req: Request): Promise<Response> => {
@@ -23,12 +26,12 @@ const handler = async (req: Request): Promise<Response> => {
   }
 
   try {
-    const payload: AuthWebhookPayload = await req.json();
-    console.log(`[auth-webhook] Received payload:`, payload);
+    const payload: AuthHookPayload = await req.json();
+    console.log(`[auth-webhook] Received Auth Hook payload:`, payload);
 
-    // Handle user signup events
-    if (payload.type === 'INSERT' && payload.table === 'users' && payload.record) {
-      const user = payload.record;
+    // Handle user signup events from Auth Hooks
+    if (payload.event === 'user.created' && payload.user) {
+      const user = payload.user;
       
       // Check if this is a signup requiring email confirmation
       if (user.email && !user.email_confirmed_at) {
