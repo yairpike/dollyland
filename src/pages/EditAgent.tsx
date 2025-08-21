@@ -193,40 +193,40 @@ export const EditAgent = () => {
       {/* Main Content */}
       <div className="space-y-6">
         <Tabs defaultValue="settings" className="w-full">
-          <TabsList className="flex w-full bg-card border p-1 h-12 items-center overflow-x-auto scrollbar-hide gap-1">
-            <TabsTrigger value="settings" className="flex items-center gap-2 whitespace-nowrap" data-tour="edit-agent-settings">
+          <TabsList className="flex w-full overflow-x-auto bg-card border py-2 h-12 items-center justify-start gap-1 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+            <TabsTrigger value="settings" className="flex items-center gap-2 whitespace-nowrap flex-shrink-0 min-w-32" data-tour="edit-agent-settings">
               <Settings className="w-4 h-4" />
               Settings
             </TabsTrigger>
-            <TabsTrigger value="knowledge" className="flex items-center gap-2 whitespace-nowrap" data-tour="edit-agent-knowledge">
+            <TabsTrigger value="knowledge" className="flex items-center gap-2 whitespace-nowrap flex-shrink-0 min-w-32" data-tour="edit-agent-knowledge">
               <Database className="w-4 h-4" />
               Knowledge
             </TabsTrigger>
-            <TabsTrigger value="ai-setup" className="flex items-center gap-2 whitespace-nowrap" data-tour="edit-agent-ai-setup">
+            <TabsTrigger value="ai-setup" className="flex items-center gap-2 whitespace-nowrap flex-shrink-0 min-w-32" data-tour="edit-agent-ai-setup">
               <Zap className="w-4 h-4" />
               AI Setup
             </TabsTrigger>
-            <TabsTrigger value="actions" className="flex items-center gap-2 whitespace-nowrap" data-tour="edit-agent-actions">
+            <TabsTrigger value="actions" className="flex items-center gap-2 whitespace-nowrap flex-shrink-0 min-w-32" data-tour="edit-agent-actions">
               <Zap className="w-4 h-4" />
               Actions
             </TabsTrigger>
-            <TabsTrigger value="workflows" className="flex items-center gap-2 whitespace-nowrap" data-tour="edit-agent-workflows">
+            <TabsTrigger value="workflows" className="flex items-center gap-2 whitespace-nowrap flex-shrink-0 min-w-32" data-tour="edit-agent-workflows">
               <Workflow className="w-4 h-4" />
               Workflows
             </TabsTrigger>
-            <TabsTrigger value="webhooks" className="flex items-center gap-2 whitespace-nowrap" data-tour="edit-agent-webhooks">
+            <TabsTrigger value="webhooks" className="flex items-center gap-2 whitespace-nowrap flex-shrink-0 min-w-32" data-tour="edit-agent-webhooks">
               <Webhook className="w-4 h-4" />
               Webhooks
             </TabsTrigger>
-            <TabsTrigger value="linear" className="flex items-center gap-2 whitespace-nowrap" data-tour="edit-agent-linear">
+            <TabsTrigger value="linear" className="flex items-center gap-2 whitespace-nowrap flex-shrink-0 min-w-32" data-tour="edit-agent-linear">
               <ExternalLink className="w-4 h-4" />
               Linear
             </TabsTrigger>
-            <TabsTrigger value="github" className="flex items-center gap-2 whitespace-nowrap" data-tour="edit-agent-github">
+            <TabsTrigger value="github" className="flex items-center gap-2 whitespace-nowrap flex-shrink-0 min-w-32" data-tour="edit-agent-github">
               <GitBranch className="w-4 h-4" />
               GitHub
             </TabsTrigger>
-            <TabsTrigger value="deploy" className="flex items-center gap-2 whitespace-nowrap" data-tour="edit-agent-deploy">
+            <TabsTrigger value="deploy" className="flex items-center gap-2 whitespace-nowrap flex-shrink-0 min-w-32" data-tour="edit-agent-deploy">
               <Rocket className="w-4 h-4" />
               Deploy
             </TabsTrigger>
