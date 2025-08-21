@@ -66,7 +66,7 @@ export function DashboardLayout({ children, onCreateAgent }: DashboardLayoutProp
             <div className="flex items-center gap-2 min-w-0">
               <img src={logoSrc} alt="dollyland.ai" className="h-8 w-auto object-contain flex-shrink-0" />
               {user && userProfile?.first_name && (
-                <p className="text-xs font-medium text-foreground truncate">
+                <p className="text-sm font-semibold text-foreground truncate">
                   {userProfile.first_name}'s
                 </p>
               )}

@@ -82,7 +82,7 @@ export const Header = () => {
               {loading || initializing ? <LoadingAnimation size="md" /> : <img src={logoSrc} alt="dollyland.ai" className="h-8 sm:h-12 w-auto object-contain" />}
               <div className="flex items-center gap-1 sm:gap-2 min-w-0">
                 {user && userProfile?.first_name && (
-                  <p className="text-xs sm:text-sm font-medium text-foreground truncate">
+                  <p className="text-sm sm:text-sm font-semibold sm:font-medium text-foreground truncate">
                     {userProfile.first_name}'s
                   </p>
                 )}
