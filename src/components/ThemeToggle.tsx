@@ -17,9 +17,9 @@ export function ThemeToggle({ iconOnly = false }: ThemeToggleProps) {
       className="flex items-center gap-2 rounded-full shadow-sm"
     >
       {theme === "light" ? (
-        <Moon className="h-4 w-4" />
+        <Moon className="h-4 w-4 text-foreground" />
       ) : (
-        <Sun className="h-4 w-4" />
+        <Sun className="h-4 w-4 text-foreground" />
       )}
       {!iconOnly && (
         <span className="text-sm font-medium">
