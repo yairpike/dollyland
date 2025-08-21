@@ -142,24 +142,24 @@ export const Settings = () => {
         <p className="text-muted-foreground mb-6">Manage your account and preferences</p>
 
         <Tabs defaultValue="account" className="w-full">
-          <TabsList className="grid w-full max-w-2xl grid-cols-5 bg-card border py-2 h-12 content-center">
-            <TabsTrigger value="account" className="flex items-center gap-2">
+          <TabsList className="flex w-full max-w-2xl overflow-x-auto bg-card border py-2 h-12 items-center gap-1 scrollbar-hide">
+            <TabsTrigger value="account" className="flex items-center gap-2 whitespace-nowrap flex-shrink-0">
               <User className="w-4 h-4" />
               Account
             </TabsTrigger>
-            <TabsTrigger value="ai-providers" className="flex items-center gap-2">
+            <TabsTrigger value="ai-providers" className="flex items-center gap-2 whitespace-nowrap flex-shrink-0">
               <Bot className="w-4 h-4" />
               AI Providers
             </TabsTrigger>
-            <TabsTrigger value="tutorials" className="flex items-center gap-2">
+            <TabsTrigger value="tutorials" className="flex items-center gap-2 whitespace-nowrap flex-shrink-0">
               <GraduationCap className="w-4 h-4" />
               Tutorials
             </TabsTrigger>
-            <TabsTrigger value="billing" className="flex items-center gap-2">
+            <TabsTrigger value="billing" className="flex items-center gap-2 whitespace-nowrap flex-shrink-0">
               <CreditCard className="w-4 h-4" />
               Billing
             </TabsTrigger>
-            <TabsTrigger value="invites" className="flex items-center gap-2">
+            <TabsTrigger value="invites" className="flex items-center gap-2 whitespace-nowrap flex-shrink-0">
               <User className="w-4 h-4" />
               Invites
             </TabsTrigger>
