@@ -1031,28 +1031,6 @@ export type Database = {
         }
         Returns: string
       }
-      debug_all_invites: {
-        Args: Record<PropertyKey, never>
-        Returns: {
-          email: string
-          expires_at: string
-          invite_code: string
-          is_expired: boolean
-          is_used: boolean
-          used_at: string
-        }[]
-      }
-      debug_invite_check: {
-        Args: { p_invite_code: string }
-        Returns: {
-          email: string
-          expires_at: string
-          invite_code: string
-          is_expired: boolean
-          is_used: boolean
-          used_at: string
-        }[]
-      }
       decrypt_api_key: {
         Args: { encrypted_key: string; user_id: string }
         Returns: string
