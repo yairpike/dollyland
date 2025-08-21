@@ -63,19 +63,17 @@ export function DashboardLayout({ children, onCreateAgent }: DashboardLayoutProp
             </Sheet>
             
             {/* Logo and App Name */}
-            <div className="flex items-center gap-3">
-              <img src={logoSrc} alt="dollyland.ai" className="h-8 lg:h-10 w-auto object-contain" />
-              <div className="flex flex-col min-w-0">
-                {user && userProfile?.first_name && (
-                  <p className="text-xs font-medium text-foreground truncate">
-                    {userProfile.first_name}'s
-                  </p>
-                )}
-                <h1 className="text-lg lg:text-xl font-semibold">dollyland.ai</h1>
-                <span className="bg-gradient-to-r from-primary to-primary-glow text-primary-foreground text-[8px] font-bold px-1 py-0.5 rounded-full tracking-wide self-start">
-                  ALPHA
-                </span>
-              </div>
+            <div className="flex items-center gap-2 min-w-0">
+              <img src={logoSrc} alt="dollyland.ai" className="h-8 w-auto object-contain flex-shrink-0" />
+              {user && userProfile?.first_name && (
+                <p className="text-xs font-medium text-foreground truncate">
+                  {userProfile.first_name}'s
+                </p>
+              )}
+              <h1 className="text-sm font-semibold truncate">dollyland.ai</h1>
+              <span className="bg-gradient-to-r from-primary to-primary-glow text-primary-foreground text-[8px] font-bold px-1 py-0.5 rounded-full tracking-wide flex-shrink-0">
+                ALPHA
+              </span>
             </div>
           </div>
         </header>

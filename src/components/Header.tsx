@@ -78,16 +78,16 @@ export const Header = () => {
         <div className="max-w-7xl mx-auto px-4 lg:px-8 py-4">
           <div className="flex items-center justify-between">
             {/* Logo */}
-            <Link to="/" className="flex items-center gap-3 flex-shrink-0 hover:scale-105 transition-transform">
-              {loading || initializing ? <LoadingAnimation size="md" /> : <img src={logoSrc} alt="dollyland.ai" className="h-12 w-auto object-contain" />}
-              <div className="flex flex-col">
+            <Link to="/" className="flex items-center gap-2 sm:gap-3 flex-shrink-0 hover:scale-105 transition-transform">
+              {loading || initializing ? <LoadingAnimation size="md" /> : <img src={logoSrc} alt="dollyland.ai" className="h-8 sm:h-12 w-auto object-contain" />}
+              <div className="flex items-center gap-1 sm:gap-2 min-w-0">
                 {user && userProfile?.first_name && (
-                  <p className="text-sm font-medium text-foreground hidden sm:block">
+                  <p className="text-xs sm:text-sm font-medium text-foreground truncate">
                     {userProfile.first_name}'s
                   </p>
                 )}
-                <h1 className="text-xl font-semibold text-foreground">dollyland.ai</h1>
-                <span className="bg-gradient-to-r from-primary to-primary-glow text-primary-foreground text-[10px] sm:text-xs font-bold px-1.5 sm:px-2 py-0.5 sm:py-1 rounded-full tracking-wide self-start">
+                <h1 className="text-sm sm:text-xl font-semibold text-foreground">dollyland.ai</h1>
+                <span className="bg-gradient-to-r from-primary to-primary-glow text-primary-foreground text-[8px] sm:text-xs font-bold px-1 sm:px-2 py-0.5 sm:py-1 rounded-full tracking-wide flex-shrink-0">
                   ALPHA
                 </span>
               </div>
