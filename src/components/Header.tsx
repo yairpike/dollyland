@@ -8,6 +8,8 @@ import { ThemeToggle } from "./ThemeToggle";
 import { UserRole } from "@/components/UserRole";
 import { LoadingAnimation } from "./LoadingAnimation";
 import { useTheme } from "next-themes";
+import { useEffect, useState } from "react";
+import { supabase } from "@/integrations/supabase/client";
 export const Header = () => {
   const {
     user,
@@ -20,6 +22,25 @@ export const Header = () => {
   } = useTheme();
   const navigate = useNavigate();
   const logoSrc = theme === 'dark' ? '/lovable-uploads/c8c73254-3940-4a5b-b990-cb30d21dc890.png' : '/lovable-uploads/85abbc87-fafc-4307-86a1-f85ed74b639e.png';
+  const [userProfile, setUserProfile] = useState<{ first_name?: string } | null>(null);
+
+  // Fetch user profile to get first name
+  useEffect(() => {
+    if (user) {
+      const fetchProfile = async () => {
+        const { data } = await supabase
+          .from('profiles')
+          .select('first_name, last_name')
+          .eq('user_id', user.id)
+          .single();
+        
+        if (data) {
+          setUserProfile(data);
+        }
+      };
+      fetchProfile();
+    }
+  }, [user]);
   const handleSignOut = async () => {
     try {
       console.log('Header: Starting sign out process');
@@ -59,10 +80,15 @@ export const Header = () => {
             {/* Logo */}
             <Link to="/" className="flex items-center gap-3 flex-shrink-0 hover:scale-105 transition-transform">
               {loading || initializing ? <LoadingAnimation size="md" /> : <img src={logoSrc} alt="dollyland.ai" className="h-12 w-auto object-contain" />}
-              <div className="flex items-center gap-2">
+              <div className="flex flex-col">
+                {user && userProfile?.first_name && (
+                  <p className="text-sm font-medium text-foreground hidden sm:block">
+                    {userProfile.first_name}'s
+                  </p>
+                )}
                 <h1 className="text-xl font-semibold text-foreground">dollyland.ai</h1>
-                <span className="bg-gradient-to-r from-primary to-primary-glow text-primary-foreground text-xs font-bold px-2 py-1 rounded-full tracking-wide">
-                  CLOSED ALPHA
+                <span className="bg-gradient-to-r from-primary to-primary-glow text-primary-foreground text-[10px] sm:text-xs font-bold px-1.5 sm:px-2 py-0.5 sm:py-1 rounded-full tracking-wide self-start">
+                  ALPHA
                 </span>
               </div>
             </Link>

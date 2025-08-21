@@ -1,9 +1,11 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { AppSidebar } from "./AppSidebar";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { Menu } from "lucide-react";
 import { useTheme } from "next-themes";
+import { useAuth } from "@/hooks/useAuth";
+import { supabase } from "@/integrations/supabase/client";
 
 interface DashboardLayoutProps {
   children: React.ReactNode;
@@ -13,8 +15,28 @@ interface DashboardLayoutProps {
 export function DashboardLayout({ children, onCreateAgent }: DashboardLayoutProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { theme } = useTheme();
+  const { user } = useAuth();
+  const [userProfile, setUserProfile] = useState<{ first_name?: string } | null>(null);
 
   const logoSrc = theme === 'dark' ? '/lovable-uploads/c8c73254-3940-4a5b-b990-cb30d21dc890.png' : '/lovable-uploads/85abbc87-fafc-4307-86a1-f85ed74b639e.png';
+
+  // Fetch user profile to get first name
+  useEffect(() => {
+    if (user) {
+      const fetchProfile = async () => {
+        const { data } = await supabase
+          .from('profiles')
+          .select('first_name, last_name')
+          .eq('user_id', user.id)
+          .single();
+        
+        if (data) {
+          setUserProfile(data);
+        }
+      };
+      fetchProfile();
+    }
+  }, [user]);
   
   return (
     <div className="min-h-screen flex w-full bg-background">
@@ -43,10 +65,17 @@ export function DashboardLayout({ children, onCreateAgent }: DashboardLayoutProp
             {/* Logo and App Name */}
             <div className="flex items-center gap-3">
               <img src={logoSrc} alt="dollyland.ai" className="h-8 lg:h-10 w-auto object-contain" />
-              <h1 className="text-lg lg:text-xl font-semibold">dollyland.ai</h1>
-              <span className="bg-gradient-to-r from-primary to-primary-glow text-primary-foreground text-xs font-bold px-2 py-1 rounded-full tracking-wide">
-                ALPHA
-              </span>
+              <div className="flex flex-col min-w-0">
+                {user && userProfile?.first_name && (
+                  <p className="text-xs font-medium text-foreground truncate">
+                    {userProfile.first_name}'s
+                  </p>
+                )}
+                <h1 className="text-lg lg:text-xl font-semibold">dollyland.ai</h1>
+                <span className="bg-gradient-to-r from-primary to-primary-glow text-primary-foreground text-[8px] font-bold px-1 py-0.5 rounded-full tracking-wide self-start">
+                  ALPHA
+                </span>
+              </div>
             </div>
           </div>
         </header>
