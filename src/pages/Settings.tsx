@@ -142,7 +142,7 @@ export const Settings = () => {
         <p className="text-muted-foreground mb-6">Manage your account and preferences</p>
 
         <Tabs defaultValue="account" className="w-full">
-          <TabsList className="flex w-full max-w-2xl overflow-x-auto bg-card border py-2 h-12 items-center gap-1 scrollbar-hide">
+          <TabsList className="flex w-full max-w-2xl overflow-x-auto bg-card border py-2 h-12 items-center gap-1 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
             <TabsTrigger value="account" className="flex items-center gap-2 whitespace-nowrap flex-shrink-0">
               <User className="w-4 h-4" />
               Account
