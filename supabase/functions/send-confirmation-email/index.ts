@@ -1,8 +1,6 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { Resend } from "npm:resend@2.0.0";
 
-const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
-
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
@@ -24,6 +22,9 @@ const handler = async (req: Request): Promise<Response> => {
   }
 
   try {
+    // Initialize Resend client inside the try block to avoid issues during OPTIONS requests
+    const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
+    
     const { email, confirmationUrl, token }: ConfirmationEmailRequest = await req.json();
     
     console.log(`[send-confirmation-email] Sending confirmation email to ${email}`);
