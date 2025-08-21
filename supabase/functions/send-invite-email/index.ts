@@ -2,6 +2,8 @@ import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { Resend } from "npm:resend@2.0.0";
 import { supabase } from "../_shared/supabase.ts";
 
+const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
+
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
@@ -55,13 +57,10 @@ const handler = async (req: Request): Promise<Response> => {
         }
       );
     }
-    console.log(`[send-invite-email] RESEND_API_KEY available: ${resendKey.substring(0, 8)}...`);
+     console.log(`[send-invite-email] RESEND_API_KEY available: ${resendKey.substring(0, 8)}...`);
 
-    // Initialize Resend client inside the try block
-    const resend = new Resend(resendKey);
-
-    // Send the invitation email
-    const emailResponse = await resend.emails.send({
+     // Send the invitation email
+     const emailResponse = await resend.emails.send({
       from: "Dollyland AI <noreply@dollyland.ai>",
       to: [email],
       subject: "You're invited to join Dollyland AI! 🚀",
