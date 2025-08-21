@@ -80,7 +80,7 @@ export const Header = () => {
             {/* Logo */}
             <Link to="/" className="flex items-center gap-2 sm:gap-3 flex-shrink-0 hover:scale-105 transition-transform">
               {loading || initializing ? <LoadingAnimation size="md" /> : <img src={logoSrc} alt="dollyland.ai" className="h-8 sm:h-12 w-auto object-contain" />}
-              <div className="flex items-center gap-1 sm:gap-2 min-w-0">
+              <div className="flex items-center gap-0.5 sm:gap-2 min-w-0">
                 {user && userProfile?.first_name && (
                   <p className="text-sm sm:text-sm font-semibold sm:font-medium text-foreground truncate">
                     {userProfile.first_name}'s
