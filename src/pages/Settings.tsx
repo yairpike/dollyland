@@ -143,23 +143,23 @@ export const Settings = () => {
 
         <Tabs defaultValue="account" className="w-full">
           <TabsList className="flex w-full overflow-x-auto bg-card border py-2 h-12 items-center justify-start gap-1 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
-            <TabsTrigger value="account" className="flex items-center gap-2 whitespace-nowrap flex-shrink-0">
+            <TabsTrigger value="account" className="flex items-center gap-2 whitespace-nowrap flex-shrink-0 min-w-32">
               <User className="w-4 h-4" />
               Account
             </TabsTrigger>
-            <TabsTrigger value="ai-providers" className="flex items-center gap-2 whitespace-nowrap flex-shrink-0">
+            <TabsTrigger value="ai-providers" className="flex items-center gap-2 whitespace-nowrap flex-shrink-0 min-w-32">
               <Bot className="w-4 h-4" />
               AI Providers
             </TabsTrigger>
-            <TabsTrigger value="tutorials" className="flex items-center gap-2 whitespace-nowrap flex-shrink-0">
+            <TabsTrigger value="tutorials" className="flex items-center gap-2 whitespace-nowrap flex-shrink-0 min-w-32">
               <GraduationCap className="w-4 h-4" />
               Tutorials
             </TabsTrigger>
-            <TabsTrigger value="billing" className="flex items-center gap-2 whitespace-nowrap flex-shrink-0">
+            <TabsTrigger value="billing" className="flex items-center gap-2 whitespace-nowrap flex-shrink-0 min-w-32">
               <CreditCard className="w-4 h-4" />
               Billing
             </TabsTrigger>
-            <TabsTrigger value="invites" className="flex items-center gap-2 whitespace-nowrap flex-shrink-0">
+            <TabsTrigger value="invites" className="flex items-center gap-2 whitespace-nowrap flex-shrink-0 min-w-32">
               <User className="w-4 h-4" />
               Invites
             </TabsTrigger>
