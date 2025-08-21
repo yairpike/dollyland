@@ -6,6 +6,7 @@ export const TestEmail = () => {
   const sendTestEmail = async () => {
     try {
       toast.info("Sending test email...");
+      console.log("Starting test email function call...");
       
       const { data, error } = await supabase.functions.invoke('send-confirmation-email', {
         body: {
@@ -14,6 +15,8 @@ export const TestEmail = () => {
           token: 'sample-token-123456'
         }
       });
+
+      console.log("Function response:", { data, error });
 
       if (error) {
         console.error('Error sending email:', error);

@@ -22,8 +22,18 @@ const handler = async (req: Request): Promise<Response> => {
   }
 
   try {
+    console.log(`[send-confirmation-email] Processing ${req.method} request`);
+    
+    // Check if RESEND_API_KEY is available
+    const resendKey = Deno.env.get("RESEND_API_KEY");
+    console.log(`[send-confirmation-email] RESEND_API_KEY available: ${resendKey ? 'YES' : 'NO'}`);
+    
+    if (!resendKey) {
+      throw new Error("RESEND_API_KEY environment variable not found");
+    }
+    
     // Initialize Resend client inside the try block to avoid issues during OPTIONS requests
-    const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
+    const resend = new Resend(resendKey);
     
     const { email, confirmationUrl, token }: ConfirmationEmailRequest = await req.json();
     
