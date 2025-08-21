@@ -2,8 +2,6 @@ import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { Resend } from "npm:resend@2.0.0";
 import { supabase } from "../_shared/supabase.ts";
 
-// Initialize Resend inside the handler to handle missing keys gracefully
-
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
@@ -45,29 +43,17 @@ const handler = async (req: Request): Promise<Response> => {
 
     console.log(`[send-invite-email] Sending invite email to ${email} with code ${inviteCode}`);
 
-    // Access the RESEND_API_KEY from Supabase vault using the service role
-    const { data: resendKey, error: keyError } = await supabase
-      .schema('vault')
-      .from('secrets')
-      .select('secret')
-      .eq('name', 'RESEND_API_KEY')
-      .single();
-
-    if (keyError || !resendKey?.secret) {
-      console.error(`[send-invite-email] Failed to get RESEND_API_KEY from vault:`, keyError);
-      return new Response(
-        JSON.stringify({ error: "Email service not configured" }),
-        {
-          status: 500,
-          headers: { "Content-Type": "application/json", ...corsHeaders },
-        }
-      );
+    // Get RESEND_API_KEY from environment (this is how it was working before)
+    const resendApiKey = Deno.env.get("RESEND_API_KEY");
+    if (!resendApiKey) {
+      console.error(`[send-invite-email] RESEND_API_KEY not found in environment`);
+      throw new Error("RESEND_API_KEY not configured");
     }
+    
+    console.log(`[send-invite-email] RESEND_API_KEY found: ${resendApiKey.substring(0, 8)}...`);
 
-    console.log(`[send-invite-email] RESEND_API_KEY retrieved from vault`);
-
-    // Initialize Resend client with the secret from vault
-    const resend = new Resend(resendKey.secret);
+    // Initialize Resend
+    const resend = new Resend(resendApiKey);
 
      // Send the invitation email
      const emailResponse = await resend.emails.send({
