@@ -53,25 +53,32 @@ const Auth = () => {
 
     try {
       if (isSignUp) {
+        console.log('Validating invite code:', inviteCode.trim());
+        
         // First, validate the invite using secure function (no email required)
         const { data: isValidInvite, error: inviteError } = await supabase
           .rpc('validate_invite_secure', { 
             p_invite_code: inviteCode.trim()
           });
 
+        console.log('Invite validation result:', { isValidInvite, inviteError });
+
         if (inviteError) {
           console.error('Invite validation error:', inviteError);
-          toast.error("Error validating invite. Please try again.");
+          toast.error(`Error validating invite: ${inviteError.message}`);
           setLoading(false);
           return;
         }
 
         if (!isValidInvite) {
+          console.log('Invite validation failed - invalid code');
           setShowInviteError(true);
           toast.error("Invalid or expired invite code. dollyland.ai is currently invite-only.");
           setLoading(false);
           return;
         }
+
+        console.log('Invite validation passed, proceeding with signup');
 
         // If invite is valid, proceed with signup
         const combinedFullName = `${firstName} ${lastName}`.trim();
