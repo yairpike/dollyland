@@ -82,7 +82,7 @@ const Auth = () => {
 
         // If invite is valid, proceed with signup
         const combinedFullName = `${firstName} ${lastName}`.trim();
-        const redirectUrl = `${window.location.origin}/`;
+        const redirectUrl = window.location.origin + '/dashboard';
         const { data: signUpData, error } = await signUp(email, password, {
           full_name: combinedFullName,
           first_name: firstName,
