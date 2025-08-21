@@ -8,11 +8,11 @@ export const TestEmail = () => {
       toast.info("Sending test email...");
       console.log("Starting test email function call...");
       
-      const { data, error } = await supabase.functions.invoke('send-confirmation-email', {
+      const { data, error } = await supabase.functions.invoke('send-invite-email', {
         body: {
           email: 'yair.pike@gmail.com',
-          confirmationUrl: 'https://dollyland-ai.lovable.app/dashboard',
-          token: 'sample-token-123456'
+          inviteCode: 'TEST123',
+          inviterName: 'Test User'
         }
       });
 
