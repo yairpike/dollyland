@@ -21,10 +21,14 @@ const Auth = () => {
   const [inviteCode, setInviteCode] = useState("");
   const [showInviteError, setShowInviteError] = useState(false);
   const { signIn, signUp, signInWithGoogle, user, loading: authLoading, initializing } = useAuth();
-  const { theme } = useTheme();
+  const { theme, resolvedTheme } = useTheme();
   const navigate = useNavigate();
 
-  const logoSrc = theme === 'dark' ? '/lovable-uploads/c8c73254-3940-4a5b-b990-cb30d21dc890.png' : '/lovable-uploads/85abbc87-fafc-4307-86a1-f85ed74b639e.png';
+  // Use resolvedTheme for more reliable theme detection, fallback to system preference
+  const currentTheme = resolvedTheme || theme;
+  const logoSrc = currentTheme === 'dark' 
+    ? '/lovable-uploads/c8c73254-3940-4a5b-b990-cb30d21dc890.png' 
+    : '/lovable-uploads/85abbc87-fafc-4307-86a1-f85ed74b639e.png';
 
   // Redirect if already authenticated
   useEffect(() => {
