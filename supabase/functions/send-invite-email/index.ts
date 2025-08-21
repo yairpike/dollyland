@@ -16,16 +16,24 @@ interface SendInviteRequest {
 }
 
 const handler = async (req: Request): Promise<Response> => {
+  console.log(`[send-invite-email] Request received: ${req.method}`);
+  
   // Handle CORS preflight requests
   if (req.method === "OPTIONS") {
+    console.log(`[send-invite-email] Handling CORS preflight`);
     return new Response(null, { headers: corsHeaders });
   }
 
   try {
-    const { email, inviteCode, inviterName }: SendInviteRequest = await req.json();
+    const body = await req.text();
+    console.log(`[send-invite-email] Raw body received:`, body);
+    
+    const { email, inviteCode, inviterName }: SendInviteRequest = JSON.parse(body);
+    console.log(`[send-invite-email] Parsed data:`, { email, inviteCode, inviterName });
 
     // Validate required fields
     if (!email || !inviteCode) {
+      console.log(`[send-invite-email] Validation failed - missing required fields`);
       return new Response(
         JSON.stringify({ error: "Email and invite code are required" }),
         {
@@ -35,7 +43,21 @@ const handler = async (req: Request): Promise<Response> => {
       );
     }
 
-    console.log(`Sending invite email to ${email} with code ${inviteCode}`);
+    console.log(`[send-invite-email] Sending invite email to ${email} with code ${inviteCode}`);
+
+    // Check if RESEND_API_KEY is available
+    const resendKey = Deno.env.get("RESEND_API_KEY");
+    if (!resendKey) {
+      console.error(`[send-invite-email] RESEND_API_KEY not found in environment`);
+      return new Response(
+        JSON.stringify({ error: "Email service not configured" }),
+        {
+          status: 500,
+          headers: { "Content-Type": "application/json", ...corsHeaders },
+        }
+      );
+    }
+    console.log(`[send-invite-email] RESEND_API_KEY available: ${resendKey.substring(0, 8)}...`);
 
     // Send the invitation email
     const emailResponse = await resend.emails.send({

@@ -79,8 +79,9 @@ export const InviteManager = () => {
       
       // If the invite was created successfully and needs email, send it
       if (response && response.invite_code) {
+        console.log('Attempting to send invite email:', { email: newEmail, code: response.invite_code });
         try {
-          const { error: emailError } = await supabase.functions.invoke('send-invite-email', {
+          const { data: emailData, error: emailError } = await supabase.functions.invoke('send-invite-email', {
             body: {
               email: newEmail,
               inviteCode: response.invite_code,
@@ -88,17 +89,21 @@ export const InviteManager = () => {
             }
           });
           
+          console.log('Email function response:', { data: emailData, error: emailError });
+          
           if (emailError) {
             console.error('Email sending error:', emailError);
-            toast.success(`Invite created for ${newEmail} (email sending failed - please share the code manually)`);
+            toast.success(`Invite created for ${newEmail} (email sending failed - please share the code manually: ${response.invite_code})`);
           } else {
+            console.log('Email sent successfully:', emailData);
             toast.success(`Invite created and email sent to ${newEmail}`);
           }
         } catch (emailError) {
           console.error('Email sending exception:', emailError);
-          toast.success(`Invite created for ${newEmail} (email sending failed - please share the code manually)`);
+          toast.success(`Invite created for ${newEmail} (email sending failed - please share the code manually: ${response.invite_code})`);
         }
       } else {
+        console.log('No invite code in response:', response);
         toast.success(`Invite created for ${newEmail}`);
       }
       
