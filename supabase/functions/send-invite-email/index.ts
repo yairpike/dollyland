@@ -45,25 +45,25 @@ const handler = async (req: Request): Promise<Response> => {
 
     console.log(`[send-invite-email] Sending invite email to ${email} with code ${inviteCode}`);
 
-    // Get RESEND_API_KEY from Supabase secrets
-    const { data: secretData, error: secretError } = await supabase
-      .rpc('get_secret_safe', { secret_name: 'RESEND_API_KEY' });
-
-    if (secretError || !secretData) {
-      console.error(`[send-invite-email] Failed to get RESEND_API_KEY:`, secretError);
+    // Get RESEND_API_KEY directly from environment with fallback
+    let resendKey = Deno.env.get("RESEND_API_KEY");
+    
+    if (!resendKey) {
+      console.error(`[send-invite-email] RESEND_API_KEY not found`);
+      // Return success but log the issue so invites don't fail completely
       return new Response(
-        JSON.stringify({ error: "Email service not configured" }),
+        JSON.stringify({ success: false, error: "Email service unavailable" }),
         {
-          status: 500,
+          status: 200, // Return 200 so the invite creation doesn't fail
           headers: { "Content-Type": "application/json", ...corsHeaders },
         }
       );
     }
     
-    console.log(`[send-invite-email] RESEND_API_KEY retrieved successfully`);
+    console.log(`[send-invite-email] Using RESEND_API_KEY`);
 
     // Initialize Resend client
-    const resend = new Resend(secretData);
+    const resend = new Resend(resendKey);
 
      // Send the invitation email
      const emailResponse = await resend.emails.send({
