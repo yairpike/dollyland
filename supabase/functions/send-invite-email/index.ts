@@ -43,14 +43,31 @@ const handler = async (req: Request): Promise<Response> => {
 
     console.log(`[send-invite-email] Sending invite email to ${email} with code ${inviteCode}`);
 
-    // Get RESEND_API_KEY from environment (this is how it was working before)
-    const resendApiKey = Deno.env.get("RESEND_API_KEY");
+    // Try to get API key from vault first, then environment
+    let resendApiKey = Deno.env.get("RESEND_API_KEY");
+    
     if (!resendApiKey) {
-      console.error(`[send-invite-email] RESEND_API_KEY not found in environment`);
+      // Try to get from Supabase vault using the public function
+      try {
+        const { data: keyData, error: keyError } = await supabase.rpc('get_secret_safe', {
+          secret_name: 'RESEND_API_KEY'
+        });
+        
+        if (keyData && !keyError) {
+          resendApiKey = keyData;
+          console.log(`[send-invite-email] Got API key from vault`);
+        }
+      } catch (vaultError) {
+        console.error(`[send-invite-email] Vault access failed:`, vaultError);
+      }
+    }
+    
+    if (!resendApiKey) {
+      console.error(`[send-invite-email] RESEND_API_KEY not found anywhere`);
       throw new Error("RESEND_API_KEY not configured");
     }
     
-    console.log(`[send-invite-email] RESEND_API_KEY found: ${resendApiKey.substring(0, 8)}...`);
+    console.log(`[send-invite-email] Using RESEND_API_KEY`);
 
     // Initialize Resend
     const resend = new Resend(resendApiKey);
