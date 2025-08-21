@@ -13,12 +13,31 @@ export const Hero = () => {
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-background via-accent/5 to-primary/5">
       <div className="absolute inset-0 bg-gradient-card opacity-30"></div>
       
-      {/* Animated background elements */}
-      <div className="absolute top-20 left-16 w-24 h-20 bg-primary/20 rounded-3xl animate-float blur-sm"></div>
-      <div className="absolute bottom-32 right-20 w-32 h-28 bg-accent/40 rounded-3xl animate-float blur-sm" style={{ animationDelay: '2s' }}></div>
-      <div className="absolute top-1/3 right-16 w-20 h-24 bg-muted/50 rounded-3xl animate-float blur-sm" style={{ animationDelay: '4s' }}></div>
-      <div className="absolute bottom-1/4 left-20 w-28 h-32 bg-primary/15 rounded-3xl animate-float blur-sm" style={{ animationDelay: '1s' }}></div>
-      <div className="absolute top-2/3 left-1/3 w-16 h-20 bg-accent/30 rounded-3xl animate-float blur-sm" style={{ animationDelay: '3s' }}></div>
+      {/* Floating sheep and clouds */}
+      <div className="absolute top-20 left-16 text-6xl animate-float" style={{ animationDelay: '0s' }}>
+        <span className="dark:text-white text-black/80">🐑</span>
+      </div>
+      <div className="absolute bottom-32 right-20 text-5xl animate-float" style={{ animationDelay: '2s' }}>
+        <span className="dark:text-white text-black/80">🐑</span>
+      </div>
+      <div className="absolute top-1/3 right-16 text-4xl animate-float" style={{ animationDelay: '4s' }}>
+        <span className="dark:text-white text-black/80">🐑</span>
+      </div>
+      <div className="absolute bottom-1/4 left-20 text-5xl animate-float" style={{ animationDelay: '1s' }}>
+        <span className="dark:text-white text-black/80">🐑</span>
+      </div>
+      <div className="absolute top-2/3 left-1/3 text-4xl animate-float" style={{ animationDelay: '3s' }}>
+        <span className="dark:text-white text-black/80">🐑</span>
+      </div>
+      <div className="absolute top-16 right-1/3 text-4xl animate-float" style={{ animationDelay: '1.5s' }}>
+        <span className="text-blue-200/70">☁️</span>
+      </div>
+      <div className="absolute bottom-20 left-1/4 text-3xl animate-float" style={{ animationDelay: '3.5s' }}>
+        <span className="text-blue-200/70">☁️</span>
+      </div>
+      <div className="absolute top-1/2 left-12 text-3xl animate-float" style={{ animationDelay: '2.5s' }}>
+        <span className="text-blue-200/70">☁️</span>
+      </div>
       
       <div className="relative z-10 text-center max-w-6xl mx-auto px-6">
         <div className="mb-12 animate-slide-up">
