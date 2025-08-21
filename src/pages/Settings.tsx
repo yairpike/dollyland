@@ -16,6 +16,7 @@ import { User, CreditCard, Bot, LogOut, Mail, GraduationCap, PlayCircle, RotateC
 import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
 import { useTourManager } from "@/components/OnboardingTour";
+import { TestEmail } from "@/components/TestEmail";
 
 export const Settings = () => {
   const { user, signOut } = useAuth();
@@ -248,6 +249,18 @@ export const Settings = () => {
                     <LogOut className="w-4 h-4" />
                     Sign Out
                   </Button>
+                </div>
+
+                <Separator />
+                
+                <div className="flex justify-between items-center">
+                  <div>
+                    <h4 className="font-medium">Test Email System</h4>
+                    <p className="text-sm text-muted-foreground">
+                      Test the custom confirmation email template
+                    </p>
+                  </div>
+                  <TestEmail />
                 </div>
 
                 <div className="flex justify-start">
