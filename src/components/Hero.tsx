@@ -13,30 +13,43 @@ export const Hero = () => {
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-background via-accent/5 to-primary/5">
       <div className="absolute inset-0 bg-gradient-card opacity-30"></div>
       
-      {/* Floating sheep and clouds */}
-      <div className="absolute top-20 left-16 text-6xl animate-float" style={{ animationDelay: '0s' }}>
-        <span className="dark:text-white text-black/80">🐑</span>
+      {/* Floating logos and clouds */}
+      <div className="absolute top-20 left-16 w-16 h-16 animate-float" style={{ animationDelay: '0s' }}>
+        <img src={logoSrc} alt="dollyland.ai" className="w-full h-full object-contain opacity-60" />
       </div>
-      <div className="absolute bottom-32 right-20 text-5xl animate-float" style={{ animationDelay: '2s' }}>
-        <span className="dark:text-white text-black/80">🐑</span>
+      <div className="absolute bottom-32 right-20 w-14 h-14 animate-float" style={{ animationDelay: '2s' }}>
+        <img src={logoSrc} alt="dollyland.ai" className="w-full h-full object-contain opacity-60" />
       </div>
-      <div className="absolute top-1/3 right-16 text-4xl animate-float" style={{ animationDelay: '4s' }}>
-        <span className="dark:text-white text-black/80">🐑</span>
+      <div className="absolute top-1/3 right-16 w-12 h-12 animate-float" style={{ animationDelay: '4s' }}>
+        <img src={logoSrc} alt="dollyland.ai" className="w-full h-full object-contain opacity-60" />
       </div>
-      <div className="absolute bottom-1/4 left-20 text-5xl animate-float" style={{ animationDelay: '1s' }}>
-        <span className="dark:text-white text-black/80">🐑</span>
+      <div className="absolute bottom-1/4 left-20 w-14 h-14 animate-float" style={{ animationDelay: '1s' }}>
+        <img src={logoSrc} alt="dollyland.ai" className="w-full h-full object-contain opacity-60" />
       </div>
-      <div className="absolute top-2/3 left-1/3 text-4xl animate-float" style={{ animationDelay: '3s' }}>
-        <span className="dark:text-white text-black/80">🐑</span>
+      <div className="absolute top-2/3 left-1/3 w-12 h-12 animate-float" style={{ animationDelay: '3s' }}>
+        <img src={logoSrc} alt="dollyland.ai" className="w-full h-full object-contain opacity-60" />
       </div>
-      <div className="absolute top-16 right-1/3 text-4xl animate-float" style={{ animationDelay: '1.5s' }}>
-        <span className="text-blue-200/70">☁️</span>
+      
+      {/* Floating clouds */}
+      <div className="absolute top-16 right-1/3 w-20 h-12 animate-float" style={{ animationDelay: '1.5s' }}>
+        <svg viewBox="0 0 100 60" className="w-full h-full text-teal-400 opacity-70">
+          <path d="M20,40 Q20,20 40,20 Q50,10 70,20 Q90,20 90,40 Q90,50 70,50 L30,50 Q20,50 20,40 Z" fill="currentColor" />
+        </svg>
       </div>
-      <div className="absolute bottom-20 left-1/4 text-3xl animate-float" style={{ animationDelay: '3.5s' }}>
-        <span className="text-blue-200/70">☁️</span>
+      <div className="absolute bottom-20 left-1/4 w-16 h-10 animate-float" style={{ animationDelay: '3.5s' }}>
+        <svg viewBox="0 0 100 60" className="w-full h-full text-teal-400 opacity-70">
+          <path d="M15,45 Q15,25 35,25 Q45,15 65,25 Q85,25 85,45 Q85,55 65,55 L25,55 Q15,55 15,45 Z" fill="currentColor" />
+        </svg>
       </div>
-      <div className="absolute top-1/2 left-12 text-3xl animate-float" style={{ animationDelay: '2.5s' }}>
-        <span className="text-blue-200/70">☁️</span>
+      <div className="absolute top-1/2 left-12 w-14 h-8 animate-float" style={{ animationDelay: '2.5s' }}>
+        <svg viewBox="0 0 100 60" className="w-full h-full text-teal-400 opacity-70">
+          <path d="M25,45 Q25,30 40,30 Q50,20 70,30 Q85,30 85,45 Q85,50 70,50 L35,50 Q25,50 25,45 Z" fill="currentColor" />
+        </svg>
+      </div>
+      <div className="absolute top-10 left-1/2 w-18 h-11 animate-float" style={{ animationDelay: '4.5s' }}>
+        <svg viewBox="0 0 100 60" className="w-full h-full text-teal-400 opacity-70">
+          <path d="M10,40 Q10,20 30,20 Q40,10 60,20 Q80,15 85,35 Q90,40 85,45 L25,45 Q10,45 10,40 Z" fill="currentColor" />
+        </svg>
       </div>
       
       <div className="relative z-10 text-center max-w-6xl mx-auto px-6">
