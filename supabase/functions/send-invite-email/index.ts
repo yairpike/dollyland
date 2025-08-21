@@ -45,10 +45,12 @@ const handler = async (req: Request): Promise<Response> => {
 
     console.log(`[send-invite-email] Sending invite email to ${email} with code ${inviteCode}`);
 
-    // Check if RESEND_API_KEY is available
-    const resendKey = Deno.env.get("RESEND_API_KEY");
-    if (!resendKey) {
-      console.error(`[send-invite-email] RESEND_API_KEY not found in environment`);
+    // Get RESEND_API_KEY from Supabase secrets
+    const { data: secretData, error: secretError } = await supabase
+      .rpc('get_secret_safe', { secret_name: 'RESEND_API_KEY' });
+
+    if (secretError || !secretData) {
+      console.error(`[send-invite-email] Failed to get RESEND_API_KEY:`, secretError);
       return new Response(
         JSON.stringify({ error: "Email service not configured" }),
         {
@@ -57,10 +59,11 @@ const handler = async (req: Request): Promise<Response> => {
         }
       );
     }
-     console.log(`[send-invite-email] RESEND_API_KEY available: ${resendKey.substring(0, 8)}...`);
+    
+    console.log(`[send-invite-email] RESEND_API_KEY retrieved successfully`);
 
-     // Initialize Resend client
-     const resend = new Resend(resendKey);
+    // Initialize Resend client
+    const resend = new Resend(secretData);
 
      // Send the invitation email
      const emailResponse = await resend.emails.send({
