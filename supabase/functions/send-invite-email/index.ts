@@ -39,7 +39,7 @@ const handler = async (req: Request): Promise<Response> => {
 
     // Send the invitation email
     const emailResponse = await resend.emails.send({
-      from: "Dollyland AI <onboarding@resend.dev>",
+      from: "Dollyland AI <noreply@dollyland.ai>",
       to: [email],
       subject: "You're invited to join Dollyland AI! 🚀",
       html: `
