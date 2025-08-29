@@ -304,6 +304,66 @@ export type Database = {
         }
         Relationships: []
       }
+      conversation_usage: {
+        Row: {
+          agent_id: string
+          agent_owner_id: string
+          conversation_id: string
+          cost_cents: number
+          created_at: string
+          creator_earnings_cents: number
+          id: string
+          payment_status: string
+          platform_earnings_cents: number
+          revenue_share_percentage: number
+          usage_type: string
+          user_id: string
+        }
+        Insert: {
+          agent_id: string
+          agent_owner_id: string
+          conversation_id: string
+          cost_cents?: number
+          created_at?: string
+          creator_earnings_cents: number
+          id?: string
+          payment_status?: string
+          platform_earnings_cents: number
+          revenue_share_percentage?: number
+          usage_type?: string
+          user_id: string
+        }
+        Update: {
+          agent_id?: string
+          agent_owner_id?: string
+          conversation_id?: string
+          cost_cents?: number
+          created_at?: string
+          creator_earnings_cents?: number
+          id?: string
+          payment_status?: string
+          platform_earnings_cents?: number
+          revenue_share_percentage?: number
+          usage_type?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "conversation_usage_agent_id_fkey"
+            columns: ["agent_id"]
+            isOneToOne: false
+            referencedRelation: "agents"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "conversation_usage_conversation_id_fkey"
+            columns: ["conversation_id"]
+            isOneToOne: false
+            referencedRelation: "conversations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       conversations: {
         Row: {
           agent_id: string
@@ -332,6 +392,50 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "conversations_agent_id_fkey"
+            columns: ["agent_id"]
+            isOneToOne: false
+            referencedRelation: "agents"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      creator_earnings: {
+        Row: {
+          agent_id: string
+          created_at: string
+          creator_id: string
+          id: string
+          last_payout_at: string | null
+          pending_payout_cents: number
+          total_conversations: number
+          total_earnings_cents: number
+          updated_at: string
+        }
+        Insert: {
+          agent_id: string
+          created_at?: string
+          creator_id: string
+          id?: string
+          last_payout_at?: string | null
+          pending_payout_cents?: number
+          total_conversations?: number
+          total_earnings_cents?: number
+          updated_at?: string
+        }
+        Update: {
+          agent_id?: string
+          created_at?: string
+          creator_id?: string
+          id?: string
+          last_payout_at?: string | null
+          pending_payout_cents?: number
+          total_conversations?: number
+          total_earnings_cents?: number
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "creator_earnings_agent_id_fkey"
             columns: ["agent_id"]
             isOneToOne: false
             referencedRelation: "agents"
@@ -658,6 +762,81 @@ export type Database = {
           },
         ]
       }
+      payment_transactions: {
+        Row: {
+          amount_cents: number
+          created_at: string
+          currency: string
+          id: string
+          metadata: Json | null
+          status: string
+          stripe_charge_id: string | null
+          stripe_payment_intent_id: string | null
+          transaction_type: string
+          user_id: string
+        }
+        Insert: {
+          amount_cents: number
+          created_at?: string
+          currency?: string
+          id?: string
+          metadata?: Json | null
+          status?: string
+          stripe_charge_id?: string | null
+          stripe_payment_intent_id?: string | null
+          transaction_type: string
+          user_id: string
+        }
+        Update: {
+          amount_cents?: number
+          created_at?: string
+          currency?: string
+          id?: string
+          metadata?: Json | null
+          status?: string
+          stripe_charge_id?: string | null
+          stripe_payment_intent_id?: string | null
+          transaction_type?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      payout_requests: {
+        Row: {
+          amount_cents: number
+          creator_id: string
+          id: string
+          notes: string | null
+          processed_at: string | null
+          requested_at: string
+          status: string
+          stripe_account_id: string | null
+          stripe_transfer_id: string | null
+        }
+        Insert: {
+          amount_cents: number
+          creator_id: string
+          id?: string
+          notes?: string | null
+          processed_at?: string | null
+          requested_at?: string
+          status?: string
+          stripe_account_id?: string | null
+          stripe_transfer_id?: string | null
+        }
+        Update: {
+          amount_cents?: number
+          creator_id?: string
+          id?: string
+          notes?: string | null
+          processed_at?: string | null
+          requested_at?: string
+          status?: string
+          stripe_account_id?: string | null
+          stripe_transfer_id?: string | null
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           avatar_url: string | null
@@ -731,6 +910,51 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      subscription_plans: {
+        Row: {
+          conversation_limit: number | null
+          created_at: string
+          description: string | null
+          features: Json
+          id: string
+          is_active: boolean
+          name: string
+          price_monthly: number
+          price_yearly: number | null
+          stripe_price_id: string | null
+          stripe_yearly_price_id: string | null
+          updated_at: string
+        }
+        Insert: {
+          conversation_limit?: number | null
+          created_at?: string
+          description?: string | null
+          features?: Json
+          id?: string
+          is_active?: boolean
+          name: string
+          price_monthly: number
+          price_yearly?: number | null
+          stripe_price_id?: string | null
+          stripe_yearly_price_id?: string | null
+          updated_at?: string
+        }
+        Update: {
+          conversation_limit?: number | null
+          created_at?: string
+          description?: string | null
+          features?: Json
+          id?: string
+          is_active?: boolean
+          name?: string
+          price_monthly?: number
+          price_yearly?: number | null
+          stripe_price_id?: string | null
+          stripe_yearly_price_id?: string | null
+          updated_at?: string
+        }
+        Relationships: []
       }
       user_ai_providers: {
         Row: {
@@ -806,6 +1030,56 @@ export type Database = {
           user_id?: string
         }
         Relationships: []
+      }
+      user_subscriptions: {
+        Row: {
+          cancel_at_period_end: boolean
+          created_at: string
+          current_period_end: string | null
+          current_period_start: string | null
+          id: string
+          plan_id: string
+          status: string
+          stripe_customer_id: string | null
+          stripe_subscription_id: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          cancel_at_period_end?: boolean
+          created_at?: string
+          current_period_end?: string | null
+          current_period_start?: string | null
+          id?: string
+          plan_id: string
+          status?: string
+          stripe_customer_id?: string | null
+          stripe_subscription_id?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          cancel_at_period_end?: boolean
+          created_at?: string
+          current_period_end?: string | null
+          current_period_start?: string | null
+          id?: string
+          plan_id?: string
+          status?: string
+          stripe_customer_id?: string | null
+          stripe_subscription_id?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_subscriptions_plan_id_fkey"
+            columns: ["plan_id"]
+            isOneToOne: false
+            referencedRelation: "subscription_plans"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       webhook_deliveries: {
         Row: {
@@ -999,6 +1273,10 @@ export type Database = {
           recommendation: string
           security_concern: string
         }[]
+      }
+      check_conversation_limit: {
+        Args: { p_user_id: string }
+        Returns: boolean
       }
       create_deployment_secure: {
         Args: {
@@ -1431,6 +1709,15 @@ export type Database = {
           success: boolean
           user_id: string
         }[]
+      }
+      record_conversation_usage: {
+        Args: {
+          p_agent_id: string
+          p_conversation_id: string
+          p_cost_cents?: number
+          p_user_id: string
+        }
+        Returns: undefined
       }
       regenerate_deployment_key: {
         Args: { deployment_id: string }
