@@ -18,8 +18,6 @@ const Auth = () => {
   const [fullName, setFullName] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
-  const [inviteCode, setInviteCode] = useState("");
-  const [showInviteError, setShowInviteError] = useState(false);
   const { signIn, signUp, signInWithGoogle, user, loading: authLoading, initializing } = useAuth();
   const { theme, resolvedTheme } = useTheme();
   const navigate = useNavigate();
@@ -53,46 +51,15 @@ const Auth = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    setShowInviteError(false);
 
     try {
       if (isSignUp) {
-        console.log('Validating invite code:', inviteCode.trim());
-        
-        // First, validate the invite using secure function (no email required)
-        const { data: isValidInvite, error: inviteError } = await supabase
-          .rpc('validate_invite_secure', { 
-            p_invite_code: inviteCode.trim()
-          });
-
-        console.log('Invite validation result:', { isValidInvite, inviteError });
-
-        if (inviteError) {
-          console.error('Invite validation error:', inviteError);
-          toast.error(`Error validating invite: ${inviteError.message}`);
-          setLoading(false);
-          return;
-        }
-
-        if (!isValidInvite) {
-          console.log('Invite validation failed - invalid code');
-          setShowInviteError(true);
-          toast.error("Invalid or expired invite code. dollyland.ai is currently invite-only.");
-          setLoading(false);
-          return;
-        }
-
-        console.log('Invite validation passed, proceeding with signup');
-
-        // If invite is valid, proceed with signup
         const combinedFullName = `${firstName} ${lastName}`.trim();
         const redirectUrl = window.location.origin + '/dashboard';
-        const { data: signUpData, error } = await signUp(email, password, {
+        const { error } = await signUp(email, password, {
           full_name: combinedFullName,
           first_name: firstName,
           last_name: lastName,
-          invite_used: true,
-          invite_code: inviteCode.trim(),
           options: {
             emailRedirectTo: redirectUrl
           }
@@ -106,13 +73,6 @@ const Auth = () => {
             toast.error(error.message);
           }
         } else {
-          // Mark invite as used using secure function
-          if (signUpData.user) {
-            await supabase.rpc('use_invite_secure', {
-              p_email: email.toLowerCase(),
-              p_invite_code: inviteCode.trim()
-            });
-          }
           toast.success("Account created! Please check your email to verify.");
         }
       } else {
@@ -161,11 +121,6 @@ const Auth = () => {
           <p className="text-muted-foreground">
             {isSignUp ? "Create your account" : "Welcome back"}
           </p>
-          {isSignUp && (
-            <div className="bg-primary/10 text-primary text-sm p-3 rounded-lg border border-primary/20">
-              🔒 dollyland.ai is currently in <strong>Closed Alpha</strong> - invite code required
-            </div>
-          )}
         </div>
 
         <Card>
@@ -182,27 +137,6 @@ const Auth = () => {
             <form onSubmit={handleSubmit} className="space-y-4">
               {isSignUp && (
                 <>
-                  <div className="space-y-2">
-                    <Label htmlFor="inviteCode">Invite Code *</Label>
-                    <Input
-                      id="inviteCode"
-                      type="text"
-                      placeholder="Enter your invite code"
-                      value={inviteCode}
-                      onChange={(e) => {
-                        setInviteCode(e.target.value);
-                        setShowInviteError(false);
-                      }}
-                      required
-                      className={showInviteError ? "border-red-500" : ""}
-                    />
-                    {showInviteError && (
-                      <p className="text-sm text-red-500">
-                        Invalid invite code. dollyland.ai is currently invite-only. Contact the team for access.
-                      </p>
-                    )}
-                  </div>
-                  
                   <div className="grid grid-cols-2 gap-3">
                     <div className="space-y-2">
                       <Label htmlFor="firstName">First Name</Label>

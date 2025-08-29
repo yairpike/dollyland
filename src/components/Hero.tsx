@@ -57,7 +57,7 @@ export const Hero = () => {
           <div className="flex items-center justify-center gap-3 mb-8">
             <img src={logoSrc} alt="dollyland.ai" className="h-20 w-auto object-contain" />
             <span className="bg-gradient-to-r from-primary to-primary-glow text-primary-foreground text-sm font-bold px-3 py-2 rounded-full tracking-wide">
-              CLOSED ALPHA
+              ALPHA
             </span>
           </div>
           <h1 className="text-5xl md:text-7xl font-semibold mb-8 leading-tight">
@@ -65,7 +65,7 @@ export const Hero = () => {
             <span className="block bg-gradient-primary bg-clip-text text-transparent mt-2">Marketplace</span>
           </h1>
           <p className="text-xl text-muted-foreground mb-10 max-w-4xl mx-auto leading-relaxed font-medium">
-            Create, train, and monetize AI agents with your expertise. Currently in closed alpha - invite only.
+            Create, train, and monetize AI agents with your expertise. Join the marketplace and start earning today.
           </p>
         </div>
 
