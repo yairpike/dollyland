@@ -77,3 +77,15 @@ verify_jwt = false
 
 [functions.auth-webhook]
 verify_jwt = false
+
+[functions.create-checkout]
+verify_jwt = true
+
+[functions.check-subscription]
+verify_jwt = true
+
+[functions.customer-portal]
+verify_jwt = true
+
+[functions.process-payout]
+verify_jwt = true

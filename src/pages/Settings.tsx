@@ -100,9 +100,18 @@ export const Settings = () => {
     }
   };
 
-  const handleManagePayment = () => {
-    // Payment management functionality would go here
-    toast.info("Payment management coming soon");
+  const handleManagePayment = async () => {
+    try {
+      const { data, error } = await supabase.functions.invoke('customer-portal');
+      if (error) throw error;
+      
+      if (data.url) {
+        window.open(data.url, '_blank');
+      }
+    } catch (error) {
+      console.error('Error opening customer portal:', error);
+      toast.error('Failed to open payment management');
+    }
   };
 
   const handleSignOut = async () => {

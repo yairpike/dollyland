@@ -9,6 +9,8 @@ import { Dashboard } from "./pages/Dashboard";
 import { Analytics } from "./pages/Analytics";
 import { Settings } from "./pages/Settings";
 import Marketplace from "./pages/Marketplace";
+import Pricing from "./pages/Pricing";
+import Success from "./pages/Success";
 
 import AgentTrial from "./pages/AgentTrial";
 import Auth from "./pages/Auth";
@@ -32,6 +34,8 @@ const App = () => (
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/auth" element={<Auth />} />
+          <Route path="/pricing" element={<Pricing />} />
+          <Route path="/success" element={<Success />} />
           <Route path="/marketplace" element={<ProtectedRoute><DashboardLayout><Marketplace /></DashboardLayout></ProtectedRoute>} />
           
           <Route path="/trial/:agentId" element={<AgentTrial />} />

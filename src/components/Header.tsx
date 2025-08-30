@@ -106,6 +106,7 @@ export const Header = () => {
                   <a href="#use-cases" className="text-muted-foreground hover:text-primary transition-all duration-300 font-medium px-3 py-2 rounded-lg hover:bg-accent/50 hover:scale-105 transform story-link">Use Cases</a>
                   <a href="#upload" className="text-muted-foreground hover:text-primary transition-all duration-300 font-medium px-3 py-2 rounded-lg hover:bg-accent/50 hover:scale-105 transform story-link">Upload</a>
                   <a href="#marketplace" className="text-muted-foreground hover:text-primary transition-all duration-300 font-medium px-3 py-2 rounded-lg hover:bg-accent/50 hover:scale-105 transform story-link">Marketplace</a>
+                  <Link to="/pricing" className="text-muted-foreground hover:text-primary transition-all duration-300 font-medium px-3 py-2 rounded-lg hover:bg-accent/50 hover:scale-105 transform">Pricing</Link>
                 </>}
             </nav>
             
