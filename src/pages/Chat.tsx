@@ -6,6 +6,8 @@ import { DashboardLayout } from "@/components/DashboardLayout";
 import { RealtimeChat } from "@/components/RealtimeChat";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
+import { useAuth } from "@/hooks/useAuth";
+import { ProtectedRoute } from "@/components/ProtectedRoute";
 
 interface Agent {
   id: string;
@@ -19,6 +21,7 @@ export const Chat = () => {
   const navigate = useNavigate();
   const [agent, setAgent] = useState<Agent | null>(null);
   const [loading, setLoading] = useState(true);
+  const { user } = useAuth();
 
   useEffect(() => {
     if (!agentId) {
@@ -78,24 +81,26 @@ export const Chat = () => {
   }
 
   return (
-    <DashboardLayout>
-      <div className="space-y-4">
-        {/* Back Button */}
-        <Button 
-          variant="ghost" 
-          size="icon"
-          onClick={() => navigate('/dashboard')}
-          className="mb-4"
-        >
-          <ArrowLeft className="w-4 h-4" />
-        </Button>
+    <ProtectedRoute>
+      <DashboardLayout>
+        <div className="space-y-4">
+          {/* Back Button */}
+          <Button 
+            variant="ghost" 
+            size="icon"
+            onClick={() => navigate('/dashboard')}
+            className="mb-4"
+          >
+            <ArrowLeft className="w-4 h-4" />
+          </Button>
 
-        {/* Chat Interface */}
-        <RealtimeChat 
-          agentId={agent.id} 
-          agentName={agent.name}
-        />
-      </div>
-    </DashboardLayout>
+          {/* Chat Interface */}
+          <RealtimeChat 
+            agentId={agent.id} 
+            agentName={agent.name}
+          />
+        </div>
+      </DashboardLayout>
+    </ProtectedRoute>
   );
 };

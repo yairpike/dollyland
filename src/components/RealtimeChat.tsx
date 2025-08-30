@@ -19,6 +19,11 @@ import { AudioRecorder, encodeAudioForAPI, playAudioData } from '@/utils/Realtim
 import { SecureInput } from '@/components/SecureInput';
 import { useRateLimiting } from '@/hooks/useRateLimiting';
 import { useInputValidation } from '@/hooks/useInputValidation';
+import { useAuth } from '@/hooks/useAuth';
+import { useSubscription } from '@/hooks/useSubscription';
+import { trackConversationUsage } from '@/utils/conversationTracking';
+import { AlertTriangle } from 'lucide-react';
+import { Alert, AlertDescription } from '@/components/ui/alert';
 
 interface Message {
   id: string;
@@ -41,6 +46,12 @@ export const RealtimeChat: React.FC<RealtimeChatProps> = ({ agentId, agentName }
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [audioEnabled, setAudioEnabled] = useState(true);
   const [isConnecting, setIsConnecting] = useState(false);
+  const [conversationId] = useState(() => crypto.randomUUID());
+  const [showLimitWarning, setShowLimitWarning] = useState(false);
+  
+  // Auth and subscription
+  const { user } = useAuth();
+  const { canCreateConversation, subscription, isSubscribed } = useSubscription();
   
   // Security features
   const chatRateLimit = useRateLimiting({ 
@@ -80,6 +91,19 @@ export const RealtimeChat: React.FC<RealtimeChatProps> = ({ agentId, agentName }
 
   const connectToRealtime = async () => {
     if (isConnected || isConnecting) return;
+    
+    // Check subscription limits before connecting
+    if (!user) {
+      toast.error('Please log in to start conversations');
+      return;
+    }
+    
+    const canStart = await canCreateConversation();
+    if (!canStart) {
+      setShowLimitWarning(true);
+      toast.error('Conversation limit reached. Please upgrade your subscription.');
+      return;
+    }
     
     setIsConnecting(true);
     
@@ -132,6 +156,10 @@ export const RealtimeChat: React.FC<RealtimeChatProps> = ({ agentId, agentName }
             if (currentTranscriptRef.current.trim()) {
               addMessage('assistant', currentTranscriptRef.current.trim(), true);
               currentTranscriptRef.current = '';
+              // Track conversation usage after AI response
+              if (user) {
+                trackConversationUsage(user.id, agentId, conversationId);
+              }
             }
             break;
 
@@ -255,6 +283,13 @@ export const RealtimeChat: React.FC<RealtimeChatProps> = ({ agentId, agentName }
       wsRef.current.send(JSON.stringify({
         type: 'response.create'
       }));
+      
+      // Schedule conversation tracking for after AI response
+      setTimeout(() => {
+        if (user) {
+          trackConversationUsage(user.id, agentId, conversationId);
+        }
+      }, 2000);
     }
     
     setInputValue('');
@@ -269,6 +304,19 @@ export const RealtimeChat: React.FC<RealtimeChatProps> = ({ agentId, agentName }
 
   return (
     <div className="flex flex-col h-[calc(100vh-2rem)] max-w-4xl mx-auto">
+      {/* Subscription Limit Warning */}
+      {showLimitWarning && (
+        <Alert className="mb-4 border-warning bg-warning/10">
+          <AlertTriangle className="h-4 w-4" />
+          <AlertDescription>
+            You've reached your conversation limit of {subscription?.plan?.conversation_limit || 20} conversations this month.
+            {!isSubscribed && (
+              <> <a href="/pricing" className="underline font-medium">Upgrade your subscription</a> to continue chatting.</>
+            )}
+          </AlertDescription>
+        </Alert>
+      )}
+      
       {/* Header */}
       <Card className="mb-4">
         <CardHeader className="pb-3">
