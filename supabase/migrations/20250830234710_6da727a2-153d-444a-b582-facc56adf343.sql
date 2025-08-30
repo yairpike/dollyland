@@ -1,0 +1,12 @@
+-- Insert subscription plan data
+INSERT INTO public.subscription_plans (id, name, description, price_monthly, price_yearly, features, conversation_limit, is_active) VALUES
+(gen_random_uuid(), 'Free', 'Perfect for testing and light usage', 0, 0, '["20 conversations per month", "Access to public agents", "Basic support"]'::jsonb, 20, true),
+(gen_random_uuid(), 'Starter', 'Great for regular users and small businesses', 900, 9600, '["500 conversations per month", "Access to all agents", "Create unlimited agents", "Priority support", "Creator revenue sharing"]'::jsonb, 500, true),
+(gen_random_uuid(), 'Pro', 'Perfect for power users and enterprises', 1900, 20400, '["Unlimited conversations", "Access to all agents", "Create unlimited agents", "Premium support", "Creator revenue sharing", "Advanced analytics", "API access"]'::jsonb, null, true)
+ON CONFLICT (name) DO UPDATE SET
+  description = EXCLUDED.description,
+  price_monthly = EXCLUDED.price_monthly,
+  price_yearly = EXCLUDED.price_yearly,
+  features = EXCLUDED.features,
+  conversation_limit = EXCLUDED.conversation_limit,
+  is_active = EXCLUDED.is_active;
