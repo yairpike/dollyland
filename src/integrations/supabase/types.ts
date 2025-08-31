@@ -1259,14 +1259,7 @@ export type Database = {
       }
     }
     Views: {
-      security_audit_summary: {
-        Row: {
-          protection_level: string | null
-          protection_type: string | null
-          table_name: string | null
-        }
-        Relationships: []
-      }
+      [_ in never]: never
     }
     Functions: {
       access_encrypted_key_secure: {
@@ -1582,6 +1575,14 @@ export type Database = {
           id: string
           name: string
           updated_at: string
+        }[]
+      }
+      get_security_audit_summary: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          protection_level: string
+          protection_type: string
+          table_name: string
         }[]
       }
       get_user_ai_providers_safe: {
