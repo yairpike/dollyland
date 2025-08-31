@@ -1734,6 +1734,15 @@ export type Database = {
         }
         Returns: undefined
       }
+      log_security_violation: {
+        Args: {
+          p_details?: Json
+          p_table_name: string
+          p_user_id?: string
+          p_violation_type: string
+        }
+        Returns: undefined
+      }
       monitor_vault_security: {
         Args: Record<PropertyKey, never>
         Returns: {
@@ -1807,6 +1816,15 @@ export type Database = {
       validate_invite_secure: {
         Args: { p_invite_code: string }
         Returns: boolean
+      }
+      validate_security_configuration: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          anonymous_access: boolean
+          recommendation: string
+          security_status: string
+          table_name: string
+        }[]
       }
       validate_sensitive_access: {
         Args: { access_type?: string; record_id: string; table_name: string }
