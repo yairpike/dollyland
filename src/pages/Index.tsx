@@ -8,6 +8,7 @@ import { KnowledgeUpload } from "@/components/KnowledgeUploadSection";
 import { CTA } from "@/components/CTA";
 import { MarketplaceSection } from "@/components/MarketplaceSection";
 import { PageLoader } from "@/components/PageLoader";
+import { Footer } from "@/components/Footer";
 import { useAuth } from "@/hooks/useAuth";
 
 const Index = () => {
@@ -35,6 +36,7 @@ const Index = () => {
         <MarketplaceSection />
         <CTA />
       </main>
+      <Footer />
     </div>
   );
 };

@@ -7,6 +7,8 @@ import { useAuth } from "@/hooks/useAuth"
 import { toast } from "sonner"
 import { Loader2 } from "lucide-react"
 import { Separator } from "@/components/ui/separator"
+import { Checkbox } from "@/components/ui/checkbox"
+import { Link } from "react-router-dom"
 
 interface AuthModalProps {
   open: boolean
@@ -19,6 +21,7 @@ export const AuthModal = ({ open, onOpenChange }: AuthModalProps) => {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [fullName, setFullName] = useState("")
+  const [acceptedTerms, setAcceptedTerms] = useState(false)
   
   const { signIn, signUp, signInWithGoogle } = useAuth()
 
@@ -28,6 +31,10 @@ export const AuthModal = ({ open, onOpenChange }: AuthModalProps) => {
 
     try {
       if (isSignUp) {
+        if (!acceptedTerms) {
+          toast.error("Please accept the Terms of Service and Privacy Policy to continue.")
+          return
+        }
         const { error } = await signUp(email, password, { full_name: fullName })
         if (error) throw error
         toast.success("Account created! Please check your email to verify.")
@@ -101,7 +108,30 @@ export const AuthModal = ({ open, onOpenChange }: AuthModalProps) => {
             />
           </div>
           
-          <Button 
+          {isSignUp && (
+            <div className="flex items-start space-x-2">
+              <Checkbox
+                id="terms"
+                checked={acceptedTerms}
+                onCheckedChange={(checked) => setAcceptedTerms(checked as boolean)}
+                className="mt-1"
+              />
+              <div className="text-sm leading-relaxed">
+                <Label htmlFor="terms" className="text-sm font-normal cursor-pointer">
+                  I agree to the{" "}
+                  <Link to="/terms" className="text-primary hover:underline" onClick={() => onOpenChange(false)}>
+                    Terms of Service
+                  </Link>{" "}
+                  and{" "}
+                  <Link to="/privacy" className="text-primary hover:underline" onClick={() => onOpenChange(false)}>
+                    Privacy Policy
+                  </Link>
+                </Label>
+              </div>
+            </div>
+          )}
+          
+          <Button
             type="submit" 
             className="w-full" 
             disabled={loading}

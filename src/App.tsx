@@ -20,6 +20,8 @@ import NotFound from "./pages/NotFound";
 import { Chat } from "./pages/Chat";
 import CreateAgent from "./pages/CreateAgent";
 import { EditAgent } from "./pages/EditAgent";
+import Terms from "./pages/Terms";
+import Privacy from "./pages/Privacy";
 import { ProtectedRoute } from "./components/ProtectedRoute";
 import { DashboardLayout } from "./components/DashboardLayout";
 import { DollyCopilot } from "./components/DollyCopilot";
@@ -39,6 +41,8 @@ const App = () => (
               <Route path="/" element={<Index />} />
               <Route path="/auth" element={<Auth />} />
               <Route path="/pricing" element={<Pricing />} />
+              <Route path="/terms" element={<Terms />} />
+              <Route path="/privacy" element={<Privacy />} />
               <Route path="/success" element={<Success />} />
               <Route path="/marketplace" element={<ProtectedRoute><DashboardLayout><Marketplace /></DashboardLayout></ProtectedRoute>} />
               

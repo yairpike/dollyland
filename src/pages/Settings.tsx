@@ -521,6 +521,42 @@ export const Settings = () => {
           </TabsContent>
         </Tabs>
 
+        {/* Legal Information */}
+        <Card className="mt-6">
+          <CardHeader>
+            <CardTitle>Legal Information</CardTitle>
+            <CardDescription>
+              Important legal documents and policies
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <a 
+                href="/terms" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="flex items-center gap-3 p-4 rounded-lg border hover:bg-muted/50 transition-colors"
+              >
+                <div>
+                  <h4 className="font-medium">Terms of Service</h4>
+                  <p className="text-sm text-muted-foreground">View our terms and conditions</p>
+                </div>
+              </a>
+              <a 
+                href="/privacy" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="flex items-center gap-3 p-4 rounded-lg border hover:bg-muted/50 transition-colors"
+              >
+                <div>
+                  <h4 className="font-medium">Privacy Policy</h4>
+                  <p className="text-sm text-muted-foreground">Learn how we protect your data</p>
+                </div>
+              </a>
+            </div>
+          </CardContent>
+        </Card>
+
         {/* Email Change Dialog */}
         <Dialog open={showEmailChange} onOpenChange={setShowEmailChange}>
           <DialogContent className="sm:max-w-md">

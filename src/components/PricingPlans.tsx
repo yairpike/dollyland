@@ -305,10 +305,20 @@ export const PricingPlans = () => {
           })}
         </div>
 
-        <div className="text-center mt-16">
+        <div className="text-center mt-16 space-y-4">
           <p className="text-muted-foreground">
             All plans include a 14-day money-back guarantee. Cancel anytime.
           </p>
+          <div className="text-sm text-muted-foreground">
+            By subscribing, you agree to our{" "}
+            <a href="/terms" className="text-primary hover:underline" target="_blank" rel="noopener noreferrer">
+              Terms of Service
+            </a>{" "}
+            and{" "}
+            <a href="/privacy" className="text-primary hover:underline" target="_blank" rel="noopener noreferrer">
+              Privacy Policy
+            </a>
+          </div>
         </div>
       </div>
     </div>
