@@ -11,8 +11,9 @@ import { ThemeToggle } from "@/components/ThemeToggle";
 import { DashboardLayout } from "@/components/DashboardLayout";
 import { InviteManager } from "@/components/InviteManager";
 import { useAuth } from "@/hooks/useAuth";
+import { useSubscription } from "@/hooks/useSubscription";
 import { supabase } from "@/integrations/supabase/client";
-import { User, CreditCard, Bot, LogOut, Mail, GraduationCap, PlayCircle, RotateCcw } from "lucide-react";
+import { User, CreditCard, Bot, LogOut, Mail, GraduationCap, PlayCircle, RotateCcw, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
 import { useTourManager } from "@/components/OnboardingTour";
@@ -21,6 +22,7 @@ export const Settings = () => {
   const { user, signOut } = useAuth();
   const navigate = useNavigate();
   const { resetTours } = useTourManager();
+  const { subscription, loading: subscriptionLoading, isSubscribed, plan } = useSubscription();
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [fullName, setFullName] = useState(user?.user_metadata?.full_name || "");
@@ -100,7 +102,16 @@ export const Settings = () => {
     }
   };
 
+  const handleUpgradePlan = () => {
+    navigate('/pricing');
+  };
+
   const handleManagePayment = async () => {
+    if (!isSubscribed) {
+      toast.error('You need an active subscription to manage payment methods');
+      return;
+    }
+
     try {
       const { data, error } = await supabase.functions.invoke('customer-portal');
       if (error) throw error;
@@ -410,54 +421,77 @@ export const Settings = () => {
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div className="space-y-4">
-                    <div>
-                      <h4 className="font-medium">Current Plan</h4>
-                      <p className="text-sm text-muted-foreground">Free Plan</p>
-                      <p className="text-xs text-muted-foreground mt-1">
-                        Basic features with limited usage
-                      </p>
-                    </div>
-                    
-                    <div>
-                      <h4 className="font-medium">Usage This Month</h4>
-                      <div className="mt-2 space-y-2">
-                        <div className="flex justify-between text-sm">
-                          <span>API Calls</span>
-                          <span>150 / 1,000</span>
+                {subscriptionLoading ? (
+                  <div className="flex items-center justify-center py-8">
+                    <Loader2 className="w-6 h-6 animate-spin" />
+                    <span className="ml-2">Loading subscription data...</span>
+                  </div>
+                ) : (
+                  <>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      <div className="space-y-4">
+                        <div>
+                          <h4 className="font-medium">Current Plan</h4>
+                          <p className="text-sm text-muted-foreground">
+                            {plan?.name || 'Free Plan'}
+                          </p>
+                          <p className="text-xs text-muted-foreground mt-1">
+                            {isSubscribed 
+                              ? `Active subscription with ${plan?.features?.length || 0} features`
+                              : 'Basic features with limited usage'
+                            }
+                          </p>
+                          {subscription?.subscription_end && (
+                            <p className="text-xs text-muted-foreground mt-1">
+                              Expires: {new Date(subscription.subscription_end).toLocaleDateString()}
+                            </p>
+                          )}
                         </div>
-                        <div className="flex justify-between text-sm">
-                          <span>Agents Created</span>
-                          <span>3 / 10</span>
+                        
+                        <div>
+                          <h4 className="font-medium">Plan Features</h4>
+                          <div className="mt-2 space-y-1">
+                            {plan?.features?.slice(0, 3).map((feature, index) => (
+                              <div key={index} className="text-sm text-muted-foreground">
+                                • {feature}
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="space-y-4">
+                        <div>
+                          <h4 className="font-medium">Payment Method</h4>
+                          <p className="text-sm text-muted-foreground">
+                            {isSubscribed ? 'Payment method on file' : 'No payment method on file'}
+                          </p>
+                        </div>
+                        
+                        <div>
+                          <h4 className="font-medium">Subscription Status</h4>
+                          <p className="text-sm text-muted-foreground">
+                            {isSubscribed ? 'Active Subscription' : 'Free Plan'}
+                          </p>
                         </div>
                       </div>
                     </div>
-                  </div>
 
-                  <div className="space-y-4">
-                    <div>
-                      <h4 className="font-medium">Payment Method</h4>
-                      <p className="text-sm text-muted-foreground">No payment method on file</p>
+                    <Separator />
+
+                    <div className="flex flex-col sm:flex-row gap-4">
+                      {!isSubscribed ? (
+                        <Button variant="default" onClick={handleUpgradePlan}>
+                          Upgrade Plan
+                        </Button>
+                      ) : (
+                        <Button variant="outline" onClick={handleManagePayment}>
+                          Manage Payment Methods
+                        </Button>
+                      )}
                     </div>
-                    
-                    <div>
-                      <h4 className="font-medium">Next Billing Date</h4>
-                      <p className="text-sm text-muted-foreground">N/A - Free Plan</p>
-                    </div>
-                  </div>
-                </div>
-
-                <Separator />
-
-                <div className="flex flex-col sm:flex-row gap-4">
-                  <Button variant="default" onClick={handleManagePayment}>
-                    Upgrade Plan
-                  </Button>
-                  <Button variant="outline" onClick={handleManagePayment}>
-                    Manage Payment Methods
-                  </Button>
-                </div>
+                  </>
+                )}
 
                 <div className="bg-muted rounded-lg p-4">
                   <h5 className="font-medium mb-2">Available Plans</h5>
