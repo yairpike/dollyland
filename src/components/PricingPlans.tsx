@@ -34,11 +34,8 @@ export const PricingPlans = () => {
 
   const fetchPlans = async () => {
     try {
-      const { data, error } = await supabase
-        .from('subscription_plans')
-        .select('*')
-        .eq('is_active', true)
-        .order('price_monthly');
+      // Use the secure function instead of direct table access
+      const { data, error } = await supabase.rpc('get_public_pricing_plans');
 
       if (error) throw error;
       setPlans(data || []);

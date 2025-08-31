@@ -64,7 +64,14 @@ serve(async (req) => {
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : String(error);
     logStep("ERROR in customer-portal", { message: errorMessage });
-    return new Response(JSON.stringify({ error: errorMessage }), {
+    
+    // Return generic error message in production, detailed in development
+    const isDevelopment = Deno.env.get("DENO_ENV") !== "production";
+    const publicErrorMessage = isDevelopment 
+      ? errorMessage 
+      : "Customer portal access failed. Please try again.";
+    
+    return new Response(JSON.stringify({ error: publicErrorMessage }), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
       status: 500,
     });

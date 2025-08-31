@@ -5,6 +5,10 @@ import { createClient } from "https://esm.sh/@supabase/supabase-js@2.55.0";
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
+  'Content-Security-Policy': "default-src 'self'",
+  'X-Frame-Options': 'DENY',
+  'X-Content-Type-Options': 'nosniff',
+  'Referrer-Policy': 'strict-origin-when-cross-origin'
 };
 
 const logStep = (step: string, details?: any) => {
@@ -206,7 +210,14 @@ serve(async (req) => {
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : String(error);
     logStep("ERROR in check-subscription", { message: errorMessage });
-    return new Response(JSON.stringify({ error: errorMessage }), {
+    
+    // Return generic error message in production, detailed in development
+    const isDevelopment = Deno.env.get("DENO_ENV") !== "production";
+    const publicErrorMessage = isDevelopment 
+      ? errorMessage 
+      : "Subscription check failed. Please try again.";
+    
+    return new Response(JSON.stringify({ error: publicErrorMessage }), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
       status: 500,
     });

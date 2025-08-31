@@ -1076,13 +1076,6 @@ export type Database = {
             foreignKeyName: "user_subscriptions_plan_id_fkey"
             columns: ["plan_id"]
             isOneToOne: false
-            referencedRelation: "public_pricing_plans"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "user_subscriptions_plan_id_fkey"
-            columns: ["plan_id"]
-            isOneToOne: false
             referencedRelation: "subscription_plans"
             referencedColumns: ["id"]
           },
@@ -1266,45 +1259,7 @@ export type Database = {
       }
     }
     Views: {
-      public_pricing_plans: {
-        Row: {
-          conversation_limit: number | null
-          created_at: string | null
-          description: string | null
-          features: Json | null
-          id: string | null
-          is_active: boolean | null
-          name: string | null
-          price_monthly: number | null
-          price_yearly: number | null
-          updated_at: string | null
-        }
-        Insert: {
-          conversation_limit?: number | null
-          created_at?: string | null
-          description?: string | null
-          features?: Json | null
-          id?: string | null
-          is_active?: boolean | null
-          name?: string | null
-          price_monthly?: number | null
-          price_yearly?: number | null
-          updated_at?: string | null
-        }
-        Update: {
-          conversation_limit?: number | null
-          created_at?: string | null
-          description?: string | null
-          features?: Json | null
-          id?: string | null
-          is_active?: boolean | null
-          name?: string | null
-          price_monthly?: number | null
-          price_yearly?: number | null
-          updated_at?: string | null
-        }
-        Relationships: []
-      }
+      [_ in never]: never
     }
     Functions: {
       access_encrypted_key_secure: {
@@ -1545,6 +1500,21 @@ export type Database = {
           rating: number
           tags: string[]
           user_count: number
+        }[]
+      }
+      get_public_pricing_plans: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          conversation_limit: number
+          created_at: string
+          description: string
+          features: Json
+          id: string
+          is_active: boolean
+          name: string
+          price_monthly: number
+          price_yearly: number
+          updated_at: string
         }[]
       }
       get_safe_ai_providers: {
