@@ -1689,6 +1689,16 @@ export type Database = {
         }
         Returns: boolean
       }
+      insert_conversation_usage_secure: {
+        Args: {
+          p_agent_id: string
+          p_agent_owner_id: string
+          p_conversation_id: string
+          p_cost_cents?: number
+          p_user_id: string
+        }
+        Returns: undefined
+      }
       log_api_key_access: {
         Args: {
           p_access_type: string
@@ -1702,6 +1712,15 @@ export type Database = {
       }
       log_invite_access_attempt: {
         Args: Record<PropertyKey, never>
+        Returns: undefined
+      }
+      log_secure_access: {
+        Args: {
+          p_access_type: string
+          p_resource_id: string
+          p_success?: boolean
+          p_user_id: string
+        }
         Returns: undefined
       }
       log_security_event_enhanced: {
@@ -1791,6 +1810,10 @@ export type Database = {
       }
       validate_sensitive_access: {
         Args: { access_type?: string; record_id: string; table_name: string }
+        Returns: boolean
+      }
+      validate_session_context: {
+        Args: Record<PropertyKey, never>
         Returns: boolean
       }
       validate_vault_security: {
