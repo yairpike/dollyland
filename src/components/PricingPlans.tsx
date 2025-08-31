@@ -7,6 +7,7 @@ import { Check, Star, Zap } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { useAuth } from "@/hooks/useAuth";
+import { useSubscription } from "@/hooks/useSubscription";
 
 interface SubscriptionPlan {
   id: string;
@@ -25,6 +26,7 @@ export const PricingPlans = () => {
   const [isYearly, setIsYearly] = useState(false);
   const [loadingPlanId, setLoadingPlanId] = useState<string | null>(null);
   const { user } = useAuth();
+  const { subscription, loading: subscriptionLoading } = useSubscription();
 
   useEffect(() => {
     fetchPlans();
@@ -63,7 +65,6 @@ export const PricingPlans = () => {
       if (plan.price_monthly === 0) {
         // Simulate processing time for better UX
         await new Promise(resolve => setTimeout(resolve, 1000));
-        toast.success('You\'re already on the Free plan! Start creating agents now.');
         return;
       }
 
@@ -130,6 +131,38 @@ export const PricingPlans = () => {
     return planName.toLowerCase() === 'starter';
   };
 
+  const getCurrentPlanInfo = () => {
+    if (!subscription?.plan) return null;
+    return subscription.plan;
+  };
+
+  const getButtonText = (plan: SubscriptionPlan) => {
+    const currentPlan = getCurrentPlanInfo();
+    
+    if (!currentPlan) {
+      return plan.price_monthly === 0 ? 'Get Started Free' : 'Subscribe Now';
+    }
+    
+    if (currentPlan.name === plan.name) {
+      return 'Current Plan';
+    }
+    
+    // Compare plan prices to determine upgrade/downgrade
+    const currentPlanPrice = typeof currentPlan.conversation_limit === 'number' && currentPlan.conversation_limit === 20 ? 0 : 
+                            currentPlan.name === 'Starter' ? 799 : 1999;
+    
+    if (plan.price_monthly > currentPlanPrice) {
+      return `Upgrade to ${plan.name}`;
+    } else {
+      return `Downgrade to ${plan.name}`;
+    }
+  };
+
+  const isCurrentPlan = (plan: SubscriptionPlan) => {
+    const currentPlan = getCurrentPlanInfo();
+    return currentPlan?.name === plan.name;
+  };
+
   return (
     <div className="py-24 bg-gradient-to-br from-background via-muted/30 to-background">
       <div className="container mx-auto px-4">
@@ -193,12 +226,11 @@ export const PricingPlans = () => {
                 <CardContent className="pt-0">
                   <Button
                     onClick={() => handleSubscribe(plan.id)}
-                    disabled={isLoading}
+                    disabled={isLoading || isCurrentPlan(plan) || subscriptionLoading}
                     className={`w-full mb-6 ${isPopular ? 'bg-primary hover:bg-primary/90' : ''}`}
-                    variant={plan.price_monthly === 0 ? 'outline' : 'default'}
+                    variant={isCurrentPlan(plan) ? 'outline' : plan.price_monthly === 0 ? 'outline' : 'default'}
                   >
-                    {loadingPlanId === plan.id ? 'Processing...' : 
-                     plan.price_monthly === 0 ? 'Get Started Free' : 'Subscribe Now'}
+                    {loadingPlanId === plan.id ? 'Processing...' : getButtonText(plan)}
                   </Button>
 
                   <ul className="space-y-3">
