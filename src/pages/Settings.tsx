@@ -480,14 +480,9 @@ export const Settings = () => {
 
                     <div className="flex flex-col sm:flex-row gap-4">
                       {!isSubscribed ? (
-                        <>
-                          <Button variant="default" onClick={handleUpgradePlan}>
-                            Upgrade Plan
-                          </Button>
-                          <Button variant="outline" onClick={handleAddPaymentMethod}>
-                            Add Payment Method
-                          </Button>
-                        </>
+                        <Button variant="default" onClick={handleUpgradePlan}>
+                          Choose Plan
+                        </Button>
                       ) : (
                         <Button variant="outline" onClick={handleManagePayment}>
                           Manage Payment Methods
