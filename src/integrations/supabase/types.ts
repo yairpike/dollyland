@@ -1259,7 +1259,14 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      security_audit_summary: {
+        Row: {
+          last_updated: string | null
+          report_title: string | null
+          summary: string | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
       access_encrypted_key_secure: {
@@ -1781,6 +1788,14 @@ export type Database = {
       regenerate_webhook_secret: {
         Args: { webhook_id: string }
         Returns: string
+      }
+      security_status_check: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          check_name: string
+          details: string
+          status: string
+        }[]
       }
       sync_marketplace_agents: {
         Args: Record<PropertyKey, never>
