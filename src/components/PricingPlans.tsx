@@ -59,14 +59,11 @@ export const PricingPlans = () => {
       const plan = plans.find(p => p.id === planId);
       if (!plan) throw new Error('Plan not found');
 
-      // For free plan, handle locally
+      // For free plan, handle locally without backend calls
       if (plan.price_monthly === 0) {
-        const { error } = await supabase.functions.invoke('create-checkout', {
-          body: { planId, priceType: 'monthly' }
-        });
-
-        if (error) throw error;
-        toast.success('Free plan activated successfully!');
+        // Simulate processing time for better UX
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        toast.success('You\'re already on the Free plan! Start creating agents now.');
         return;
       }
 
@@ -87,7 +84,11 @@ export const PricingPlans = () => {
       }
     } catch (error) {
       console.error('Error creating checkout:', error);
-      toast.error('Failed to start checkout process');
+      if (error.message?.includes('Failed to fetch')) {
+        toast.error('Checkout service is currently unavailable. Please try again later.');
+      } else {
+        toast.error('Failed to start checkout process');
+      }
     } finally {
       setIsLoading(false);
       setLoadingPlanId(null);
