@@ -1259,7 +1259,14 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      security_audit_summary: {
+        Row: {
+          protection_level: string | null
+          protection_type: string | null
+          table_name: string | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
       access_encrypted_key_secure: {
@@ -1682,6 +1689,10 @@ export type Database = {
         Args: { webhook_uuid: string }
         Returns: string
       }
+      get_webhook_secret_secure_enhanced: {
+        Args: { webhook_uuid: string }
+        Returns: string
+      }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
@@ -1805,6 +1816,14 @@ export type Database = {
         Args: { provider_id: string }
         Returns: boolean
       }
+      validate_api_key_access: {
+        Args: { record_id: string; table_name: string }
+        Returns: boolean
+      }
+      validate_financial_access: {
+        Args: { record_id: string; table_name: string }
+        Returns: boolean
+      }
       validate_invite: {
         Args: { p_email: string; p_invite_code?: string }
         Returns: boolean
@@ -1821,6 +1840,16 @@ export type Database = {
         Args: Record<PropertyKey, never>
         Returns: {
           anonymous_access: boolean
+          recommendation: string
+          security_status: string
+          table_name: string
+        }[]
+      }
+      validate_security_configuration_enhanced: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          anonymous_access: boolean
+          compliance_level: string
           recommendation: string
           security_status: string
           table_name: string
