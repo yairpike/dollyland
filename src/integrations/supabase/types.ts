@@ -1259,14 +1259,7 @@ export type Database = {
       }
     }
     Views: {
-      security_audit_summary: {
-        Row: {
-          last_updated: string | null
-          report_title: string | null
-          summary: string | null
-        }
-        Relationships: []
-      }
+      [_ in never]: never
     }
     Functions: {
       access_encrypted_key_secure: {
@@ -1592,6 +1585,13 @@ export type Database = {
           table_name: string
         }[]
       }
+      get_security_status: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          last_updated: string
+          status_message: string
+        }[]
+      }
       get_user_ai_providers_safe: {
         Args: Record<PropertyKey, never>
         Returns: {
@@ -1831,6 +1831,14 @@ export type Database = {
       validate_ai_provider_access: {
         Args: { provider_id: string }
         Returns: boolean
+      }
+      validate_all_security_policies: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          policy_count: number
+          status: string
+          table_name: string
+        }[]
       }
       validate_api_key_access: {
         Args: { record_id: string; table_name: string }
