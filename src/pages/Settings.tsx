@@ -107,11 +107,6 @@ export const Settings = () => {
   };
 
   const handleManagePayment = async () => {
-    if (!isSubscribed) {
-      toast.error('You need an active subscription to manage payment methods');
-      return;
-    }
-
     try {
       const { data, error } = await supabase.functions.invoke('customer-portal');
       if (error) throw error;
@@ -121,8 +116,12 @@ export const Settings = () => {
       }
     } catch (error) {
       console.error('Error opening customer portal:', error);
-      toast.error('Failed to open payment management');
+      toast.error('Failed to open payment management. Please try again or contact support.');
     }
+  };
+
+  const handleAddPaymentMethod = () => {
+    navigate('/pricing');
   };
 
   const handleSignOut = async () => {
@@ -481,9 +480,14 @@ export const Settings = () => {
 
                     <div className="flex flex-col sm:flex-row gap-4">
                       {!isSubscribed ? (
-                        <Button variant="default" onClick={handleUpgradePlan}>
-                          Upgrade Plan
-                        </Button>
+                        <>
+                          <Button variant="default" onClick={handleUpgradePlan}>
+                            Upgrade Plan
+                          </Button>
+                          <Button variant="outline" onClick={handleAddPaymentMethod}>
+                            Add Payment Method
+                          </Button>
+                        </>
                       ) : (
                         <Button variant="outline" onClick={handleManagePayment}>
                           Manage Payment Methods

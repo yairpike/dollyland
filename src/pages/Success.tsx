@@ -4,12 +4,16 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { CheckCircle, ArrowRight } from "lucide-react";
 import { Header } from "@/components/Header";
+import { DashboardLayout } from "@/components/DashboardLayout";
+import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
 import { supabase } from "@/integrations/supabase/client";
+import { useAuth } from "@/hooks/useAuth";
 import { toast } from "sonner";
 
 const Success = () => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
+  const { user } = useAuth();
   const sessionId = searchParams.get('session_id');
 
   useEffect(() => {
@@ -28,56 +32,88 @@ const Success = () => {
     }
   }, [sessionId]);
 
+  // Content component for reuse
+  const SuccessContent = () => (
+    <div className="max-w-2xl mx-auto">
+      <Card className="text-center">
+        <CardHeader className="pb-4">
+          <div className="flex justify-center mb-4">
+            <CheckCircle className="w-16 h-16 text-green-500" />
+          </div>
+          <CardTitle className="text-3xl mb-2">Payment Successful!</CardTitle>
+          <CardDescription className="text-lg">
+            Your subscription has been activated and you're ready to start creating amazing AI agents.
+          </CardDescription>
+        </CardHeader>
+        
+        <CardContent className="pt-4 space-y-6">
+          <div className="bg-muted/50 rounded-lg p-6">
+            <h3 className="font-semibold mb-3">What's next?</h3>
+            <ul className="text-left space-y-2 text-sm text-muted-foreground">
+              <li>• Create unlimited AI agents</li>
+              <li>• Start earning from agent conversations</li>
+              <li>• Access advanced analytics and insights</li>
+              <li>• Get priority support</li>
+            </ul>
+          </div>
+          
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Button 
+              onClick={() => navigate('/dashboard')}
+              className="gap-2"
+            >
+              Go to Dashboard
+              <ArrowRight className="w-4 h-4" />
+            </Button>
+            <Button 
+              variant="outline" 
+              onClick={() => navigate('/create-agent')}
+            >
+              Create Your First Agent
+            </Button>
+          </div>
+          
+          <p className="text-xs text-muted-foreground">
+            You'll receive a confirmation email shortly. If you have any questions, our support team is here to help.
+          </p>
+        </CardContent>
+      </Card>
+    </div>
+  );
+
+  // If user is signed in, use dashboard layout
+  if (user) {
+    return (
+      <DashboardLayout>
+        <div className="space-y-6">
+          <Breadcrumb>
+            <BreadcrumbList>
+              <BreadcrumbItem>
+                <BreadcrumbLink href="/dashboard">Dashboard</BreadcrumbLink>
+              </BreadcrumbItem>
+              <BreadcrumbSeparator />
+              <BreadcrumbItem>
+                <BreadcrumbLink href="/pricing">Pricing</BreadcrumbLink>
+              </BreadcrumbItem>
+              <BreadcrumbSeparator />
+              <BreadcrumbItem>
+                <BreadcrumbPage>Payment Success</BreadcrumbPage>
+              </BreadcrumbItem>
+            </BreadcrumbList>
+          </Breadcrumb>
+          <SuccessContent />
+        </div>
+      </DashboardLayout>
+    );
+  }
+
+  // For anonymous users, use the original layout
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-muted/30 to-background">
       <Header />
       
       <main className="container mx-auto px-4 py-24">
-        <div className="max-w-2xl mx-auto">
-          <Card className="text-center">
-            <CardHeader className="pb-4">
-              <div className="flex justify-center mb-4">
-                <CheckCircle className="w-16 h-16 text-green-500" />
-              </div>
-              <CardTitle className="text-3xl mb-2">Payment Successful!</CardTitle>
-              <CardDescription className="text-lg">
-                Your subscription has been activated and you're ready to start creating amazing AI agents.
-              </CardDescription>
-            </CardHeader>
-            
-            <CardContent className="pt-4 space-y-6">
-              <div className="bg-muted/50 rounded-lg p-6">
-                <h3 className="font-semibold mb-3">What's next?</h3>
-                <ul className="text-left space-y-2 text-sm text-muted-foreground">
-                  <li>• Create unlimited AI agents</li>
-                  <li>• Start earning from agent conversations</li>
-                  <li>• Access advanced analytics and insights</li>
-                  <li>• Get priority support</li>
-                </ul>
-              </div>
-              
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Button 
-                  onClick={() => navigate('/dashboard')}
-                  className="gap-2"
-                >
-                  Go to Dashboard
-                  <ArrowRight className="w-4 h-4" />
-                </Button>
-                <Button 
-                  variant="outline" 
-                  onClick={() => navigate('/create-agent')}
-                >
-                  Create Your First Agent
-                </Button>
-              </div>
-              
-              <p className="text-xs text-muted-foreground">
-                You'll receive a confirmation email shortly. If you have any questions, our support team is here to help.
-              </p>
-            </CardContent>
-          </Card>
-        </div>
+        <SuccessContent />
       </main>
     </div>
   );

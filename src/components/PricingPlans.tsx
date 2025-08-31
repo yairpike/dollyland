@@ -65,9 +65,12 @@ export const PricingPlans = () => {
       if (plan.price_monthly === 0) {
         // Simulate processing time for better UX
         await new Promise(resolve => setTimeout(resolve, 1000));
+        toast.success('You\'re on the Free plan! Start creating agents now.');
         return;
       }
 
+      console.log('Starting checkout process for plan:', planId);
+      
       // For paid plans, redirect to Stripe checkout
       const { data, error } = await supabase.functions.invoke('create-checkout', {
         body: { 
@@ -76,19 +79,31 @@ export const PricingPlans = () => {
         }
       });
 
-      if (error) throw error;
+      if (error) {
+        console.error('Checkout error:', error);
+        throw new Error(error.message || 'Failed to create checkout session');
+      }
 
-      if (data.url) {
+      if (data?.url) {
+        console.log('Redirecting to checkout URL:', data.url);
         window.open(data.url, '_blank');
-      } else if (data.success) {
+        toast.success('Opening payment page...');
+      } else if (data?.success) {
         toast.success(data.message);
+      } else {
+        console.error('No checkout URL or success response received');
+        throw new Error('Invalid response from checkout service');
       }
     } catch (error) {
       console.error('Error creating checkout:', error);
-      if (error.message?.includes('Failed to fetch')) {
-        toast.error('Checkout service is currently unavailable. Please try again later.');
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      
+      if (errorMessage?.includes('Failed to fetch')) {
+        toast.error('Network error. Please check your connection and try again.');
+      } else if (errorMessage?.includes('STRIPE_SECRET_KEY')) {
+        toast.error('Payment system configuration error. Please contact support.');
       } else {
-        toast.error('Failed to start checkout process');
+        toast.error(`Failed to start checkout: ${errorMessage}`);
       }
     } finally {
       setIsLoading(false);
