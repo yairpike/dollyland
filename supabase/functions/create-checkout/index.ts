@@ -13,12 +13,36 @@ const logStep = (step: string, details?: any) => {
 };
 
 serve(async (req) => {
+  logStep("Request received", { method: req.method, url: req.url });
+  
   if (req.method === 'OPTIONS') {
+    logStep("Handling CORS preflight");
     return new Response(null, { headers: corsHeaders });
+  }
+
+  // Add a simple health check endpoint
+  if (req.method === 'GET') {
+    logStep("Health check requested");
+    return new Response(JSON.stringify({ 
+      status: 'ok', 
+      timestamp: new Date().toISOString(),
+      hasStripeKey: !!Deno.env.get("STRIPE_SECRET_KEY")
+    }), {
+      headers: { ...corsHeaders, "Content-Type": "application/json" },
+      status: 200,
+    });
   }
 
   try {
     logStep("Function started");
+    
+    // Test if we can access environment variables
+    const supabaseUrl = Deno.env.get("SUPABASE_URL");
+    const supabaseServiceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
+    logStep("Environment check", { 
+      hasSupabaseUrl: !!supabaseUrl, 
+      hasServiceKey: !!supabaseServiceKey 
+    });
 
     const stripeKey = Deno.env.get("STRIPE_SECRET_KEY");
     if (!stripeKey) throw new Error("STRIPE_SECRET_KEY is not set");

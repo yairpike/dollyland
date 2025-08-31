@@ -70,6 +70,36 @@ export const PricingPlans = () => {
       }
 
       console.log('Starting checkout process for plan:', planId);
+      console.log('Supabase client configured:', !!supabase);
+      console.log('Auth user:', user?.id);
+      
+      // Check if user is authenticated
+      if (!user) {
+        throw new Error('Please sign in to upgrade your plan');
+      }
+      
+      console.log('Calling create-checkout function...');
+      
+      // First, try a health check to see if the function is reachable
+      try {
+        console.log('Testing function connectivity...');
+        const session = await supabase.auth.getSession();
+        const token = session.data.session?.access_token;
+        console.log('Using token for health check:', !!token);
+        
+        const healthResponse = await fetch(`https://fzdetwatsinsftunljir.supabase.co/functions/v1/create-checkout`, {
+          method: 'GET',
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZ6ZGV0d2F0c2luc2Z0dW5samlyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTUzOTg0MjIsImV4cCI6MjA3MDk3NDQyMn0.dD_MP3Ek4ivbItUc8KQLAsFseyVKcaOF7SXr0A9lE7U'
+          }
+        });
+        console.log('Health check response:', healthResponse.status, healthResponse.statusText);
+        const healthData = await healthResponse.text();
+        console.log('Health check data:', healthData);
+      } catch (healthError) {
+        console.error('Health check failed:', healthError);
+      }
       
       // For paid plans, redirect to Stripe checkout
       const { data, error } = await supabase.functions.invoke('create-checkout', {
@@ -78,6 +108,8 @@ export const PricingPlans = () => {
           priceType: isYearly ? 'yearly' : 'monthly' 
         }
       });
+      
+      console.log('Function response:', { data, error });
 
       if (error) {
         console.error('Checkout error:', error);
