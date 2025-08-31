@@ -1263,7 +1263,6 @@ export type Database = {
         Row: {
           protection_level: string | null
           protection_type: string | null
-          security_level: string | null
           table_name: string | null
         }
         Relationships: []
