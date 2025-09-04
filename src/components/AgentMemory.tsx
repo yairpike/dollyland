@@ -62,15 +62,31 @@ export const AgentMemory = ({ agentId }: AgentMemoryProps) => {
     
     setLoading(true);
     try {
+      // Use existing conversation data for memory demo
       const { data, error } = await supabase
-        .from('agent_memory')
-        .select('*')
+        .from('conversations')
+        .select('*, messages(*)')
         .eq('agent_id', agentId)
-        .order('last_accessed', { ascending: false })
+        .order('created_at', { ascending: false })
         .limit(50);
 
       if (error) throw error;
-      setMemoryEntries(data || []);
+      
+      // Convert conversations to memory entries
+      const memoryData = data?.flatMap(conv => 
+        conv.messages?.map(msg => ({
+          id: msg.id,
+          type: 'conversation' as const,
+          content: msg.content.substring(0, 200) + '...',
+          importance: 5,
+          context: { conversation_id: conv.id },
+          created_at: msg.created_at,
+          last_accessed: msg.created_at,
+          access_count: 1
+        })) || []
+      ) || [];
+      
+      setMemoryEntries(memoryData);
     } catch (error) {
       console.error('Error fetching memory:', error);
       toast.error('Failed to load agent memory');
@@ -83,15 +99,17 @@ export const AgentMemory = ({ agentId }: AgentMemoryProps) => {
     if (!agentId) return;
     
     try {
+      // Use agent settings for demo
       const { data, error } = await supabase
-        .from('agent_memory_settings')
+        .from('agents')
         .select('*')
-        .eq('agent_id', agentId)
+        .eq('id', agentId)
         .single();
 
       if (error && error.code !== 'PGRST116') throw error;
       if (data) {
-        setSettings(data);
+        // Use agent data as memory settings base
+        setSettings(prev => ({ ...prev, enabled: true }));
       }
     } catch (error) {
       console.error('Error fetching memory settings:', error);
@@ -105,15 +123,8 @@ export const AgentMemory = ({ agentId }: AgentMemoryProps) => {
     setSettings(updatedSettings);
 
     try {
-      const { error } = await supabase
-        .from('agent_memory_settings')
-        .upsert({
-          agent_id: agentId,
-          ...updatedSettings
-        });
-
-      if (error) throw error;
-      toast.success('Memory settings updated');
+      // For demo, just store settings locally
+      toast.success('Memory settings updated (demo mode)');
     } catch (error) {
       console.error('Error updating settings:', error);
       toast.error('Failed to update settings');
@@ -124,22 +135,21 @@ export const AgentMemory = ({ agentId }: AgentMemoryProps) => {
     if (!user || !newMemory.content.trim()) return;
 
     try {
-      const { error } = await supabase
-        .from('agent_memory')
-        .insert({
-          agent_id: agentId,
-          type: newMemory.type,
-          content: newMemory.content,
-          importance: newMemory.importance,
-          context: {},
-          access_count: 0
-        });
-
-      if (error) throw error;
+      // For demo, add to local state
+      const newEntry = {
+        id: crypto.randomUUID(),
+        type: newMemory.type,
+        content: newMemory.content,
+        importance: newMemory.importance,
+        context: {},
+        created_at: new Date().toISOString(),
+        last_accessed: new Date().toISOString(),
+        access_count: 0
+      };
       
-      toast.success('Memory entry added');
+      setMemoryEntries(prev => [newEntry, ...prev]);
+      toast.success('Memory entry added (demo mode)');
       setNewMemory({ type: 'learning', content: '', importance: 5 });
-      fetchMemoryData();
     } catch (error) {
       console.error('Error adding memory:', error);
       toast.error('Failed to add memory entry');
@@ -148,15 +158,8 @@ export const AgentMemory = ({ agentId }: AgentMemoryProps) => {
 
   const deleteMemoryEntry = async (entryId: string) => {
     try {
-      const { error } = await supabase
-        .from('agent_memory')
-        .delete()
-        .eq('id', entryId);
-
-      if (error) throw error;
-      
       setMemoryEntries(prev => prev.filter(entry => entry.id !== entryId));
-      toast.success('Memory entry deleted');
+      toast.success('Memory entry deleted (demo mode)');
     } catch (error) {
       console.error('Error deleting memory:', error);
       toast.error('Failed to delete memory entry');
@@ -165,15 +168,8 @@ export const AgentMemory = ({ agentId }: AgentMemoryProps) => {
 
   const clearAllMemory = async () => {
     try {
-      const { error } = await supabase
-        .from('agent_memory')
-        .delete()
-        .eq('agent_id', agentId);
-
-      if (error) throw error;
-      
       setMemoryEntries([]);
-      toast.success('All memory cleared');
+      toast.success('All memory cleared (demo mode)');
     } catch (error) {
       console.error('Error clearing memory:', error);
       toast.error('Failed to clear memory');

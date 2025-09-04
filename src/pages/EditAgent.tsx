@@ -23,7 +23,12 @@ import { WorkflowBuilder } from "@/components/WorkflowBuilder";
 import { DollyCopilot } from "@/components/DollyCopilot";
 import { DashboardLayout } from "@/components/DashboardLayout";
 import { toast } from "sonner";
-import { ArrowLeft, Trash2, Loader2, Settings, Database, Zap, Globe, GitBranch, Rocket, ExternalLink, Webhook, Workflow } from "lucide-react";
+import { AgentFunctionCalling } from "@/components/AgentFunctionCalling";
+import { AgentMemory } from "@/components/AgentMemory";
+import { AgentCollaboration } from "@/components/AgentCollaboration";
+import { AgentMultimodal } from "@/components/AgentMultimodal";
+import { CreatorEarnings } from "@/components/CreatorEarnings";
+import { ArrowLeft, Trash2, Loader2, Settings, Database, Zap, Globe, GitBranch, Rocket, ExternalLink, Webhook, Workflow, Brain, Wand2, DollarSign, Palette } from "lucide-react";
 
 interface Agent {
   id: string;
@@ -206,6 +211,26 @@ export const EditAgent = () => {
               <Zap className="w-4 h-4" />
               AI Setup
             </TabsTrigger>
+            <TabsTrigger value="functions" className="flex items-center gap-2 whitespace-nowrap flex-shrink-0 min-w-32" data-tour="edit-agent-functions">
+              <Wand2 className="w-4 h-4" />
+              Functions
+            </TabsTrigger>
+            <TabsTrigger value="multimodal" className="flex items-center gap-2 whitespace-nowrap flex-shrink-0 min-w-32" data-tour="edit-agent-multimodal">
+              <Palette className="w-4 h-4" />
+              Multimodal
+            </TabsTrigger>
+            <TabsTrigger value="memory" className="flex items-center gap-2 whitespace-nowrap flex-shrink-0 min-w-32" data-tour="edit-agent-memory">
+              <Brain className="w-4 h-4" />
+              Memory
+            </TabsTrigger>
+            <TabsTrigger value="collaboration" className="flex items-center gap-2 whitespace-nowrap flex-shrink-0 min-w-32" data-tour="edit-agent-collaboration">
+              <Workflow className="w-4 h-4" />
+              Collaboration
+            </TabsTrigger>
+            <TabsTrigger value="earnings" className="flex items-center gap-2 whitespace-nowrap flex-shrink-0 min-w-32" data-tour="edit-agent-earnings">
+              <DollarSign className="w-4 h-4" />
+              Earnings
+            </TabsTrigger>
             <TabsTrigger value="actions" className="flex items-center gap-2 whitespace-nowrap flex-shrink-0 min-w-32" data-tour="edit-agent-actions">
               <Zap className="w-4 h-4" />
               Actions
@@ -344,6 +369,26 @@ export const EditAgent = () => {
 
             <TabsContent value="ai-setup" className="space-y-4">
               <AIProviderManager />
+            </TabsContent>
+
+            <TabsContent value="functions" className="space-y-4">
+              <AgentFunctionCalling agentId={agent.id} />
+            </TabsContent>
+
+            <TabsContent value="multimodal" className="space-y-4">
+              <AgentMultimodal agentId={agent.id} />
+            </TabsContent>
+
+            <TabsContent value="memory" className="space-y-4">
+              <AgentMemory agentId={agent.id} />
+            </TabsContent>
+
+            <TabsContent value="collaboration" className="space-y-4">
+              <AgentCollaboration agentId={agent.id} />
+            </TabsContent>
+
+            <TabsContent value="earnings" className="space-y-4">
+              <CreatorEarnings />
             </TabsContent>
 
             <TabsContent value="actions" className="space-y-4">

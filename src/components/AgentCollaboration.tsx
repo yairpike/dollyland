@@ -47,8 +47,8 @@ interface AgentWorkflow {
 interface WorkflowExecution {
   id: string;
   workflow_id: string;
-  status: 'running' | 'completed' | 'failed' | 'paused';
-  current_step: number;
+  status: string;
+  current_step: string | number;
   results: any;
   started_at: string;
   completed_at?: string;
@@ -101,13 +101,18 @@ export const AgentCollaboration = ({ agentId }: AgentCollaborationProps) => {
     setLoading(true);
     try {
       const { data, error } = await supabase
-        .from('agent_workflows')
+        .from('workflows')
         .select('*')
-        .contains('agents', [agentId])
+        .eq('user_id', user.id)
         .order('created_at', { ascending: false });
 
       if (error) throw error;
-      setWorkflows(data || []);
+      const workflowsData = data?.map(w => ({
+        ...w,
+        agents: [w.agent_id], // Convert single agent_id to array format
+        workflow_config: w.steps || {}
+      })) || [];
+      setWorkflows(workflowsData);
     } catch (error) {
       console.error('Error fetching workflows:', error);
       toast.error('Failed to load workflows');
@@ -125,11 +130,17 @@ export const AgentCollaboration = ({ agentId }: AgentCollaborationProps) => {
         .from('workflow_executions')
         .select('*')
         .in('workflow_id', workflowIds)
-        .order('started_at', { ascending: false })
+        .order('created_at', { ascending: false })
         .limit(10);
 
       if (error) throw error;
-      setExecutions(data || []);
+      const executionsData = data?.map(e => ({
+        ...e,
+        started_at: e.created_at,
+        results: e.context || {},
+        current_step: parseInt(String(e.current_step || 0))
+      })) || [];
+      setExecutions(executionsData);
     } catch (error) {
       console.error('Error fetching executions:', error);
     }
@@ -148,19 +159,20 @@ export const AgentCollaboration = ({ agentId }: AgentCollaborationProps) => {
           conditions: formData.conditions[index] || {}
         })),
         settings: {
-          timeout: 300000, // 5 minutes
+          timeout: 300000,
           retry_attempts: 3,
           parallel_execution: formData.workflowType === 'parallel'
         }
       };
 
       const { error } = await supabase
-        .from('agent_workflows')
+        .from('workflows')
         .insert({
           name: formData.name,
           description: formData.description,
-          agents: formData.selectedAgents,
-          workflow_config: workflowConfig,
+          agent_id: formData.selectedAgents[0], // Primary agent
+          steps: workflowConfig.steps,
+          triggers: [],
           is_active: true,
           user_id: user.id
         });

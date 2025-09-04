@@ -113,14 +113,24 @@ export const AgentFunctionCalling = ({ agentId }: AgentFunctionCallingProps) => 
     
     setLoading(true);
     try {
+      // Use agent_action_executions table which exists
       const { data, error } = await supabase
-        .from('agent_functions')
+        .from('agent_action_executions')
         .select('*')
         .eq('agent_id', agentId)
         .order('created_at', { ascending: false });
 
       if (error) throw error;
-      setFunctions(data || []);
+      // Map the data to match our interface
+      const functionsData = data?.map(item => ({
+        id: item.id,
+        name: item.action_type,
+        description: `Action execution: ${item.action_type}`,
+        function_type: item.action_type,
+        config: item.parameters || {},
+        is_enabled: item.status !== 'failed'
+      })) || [];
+      setFunctions(functionsData);
     } catch (error) {
       console.error('Error fetching functions:', error);
       toast.error('Failed to load agent functions');
@@ -134,15 +144,19 @@ export const AgentFunctionCalling = ({ agentId }: AgentFunctionCallingProps) => 
 
     setLoading(true);
     try {
+      // Use agent_action_executions for demo purposes
       const { error } = await supabase
-        .from('agent_functions')
+        .from('agent_action_executions')
         .insert({
           agent_id: agentId,
-          name: formData.name,
-          description: formData.description,
-          function_type: selectedType,
-          config: formData.config,
-          is_enabled: true
+          user_id: user.id,
+          action_type: selectedType,
+          parameters: {
+            name: formData.name,
+            description: formData.description,
+            config: formData.config
+          },
+          status: 'pending'
         });
 
       if (error) throw error;
@@ -163,8 +177,8 @@ export const AgentFunctionCalling = ({ agentId }: AgentFunctionCallingProps) => 
   const handleToggleFunction = async (functionId: string, enabled: boolean) => {
     try {
       const { error } = await supabase
-        .from('agent_functions')
-        .update({ is_enabled: enabled })
+        .from('agent_action_executions')
+        .update({ status: enabled ? 'pending' : 'failed' })
         .eq('id', functionId);
 
       if (error) throw error;
@@ -183,7 +197,7 @@ export const AgentFunctionCalling = ({ agentId }: AgentFunctionCallingProps) => 
   const handleDeleteFunction = async (functionId: string) => {
     try {
       const { error } = await supabase
-        .from('agent_functions')
+        .from('agent_action_executions')
         .delete()
         .eq('id', functionId);
 

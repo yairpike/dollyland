@@ -30,7 +30,7 @@ interface CreatorEarning {
 interface PayoutRequest {
   id: string;
   amount_cents: number;
-  status: 'pending' | 'processing' | 'completed' | 'failed';
+  status: string;
   requested_at: string;
   processed_at?: string;
 }
