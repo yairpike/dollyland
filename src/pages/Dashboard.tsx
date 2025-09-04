@@ -15,6 +15,10 @@ import { DashboardTour } from "@/components/tours/DashboardTour";
 import { useTourManager } from "@/components/OnboardingTour";
 import { useRealAnalytics } from "@/hooks/useRealAnalytics";
 import { AIMarketplaceDiscovery } from "@/components/AIMarketplaceDiscovery";
+import { CommunityFeatures } from "@/components/CommunityFeatures";
+import { DeveloperAPIPortal } from "@/components/DeveloperAPIPortal";
+import { ThirdPartyIntegrations } from "@/components/ThirdPartyIntegrations";
+import { PredictiveAnalytics } from "@/components/PredictiveAnalytics";
 
 interface Agent {
   id: string;
