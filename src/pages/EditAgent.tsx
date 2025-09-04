@@ -28,6 +28,8 @@ import { AgentMemory } from "@/components/AgentMemory";
 import { AgentCollaboration } from "@/components/AgentCollaboration";
 import { AgentMultimodal } from "@/components/AgentMultimodal";
 import { CreatorEarnings } from "@/components/CreatorEarnings";
+import { AgentOrchestration } from "@/components/AgentOrchestration";
+import { AgentLearningSystem } from "@/components/AgentLearningSystem";
 import { ArrowLeft, Trash2, Loader2, Settings, Database, Zap, Globe, GitBranch, Rocket, ExternalLink, Webhook, Workflow, Brain, Wand2, DollarSign, Palette } from "lucide-react";
 
 interface Agent {
