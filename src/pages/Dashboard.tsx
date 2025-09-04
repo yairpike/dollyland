@@ -13,6 +13,10 @@ import { toast } from "sonner";
 import { DashboardLayout } from "@/components/DashboardLayout";
 import { DashboardTour } from "@/components/tours/DashboardTour";
 import { useTourManager } from "@/components/OnboardingTour";
+import { CommunityFeaturesTour } from "@/components/tours/CommunityFeaturesTour";
+import { DeveloperAPITour } from "@/components/tours/DeveloperAPITour";
+import { ThirdPartyIntegrationsTour } from "@/components/tours/ThirdPartyIntegrationsTour";
+import { PredictiveAnalyticsTour } from "@/components/tours/PredictiveAnalyticsTour";
 import { useRealAnalytics } from "@/hooks/useRealAnalytics";
 import { AIMarketplaceDiscovery } from "@/components/AIMarketplaceDiscovery";
 import { CommunityFeatures } from "@/components/CommunityFeatures";
@@ -47,6 +51,10 @@ export const Dashboard = () => {
   const [publishingAgent, setPublishingAgent] = useState<Agent | null>(null);
   const { shouldShowTour } = useTourManager();
   const [showDashboardTour, setShowDashboardTour] = useState(false);
+  const [isCommunityTourOpen, setIsCommunityTourOpen] = useState(false);
+  const [isDeveloperTourOpen, setIsDeveloperTourOpen] = useState(false);
+  const [isIntegrationsTourOpen, setIsIntegrationsTourOpen] = useState(false);
+  const [isAnalyticsTourOpen, setIsAnalyticsTourOpen] = useState(false);
 
   useEffect(() => {
     if (shouldShowTour('dashboard')) {
@@ -475,10 +483,26 @@ export const Dashboard = () => {
           />
         )}
 
-        {/* Dashboard Tour */}
+        {/* Tours */}
         <DashboardTour 
           isOpen={showDashboardTour}
           onClose={() => setShowDashboardTour(false)}
+        />
+        <CommunityFeaturesTour 
+          isOpen={isCommunityTourOpen} 
+          onClose={() => setIsCommunityTourOpen(false)} 
+        />
+        <DeveloperAPITour 
+          isOpen={isDeveloperTourOpen} 
+          onClose={() => setIsDeveloperTourOpen(false)} 
+        />
+        <ThirdPartyIntegrationsTour 
+          isOpen={isIntegrationsTourOpen} 
+          onClose={() => setIsIntegrationsTourOpen(false)} 
+        />
+        <PredictiveAnalyticsTour 
+          isOpen={isAnalyticsTourOpen} 
+          onClose={() => setIsAnalyticsTourOpen(false)} 
         />
       </div>
     </DashboardLayout>

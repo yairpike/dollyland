@@ -5,6 +5,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import { DashboardLayout } from "@/components/DashboardLayout";
 import { useNavigate } from "react-router-dom";
+import { FeatureShowcaseTour } from "@/components/tours/FeatureShowcaseTour";
 import { 
   Brain, 
   Workflow, 
@@ -27,6 +28,7 @@ import {
 export const Features = () => {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("orchestration");
+  const [isFeatureTourOpen, setIsFeatureTourOpen] = useState(false);
 
   const features = {
     orchestration: {
@@ -146,13 +148,21 @@ export const Features = () => {
     <DashboardLayout>
       <div className="space-y-8">
         {/* Header */}
-        <div className="text-center space-y-4">
+        <div className="text-center space-y-4" data-tour="features-overview">
           <h1 className="text-4xl font-bold bg-gradient-to-r from-primary to-primary-glow bg-clip-text text-transparent">
             Advanced AI Agent Platform
           </h1>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
             Discover the most sophisticated AI agent capabilities designed for enterprise-scale automation and intelligence
           </p>
+          <Button 
+            onClick={() => setIsFeatureTourOpen(true)}
+            variant="outline"
+            className="mt-4"
+          >
+            <Settings className="mr-2 h-4 w-4" />
+            Take Feature Tour
+          </Button>
         </div>
 
         {/* Feature Navigation */}
@@ -276,6 +286,11 @@ export const Features = () => {
           })}
         </div>
       </div>
+      
+      <FeatureShowcaseTour 
+        isOpen={isFeatureTourOpen} 
+        onClose={() => setIsFeatureTourOpen(false)} 
+      />
     </DashboardLayout>
   );
 };
