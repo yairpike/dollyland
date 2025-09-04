@@ -21,6 +21,7 @@ import { Chat } from "./pages/Chat";
 import CreateAgent from "./pages/CreateAgent";
 import { EditAgent } from "./pages/EditAgent";
 import { Features } from "./pages/Features";
+import { Community } from "./pages/Community";
 import Terms from "./pages/Terms";
 import Privacy from "./pages/Privacy";
 import { ProtectedRoute } from "./components/ProtectedRoute";
@@ -46,6 +47,7 @@ const App = () => (
               <Route path="/privacy" element={<Privacy />} />
               <Route path="/success" element={<Success />} />
               <Route path="/marketplace" element={<ProtectedRoute><DashboardLayout><Marketplace /></DashboardLayout></ProtectedRoute>} />
+              <Route path="/community" element={<ProtectedRoute><Community /></ProtectedRoute>} />
               <Route path="/features" element={<ProtectedRoute><Features /></ProtectedRoute>} />
               
               <Route path="/trial/:agentId" element={<AgentTrial />} />

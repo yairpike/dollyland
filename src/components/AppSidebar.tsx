@@ -13,6 +13,7 @@ const mainItems = [
   { title: "Home", url: "/dashboard", icon: Home },
   { title: "Marketplace", url: "/marketplace", icon: ShoppingBag },
   { title: "Analytics", url: "/analytics", icon: BarChart3 },
+  { title: "Community", url: "/community", icon: Users },
   { title: "Settings", url: "/settings", icon: Settings },
 ];
 
