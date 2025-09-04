@@ -121,11 +121,11 @@ export const useRealAnalytics = (timeRange: string = '30d') => {
       const uniqueUsers = new Set(conversations.map(c => c.user_id)).size;
       const totalMessages = messages.length;
       
-      // Calculate average response time (mock for now, would need message timestamps)
-      const avgResponseTime = 2.3 + Math.random() * 2; // 2-4 seconds
+      // Calculate real average response time from message timestamps
+      const avgResponseTime = calculateRealResponseTime(messages);
       
-      // Calculate performance (uptime percentage)
-      const performance = Math.min(98 + Math.random() * 2, 100);
+      // Calculate real performance based on successful conversations
+      const performance = calculateRealPerformance(conversations, messages);
       
       // Calculate monthly trends
       const monthlyTrends = generateMonthlyTrends(conversations, analyticsEvents);
@@ -136,13 +136,13 @@ export const useRealAnalytics = (timeRange: string = '30d') => {
       // Calculate agent performance
       const agentPerformance = generateAgentPerformance(agents, conversations);
       
-      // Calculate response time data (hourly)
-      const responseTimeData = generateResponseTimeData();
+      // Calculate real response time data from actual messages
+      const responseTimeData = generateRealResponseTimeData(messages);
       
-      // Mock revenue calculation based on usage
-      const totalRevenue = totalConversations * 0.05 + uniqueUsers * 0.25;
+      // Calculate real revenue from conversation usage table
+      const totalRevenue = await calculateRealRevenue(user.id, startDate);
       
-      // Calculate average satisfaction from analytics events
+      // Calculate real satisfaction from analytics events
       const satisfactionEvents = analyticsEvents?.filter(e => 
         e.metadata && 
         typeof e.metadata === 'object' && 
@@ -154,7 +154,7 @@ export const useRealAnalytics = (timeRange: string = '30d') => {
             const metadata = e.metadata as any;
             return sum + (metadata.satisfaction || 0);
           }, 0) / satisfactionEvents.length
-        : 4.2 + Math.random() * 0.6; // Default 4.2-4.8
+        : 0; // Default to 0 if no satisfaction data
 
       const analyticsData: AnalyticsData = {
         totalAgents,
@@ -290,10 +290,93 @@ function generateAgentPerformance(agents: any[], conversations: any[]) {
     .slice(0, 5);
 }
 
-function generateResponseTimeData() {
-  const hours = ['00:00', '04:00', '08:00', '12:00', '16:00', '20:00'];
+// Calculate real response time from consecutive messages
+function calculateRealResponseTime(messages: any[]): number {
+  if (messages.length < 2) return 0;
+  
+  const responseTimes: number[] = [];
+  
+  for (let i = 1; i < messages.length; i++) {
+    const prevMessage = messages[i - 1];
+    const currentMessage = messages[i];
+    
+    // Calculate time between user message and assistant response
+    if (prevMessage.role === 'user' && currentMessage.role === 'assistant') {
+      const timeDiff = new Date(currentMessage.created_at).getTime() - new Date(prevMessage.created_at).getTime();
+      const seconds = timeDiff / 1000;
+      if (seconds > 0 && seconds < 300) { // Only include reasonable response times (under 5 minutes)
+        responseTimes.push(seconds);
+      }
+    }
+  }
+  
+  return responseTimes.length > 0 
+    ? responseTimes.reduce((sum, time) => sum + time, 0) / responseTimes.length
+    : 0;
+}
+
+// Calculate real performance based on successful conversations
+function calculateRealPerformance(conversations: any[], messages: any[]): number {
+  if (conversations.length === 0) return 100;
+  
+  const conversationsWithMessages = conversations.filter(conv => 
+    messages.some(msg => msg.conversation_id === conv.id)
+  );
+  
+  return Math.round((conversationsWithMessages.length / conversations.length) * 100);
+}
+
+// Generate real response time data from actual messages
+function generateRealResponseTimeData(messages: any[]) {
+  const hourlyData: { [hour: string]: number[] } = {};
+  
+  // Group messages by hour and calculate response times
+  for (let i = 1; i < messages.length; i++) {
+    const prevMessage = messages[i - 1];
+    const currentMessage = messages[i];
+    
+    if (prevMessage.role === 'user' && currentMessage.role === 'assistant') {
+      const hour = new Date(currentMessage.created_at).getHours();
+      const hourLabel = `${hour.toString().padStart(2, '0')}:00`;
+      
+      const timeDiff = new Date(currentMessage.created_at).getTime() - new Date(prevMessage.created_at).getTime();
+      const seconds = timeDiff / 1000;
+      
+      if (seconds > 0 && seconds < 300) {
+        if (!hourlyData[hourLabel]) hourlyData[hourLabel] = [];
+        hourlyData[hourLabel].push(seconds);
+      }
+    }
+  }
+  
+  // Calculate averages for each hour
+  const hours = ['00:00', '06:00', '12:00', '18:00'];
   return hours.map(hour => ({
     hour,
-    avgResponse: 1.5 + Math.random() * 3 // 1.5-4.5 seconds
+    avgResponse: hourlyData[hour] 
+      ? hourlyData[hour].reduce((sum, time) => sum + time, 0) / hourlyData[hour].length
+      : 0
   }));
+}
+
+// Calculate real revenue from conversation usage
+async function calculateRealRevenue(userId: string, startDate: Date): Promise<number> {
+  try {
+    const { data: usageData, error } = await supabase
+      .from('conversation_usage')
+      .select('creator_earnings_cents')
+      .eq('agent_owner_id', userId)
+      .gte('created_at', startDate.toISOString());
+    
+    if (error) {
+      console.error('Error fetching revenue data:', error);
+      return 0;
+    }
+    
+    const totalCents = usageData?.reduce((sum, usage) => sum + (usage.creator_earnings_cents || 0), 0) || 0;
+    return totalCents / 100; // Convert cents to dollars
+  } catch (error) {
+    console.error('Error calculating revenue:', error);
+    return 0;
+  }
 }

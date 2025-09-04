@@ -34,80 +34,13 @@ const AGENT_CATEGORIES = [
   { id: 'productivity', name: 'Productivity', icon: Zap }
 ];
 
-// Mock data for demonstration
-const FEATURED_AGENTS: PublicAgent[] = [
-  {
-    id: '1',
-    name: 'Design System Pro',
-    description: 'Expert in creating and maintaining design systems. Specialized in component libraries, design tokens, and design consistency.',
-    category: 'design',
-    rating: 4.8,
-    user_count: 1420,
-    creator_name: 'Sarah Chen',
-    tags: ['Design Systems', 'Components', 'Figma', 'CSS'],
-    is_featured: true
-  },
-  {
-    id: '2', 
-    name: 'Code Review Assistant',
-    description: 'Advanced code reviewer with expertise in security, performance, and best practices across multiple programming languages.',
-    category: 'development',
-    rating: 4.9,
-    user_count: 2100,
-    creator_name: 'Alex Rodriguez',
-    tags: ['Code Review', 'Security', 'Best Practices', 'Multiple Languages'],
-    is_featured: true
-  },
-  {
-    id: '3',
-    name: 'Content Strategy Expert',
-    description: 'AI agent specialized in content planning, SEO optimization, and social media strategy for businesses of all sizes.',
-    category: 'content',
-    rating: 4.7,
-    user_count: 890,
-    creator_name: 'Emma Thompson',
-    tags: ['Content Strategy', 'SEO', 'Social Media', 'Marketing'],
-    is_featured: false
-  },
-  {
-    id: '4',
-    name: 'Data Analytics Wizard',
-    description: 'Transform your data into actionable insights with advanced analytics, visualization, and predictive modeling capabilities.',
-    category: 'analytics',
-    rating: 4.6,
-    user_count: 650,
-    creator_name: 'Michael Park',
-    tags: ['Data Analysis', 'Visualization', 'Machine Learning', 'Python'],
-    is_featured: false
-  },
-  {
-    id: '5',
-    name: 'Business Process Optimizer',
-    description: 'Streamline your operations with AI-powered process analysis, workflow optimization, and efficiency recommendations.',
-    category: 'business',
-    rating: 4.5,
-    user_count: 420,
-    creator_name: 'Lisa Wang',
-    tags: ['Process Optimization', 'Workflow', 'Efficiency', 'Automation'],
-    is_featured: false
-  },
-  {
-    id: '6',
-    name: 'React Performance Expert',
-    description: 'Specialized in React optimization, bundle analysis, and modern development practices for high-performance applications.',
-    category: 'development',
-    rating: 4.8,
-    user_count: 1100,
-    creator_name: 'David Kim',
-    tags: ['React', 'Performance', 'Optimization', 'Web Vitals'],
-    is_featured: false
-  }
-]
+// Fallback demo data only when no real agents are available
+const FALLBACK_AGENTS: PublicAgent[] = []
 
 export const Marketplace = () => {
   const navigate = useNavigate()
-  const [agents, setAgents] = useState<PublicAgent[]>(FEATURED_AGENTS)
-  const [filteredAgents, setFilteredAgents] = useState<PublicAgent[]>(FEATURED_AGENTS)
+  const [agents, setAgents] = useState<PublicAgent[]>([])
+  const [filteredAgents, setFilteredAgents] = useState<PublicAgent[]>([])
   const [selectedCategory, setSelectedCategory] = useState('all')
   const [searchQuery, setSearchQuery] = useState('')
 
@@ -121,17 +54,21 @@ export const Marketplace = () => {
 
   const fetchPublicAgents = async () => {
     try {
-      // Use the secure marketplace function that never exposes system prompts
-      const { data: publicAgents, error } = await supabase.rpc('get_marketplace_safe')
+      // Fetch real public agents from database
+      const { data: publicAgents, error } = await supabase
+        .from('agents')
+        .select('id, name, description, avatar_url, category, rating, user_count, tags, is_featured')
+        .eq('is_public', true)
+        .order('rating', { ascending: false })
 
       if (error) {
         console.error('Error fetching marketplace agents:', error)
-        setAgents(FEATURED_AGENTS)
+        setAgents([])
         return
       }
 
       if (publicAgents && publicAgents.length > 0) {
-        // Transform the authenticated data to match our interface
+        // Transform the data to match our interface
         const transformedAgents = publicAgents.map(agent => {
           // Smart category assignment based on name/description if category is missing
           let category = agent.category
@@ -163,22 +100,22 @@ export const Marketplace = () => {
             name: agent.name || 'Unnamed Agent',
             description: agent.description || 'No description available',
             category,
-            rating: agent.rating || (4.5 + Math.random() * 0.5), // Use actual rating or generate one
-            user_count: agent.user_count || Math.floor(Math.random() * 1000) + 100,
-            creator_name: 'Dollyland Expert',
+            rating: agent.rating || 0,
+            user_count: agent.user_count || 0,
+            creator_name: 'Community Creator',
             tags: Array.isArray(agent.tags) ? agent.tags : (agent.tags ? [agent.tags] : ['AI Agent']),
-            is_featured: agent.is_featured || Math.random() > 0.7
+            is_featured: agent.is_featured || false
           }
         })
 
         setAgents(transformedAgents)
       } else {
-        // Fallback to mock data if no agents found
-        setAgents(FEATURED_AGENTS)
+        // No agents found, set empty array
+        setAgents([])
       }
     } catch (error) {
       console.error('Unexpected error fetching marketplace agents:', error)
-      setAgents(FEATURED_AGENTS)
+      setAgents([])
     }
   }
 

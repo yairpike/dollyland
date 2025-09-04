@@ -141,53 +141,53 @@ export const Dashboard = () => {
                   <p className="text-sm font-medium text-muted-foreground">Total Agents</p>
                   <p className="text-3xl font-semibold">{analytics?.totalAgents || agents.length}</p>
                   <p className="text-xs text-muted-foreground mt-1">
-                    {analytics?.totalAgents ? `+${Math.max(0, analytics.totalAgents - 1)} this week` : '+2 this week'}
+                    {analytics?.totalAgents > 0 ? `${analytics.totalAgents} total created` : `${agents.length} total created`}
                   </p>
                 </div>
                 <div className="h-12 w-12 bg-muted rounded-xl flex items-center justify-center">
                   <Bot className="h-6 w-6 text-primary" />
                 </div>
               </div>
-              <div className="h-16">
-                <ResponsiveContainer width="100%" height="100%">
-                  <BarChart data={[
-                    { name: 'Mon', value: 2, pattern: 'dots' },
-                    { name: 'Tue', value: 4, pattern: 'stripes' },
-                    { name: 'Wed', value: 3, pattern: 'dots' },
-                    { name: 'Thu', value: 6, pattern: 'solid' },
-                    { name: 'Fri', value: 5, pattern: 'stripes' },
-                    { name: 'Sat', value: 8, pattern: 'dots' },
-                    { name: 'Sun', value: 7, pattern: 'solid' }
-                  ]}>
-                    <defs>
-                      <pattern id="dots" patternUnits="userSpaceOnUse" width="4" height="4">
-                        <rect width="4" height="4" fill="hsl(var(--chart-1))" opacity="0.3"/>
-                        <circle cx="2" cy="2" r="1" fill="hsl(var(--chart-1))"/>
-                      </pattern>
-                      <pattern id="stripes" patternUnits="userSpaceOnUse" width="4" height="4" patternTransform="rotate(45)">
-                        <rect width="4" height="4" fill="hsl(var(--chart-1))" opacity="0.3"/>
-                        <rect width="2" height="4" fill="hsl(var(--chart-1))"/>
-                      </pattern>
-                    </defs>
-                    <Bar dataKey="value" radius={2}>
-                      {[
-                        { name: 'Mon', value: 2, pattern: 'dots' },
-                        { name: 'Tue', value: 4, pattern: 'stripes' },
-                        { name: 'Wed', value: 3, pattern: 'dots' },
-                        { name: 'Thu', value: 6, pattern: 'solid' },
-                        { name: 'Fri', value: 5, pattern: 'stripes' },
-                        { name: 'Sat', value: 8, pattern: 'dots' },
-                        { name: 'Sun', value: 7, pattern: 'solid' }
-                      ].map((entry, index) => (
-                        <Cell 
-                          key={`cell-${index}`} 
-                          fill={entry.pattern === 'solid' ? 'hsl(var(--chart-1))' : `url(#${entry.pattern})`} 
-                        />
-                      ))}
-                    </Bar>
-                  </BarChart>
-                </ResponsiveContainer>
-              </div>
+               <div className="h-16">
+                 <ResponsiveContainer width="100%" height="100%">
+                   <BarChart data={analytics?.weeklyEngagement?.map((day, index) => ({
+                     name: day.day,
+                     value: Math.max(1, Math.ceil(analytics.totalAgents / 7)), // Distribute agents across week
+                     pattern: ['dots', 'stripes', 'solid'][index % 3]
+                   })) || [
+                     { name: 'Mon', value: 0, pattern: 'dots' },
+                     { name: 'Tue', value: 0, pattern: 'stripes' },
+                     { name: 'Wed', value: 0, pattern: 'dots' },
+                     { name: 'Thu', value: 0, pattern: 'solid' },
+                     { name: 'Fri', value: 0, pattern: 'stripes' },
+                     { name: 'Sat', value: 0, pattern: 'dots' },
+                     { name: 'Sun', value: 0, pattern: 'solid' }
+                   ]}>
+                     <defs>
+                       <pattern id="dots" patternUnits="userSpaceOnUse" width="4" height="4">
+                         <rect width="4" height="4" fill="hsl(var(--chart-1))" opacity="0.3"/>
+                         <circle cx="2" cy="2" r="1" fill="hsl(var(--chart-1))"/>
+                       </pattern>
+                       <pattern id="stripes" patternUnits="userSpaceOnUse" width="4" height="4" patternTransform="rotate(45)">
+                         <rect width="4" height="4" fill="hsl(var(--chart-1))" opacity="0.3"/>
+                         <rect width="2" height="4" fill="hsl(var(--chart-1))"/>
+                       </pattern>
+                     </defs>
+                     <Bar dataKey="value" radius={2}>
+                       {(analytics?.weeklyEngagement?.map((day, index) => ({
+                         name: day.day,
+                         value: Math.max(1, Math.ceil(analytics.totalAgents / 7)),
+                         pattern: ['dots', 'stripes', 'solid'][index % 3]
+                       })) || []).map((entry, index) => (
+                         <Cell 
+                           key={`cell-${index}`} 
+                           fill={entry.pattern === 'solid' ? 'hsl(var(--chart-1))' : `url(#${entry.pattern})`} 
+                         />
+                       ))}
+                     </Bar>
+                   </BarChart>
+                 </ResponsiveContainer>
+               </div>
             </CardContent>
           </Card>
 
@@ -196,55 +196,55 @@ export const Dashboard = () => {
               <div className="flex items-center justify-between mb-4">
                 <div>
                   <p className="text-sm font-medium text-muted-foreground">Conversations</p>
-                  <p className="text-3xl font-semibold">{analytics?.totalConversations || 156}</p>
+                  <p className="text-3xl font-semibold">{analytics?.totalConversations || 0}</p>
                   <p className="text-xs text-muted-foreground mt-1">
-                    {analytics?.totalConversations ? '+12% vs last week' : '+12% vs last week'}
+                    {analytics?.totalConversations > 0 ? 'Active conversations' : 'No conversations yet'}
                   </p>
                 </div>
                 <div className="h-12 w-12 bg-muted rounded-xl flex items-center justify-center">
                   <MessageSquare className="h-6 w-6 text-primary" />
                 </div>
               </div>
-              <div className="h-16">
-                <ResponsiveContainer width="100%" height="100%">
-                  <BarChart data={[
-                    { name: 'Mon', value: 15, pattern: 'stripes' },
-                    { name: 'Tue', value: 22, pattern: 'dots' },
-                    { name: 'Wed', value: 18, pattern: 'stripes' },
-                    { name: 'Thu', value: 28, pattern: 'solid' },
-                    { name: 'Fri', value: 24, pattern: 'dots' },
-                    { name: 'Sat', value: 30, pattern: 'stripes' },
-                    { name: 'Sun', value: 19, pattern: 'solid' }
-                  ]}>
-                    <defs>
-                      <pattern id="dots2" patternUnits="userSpaceOnUse" width="4" height="4">
-                        <rect width="4" height="4" fill="hsl(var(--chart-1))" opacity="0.3"/>
-                        <circle cx="2" cy="2" r="1" fill="hsl(var(--chart-1))"/>
-                      </pattern>
-                      <pattern id="stripes2" patternUnits="userSpaceOnUse" width="4" height="4" patternTransform="rotate(45)">
-                        <rect width="4" height="4" fill="hsl(var(--chart-1))" opacity="0.3"/>
-                        <rect width="2" height="4" fill="hsl(var(--chart-1))"/>
-                      </pattern>
-                    </defs>
-                    <Bar dataKey="value" radius={2}>
-                      {[
-                        { name: 'Mon', value: 15, pattern: 'stripes2' },
-                        { name: 'Tue', value: 22, pattern: 'dots2' },
-                        { name: 'Wed', value: 18, pattern: 'stripes2' },
-                        { name: 'Thu', value: 28, pattern: 'solid' },
-                        { name: 'Fri', value: 24, pattern: 'dots2' },
-                        { name: 'Sat', value: 30, pattern: 'stripes2' },
-                        { name: 'Sun', value: 19, pattern: 'solid' }
-                      ].map((entry, index) => (
-                        <Cell 
-                          key={`cell-${index}`} 
-                          fill={entry.pattern === 'solid' ? 'hsl(var(--chart-1))' : `url(#${entry.pattern})`} 
-                        />
-                      ))}
-                    </Bar>
-                  </BarChart>
-                </ResponsiveContainer>
-              </div>
+               <div className="h-16">
+                 <ResponsiveContainer width="100%" height="100%">
+                   <BarChart data={analytics?.weeklyEngagement?.map((day, index) => ({
+                     name: day.day,
+                     value: day.messages,
+                     pattern: ['stripes', 'dots', 'solid'][index % 3]
+                   })) || [
+                     { name: 'Mon', value: 0, pattern: 'stripes' },
+                     { name: 'Tue', value: 0, pattern: 'dots' },
+                     { name: 'Wed', value: 0, pattern: 'stripes' },
+                     { name: 'Thu', value: 0, pattern: 'solid' },
+                     { name: 'Fri', value: 0, pattern: 'dots' },
+                     { name: 'Sat', value: 0, pattern: 'stripes' },
+                     { name: 'Sun', value: 0, pattern: 'solid' }
+                   ]}>
+                     <defs>
+                       <pattern id="dots2" patternUnits="userSpaceOnUse" width="4" height="4">
+                         <rect width="4" height="4" fill="hsl(var(--chart-1))" opacity="0.3"/>
+                         <circle cx="2" cy="2" r="1" fill="hsl(var(--chart-1))"/>
+                       </pattern>
+                       <pattern id="stripes2" patternUnits="userSpaceOnUse" width="4" height="4" patternTransform="rotate(45)">
+                         <rect width="4" height="4" fill="hsl(var(--chart-1))" opacity="0.3"/>
+                         <rect width="2" height="4" fill="hsl(var(--chart-1))"/>
+                       </pattern>
+                     </defs>
+                     <Bar dataKey="value" radius={2}>
+                       {(analytics?.weeklyEngagement?.map((day, index) => ({
+                         name: day.day,
+                         value: day.messages,
+                         pattern: ['stripes2', 'dots2', 'solid'][index % 3]
+                       })) || []).map((entry, index) => (
+                         <Cell 
+                           key={`cell-${index}`} 
+                           fill={entry.pattern === 'solid' ? 'hsl(var(--chart-1))' : `url(#${entry.pattern})`} 
+                         />
+                       ))}
+                     </Bar>
+                   </BarChart>
+                 </ResponsiveContainer>
+               </div>
             </CardContent>
           </Card>
 
@@ -253,36 +253,40 @@ export const Dashboard = () => {
               <div className="flex items-center justify-between mb-4">
                 <div>
                   <p className="text-sm font-medium text-muted-foreground">Active Users</p>
-                  <p className="text-3xl font-semibold">{analytics?.activeUsers || 89}</p>
+                  <p className="text-3xl font-semibold">{analytics?.activeUsers || 0}</p>
                   <p className="text-xs text-muted-foreground mt-1">
-                    {analytics?.activeUsers ? `+${Math.max(0, analytics.activeUsers - 5)} today` : '+5 today'}
+                    {analytics?.activeUsers > 0 ? 'Unique users' : 'No active users'}
                   </p>
                 </div>
                 <div className="h-12 w-12 bg-muted rounded-xl flex items-center justify-center">
                   <Users className="h-6 w-6 text-primary" />
                 </div>
               </div>
-              <div className="h-16">
-                <ResponsiveContainer width="100%" height="100%">
-                  <BarChart data={[
-                    { name: 'Mon', value: 12, gradient: true },
-                    { name: 'Tue', value: 19, gradient: true },
-                    { name: 'Wed', value: 16, gradient: true },
-                    { name: 'Thu', value: 14, gradient: true },
-                    { name: 'Fri', value: 18, gradient: true },
-                    { name: 'Sat', value: 11, gradient: true },
-                    { name: 'Sun', value: 9, gradient: true }
-                  ]}>
-                    <defs>
-                      <linearGradient id="userGradient" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="0%" stopColor="hsl(var(--chart-1))" stopOpacity="1"/>
-                        <stop offset="100%" stopColor="hsl(var(--chart-1))" stopOpacity="0.6"/>
-                      </linearGradient>
-                    </defs>
-                    <Bar dataKey="value" fill="url(#userGradient)" radius={2} />
-                  </BarChart>
-                </ResponsiveContainer>
-              </div>
+               <div className="h-16">
+                 <ResponsiveContainer width="100%" height="100%">
+                   <BarChart data={analytics?.weeklyEngagement?.map(day => ({
+                     name: day.day,
+                     value: day.activeUsers,
+                     gradient: true
+                   })) || [
+                     { name: 'Mon', value: 0, gradient: true },
+                     { name: 'Tue', value: 0, gradient: true },
+                     { name: 'Wed', value: 0, gradient: true },
+                     { name: 'Thu', value: 0, gradient: true },
+                     { name: 'Fri', value: 0, gradient: true },
+                     { name: 'Sat', value: 0, gradient: true },
+                     { name: 'Sun', value: 0, gradient: true }
+                   ]}>
+                     <defs>
+                       <linearGradient id="userGradient" x1="0" y1="0" x2="0" y2="1">
+                         <stop offset="0%" stopColor="hsl(var(--chart-1))" stopOpacity="1"/>
+                         <stop offset="100%" stopColor="hsl(var(--chart-1))" stopOpacity="0.6"/>
+                       </linearGradient>
+                     </defs>
+                     <Bar dataKey="value" fill="url(#userGradient)" radius={2} />
+                   </BarChart>
+                 </ResponsiveContainer>
+               </div>
             </CardContent>
           </Card>
 
@@ -291,35 +295,39 @@ export const Dashboard = () => {
               <div className="flex items-center justify-between mb-4">
                 <div>
                   <p className="text-sm font-medium text-muted-foreground">Performance</p>
-                  <p className="text-3xl font-semibold">{analytics ? `${Math.round(analytics.performance)}%` : '98%'}</p>
-                  <p className="text-xs text-muted-foreground mt-1">Uptime</p>
+                  <p className="text-3xl font-semibold">{analytics ? `${Math.round(analytics.performance)}%` : '100%'}</p>
+                  <p className="text-xs text-muted-foreground mt-1">Success rate</p>
                 </div>
                 <div className="h-12 w-12 bg-muted rounded-xl flex items-center justify-center">
                   <TrendingUp className="h-6 w-6 text-primary" />
                 </div>
               </div>
-              <div className="h-16">
-                <ResponsiveContainer width="100%" height="100%">
-                  <BarChart data={[
-                    { name: 'Mon', value: 98, gradient: true },
-                    { name: 'Tue', value: 99, gradient: true },
-                    { name: 'Wed', value: 97, gradient: true },
-                    { name: 'Thu', value: 100, gradient: true },
-                    { name: 'Fri', value: 98, gradient: true },
-                    { name: 'Sat', value: 99, gradient: true },
-                    { name: 'Sun', value: 98, gradient: true }
-                  ]}>
-                    <defs>
-                      <linearGradient id="performanceGradient" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="0%" stopColor="hsl(var(--chart-1))" stopOpacity="1"/>
-                        <stop offset="50%" stopColor="hsl(var(--chart-1))" stopOpacity="0.8"/>
-                        <stop offset="100%" stopColor="hsl(var(--chart-1))" stopOpacity="0.4"/>
-                      </linearGradient>
-                    </defs>
-                    <Bar dataKey="value" fill="url(#performanceGradient)" radius={2} />
-                  </BarChart>
-                </ResponsiveContainer>
-              </div>
+               <div className="h-16">
+                 <ResponsiveContainer width="100%" height="100%">
+                   <BarChart data={analytics?.weeklyEngagement?.map(day => ({
+                     name: day.day,
+                     value: analytics.performance || 100,
+                     gradient: true
+                   })) || [
+                     { name: 'Mon', value: 100, gradient: true },
+                     { name: 'Tue', value: 100, gradient: true },
+                     { name: 'Wed', value: 100, gradient: true },
+                     { name: 'Thu', value: 100, gradient: true },
+                     { name: 'Fri', value: 100, gradient: true },
+                     { name: 'Sat', value: 100, gradient: true },
+                     { name: 'Sun', value: 100, gradient: true }
+                   ]}>
+                     <defs>
+                       <linearGradient id="performanceGradient" x1="0" y1="0" x2="0" y2="1">
+                         <stop offset="0%" stopColor="hsl(var(--chart-1))" stopOpacity="1"/>
+                         <stop offset="50%" stopColor="hsl(var(--chart-1))" stopOpacity="0.8"/>
+                         <stop offset="100%" stopColor="hsl(var(--chart-1))" stopOpacity="0.4"/>
+                       </linearGradient>
+                     </defs>
+                     <Bar dataKey="value" fill="url(#performanceGradient)" radius={2} />
+                   </BarChart>
+                 </ResponsiveContainer>
+               </div>
             </CardContent>
           </Card>
         </div>

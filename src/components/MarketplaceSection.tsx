@@ -46,62 +46,13 @@ const AGENT_CATEGORIES = [
   { id: 'fullstack', name: 'Fullstack Builder', icon: Layers },
 ]
 
-// Mock data for demo - in production this would come from database
-const FEATURED_AGENTS: PublicAgent[] = [
-  {
-    id: '1',
-    name: 'Design System Pro',
-    description: 'Expert in creating and maintaining design systems. Specialized in component libraries, tokens, and design consistency.',
-    avatar_url: null,
-    category: 'ui-ux',
-    rating: 4.9,
-    user_count: 1247,
-    creator_name: 'Sarah Chen',
-    tags: ['Design Systems', 'Components', 'Figma', 'Tokens'],
-    is_featured: true
-  },
-  {
-    id: '2', 
-    name: 'Fullstack Architect',
-    description: 'End-to-end product builder. From user research to deployment. Combines design thinking with technical execution.',
-    avatar_url: null,
-    category: 'fullstack',
-    rating: 4.8,
-    user_count: 892,
-    creator_name: 'Alex Rivera',
-    tags: ['React', 'Node.js', 'User Research', 'MVP'],
-    is_featured: true
-  },
-  {
-    id: '3',
-    name: 'UX Research Assistant',
-    description: 'Helps conduct user interviews, analyze feedback, and create actionable insights for product decisions.',
-    avatar_url: null,
-    category: 'product',
-    rating: 4.7,
-    user_count: 634,
-    creator_name: 'Maya Patel',
-    tags: ['User Research', 'Analytics', 'Insights', 'Strategy'],
-    is_featured: true
-  },
-  {
-    id: '4',
-    name: 'Frontend Performance Expert',
-    description: 'Optimizes React applications for performance. Specializes in Core Web Vitals, bundle optimization, and user experience.',
-    avatar_url: null,
-    category: 'frontend',
-    rating: 4.9,
-    user_count: 756,
-    creator_name: 'David Kim',
-    tags: ['React', 'Performance', 'Optimization', 'Web Vitals'],
-    is_featured: false
-  }
-]
+// Fallback demo data only when no real agents are available
+const FALLBACK_AGENTS: PublicAgent[] = []
 
 export const MarketplaceSection = () => {
   const navigate = useNavigate()
-  const [agents, setAgents] = useState<PublicAgent[]>(FEATURED_AGENTS)
-  const [filteredAgents, setFilteredAgents] = useState<PublicAgent[]>(FEATURED_AGENTS)
+  const [agents, setAgents] = useState<PublicAgent[]>([])
+  const [filteredAgents, setFilteredAgents] = useState<PublicAgent[]>([])
   const [selectedCategory, setSelectedCategory] = useState('all')
   const [searchQuery, setSearchQuery] = useState('')
 
@@ -112,38 +63,38 @@ export const MarketplaceSection = () => {
 
   const fetchPublicAgents = async () => {
     try {
-      // Use the secure marketplace function that never exposes system prompts
-      const { data, error } = await supabase.rpc('get_marketplace_safe')
+      // Fetch real public agents from database
+      const { data: publicAgents, error } = await supabase
+        .from('agents')
+        .select('id, name, description, avatar_url, category, rating, user_count, tags, is_featured')
+        .eq('is_public', true)
+        .limit(12)
+        .order('rating', { ascending: false })
 
       if (error) {
         console.error('Error fetching marketplace agents:', error)
-        setAgents(FEATURED_AGENTS)
+        setAgents([])
         return
       }
 
       // Transform data to match our interface
-      const transformedAgents = data?.map(agent => ({
+      const transformedAgents = publicAgents?.map(agent => ({
         id: agent.id,
-        name: agent.name,
-        description: agent.description,
+        name: agent.name || 'Unnamed Agent',
+        description: agent.description || 'No description available',
         avatar_url: agent.avatar_url,
         category: agent.category || 'ui-ux',
-        rating: agent.rating || 4.5,
-        user_count: agent.user_count || 500,
-        creator_name: 'Dollyland Expert',
+        rating: agent.rating || 0,
+        user_count: agent.user_count || 0,
+        creator_name: 'Community Creator',
         tags: Array.isArray(agent.tags) ? agent.tags : ['AI Agent'],
         is_featured: agent.is_featured || false
       })) || []
 
-      // Mix real agents with demo data if we don't have enough
-      const allAgents = transformedAgents.length > 0 
-        ? [...transformedAgents, ...FEATURED_AGENTS.slice(transformedAgents.length)] 
-        : FEATURED_AGENTS
-
-      setAgents(allAgents)
+      setAgents(transformedAgents)
     } catch (error) {
       console.error('Unexpected error fetching marketplace agents:', error)
-      setAgents(FEATURED_AGENTS) // Fallback to demo data
+      setAgents([])
     }
   }
 
