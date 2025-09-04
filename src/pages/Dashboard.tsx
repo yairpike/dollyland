@@ -347,9 +347,8 @@ export const Dashboard = () => {
 
         {/* Main Content */}
         <Tabs defaultValue="agents" className="space-y-6" data-tour="dashboard-tabs">
-          <TabsList className="grid w-full max-w-2xl grid-cols-4 bg-card border py-2 h-12 content-center">
+          <TabsList className="grid w-full max-w-2xl grid-cols-3 bg-card border py-2 h-12 content-center">
             <TabsTrigger value="agents">My Agents</TabsTrigger>
-            <TabsTrigger value="marketplace">Marketplace</TabsTrigger>
             <TabsTrigger value="community">Community</TabsTrigger>
             <TabsTrigger value="developer">Developer</TabsTrigger>
           </TabsList>
@@ -449,11 +448,6 @@ export const Dashboard = () => {
             )}
           </TabsContent>
 
-          <TabsContent value="marketplace" className="space-y-6">
-            <div className="space-y-4">
-              <AIMarketplaceDiscovery />
-            </div>
-          </TabsContent>
 
           <TabsContent value="community" className="space-y-6">
             <div className="space-y-4">
