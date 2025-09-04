@@ -132,7 +132,11 @@ const NODE_TYPES = [
   }
 ];
 
-export const AdvancedWorkflowBuilder = () => {
+interface AdvancedWorkflowBuilderProps {
+  agentId: string;
+}
+
+export const AdvancedWorkflowBuilder = ({ agentId }: AdvancedWorkflowBuilderProps) => {
   const { user } = useAuth();
   const [workflows, setWorkflows] = useState<AdvancedWorkflow[]>([]);
   const [selectedWorkflow, setSelectedWorkflow] = useState<AdvancedWorkflow | null>(null);
@@ -637,7 +641,7 @@ export const AdvancedWorkflowBuilder = () => {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between" data-tour="workflow-canvas">
         <div>
           <h3 className="text-lg font-semibold">Advanced Workflow Builder</h3>
           <p className="text-sm text-muted-foreground">

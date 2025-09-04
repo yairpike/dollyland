@@ -14,6 +14,7 @@ import { DashboardLayout } from "@/components/DashboardLayout";
 import { DashboardTour } from "@/components/tours/DashboardTour";
 import { useTourManager } from "@/components/OnboardingTour";
 import { useRealAnalytics } from "@/hooks/useRealAnalytics";
+import { AIMarketplaceDiscovery } from "@/components/AIMarketplaceDiscovery";
 
 interface Agent {
   id: string;

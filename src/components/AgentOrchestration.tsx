@@ -63,7 +63,7 @@ interface OrchestrationCondition {
 }
 
 interface AgentOrchestrationProps {
-  agentId?: string;
+  agentId: string;
 }
 
 const ORCHESTRATION_TYPES = [
@@ -294,7 +294,7 @@ export const AgentOrchestration = ({ agentId }: AgentOrchestrationProps) => {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between" data-tour="orchestration-header">
         <div>
           <h3 className="text-lg font-semibold">Agent Orchestration</h3>
           <p className="text-sm text-muted-foreground">
@@ -340,7 +340,7 @@ export const AgentOrchestration = ({ agentId }: AgentOrchestrationProps) => {
               </div>
 
               {/* Orchestration Type */}
-              <div className="space-y-3">
+              <div className="space-y-3" data-tour="agent-workflows">
                 <Label>Orchestration Type</Label>
                 <div className="grid grid-cols-2 gap-3">
                   {ORCHESTRATION_TYPES.map((type) => {

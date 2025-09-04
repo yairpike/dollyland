@@ -30,6 +30,12 @@ import { AgentMultimodal } from "@/components/AgentMultimodal";
 import { CreatorEarnings } from "@/components/CreatorEarnings";
 import { AgentOrchestration } from "@/components/AgentOrchestration";
 import { AgentLearningSystem } from "@/components/AgentLearningSystem";
+import { AdvancedWorkflowBuilder } from "@/components/AdvancedWorkflowBuilder";
+import { AgentOrchestrationTour } from "@/components/tours/AgentOrchestrationTour";
+import { AgentLearningTour } from "@/components/tours/AgentLearningTour";
+import { WorkflowBuilderTour } from "@/components/tours/WorkflowBuilderTour";
+import { EditAgentTour } from "@/components/tours/EditAgentTour";
+import { useTourManager } from "@/components/OnboardingTour";
 import { ArrowLeft, Trash2, Loader2, Settings, Database, Zap, Globe, GitBranch, Rocket, ExternalLink, Webhook, Workflow, Brain, Wand2, DollarSign, Palette } from "lucide-react";
 
 interface Agent {
@@ -57,6 +63,11 @@ export const EditAgent = () => {
     description: "",
     systemPrompt: ""
   });
+  const { shouldShowTour } = useTourManager();
+  const [showEditAgentTour, setShowEditAgentTour] = useState(false);
+  const [showOrchestrationTour, setShowOrchestrationTour] = useState(false);
+  const [showLearningTour, setShowLearningTour] = useState(false);
+  const [showWorkflowTour, setShowWorkflowTour] = useState(false);
 
   useEffect(() => {
     console.log('EditAgent useEffect triggered - agentId:', agentId, 'user:', user);
@@ -257,6 +268,33 @@ export const EditAgent = () => {
               <Rocket className="w-4 h-4" />
               Deploy
             </TabsTrigger>
+            <TabsTrigger 
+              value="orchestration" 
+              className="flex items-center gap-2 whitespace-nowrap flex-shrink-0 min-w-32" 
+              data-tour="edit-agent-orchestration"
+              onClick={() => shouldShowTour('agent-orchestration') && setShowOrchestrationTour(true)}
+            >
+              <Brain className="w-4 h-4" />
+              Orchestration
+            </TabsTrigger>
+            <TabsTrigger 
+              value="learning"
+              className="flex items-center gap-2 whitespace-nowrap flex-shrink-0 min-w-32" 
+              data-tour="edit-agent-learning"
+              onClick={() => shouldShowTour('agent-learning') && setShowLearningTour(true)}
+            >
+              <Zap className="w-4 h-4" />
+              Learning
+            </TabsTrigger>
+            <TabsTrigger 
+              value="advanced-workflows"
+              className="flex items-center gap-2 whitespace-nowrap flex-shrink-0 min-w-32" 
+              data-tour="edit-agent-advanced-workflows"
+              onClick={() => shouldShowTour('advanced-workflow-builder') && setShowWorkflowTour(true)}
+            >
+              <Workflow className="w-4 h-4" />
+              Advanced Workflows
+            </TabsTrigger>
           </TabsList>
 
           <div className="mt-8">
@@ -416,12 +454,42 @@ export const EditAgent = () => {
             <TabsContent value="deploy" className="space-y-4">
               <VercelIntegration agentId={agent.id} />
             </TabsContent>
+
+            <TabsContent value="orchestration" className="space-y-6">
+              <AgentOrchestration agentId={agent.id} />
+            </TabsContent>
+
+            <TabsContent value="learning" className="space-y-6">
+              <AgentLearningSystem agentId={agent.id} />
+            </TabsContent>
+
+            <TabsContent value="advanced-workflows" className="space-y-6">
+              <AdvancedWorkflowBuilder agentId={agent.id} />
+            </TabsContent>
           </div>
         </Tabs>
       </div>
 
       {/* Dollyland.AI Copilot */}
       <DollyCopilot context="edit-agent" />
+      
+      {/* Tours */}
+      <EditAgentTour 
+        isOpen={showEditAgentTour}
+        onClose={() => setShowEditAgentTour(false)}
+      />
+      <AgentOrchestrationTour 
+        isOpen={showOrchestrationTour}
+        onClose={() => setShowOrchestrationTour(false)}
+      />
+      <AgentLearningTour 
+        isOpen={showLearningTour}
+        onClose={() => setShowLearningTour(false)}
+      />
+      <WorkflowBuilderTour 
+        isOpen={showWorkflowTour}
+        onClose={() => setShowWorkflowTour(false)}
+      />
     </DashboardLayout>
   );
 };

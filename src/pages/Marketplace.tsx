@@ -9,6 +9,9 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Star, Search, Filter, Users, Play, Briefcase, Code, Palette, BarChart, MessageSquare, FileText, Brain, Zap } from "lucide-react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
+import { AIMarketplaceDiscovery } from "@/components/AIMarketplaceDiscovery";
+import { MarketplaceDiscoveryTour } from "@/components/tours/MarketplaceDiscoveryTour";
+import { useTourManager } from "@/components/OnboardingTour";
 
 interface PublicAgent {
   id: string;
@@ -43,10 +46,18 @@ export const Marketplace = () => {
   const [filteredAgents, setFilteredAgents] = useState<PublicAgent[]>([])
   const [selectedCategory, setSelectedCategory] = useState('all')
   const [searchQuery, setSearchQuery] = useState('')
+  const { shouldShowTour } = useTourManager()
+  const [showMarketplaceTour, setShowMarketplaceTour] = useState(false)
 
   useEffect(() => {
     fetchPublicAgents()
   }, [])
+
+  useEffect(() => {
+    if (shouldShowTour('marketplace-discovery')) {
+      setShowMarketplaceTour(true)
+    }
+  }, [shouldShowTour])
 
   useEffect(() => {
     filterAgents()
@@ -152,9 +163,14 @@ export const Marketplace = () => {
   return (
     <div className="space-y-8">
       {/* Header */}
-      <div>
+      <div data-tour="marketplace-header">
         <h1 className="text-3xl font-semibold mb-4">Agent Marketplace</h1>
         <p className="text-sm text-muted-foreground">Discover and try AI agents built by expert designers and developers</p>
+      </div>
+
+      {/* AI Marketplace Discovery */}
+      <div data-tour="ai-search">
+        <AIMarketplaceDiscovery />
       </div>
 
       {/* Search and Filter */}
@@ -303,6 +319,12 @@ export const Marketplace = () => {
           })}
         </div>
       )}
+
+      {/* Marketplace Discovery Tour */}
+      <MarketplaceDiscoveryTour 
+        isOpen={showMarketplaceTour}
+        onClose={() => setShowMarketplaceTour(false)}
+      />
     </div>
   )
 }
