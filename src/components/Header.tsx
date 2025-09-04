@@ -96,10 +96,16 @@ export const Header = () => {
             </Link>
             
             {/* Navigation - Hidden on mobile, replaced by mobile menu */}
-            <nav className="hidden lg:flex items-center gap-8">
+            <nav className="hidden lg:flex items-center gap-6">
                 {user ? <>
                    <Link to="/dashboard" className="text-muted-foreground hover:text-primary transition-all duration-300 font-medium px-3 py-2 rounded-lg hover:bg-accent/50 hover:scale-105 transform">
-                     My Agents
+                     Dashboard
+                   </Link>
+                   <Link to="/marketplace" className="text-muted-foreground hover:text-primary transition-all duration-300 font-medium px-3 py-2 rounded-lg hover:bg-accent/50 hover:scale-105 transform">
+                     Marketplace
+                   </Link>
+                   <Link to="/analytics" className="text-muted-foreground hover:text-primary transition-all duration-300 font-medium px-3 py-2 rounded-lg hover:bg-accent/50 hover:scale-105 transform">
+                     Analytics
                    </Link>
                    <Link to="/pricing" className="text-muted-foreground hover:text-primary transition-all duration-300 font-medium px-3 py-2 rounded-lg hover:bg-accent/50 hover:scale-105 transform">
                      Pricing

@@ -339,9 +339,11 @@ export const Dashboard = () => {
 
         {/* Main Content */}
         <Tabs defaultValue="agents" className="space-y-6" data-tour="dashboard-tabs">
-          <TabsList className="grid w-full max-w-md grid-cols-2 bg-card border py-2 h-12 content-center">
+          <TabsList className="grid w-full max-w-2xl grid-cols-4 bg-card border py-2 h-12 content-center">
             <TabsTrigger value="agents">My Agents</TabsTrigger>
             <TabsTrigger value="marketplace">Marketplace</TabsTrigger>
+            <TabsTrigger value="community">Community</TabsTrigger>
+            <TabsTrigger value="developer">Developer</TabsTrigger>
           </TabsList>
 
           <TabsContent value="agents" className="space-y-6">
@@ -439,19 +441,24 @@ export const Dashboard = () => {
             )}
           </TabsContent>
 
-          <TabsContent value="marketplace">
-            <Card className="p-12">
-              <div className="text-center">
-                <ShoppingBag className="w-16 h-16 mx-auto text-muted-foreground mb-4" />
-                <h3 className="text-xl font-semibold mb-2">Marketplace</h3>
-                <p className="text-muted-foreground mb-6">
-                  Discover and purchase AI agents from the community
-                </p>
-                <Button onClick={() => navigate('/marketplace')}>
-                  Browse Marketplace
-                </Button>
-              </div>
-            </Card>
+          <TabsContent value="marketplace" className="space-y-6">
+            <div className="space-y-4">
+              <AIMarketplaceDiscovery />
+            </div>
+          </TabsContent>
+
+          <TabsContent value="community" className="space-y-6">
+            <div className="space-y-4">
+              <CommunityFeatures />
+              <PredictiveAnalytics />
+            </div>
+          </TabsContent>
+
+          <TabsContent value="developer" className="space-y-6">
+            <div className="space-y-4">
+              <DeveloperAPIPortal />
+              <ThirdPartyIntegrations />
+            </div>
           </TabsContent>
         </Tabs>
 
