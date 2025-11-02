@@ -4,7 +4,7 @@ import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { Sparkles, Zap, Brain, Heart, TrendingUp, ArrowRight, ChevronDown, Layers, Rocket, LayoutGrid, ChefHat } from "lucide-react";
-import dollyLogo from "@/assets/dolly-logo-final.png";
+import dollyLogo from "@/assets/dolly-logo-sheep.png";
 
 const products = [
   {
