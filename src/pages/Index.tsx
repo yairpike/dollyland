@@ -1,295 +1,406 @@
-import { useEffect, useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { ThemeToggle } from "@/components/ThemeToggle";
-import { 
-  Sparkles, 
-  Brain, 
-  BookOpen, 
-  Calendar, 
-  TrendingUp, 
-  ChefHat, 
-  Shield,
-  Globe,
-  Zap,
-  ArrowRight,
-  ExternalLink
-} from "lucide-react";
+import { Sparkles, Zap, Brain, Heart, TrendingUp, ArrowRight, ChevronDown, Layers, Rocket, BookOpen, ChefHat } from "lucide-react";
+import dollyLogo from "@/assets/dolly-logo-final.png";
 
 const products = [
   {
-    id: "flashcards",
-    name: "Flashcards",
-    tagline: "Smart flashcards with spaced repetition",
-    description: "An intelligent learning platform to help you memorize and retain information effectively.",
-    icon: BookOpen,
-    gradient: "from-blue-500/20 via-cyan-500/20 to-teal-500/20",
-    iconColor: "text-cyan-400",
-    compatibility: ["Web"],
-    url: "#"
-  },
-  {
-    id: "aura-cycle",
-    name: "Aura Cycle",
-    tagline: "A private space to understand your cycle",
-    description: "Your data is yours - everything stays on your device, always. Works offline.",
-    icon: Calendar,
-    gradient: "from-pink-500/20 via-purple-500/20 to-violet-500/20",
-    iconColor: "text-pink-400",
-    compatibility: ["Web", "Offline"],
-    url: "#"
-  },
-  {
-    id: "stealth-wealth",
-    name: "Stealth Wealth",
-    tagline: "Portfolio tracking with real-time stock prices",
-    description: "Set up your portfolio with accurate financial data and track your investments privately.",
-    icon: TrendingUp,
-    gradient: "from-emerald-500/20 via-green-500/20 to-teal-500/20",
-    iconColor: "text-emerald-400",
-    compatibility: ["Web", "Local Storage"],
-    url: "#"
-  },
-  {
-    id: "sage",
-    name: "Sage",
-    tagline: "Smart recipe management with AI",
-    description: "AI-powered recipe generation, meal planning, and intelligent pantry management. Your culinary journey starts here.",
-    icon: ChefHat,
-    gradient: "from-orange-500/20 via-amber-500/20 to-yellow-500/20",
-    iconColor: "text-orange-400",
-    compatibility: ["Web", "AI", "Offline"],
-    url: "#"
-  },
-  {
-    id: "neura",
+    id: 5,
     name: "Neura",
-    tagline: "AI-powered knowledge management",
-    description: "Transform how you learn, research, and grow with intelligent insights, secure browsing, and knowledge evolution tracking.",
+    tagline: "AI Knowledge Engine",
+    description: "Your personal AI assistant powered by advanced language models. Chat, learn, and discover with cutting-edge AI technology.",
     icon: Brain,
-    gradient: "from-indigo-500/20 via-blue-500/20 to-cyan-500/20",
-    iconColor: "text-indigo-400",
-    compatibility: ["Web", "AI", "Privacy"],
-    url: "#"
+    gradient: "from-purple-500 via-indigo-500 to-violet-600",
+    iconColor: "text-purple-300",
+    compatibility: ["Web", "API"],
+    url: "https://neura.hypertimestudio.com",
+    featured: true,
+    preview: "Chat interface with real-time AI responses"
+  },
+  {
+    id: 4,
+    name: "Sage",
+    tagline: "Your Recipe Companion",
+    description: "AI-powered recipe discovery and meal planning. Get personalized recommendations based on your taste and dietary needs.",
+    icon: ChefHat,
+    gradient: "from-orange-500 via-amber-500 to-yellow-600",
+    iconColor: "text-orange-300",
+    compatibility: ["Web", "Mobile"],
+    url: "https://sage.hypertimestudio.com",
+    size: "large"
+  },
+  {
+    id: 1,
+    name: "Flashcards",
+    tagline: "Learn Smarter",
+    description: "AI-powered flashcard generation from any content. Transform your study materials into interactive learning experiences.",
+    icon: BookOpen,
+    gradient: "from-cyan-500 via-blue-500 to-indigo-600",
+    iconColor: "text-cyan-300",
+    compatibility: ["Web", "Mobile"],
+    url: "https://flashcards.hypertimestudio.com",
+    size: "medium"
+  },
+  {
+    id: 2,
+    name: "Aura Cycle",
+    tagline: "Track Your Wellness",
+    description: "Comprehensive period tracking with AI insights. Understand your body's patterns and optimize your health journey.",
+    icon: Heart,
+    gradient: "from-pink-500 via-rose-500 to-red-600",
+    iconColor: "text-pink-300",
+    compatibility: ["iOS", "Android"],
+    url: "https://auracycle.hypertimestudio.com",
+    size: "medium"
+  },
+  {
+    id: 3,
+    name: "Stealth Wealth",
+    tagline: "Financial Freedom",
+    description: "Smart financial planning powered by AI. Build wealth quietly with intelligent investment strategies and insights.",
+    icon: TrendingUp,
+    gradient: "from-emerald-500 via-teal-500 to-cyan-600",
+    iconColor: "text-emerald-300",
+    compatibility: ["Web", "iOS"],
+    url: "https://stealthwealth.hypertimestudio.com",
+    size: "medium"
   }
 ];
 
 export default function Index() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-  const [hoveredProduct, setHoveredProduct] = useState<string | null>(null);
+  const [hoveredProduct, setHoveredProduct] = useState<number | null>(null);
+  const [scrollY, setScrollY] = useState(0);
+  const heroRef = useRef<HTMLDivElement>(null);
+  const featuredProduct = products.find(p => p.featured);
+  const bentoProducts = products.filter(p => !p.featured);
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
       setMousePosition({ x: e.clientX, y: e.clientY });
     };
 
+    const handleScroll = () => {
+      setScrollY(window.scrollY);
+    };
+
     window.addEventListener("mousemove", handleMouseMove);
-    return () => window.removeEventListener("mousemove", handleMouseMove);
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("mousemove", handleMouseMove);
+      window.removeEventListener("scroll", handleScroll);
+    };
   }, []);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-background to-primary/5 relative overflow-hidden">
-      {/* Animated background grid */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,hsl(var(--border))_1px,transparent_1px),linear-gradient(to_bottom,hsl(var(--border))_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_0%,#000_70%,transparent_110%)] opacity-20" />
+    <div className="min-h-screen bg-background text-foreground overflow-hidden relative">
+      {/* Gradient mesh background */}
+      <div className="fixed inset-0 opacity-30">
+        <div className="absolute top-0 left-1/4 w-96 h-96 bg-primary/30 rounded-full mix-blend-multiply filter blur-3xl animate-float" />
+        <div className="absolute top-1/3 right-1/4 w-96 h-96 bg-purple-500/30 rounded-full mix-blend-multiply filter blur-3xl animate-float" style={{ animationDelay: '2s' }} />
+        <div className="absolute bottom-1/4 left-1/3 w-96 h-96 bg-indigo-500/30 rounded-full mix-blend-multiply filter blur-3xl animate-float" style={{ animationDelay: '4s' }} />
+      </div>
+
+      {/* Animated grid */}
+      <div className="fixed inset-0 bg-[linear-gradient(rgba(var(--primary-rgb),0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(var(--primary-rgb),0.02)_1px,transparent_1px)] bg-[size:80px_80px] [mask-image:radial-gradient(ellipse_at_center,black_40%,transparent_90%)]" 
+        style={{ transform: `translateY(${scrollY * 0.1}px)` }} 
+      />
       
-      {/* Cursor glow effect */}
+      {/* Magnetic cursor glow */}
       <div 
-        className="pointer-events-none fixed inset-0 z-30 transition duration-300"
+        className="fixed w-[800px] h-[800px] rounded-full pointer-events-none transition-all duration-500 blur-3xl opacity-15 mix-blend-screen"
         style={{
-          background: `radial-gradient(600px circle at ${mousePosition.x}px ${mousePosition.y}px, hsl(var(--primary) / 0.1), transparent 40%)`
+          background: `radial-gradient(circle, hsl(var(--primary)) 0%, hsl(var(--primary) / 0.5) 30%, transparent 70%)`,
+          left: mousePosition.x - 400,
+          top: mousePosition.y - 400,
         }}
       />
 
+      {/* Floating particles */}
+      <div className="fixed inset-0 pointer-events-none">
+        {[...Array(20)].map((_, i) => (
+          <div
+            key={i}
+            className="absolute w-1 h-1 bg-primary/20 rounded-full animate-float"
+            style={{
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+              animationDelay: `${Math.random() * 5}s`,
+              animationDuration: `${10 + Math.random() * 10}s`
+            }}
+          />
+        ))}
+      </div>
+
       {/* Header */}
-      <header className="relative z-40 border-b border-border/40 backdrop-blur-xl bg-background/50">
+      <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/60 backdrop-blur-2xl supports-[backdrop-filter]:bg-background/60">
         <div className="container mx-auto px-6 py-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-primary-glow flex items-center justify-center">
-              <Sparkles className="w-6 h-6 text-primary-foreground" />
-            </div>
-            <div>
-              <h1 className="text-xl font-bold bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text text-transparent">
-                Dollyland
-              </h1>
-              <p className="text-xs text-muted-foreground">Innovation Studio</p>
-            </div>
+            <img src={dollyLogo} alt="Dollyland" className="h-8 w-auto" />
+            <span className="text-xl font-bold bg-gradient-to-r from-primary via-purple-500 to-primary bg-clip-text text-transparent">
+              Dollyland
+            </span>
           </div>
           <ThemeToggle iconOnly />
         </div>
       </header>
 
-      {/* Hero Section */}
-      <section className="relative z-10 container mx-auto px-6 pt-20 pb-16">
-        <div className="max-w-4xl mx-auto text-center space-y-8">
-          {/* Floating badge */}
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 backdrop-blur-sm">
-            <Zap className="w-4 h-4 text-primary animate-pulse" />
-            <span className="text-sm font-medium text-primary">Building the Future of Digital Products</span>
-          </div>
-
-          {/* Main headline */}
-          <h2 className="text-6xl md:text-7xl font-bold leading-tight">
-            <span className="bg-gradient-to-br from-foreground via-foreground to-foreground/60 bg-clip-text text-transparent">
-              Where Ideas
-            </span>
-            <br />
-            <span className="bg-gradient-to-r from-primary via-primary-glow to-primary bg-clip-text text-transparent animate-gradient">
-              Become Reality
-            </span>
-          </h2>
-
-          {/* Subheadline */}
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-            We craft innovative digital experiences that empower users to learn, grow, and thrive in the modern world.
-          </p>
-
-          {/* CTA */}
-          <div className="flex gap-4 justify-center pt-4">
-            <Button size="lg" className="gap-2 shadow-lg shadow-primary/25">
-              Explore Products
-              <ArrowRight className="w-4 h-4" />
-            </Button>
-            <Button size="lg" variant="outline" className="gap-2">
-              <Globe className="w-4 h-4" />
-              Our Mission
-            </Button>
-          </div>
-        </div>
-      </section>
-
-      {/* Products Grid */}
-      <section className="relative z-10 container mx-auto px-6 py-16">
-        <div className="text-center mb-12">
-          <Badge variant="outline" className="mb-4 px-4 py-1">
-            <Sparkles className="w-3 h-3 mr-2" />
-            Our Products
+      <main className="relative z-10">
+        {/* Hero Section */}
+        <section ref={heroRef} className="container mx-auto px-6 py-32 text-center relative">
+          <Badge variant="outline" className="mb-8 px-6 py-2 text-sm font-medium border-primary/30 bg-primary/5 backdrop-blur-sm">
+            <Sparkles className="w-4 h-4 mr-2 inline animate-pulse" />
+            Innovation Studio
           </Badge>
-          <h3 className="text-4xl font-bold mb-4">Innovation in Action</h3>
-          <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-            Each product is crafted with care, designed to solve real problems and enhance your digital life.
+          
+          <h1 className="text-7xl md:text-9xl font-bold mb-8 tracking-tight leading-none">
+            <span className="block" style={{ transform: `translateY(${scrollY * 0.1}px)` }}>
+              Building the
+            </span>
+            <span className="block bg-gradient-to-r from-primary via-purple-500 to-indigo-500 bg-clip-text text-transparent animate-gradient bg-[length:200%_auto]">
+              Future of AI
+            </span>
+          </h1>
+          
+          <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto mb-16 leading-relaxed font-light">
+            We craft intelligent products that push the boundaries of what's possible with artificial intelligence.
           </p>
-        </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
-          {products.map((product) => {
-            const Icon = product.icon;
-            const isHovered = hoveredProduct === product.id;
+          {/* Scroll indicator */}
+          <div className="flex flex-col items-center gap-2 text-muted-foreground/50 mt-20">
+            <span className="text-xs uppercase tracking-wider">Explore</span>
+            <ChevronDown className="w-5 h-5 animate-bounce" />
+          </div>
+        </section>
 
-            return (
-              <Card
-                key={product.id}
-                className={`group relative overflow-hidden border-border/50 bg-card/50 backdrop-blur-sm hover:border-primary/50 transition-all duration-500 hover:shadow-xl hover:shadow-primary/10 ${
-                  isHovered ? "scale-[1.02]" : ""
-                }`}
-                onMouseEnter={() => setHoveredProduct(product.id)}
-                onMouseLeave={() => setHoveredProduct(null)}
-              >
-                {/* Gradient background */}
-                <div className={`absolute inset-0 bg-gradient-to-br ${product.gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
-                
-                {/* Content */}
-                <div className="relative p-6 space-y-4">
-                  {/* Icon */}
-                  <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${product.gradient} flex items-center justify-center transform group-hover:scale-110 group-hover:rotate-6 transition-all duration-500`}>
-                    <Icon className={`w-7 h-7 ${product.iconColor}`} />
-                  </div>
-
-                  {/* Title */}
-                  <div>
-                    <h4 className="text-xl font-bold mb-1 group-hover:text-primary transition-colors">
-                      {product.name}
-                    </h4>
-                    <p className="text-sm text-muted-foreground">
-                      {product.tagline}
-                    </p>
-                  </div>
-
-                  {/* Description */}
-                  <p className="text-sm text-muted-foreground leading-relaxed">
-                    {product.description}
+        {/* Featured Product Spotlight */}
+        {featuredProduct && (
+          <section className="relative py-32 overflow-hidden">
+            {/* Diagonal background */}
+            <div className="absolute inset-0 bg-gradient-to-br from-background via-primary/5 to-background transform -skew-y-2 scale-110" />
+            
+            <div className="container mx-auto px-6 relative z-10">
+              <div className="grid lg:grid-cols-2 gap-16 items-center max-w-7xl mx-auto">
+                {/* Left: Content */}
+                <div className="space-y-8" style={{ transform: `translateX(${scrollY * 0.05}px)` }}>
+                  <Badge className={`bg-gradient-to-r ${featuredProduct.gradient} text-white border-0 px-4 py-1.5`}>
+                    <Rocket className="w-3 h-3 mr-2" />
+                    Featured Product
+                  </Badge>
+                  
+                  <h2 className="text-5xl md:text-7xl font-bold leading-tight">
+                    {featuredProduct.name}
+                  </h2>
+                  
+                  <p className="text-xl text-muted-foreground leading-relaxed">
+                    {featuredProduct.description}
                   </p>
 
-                  {/* Compatibility badges */}
-                  <div className="flex flex-wrap gap-2">
-                    {product.compatibility.map((tech) => (
-                      <Badge 
-                        key={tech} 
-                        variant="secondary" 
-                        className="text-xs px-2 py-0.5"
-                      >
-                        {tech}
+                  <div className="flex flex-wrap gap-3">
+                    {featuredProduct.compatibility.map((platform) => (
+                      <Badge key={platform} variant="secondary" className="px-4 py-1.5">
+                        {platform}
                       </Badge>
                     ))}
                   </div>
 
-                  {/* CTA */}
-                  <div className="pt-2">
-                    <Button
-                      variant="ghost"
-                      className="w-full justify-between group/btn hover:bg-primary/10"
-                      onClick={() => window.open(product.url, '_blank')}
+                  <div className="flex gap-4 pt-4">
+                    <Button 
+                      size="lg"
+                      className={`bg-gradient-to-r ${featuredProduct.gradient} text-white border-0 hover:scale-105 transition-transform shadow-lg shadow-primary/25`}
+                      onClick={() => window.open(featuredProduct.url, '_blank')}
                     >
-                      <span>Learn More</span>
-                      <ExternalLink className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
+                      Launch App
+                      <ArrowRight className="w-5 h-5 ml-2" />
                     </Button>
                   </div>
                 </div>
 
-                {/* Shine effect on hover */}
-                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
-                </div>
-              </Card>
-            );
-          })}
-        </div>
-      </section>
+                {/* Right: Visual Preview */}
+                <div className="relative" style={{ transform: `translateX(${-scrollY * 0.05}px)` }}>
+                  <div className={`relative aspect-square rounded-3xl bg-gradient-to-br ${featuredProduct.gradient} p-1 shadow-2xl shadow-primary/20 hover:shadow-primary/40 transition-all duration-500 hover:scale-105 group`}>
+                    <div className="w-full h-full rounded-3xl bg-background/95 backdrop-blur-xl flex items-center justify-center relative overflow-hidden">
+                      <featuredProduct.icon className={`w-32 h-32 ${featuredProduct.iconColor} opacity-20 group-hover:opacity-40 transition-opacity group-hover:scale-110 duration-500`} />
+                      
+                      {/* Floating orb effect */}
+                      <div className={`absolute inset-0 bg-gradient-to-br ${featuredProduct.gradient} opacity-0 group-hover:opacity-20 transition-opacity duration-500`} />
+                    </div>
+                  </div>
 
-      {/* Footer */}
-      <footer className="relative z-10 border-t border-border/40 backdrop-blur-xl bg-background/50 mt-20">
-        <div className="container mx-auto px-6 py-12">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-primary-glow flex items-center justify-center">
-                <Sparkles className="w-6 h-6 text-primary-foreground" />
-              </div>
-              <div>
-                <h3 className="font-bold text-lg">Dollyland</h3>
-                <p className="text-sm text-muted-foreground">Innovation Studio</p>
+                  {/* Floating badge */}
+                  <div className="absolute -top-4 -right-4 bg-background border border-border rounded-full p-4 shadow-lg animate-float">
+                    <Brain className="w-6 h-6 text-primary" />
+                  </div>
+                </div>
               </div>
             </div>
-            
-            <div className="flex items-center gap-6">
-              <a href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-                About
-              </a>
-              <a href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-                Contact
-              </a>
-              <a href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-                Privacy
-              </a>
-              <a href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-                Terms
-              </a>
-            </div>
-          </div>
-          
-          <div className="mt-8 pt-8 border-t border-border/40 text-center">
-            <p className="text-sm text-muted-foreground">
-              © 2024 Dollyland. Building the future, one product at a time.
+          </section>
+        )}
+
+        {/* Bento Grid - Remaining Products */}
+        <section className="container mx-auto px-6 py-32">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-6xl font-bold mb-4">
+              Our Ecosystem
+            </h2>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              Each product designed to solve real problems with AI-powered innovation
             </p>
           </div>
-        </div>
-      </footer>
 
-      {/* Ambient orbs */}
-      <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
-        <div className="absolute top-1/4 -left-48 w-96 h-96 bg-primary/30 rounded-full blur-3xl animate-pulse" />
-        <div className="absolute bottom-1/4 -right-48 w-96 h-96 bg-primary-glow/30 rounded-full blur-3xl animate-pulse" style={{ animationDelay: "1s" }} />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-accent/20 rounded-full blur-3xl animate-pulse" style={{ animationDelay: "2s" }} />
-      </div>
+          {/* Asymmetric Bento Layout */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto">
+            {bentoProducts.map((product, index) => {
+              const Icon = product.icon;
+              const isHovered = hoveredProduct === product.id;
+              const isLarge = product.size === 'large';
+              
+              return (
+                <Card
+                  key={product.id}
+                  onMouseEnter={() => setHoveredProduct(product.id)}
+                  onMouseLeave={() => setHoveredProduct(null)}
+                  className={`group relative overflow-hidden border-border/50 bg-card/40 backdrop-blur-sm transition-all duration-700 hover:border-primary/50 cursor-pointer ${
+                    isLarge ? 'md:col-span-2 md:row-span-2' : 'lg:col-span-2'
+                  }`}
+                  style={{
+                    animationDelay: `${index * 150}ms`,
+                    transform: isHovered ? `translateY(-8px) scale(1.02)` : 'translateY(0) scale(1)',
+                  }}
+                  onClick={() => window.open(product.url, '_blank')}
+                >
+                  {/* Gradient mesh background */}
+                  <div className={`absolute inset-0 bg-gradient-to-br ${product.gradient} opacity-0 group-hover:opacity-5 transition-all duration-700`} />
+                  
+                  {/* Glow effect on hover */}
+                  <div className={`absolute inset-0 bg-gradient-to-br ${product.gradient} opacity-0 group-hover:opacity-10 blur-2xl transition-all duration-700`} />
+                  
+                  <div className={`relative ${isLarge ? 'p-12' : 'p-8'} h-full flex flex-col`}>
+                    {/* Icon with floating animation */}
+                    <div className={`${isLarge ? 'w-20 h-20 mb-8' : 'w-16 h-16 mb-6'} rounded-2xl bg-gradient-to-br ${product.gradient} flex items-center justify-center group-hover:scale-110 group-hover:rotate-3 transition-all duration-500 shadow-lg relative`}>
+                      <Icon className={`${isLarge ? 'w-10 h-10' : 'w-8 h-8'} ${product.iconColor}`} />
+                      
+                      {/* Pulse ring */}
+                      <div className={`absolute inset-0 rounded-2xl bg-gradient-to-br ${product.gradient} opacity-0 group-hover:opacity-50 group-hover:scale-150 transition-all duration-700 blur-md`} />
+                    </div>
+
+                    <div className="flex-1">
+                      <h3 className={`${isLarge ? 'text-4xl mb-3' : 'text-2xl mb-2'} font-bold group-hover:text-primary transition-colors duration-300`}>
+                        {product.name}
+                      </h3>
+                      
+                      <p className={`${isLarge ? 'text-base' : 'text-sm'} text-primary/70 mb-4 font-medium`}>
+                        {product.tagline}
+                      </p>
+                      
+                      <p className={`${isLarge ? 'text-base' : 'text-sm'} text-muted-foreground/80 mb-6 ${isLarge ? 'line-clamp-3' : 'line-clamp-2'}`}>
+                        {product.description}
+                      </p>
+                    </div>
+
+                    <div className="flex flex-wrap gap-2 mb-6">
+                      {product.compatibility.map((platform) => (
+                        <Badge 
+                          key={platform} 
+                          variant="secondary" 
+                          className="text-xs bg-background/80 backdrop-blur-sm group-hover:bg-primary/10 transition-colors"
+                        >
+                          {platform}
+                        </Badge>
+                      ))}
+                    </div>
+
+                    <div className="flex items-center text-sm font-medium text-primary/70 group-hover:text-primary transition-colors">
+                      Explore <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-2 transition-transform duration-300" />
+                    </div>
+                  </div>
+
+                  {/* Border glow */}
+                  {isHovered && (
+                    <div className={`absolute inset-0 border-2 border-primary/30 rounded-lg pointer-events-none shadow-lg shadow-primary/10`} />
+                  )}
+                </Card>
+              );
+            })}
+          </div>
+        </section>
+
+        {/* Innovation Metrics */}
+        <section className="container mx-auto px-6 py-32">
+          <div className="max-w-5xl mx-auto">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              <Card className="relative overflow-hidden border-border/50 bg-card/40 backdrop-blur-sm p-8 text-center group hover:border-primary/50 transition-all duration-500">
+                <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                <div className="relative">
+                  <Layers className="w-12 h-12 mx-auto mb-4 text-primary" />
+                  <div className="text-5xl font-bold mb-2 bg-gradient-to-r from-primary to-purple-500 bg-clip-text text-transparent">
+                    5
+                  </div>
+                  <div className="text-sm text-muted-foreground uppercase tracking-wider">Products Launched</div>
+                </div>
+              </Card>
+
+              <Card className="relative overflow-hidden border-border/50 bg-card/40 backdrop-blur-sm p-8 text-center group hover:border-primary/50 transition-all duration-500">
+                <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                <div className="relative">
+                  <Brain className="w-12 h-12 mx-auto mb-4 text-purple-500" />
+                  <div className="text-5xl font-bold mb-2 bg-gradient-to-r from-purple-500 to-indigo-500 bg-clip-text text-transparent">
+                    AI
+                  </div>
+                  <div className="text-sm text-muted-foreground uppercase tracking-wider">Powered Innovation</div>
+                </div>
+              </Card>
+
+              <Card className="relative overflow-hidden border-border/50 bg-card/40 backdrop-blur-sm p-8 text-center group hover:border-primary/50 transition-all duration-500">
+                <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                <div className="relative">
+                  <Rocket className="w-12 h-12 mx-auto mb-4 text-indigo-500" />
+                  <div className="text-5xl font-bold mb-2 bg-gradient-to-r from-indigo-500 to-cyan-500 bg-clip-text text-transparent">
+                    ∞
+                  </div>
+                  <div className="text-sm text-muted-foreground uppercase tracking-wider">Possibilities</div>
+                </div>
+              </Card>
+            </div>
+          </div>
+        </section>
+
+        {/* Philosophy Section */}
+        <section className="container mx-auto px-6 py-32 text-center">
+          <div className="max-w-4xl mx-auto space-y-8">
+            <h2 className="text-3xl md:text-5xl font-bold leading-tight">
+              "Innovation isn't about predicting the future.{" "}
+              <span className="bg-gradient-to-r from-primary via-purple-500 to-indigo-500 bg-clip-text text-transparent">
+                It's about building it."
+              </span>
+            </h2>
+            <p className="text-lg text-muted-foreground">
+              At Dollyland, we believe in creating products that don't just use AI—they reimagine what's possible.
+            </p>
+          </div>
+        </section>
+
+        {/* Minimalist Footer */}
+        <footer className="container mx-auto px-6 py-12 border-t border-border/20">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-6 max-w-7xl mx-auto">
+            <div className="flex items-center gap-3 opacity-70">
+              <img src={dollyLogo} alt="Dollyland" className="h-6 w-auto" />
+              <span className="text-sm text-muted-foreground">
+                © 2024 Dollyland Innovation Studio
+              </span>
+            </div>
+            
+            <div className="flex gap-8 text-sm text-muted-foreground">
+              <a href="#" className="hover:text-primary transition-colors">Privacy</a>
+              <a href="#" className="hover:text-primary transition-colors">Terms</a>
+              <a href="#" className="hover:text-primary transition-colors">Contact</a>
+            </div>
+          </div>
+        </footer>
+      </main>
     </div>
   );
 }
