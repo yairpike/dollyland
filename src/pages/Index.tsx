@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { ThemeToggle } from "@/components/ThemeToggle";
-import { Sparkles, Zap, Brain, Heart, TrendingUp, ArrowRight, ChevronDown, Layers, Rocket, BookOpen, ChefHat } from "lucide-react";
+import { Sparkles, Zap, Brain, Heart, TrendingUp, ArrowRight, ChevronDown, Layers, Rocket, LayoutGrid, ChefHat } from "lucide-react";
 import dollyLogo from "@/assets/dolly-logo-final.png";
 
 const products = [
@@ -37,7 +37,7 @@ const products = [
     name: "Flashcards",
     tagline: "Learn Smarter",
     description: "AI-powered flashcard generation from any content. Transform your study materials into interactive learning experiences.",
-    icon: BookOpen,
+    icon: LayoutGrid,
     gradient: "from-cyan-500 via-blue-500 to-indigo-600",
     iconColor: "text-cyan-300",
     compatibility: ["Web", "Mobile"],
