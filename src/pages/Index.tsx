@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -83,12 +84,21 @@ const products = [
 ];
 
 export default function Index() {
+  const navigate = useNavigate();
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [hoveredProduct, setHoveredProduct] = useState<number | null>(null);
   const [scrollY, setScrollY] = useState(0);
   const heroRef = useRef<HTMLDivElement>(null);
   const featuredProduct = products.find(p => p.featured);
   const bentoProducts = products.filter(p => !p.featured);
+
+  const handleProductClick = (url: string) => {
+    if (url.startsWith('/')) {
+      navigate(url);
+    } else {
+      window.open(url, '_blank');
+    }
+  };
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
@@ -223,9 +233,9 @@ export default function Index() {
                     <Button 
                       size="lg"
                       className={`bg-gradient-to-r ${featuredProduct.gradient} text-white border-0 hover:scale-105 transition-transform shadow-lg shadow-primary/25`}
-                      onClick={() => window.open(featuredProduct.url, '_blank')}
+                      onClick={() => handleProductClick(featuredProduct.url)}
                     >
-                      Launch App
+                      {featuredProduct.url.startsWith('/') ? 'Explore System' : 'Launch App'}
                       <ArrowRight className="w-5 h-5 ml-2" />
                     </Button>
                   </div>
@@ -282,7 +292,7 @@ export default function Index() {
                     animationDelay: `${index * 150}ms`,
                     transform: isHovered ? `translateY(-8px) scale(1.02)` : 'translateY(0) scale(1)',
                   }}
-                  onClick={() => window.open(product.url, '_blank')}
+                  onClick={() => handleProductClick(product.url)}
                 >
                   {/* Gradient mesh background */}
                   <div className={`absolute inset-0 bg-gradient-to-br ${product.gradient} opacity-0 group-hover:opacity-5 transition-all duration-700`} />

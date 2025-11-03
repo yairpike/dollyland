@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { toast } from "@/hooks/use-toast";
 import {
   DSButton,
   DSCard,
@@ -35,6 +37,12 @@ import {
   DSBreadcrumbLink,
   DSBreadcrumbSeparator,
   DSBreadcrumbPage,
+  DSDialog,
+  DSDialogContent,
+  DSDialogDescription,
+  DSDialogHeader,
+  DSDialogTitle,
+  DSDialogTrigger,
 } from "@/components/design-system";
 import {
   Users,
@@ -50,8 +58,18 @@ import {
 } from "lucide-react";
 
 export default function Examples() {
+  const navigate = useNavigate();
   const [checked, setChecked] = useState(false);
   const [switched, setSwitched] = useState(false);
+  const [settingsOpen, setSettingsOpen] = useState(false);
+
+  const handleFormSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    toast({
+      title: "Form Submitted!",
+      description: "Your message has been sent successfully.",
+    });
+  };
 
   return (
     <div className="min-h-screen bg-background">
@@ -64,25 +82,48 @@ export default function Examples() {
             </h1>
             <DSNavList>
               <li>
-                <DSNavItem href="/" icon={Home} isActive>
+                <DSNavItem href="/" icon={Home} onClick={(e) => { e.preventDefault(); navigate('/'); }}>
                   Home
                 </DSNavItem>
               </li>
               <li>
-                <DSNavItem href="/design-system">Components</DSNavItem>
+                <DSNavItem href="/design-system" onClick={(e) => { e.preventDefault(); navigate('/design-system'); }}>
+                  Components
+                </DSNavItem>
               </li>
               <li>
-                <DSNavItem href="/examples">Examples</DSNavItem>
+                <DSNavItem href="/examples" isActive onClick={(e) => { e.preventDefault(); navigate('/examples'); }}>
+                  Examples
+                </DSNavItem>
               </li>
             </DSNavList>
           </div>
           <div className="flex items-center gap-4">
-            <DSButton variant="ghost" size="icon">
+            <DSButton 
+              variant="ghost" 
+              size="icon"
+              onClick={() => toast({ title: "Notifications", description: "No new notifications" })}
+            >
               <Bell className="w-4 h-4" />
             </DSButton>
-            <DSButton variant="ghost" size="icon">
-              <Settings className="w-4 h-4" />
-            </DSButton>
+            <DSDialog open={settingsOpen} onOpenChange={setSettingsOpen}>
+              <DSDialogTrigger asChild>
+                <DSButton variant="ghost" size="icon">
+                  <Settings className="w-4 h-4" />
+                </DSButton>
+              </DSDialogTrigger>
+              <DSDialogContent>
+                <DSDialogHeader>
+                  <DSDialogTitle>Settings</DSDialogTitle>
+                  <DSDialogDescription>
+                    Manage your application settings and preferences.
+                  </DSDialogDescription>
+                </DSDialogHeader>
+                <div className="py-4">
+                  <p className="text-sm text-muted-foreground">Settings panel coming soon...</p>
+                </div>
+              </DSDialogContent>
+            </DSDialog>
           </div>
         </div>
       </DSNavigation>
@@ -92,11 +133,15 @@ export default function Examples() {
         <DSBreadcrumb className="mb-8">
           <DSBreadcrumbList>
             <DSBreadcrumbItem>
-              <DSBreadcrumbLink href="/">Home</DSBreadcrumbLink>
+              <DSBreadcrumbLink href="/" onClick={(e) => { e.preventDefault(); navigate('/'); }}>
+                Home
+              </DSBreadcrumbLink>
             </DSBreadcrumbItem>
             <DSBreadcrumbSeparator />
             <DSBreadcrumbItem>
-              <DSBreadcrumbLink href="/examples">Examples</DSBreadcrumbLink>
+              <DSBreadcrumbLink href="/examples" onClick={(e) => { e.preventDefault(); navigate('/examples'); }}>
+                Examples
+              </DSBreadcrumbLink>
             </DSBreadcrumbItem>
             <DSBreadcrumbSeparator />
             <DSBreadcrumbItem>
@@ -186,9 +231,9 @@ export default function Examples() {
           <h2 className="text-3xl font-bold mb-6">Form Components</h2>
           <DSCard className="p-8">
             <h3 className="text-2xl font-bold mb-6">Contact Form</h3>
-            <div className="space-y-6">
-              <DSInput label="Full Name" placeholder="John Doe" />
-              <DSInput label="Email" type="email" placeholder="john@example.com" />
+            <form onSubmit={handleFormSubmit} className="space-y-6">
+              <DSInput label="Full Name" placeholder="John Doe" required />
+              <DSInput label="Email" type="email" placeholder="john@example.com" required />
               
               <DSSelect>
                 <DSSelectTrigger>
@@ -201,7 +246,7 @@ export default function Examples() {
                 </DSSelectContent>
               </DSSelect>
 
-              <DSTextarea label="Message" placeholder="Tell us what's on your mind..." />
+              <DSTextarea label="Message" placeholder="Tell us what's on your mind..." required />
 
               <div className="flex items-center space-x-2">
                 <DSCheckbox
@@ -225,10 +270,10 @@ export default function Examples() {
                 </label>
               </div>
 
-              <DSButton variant="gradient" className="w-full">
+              <DSButton type="submit" variant="gradient" className="w-full">
                 Submit Form
               </DSButton>
-            </div>
+            </form>
           </DSCard>
         </section>
 

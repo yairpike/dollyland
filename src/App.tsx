@@ -8,6 +8,7 @@ import { ErrorBoundary } from "@/components/ErrorBoundary";
 import Index from "./pages/Index";
 import DesignSystem from "./pages/DesignSystem";
 import Examples from "./pages/Examples";
+import Installation from "./pages/Installation";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient({
@@ -27,12 +28,13 @@ const App = () => (
           <Toaster />
           <Sonner />
           <BrowserRouter>
-            <Routes>
-              <Route path="/" element={<Index />} />
-              <Route path="/design-system" element={<DesignSystem />} />
-              <Route path="/examples" element={<Examples />} />
-              <Route path="*" element={<NotFound />} />
-            </Routes>
+          <Routes>
+            <Route path="/" element={<Index />} />
+            <Route path="/design-system" element={<DesignSystem />} />
+            <Route path="/examples" element={<Examples />} />
+            <Route path="/installation" element={<Installation />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
           </BrowserRouter>
         </TooltipProvider>
       </ErrorBoundary>
