@@ -1,7 +1,29 @@
 import { useState } from "react";
-import { DSButton, DSBadge, DSCard, DSMetricCard, DSGradientMesh, DSFloatingParticles, DSMagneticCursor, DSHeader } from "@/components/design-system";
+import {
+  DSButton,
+  DSBadge,
+  DSCard,
+  DSMetricCard,
+  DSGradientMesh,
+  DSFloatingParticles,
+  DSMagneticCursor,
+  DSHeader,
+  DSTabs,
+  DSTabsList,
+  DSTabsTrigger,
+  DSTabsContent,
+  DSAlert,
+  DSAlertTitle,
+  DSAlertDescription,
+  DSInput,
+  DSSelect,
+  DSSelectTrigger,
+  DSSelectValue,
+  DSSelectContent,
+  DSSelectItem,
+} from "@/components/design-system";
 import { PRODUCT_GRADIENTS, ICON_COLORS } from "@/lib/design-tokens";
-import { Code2, Palette, Layers, Sparkles, Zap, Heart, Copy, Check } from "lucide-react";
+import { Code2, Palette, Layers, Sparkles, Zap, Heart, Copy, Check, Info, AlertCircle, CheckCircle } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 

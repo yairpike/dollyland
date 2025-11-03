@@ -1,73 +1,221 @@
-# Welcome to your Lovable project
+# 🎨 Dollyland Design System
 
-## Project info
+A production-ready, glassmorphic design system built for SaaS applications. Features 29 customizable components with beautiful gradients, smooth animations, and responsive layouts.
 
-**URL**: https://lovable.dev/projects/2458eab8-fa71-4c83-bd40-a828fdddb540
+## ✨ Features
 
-## How can I edit this code?
+- **29+ Production-Ready Components** - From buttons to complex data tables
+- **Glassmorphic Design** - Modern backdrop blur effects and translucent layers
+- **Gradient Everything** - Beautiful color transitions and hover effects
+- **Fully Responsive** - Mobile-first design that works everywhere
+- **Dark Mode Ready** - Seamless theme switching
+- **TypeScript First** - Full type safety and IntelliSense support
+- **Accessible** - WCAG AA compliant components
+- **Customizable** - Easy to theme with CSS variables
 
-There are several ways of editing your application.
+## 🚀 Quick Start
 
-**Use Lovable**
+### Using This Template in Lovable
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/2458eab8-fa71-4c83-bd40-a828fdddb540) and start prompting.
+1. **Remix This Project**
+   - Open this project in Lovable
+   - Click "Settings" → "Remix this project"
+   - Start building with all components ready to use
 
-Changes made via Lovable will be committed automatically to this repo.
+2. **Start Building**
+   ```tsx
+   import { DSButton, DSCard, DSTabs } from '@/components/design-system';
+   
+   function App() {
+     return (
+       <DSCard>
+         <DSButton variant="gradient">Click Me</DSButton>
+       </DSCard>
+     );
+   }
+   ```
 
-**Use your preferred IDE**
+### Manual Installation (Other Projects)
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+1. **Copy Design System Files**
+   ```
+   src/components/design-system/
+   src/lib/design-tokens.ts
+   src/styles/design-system.css
+   src/hooks/useHoverGlow.ts
+   src/hooks/useMousePosition.ts
+   src/hooks/useScrollParallax.ts
+   ```
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+2. **Install Dependencies**
+   ```bash
+   npm install lucide-react class-variance-authority @radix-ui/react-slot
+   ```
 
-Follow these steps:
+3. **Import Styles**
+   Add to your `src/index.css`:
+   ```css
+   @import './styles/design-system.css';
+   ```
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+4. **Update Tailwind Config**
+   Add to `tailwind.config.ts` content array:
+   ```js
+   './src/components/design-system/**/*.{ts,tsx}'
+   ```
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+## 📦 Component Categories
 
-# Step 3: Install the necessary dependencies.
-npm i
+### Base Components (4)
+- **DSButton** - Gradient buttons with multiple variants
+- **DSBadge** - Status badges with animations
+- **DSCard** - Glassmorphic cards with hover effects
+- **DSMetricCard** - Animated metric displays
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
+### Navigation & Layout (7)
+- **DSTabs** - Glassmorphic tabs with gradient active state
+- **DSSidebar** - Collapsible sidebar with magnetic hover
+- **DSNavigation** - Sticky navigation with blur effect
+- **DSBreadcrumb** - Breadcrumbs with gradient separators
+
+### Data Display (3)
+- **DSTable** - Enhanced tables with hover glow
+- **DSDataCard** - Stats cards with animated values
+
+### Feedback & Overlays (5)
+- **DSAlert** - Notifications with icon gradients
+- **DSDialog** - Modal dialogs with backdrop blur
+- **DSSheet** - Slide-in panels
+- **DSTooltip** - Glassmorphic tooltips
+
+### Forms & Inputs (7)
+- **DSInput** - Floating label inputs with gradient focus
+- **DSTextarea** - Auto-resize textarea
+- **DSSelect** - Glassmorphic dropdown
+- **DSCheckbox** - Gradient checked state
+- **DSRadioGroup** - Gradient selection rings
+- **DSSwitch** - Smooth toggle animation
+
+### Actions (2)
+- **DSDropdown** - Context menus
+- **DSCommand** - Command palette search
+
+### Visual Effects (3)
+- **DSGradientMesh** - Animated gradient backgrounds
+- **DSFloatingParticles** - Particle effects
+- **DSMagneticCursor** - Cursor interactions
+
+## 🎨 Design Tokens
+
+All colors and styles are customizable via CSS variables in `src/index.css`:
+
+```css
+:root {
+  --primary: 258 15% 22%;
+  --primary-glow: 258 30% 35%;
+  --gradient-primary: linear-gradient(135deg, hsl(258 15% 22%), hsl(257 63% 92%));
+  --shadow-glow: 0 8px 32px 0 hsl(258 15% 22% / 0.2);
+  /* ... more tokens */
+}
 ```
 
-**Edit a file directly in GitHub**
+## 📖 Documentation
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+Visit `/design-system` route in your app to see:
+- Interactive component showcase
+- Usage examples with code
+- Customization options
+- Best practices
 
-**Use GitHub Codespaces**
+## 🔧 Customization
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+### Changing Theme Colors
 
-## What technologies are used for this project?
+Edit `src/index.css`:
 
-This project is built with:
+```css
+:root {
+  --primary: YOUR_HUE YOUR_SAT YOUR_LIGHT;
+  --primary-glow: YOUR_HUE YOUR_SAT YOUR_LIGHT;
+}
+```
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+### Adding Custom Gradients
 
-## How can I deploy this project?
+Edit `src/lib/design-tokens.ts`:
 
-Simply open [Lovable](https://lovable.dev/projects/2458eab8-fa71-4c83-bd40-a828fdddb540) and click on Share -> Publish.
+```ts
+export const PRODUCT_GRADIENTS = {
+  custom: 'from-blue-500 via-purple-500 to-pink-600',
+};
+```
 
-## Can I connect a custom domain to my Lovable project?
+### Creating Custom Variants
 
-Yes, you can!
+Extend component variants:
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+```tsx
+// In DSButton.tsx
+const dsButtonVariants = cva(
+  "...",
+  {
+    variants: {
+      variant: {
+        // Add your custom variant
+        premium: "bg-gradient-to-r from-gold-500 to-gold-700",
+      }
+    }
+  }
+);
+```
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+## 📱 Example Pages
+
+- **Landing Page** (`/`) - Hero section with product showcase
+- **Design System** (`/design-system`) - Complete component documentation
+- **Examples** (`/examples`) - Real-world usage examples
+
+## 🤝 Contributing
+
+This design system is open for contributions:
+
+1. Fork the project in Lovable
+2. Make your changes
+3. Share your remix with improvements
+
+## 📄 License
+
+MIT License - Use freely in your projects
+
+## 🆘 Support
+
+- **Documentation**: Visit `/design-system` in your app
+- **Lovable Community**: [Discord](https://discord.com/channels/1119885301872070706/1280461670979993613)
+- **Issues**: Report bugs via GitHub Issues (if connected)
+
+## 🎯 Roadmap
+
+- [x] Phase 1: Core 29 components
+- [ ] Phase 2: Advanced animations
+- [ ] Phase 3: More chart components
+- [ ] Phase 4: Form validation helpers
+- [ ] Phase 5: Layout templates
+
+## 🌟 Showcase
+
+Built with Dollyland Design System:
+- Add your project here!
+
+---
+
+**Built with ❤️ using [Lovable](https://lovable.dev)**
+
+## Version History
+
+### v1.0.0 (Current)
+- Initial release with 29 production-ready components
+- Full TypeScript support
+- Dark mode support
+- Responsive design
+- Glassmorphic styling
+- Gradient animations
