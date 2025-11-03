@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import Index from "./pages/Index";
+import DesignSystem from "./pages/DesignSystem";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient({
@@ -27,6 +28,7 @@ const App = () => (
           <BrowserRouter>
             <Routes>
               <Route path="/" element={<Index />} />
+              <Route path="/design-system" element={<DesignSystem />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </BrowserRouter>

@@ -8,6 +8,19 @@ import dollyLogo from "@/assets/dolly-logo-sheep.png";
 
 const products = [
   {
+    id: 6,
+    name: "Dollyland Design System",
+    tagline: "Build Like We Do",
+    description: "A comprehensive design system with glassmorphic effects, gradient meshes, and 3D transforms. Everything you see here, packaged and ready to use.",
+    icon: Layers,
+    gradient: "from-indigo-500 via-purple-500 to-pink-500",
+    iconColor: "text-indigo-300",
+    compatibility: ["React", "TypeScript", "Tailwind"],
+    url: "/design-system",
+    featured: true,
+    preview: "Reusable components with cutting-edge design"
+  },
+  {
     id: 5,
     name: "Neura",
     tagline: "AI Knowledge Engine",
@@ -17,8 +30,7 @@ const products = [
     iconColor: "text-purple-300",
     compatibility: ["Web", "API"],
     url: "https://neura.hypertimestudio.com",
-    featured: true,
-    preview: "Chat interface with real-time AI responses"
+    size: "large"
   },
   {
     id: 4,
@@ -337,7 +349,7 @@ export default function Index() {
                 <div className="relative">
                   <Layers className="w-12 h-12 mx-auto mb-4 text-primary" />
                   <div className="text-5xl font-bold mb-2 bg-gradient-to-r from-primary to-purple-500 bg-clip-text text-transparent">
-                    5
+                    6
                   </div>
                   <div className="text-sm text-muted-foreground uppercase tracking-wider">Products Launched</div>
                 </div>
