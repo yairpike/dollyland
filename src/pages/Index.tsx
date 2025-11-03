@@ -1,9 +1,9 @@
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
+import { Navigation } from "@/components/Navigation";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { ThemeToggle } from "@/components/ThemeToggle";
 import { Sparkles, Zap, Brain, Heart, TrendingUp, ArrowRight, ChevronDown, Layers, Rocket, LayoutGrid, ChefHat } from "lucide-react";
 import dollyLogo from "@/assets/dolly-logo-sheep.png";
 
@@ -158,17 +158,7 @@ export default function Index() {
       </div>
 
       {/* Header */}
-      <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/60 backdrop-blur-2xl supports-[backdrop-filter]:bg-background/60">
-        <div className="container mx-auto px-6 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <img src={dollyLogo} alt="Dollyland" className="h-8 w-auto" />
-            <span className="text-xl font-bold bg-gradient-to-r from-primary via-purple-500 to-primary bg-clip-text text-transparent">
-              Dollyland
-            </span>
-          </div>
-          <ThemeToggle iconOnly />
-        </div>
-      </header>
+      <Navigation currentPage="home" />
 
       <main className="relative z-10">
         {/* Hero Section */}

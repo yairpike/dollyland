@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Navigation } from "@/components/Navigation";
 import {
   DSCard,
   DSButton,
@@ -76,11 +77,10 @@ export default function Installation() {
 
   return (
     <div className="min-h-screen bg-background">
+      <Navigation currentPage="installation" />
+      
       <div className="container mx-auto px-6 py-12 max-w-4xl">
         <div className="mb-12">
-          <DSButton variant="ghost" onClick={() => navigate(-1)} className="mb-6">
-            ← Back
-          </DSButton>
           
           <h1 className="text-5xl font-bold mb-4 bg-gradient-to-r from-primary to-primary-glow bg-clip-text text-transparent">
             Installation Guide

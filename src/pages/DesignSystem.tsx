@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-
+import { Navigation } from "@/components/Navigation";
 import {
   DSButton,
   DSBadge,
@@ -9,7 +9,6 @@ import {
   DSGradientMesh,
   DSFloatingParticles,
   DSMagneticCursor,
-  DSHeader,
   DSTabs,
   DSTabsList,
   DSTabsTrigger,
@@ -143,7 +142,7 @@ cp src/styles/design-system.css your-project/src/styles/
       <DSFloatingParticles count={15} />
       
       {/* Header */}
-      <DSHeader brandName="Dollyland Design System" />
+      <Navigation currentPage="components" />
 
       {/* Hero */}
       <section className="container mx-auto px-6 py-24 text-center">
