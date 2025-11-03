@@ -1,19 +1,10 @@
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { toast } from "@/hooks/use-toast";
 import {
   DSNavigation,
   DSNavItem,
   DSNavList,
-  DSButton,
-  DSDialog,
-  DSDialogContent,
-  DSDialogDescription,
-  DSDialogHeader,
-  DSDialogTitle,
-  DSDialogTrigger,
 } from "@/components/design-system";
-import { Home, Settings, Bell } from "lucide-react";
+import { Home } from "lucide-react";
 
 interface NavigationProps {
   currentPage: "home" | "components" | "examples" | "installation";
@@ -21,7 +12,6 @@ interface NavigationProps {
 
 export function Navigation({ currentPage }: NavigationProps) {
   const navigate = useNavigate();
-  const [settingsOpen, setSettingsOpen] = useState(false);
 
   return (
     <DSNavigation>
@@ -69,33 +59,6 @@ export function Navigation({ currentPage }: NavigationProps) {
               </DSNavItem>
             </li>
           </DSNavList>
-        </div>
-        <div className="flex items-center gap-4">
-          <DSButton 
-            variant="ghost" 
-            size="icon"
-            onClick={() => toast({ title: "Notifications", description: "No new notifications" })}
-          >
-            <Bell className="w-4 h-4" />
-          </DSButton>
-          <DSDialog open={settingsOpen} onOpenChange={setSettingsOpen}>
-            <DSDialogTrigger asChild>
-              <DSButton variant="ghost" size="icon">
-                <Settings className="w-4 h-4" />
-              </DSButton>
-            </DSDialogTrigger>
-            <DSDialogContent>
-              <DSDialogHeader>
-                <DSDialogTitle>Settings</DSDialogTitle>
-                <DSDialogDescription>
-                  Manage your application settings and preferences.
-                </DSDialogDescription>
-              </DSDialogHeader>
-              <div className="py-4">
-                <p className="text-sm text-muted-foreground">Settings panel coming soon...</p>
-              </div>
-            </DSDialogContent>
-          </DSDialog>
         </div>
       </div>
     </DSNavigation>
