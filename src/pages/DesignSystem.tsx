@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { SidebarProvider } from "@/components/ui/sidebar";
+
 import {
   DSButton,
   DSBadge,
@@ -825,29 +825,49 @@ cp src/styles/design-system.css your-project/src/styles/
               <h2 className="text-4xl font-bold mb-8">Sidebar</h2>
               <Card>
                 <CardHeader>
-                  <CardTitle>Sidebar Example</CardTitle>
-                  <CardDescription>A collapsible sidebar component</CardDescription>
+                  <CardTitle>Sidebar</CardTitle>
+                  <CardDescription>A collapsible sidebar component. Requires SidebarProvider at app level - see installation guide.</CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <SidebarProvider>
-                    <div className="border rounded-lg overflow-hidden h-96 flex w-full">
-                      <DSSidebar className="w-64">
-                        <DSSidebarContent className="p-4">
-                          <h3 className="font-semibold mb-4">Menu</h3>
-                          <DSNavigation>
-                            <DSNavItem isActive icon={Home}>Dashboard</DSNavItem>
-                            <DSNavItem icon={User}>Users</DSNavItem>
-                            <DSNavItem icon={Settings}>Settings</DSNavItem>
-                            <DSNavItem icon={FileText}>Reports</DSNavItem>
-                          </DSNavigation>
-                        </DSSidebarContent>
-                      </DSSidebar>
-                      <div className="flex-1 p-6 bg-muted/20">
-                        <h3 className="text-lg font-semibold mb-2">Main Content Area</h3>
-                        <p className="text-sm text-muted-foreground">This is where your main content goes.</p>
+                  <div className="border rounded-lg overflow-hidden h-96 flex w-full">
+                    {/* Static sidebar visual mock */}
+                    <div className="w-64 bg-card/40 backdrop-blur-md border-r border-border/50">
+                      <div className="p-4">
+                        <h3 className="font-semibold mb-4">Menu</h3>
+                        <div className="space-y-1">
+                          <div className="px-3 py-2 rounded-lg bg-gradient-to-r from-primary to-primary-glow text-primary-foreground font-medium flex items-center gap-2">
+                            <Home className="w-4 h-4" />
+                            <span>Dashboard</span>
+                          </div>
+                          <div className="px-3 py-2 rounded-lg hover:bg-accent/50 flex items-center gap-2 text-foreground">
+                            <User className="w-4 h-4" />
+                            <span>Users</span>
+                          </div>
+                          <div className="px-3 py-2 rounded-lg hover:bg-accent/50 flex items-center gap-2 text-foreground">
+                            <Settings className="w-4 h-4" />
+                            <span>Settings</span>
+                          </div>
+                          <div className="px-3 py-2 rounded-lg hover:bg-accent/50 flex items-center gap-2 text-foreground">
+                            <FileText className="w-4 h-4" />
+                            <span>Reports</span>
+                          </div>
+                        </div>
                       </div>
                     </div>
-                  </SidebarProvider>
+                    <div className="flex-1 p-6 bg-muted/20">
+                      <h3 className="text-lg font-semibold mb-2">Main Content Area</h3>
+                      <p className="text-sm text-muted-foreground mb-4">
+                        This is a visual preview of the Sidebar component.
+                      </p>
+                      <DSButton 
+                        variant="outline" 
+                        size="sm"
+                        onClick={() => navigate('/installation')}
+                      >
+                        View Setup Guide
+                      </DSButton>
+                    </div>
+                  </div>
                 </CardContent>
               </Card>
             </section>
