@@ -21,11 +21,28 @@ export const DSHeader: React.FC<DSHeaderProps> = ({
       className
     )}>
       <div className="container mx-auto px-6 py-4 flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          {logo && <img src={logo} alt={brandName} className="h-8 w-auto" />}
-          <span className="text-xl font-bold bg-gradient-to-r from-primary via-purple-500 to-primary bg-clip-text text-transparent">
-            {brandName}
-          </span>
+        <div className="flex items-center gap-8">
+          <div className="flex items-center gap-3">
+            {logo && <img src={logo} alt={brandName} className="h-8 w-auto" />}
+            <span className="text-xl font-bold bg-gradient-to-r from-primary via-purple-500 to-primary bg-clip-text text-transparent">
+              {brandName}
+            </span>
+          </div>
+          
+          <nav className="hidden md:flex items-center gap-6">
+            <a href="/" className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors">
+              Home
+            </a>
+            <a href="/design-system" className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors">
+              Components
+            </a>
+            <a href="/installation" className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors">
+              Installation
+            </a>
+            <a href="/examples" className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors">
+              Examples
+            </a>
+          </nav>
         </div>
         {showThemeToggle && <ThemeToggle />}
       </div>
