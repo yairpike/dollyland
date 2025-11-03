@@ -30,7 +30,7 @@ const products = [
     gradient: "from-purple-500 via-indigo-500 to-violet-600",
     iconColor: "text-purple-300",
     compatibility: ["Web", "API"],
-    url: "https://neura.hypertimestudio.com",
+    url: "https://neura.dollyland.ai",
     size: "large"
   },
   {
@@ -42,7 +42,7 @@ const products = [
     gradient: "from-orange-500 via-amber-500 to-yellow-600",
     iconColor: "text-orange-300",
     compatibility: ["Web", "Mobile"],
-    url: "https://sage.hypertimestudio.com",
+    url: "https://sage.dollyland.ai",
     size: "large"
   },
   {
@@ -54,7 +54,7 @@ const products = [
     gradient: "from-cyan-500 via-blue-500 to-indigo-600",
     iconColor: "text-cyan-300",
     compatibility: ["Web", "Mobile"],
-    url: "https://flashcards.hypertimestudio.com",
+    url: "https://flashcards.dollyland.ai",
     size: "medium"
   },
   {
@@ -66,7 +66,7 @@ const products = [
     gradient: "from-pink-500 via-rose-500 to-red-600",
     iconColor: "text-pink-300",
     compatibility: ["iOS", "Android"],
-    url: "https://auracycle.hypertimestudio.com",
+    url: "https://auracycle.dollyland.ai",
     size: "medium"
   },
   {
@@ -78,7 +78,7 @@ const products = [
     gradient: "from-emerald-500 via-teal-500 to-cyan-600",
     iconColor: "text-emerald-300",
     compatibility: ["Web", "iOS"],
-    url: "https://stealthwealth.hypertimestudio.com",
+    url: "https://stealthwealth.dollyland.ai",
     size: "medium"
   }
 ];
@@ -401,7 +401,7 @@ export default function Index() {
             <div className="flex items-center gap-3 opacity-70">
               <img src={dollyLogo} alt="Dollyland" className="h-6 w-auto" />
               <span className="text-sm text-muted-foreground">
-                © 2024 Dollyland Innovation Studio
+                © {new Date().getFullYear()} Dollyland Innovation Studio
               </span>
             </div>
             
