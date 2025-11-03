@@ -64,27 +64,6 @@ export default function Examples() {
       <Navigation currentPage="examples" />
 
       <div className="container mx-auto px-6 py-8">
-        {/* Breadcrumb Example */}
-        <DSBreadcrumb className="mb-8">
-          <DSBreadcrumbList>
-            <DSBreadcrumbItem>
-              <DSBreadcrumbLink href="/" onClick={(e) => { e.preventDefault(); navigate('/'); }}>
-                Home
-              </DSBreadcrumbLink>
-            </DSBreadcrumbItem>
-            <DSBreadcrumbSeparator />
-            <DSBreadcrumbItem>
-              <DSBreadcrumbLink href="/examples" onClick={(e) => { e.preventDefault(); navigate('/examples'); }}>
-                Examples
-              </DSBreadcrumbLink>
-            </DSBreadcrumbItem>
-            <DSBreadcrumbSeparator />
-            <DSBreadcrumbItem>
-              <DSBreadcrumbPage>Dashboard</DSBreadcrumbPage>
-            </DSBreadcrumbItem>
-          </DSBreadcrumbList>
-        </DSBreadcrumb>
-
         <h1 className="text-5xl font-bold mb-4 bg-gradient-to-r from-primary to-primary-glow bg-clip-text text-transparent">
           Component Examples
         </h1>
