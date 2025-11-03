@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { SidebarProvider } from "@/components/ui/sidebar";
 import {
   DSButton,
   DSBadge,
@@ -828,23 +829,25 @@ cp src/styles/design-system.css your-project/src/styles/
                   <CardDescription>A collapsible sidebar component</CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <div className="border rounded-lg overflow-hidden h-96 flex">
-                    <DSSidebar className="w-64">
-                      <DSSidebarContent className="p-4">
-                        <h3 className="font-semibold mb-4">Menu</h3>
-                        <DSNavigation>
-                          <DSNavItem isActive icon={Home}>Dashboard</DSNavItem>
-                          <DSNavItem icon={User}>Users</DSNavItem>
-                          <DSNavItem icon={Settings}>Settings</DSNavItem>
-                          <DSNavItem icon={FileText}>Reports</DSNavItem>
-                        </DSNavigation>
-                      </DSSidebarContent>
-                    </DSSidebar>
-                    <div className="flex-1 p-6 bg-muted/20">
-                      <h3 className="text-lg font-semibold mb-2">Main Content Area</h3>
-                      <p className="text-sm text-muted-foreground">This is where your main content goes.</p>
+                  <SidebarProvider>
+                    <div className="border rounded-lg overflow-hidden h-96 flex w-full">
+                      <DSSidebar className="w-64">
+                        <DSSidebarContent className="p-4">
+                          <h3 className="font-semibold mb-4">Menu</h3>
+                          <DSNavigation>
+                            <DSNavItem isActive icon={Home}>Dashboard</DSNavItem>
+                            <DSNavItem icon={User}>Users</DSNavItem>
+                            <DSNavItem icon={Settings}>Settings</DSNavItem>
+                            <DSNavItem icon={FileText}>Reports</DSNavItem>
+                          </DSNavigation>
+                        </DSSidebarContent>
+                      </DSSidebar>
+                      <div className="flex-1 p-6 bg-muted/20">
+                        <h3 className="text-lg font-semibold mb-2">Main Content Area</h3>
+                        <p className="text-sm text-muted-foreground">This is where your main content goes.</p>
+                      </div>
                     </div>
-                  </div>
+                  </SidebarProvider>
                 </CardContent>
               </Card>
             </section>
