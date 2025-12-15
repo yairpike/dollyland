@@ -4,12 +4,12 @@ import { Navigation } from "@/components/Navigation";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Sparkles, Zap, Brain, Heart, TrendingUp, ArrowRight, ChevronDown, Layers, Rocket, LayoutGrid, ChefHat } from "lucide-react";
+import { Sparkles, Zap, Brain, Heart, TrendingUp, ArrowRight, ChevronDown, Layers, Rocket, LayoutGrid, ChefHat, Building2, Home, Film, Globe } from "lucide-react";
 import dollyLogo from "@/assets/dolly-logo-sheep.png";
 
 const products = [
   {
-    id: 6,
+    id: 9,
     name: "Dollyland Design System",
     tagline: "Build Like We Do",
     description: "A comprehensive design system with glassmorphic effects, gradient meshes, and 3D transforms. Everything you see here, packaged and ready to use.",
@@ -22,33 +22,57 @@ const products = [
     preview: "Reusable components with cutting-edge design"
   },
   {
-    id: 5,
-    name: "Neura",
-    tagline: "AI Knowledge Engine",
-    description: "Your personal AI assistant powered by advanced language models. Chat, learn, and discover with cutting-edge AI technology.",
-    icon: Brain,
-    gradient: "from-purple-500 via-indigo-500 to-violet-600",
-    iconColor: "text-purple-300",
+    id: 1,
+    name: "Andorman",
+    tagline: "Enterprise Operations, Simplified",
+    description: "A powerful ERP platform designed for modern enterprises. Streamline operations, manage resources, and scale your business with intelligent automation.",
+    icon: Building2,
+    gradient: "from-slate-600 via-blue-700 to-indigo-800",
+    iconColor: "text-blue-300",
+    compatibility: ["Web", "Enterprise"],
+    url: "https://andorman.dollyland.ai",
+    size: "large"
+  },
+  {
+    id: 2,
+    name: "hopp.haus",
+    tagline: "All-in-One Property Development",
+    description: "The complete platform for property developers. Manage projects, track investments, and streamline your real estate operations in one place.",
+    icon: Home,
+    gradient: "from-amber-500 via-orange-500 to-red-600",
+    iconColor: "text-amber-300",
+    compatibility: ["Web", "Mobile"],
+    url: "https://hopphaus.lovable.app",
+    size: "medium"
+  },
+  {
+    id: 3,
+    name: "AnimAI",
+    tagline: "AI-Powered Animation Studio",
+    description: "Create stunning animations with the power of AI. Transform your ideas into professional-quality animations in minutes, not hours.",
+    icon: Film,
+    gradient: "from-fuchsia-500 via-purple-500 to-violet-600",
+    iconColor: "text-fuchsia-300",
     compatibility: ["Web", "API"],
-    url: "https://neura.dollyland.ai",
+    url: "https://animai.dollyland.ai",
     size: "large"
   },
   {
     id: 4,
-    name: "Sage",
-    tagline: "Your Recipe Companion",
-    description: "AI-powered recipe discovery and meal planning. Get personalized recommendations based on your taste and dietary needs.",
-    icon: ChefHat,
-    gradient: "from-orange-500 via-amber-500 to-yellow-600",
-    iconColor: "text-orange-300",
+    name: "ZERØ",
+    tagline: "Global Wealth Optimizer",
+    description: "Master your finances with intelligent tracking and multi-currency support. Build wealth globally with smart portfolio insights.",
+    icon: Globe,
+    gradient: "from-yellow-500 via-amber-600 to-slate-700",
+    iconColor: "text-yellow-300",
     compatibility: ["Web", "Mobile"],
-    url: "https://sage.dollyland.ai",
-    size: "large"
+    url: "https://zero.dollyland.ai",
+    size: "medium"
   },
   {
-    id: 1,
+    id: 5,
     name: "Flashcards",
-    tagline: "Learn Smarter",
+    tagline: "Master Any Subject Faster",
     description: "AI-powered flashcard generation from any content. Transform your study materials into interactive learning experiences.",
     icon: LayoutGrid,
     gradient: "from-cyan-500 via-blue-500 to-indigo-600",
@@ -58,27 +82,39 @@ const products = [
     size: "medium"
   },
   {
-    id: 2,
-    name: "Aura Cycle",
-    tagline: "Track Your Wellness",
-    description: "Comprehensive period tracking with AI insights. Understand your body's patterns and optimize your health journey.",
-    icon: Heart,
-    gradient: "from-pink-500 via-rose-500 to-red-600",
-    iconColor: "text-pink-300",
-    compatibility: ["iOS", "Android"],
-    url: "https://auracycle.dollyland.ai",
+    id: 6,
+    name: "SAGE",
+    tagline: "Smart Recipe Management",
+    description: "AI-powered recipe discovery and meal planning. Get personalized recommendations based on your taste and dietary needs.",
+    icon: ChefHat,
+    gradient: "from-orange-500 via-amber-500 to-yellow-600",
+    iconColor: "text-orange-300",
+    compatibility: ["Web", "Mobile"],
+    url: "https://sage.dollyland.ai",
     size: "medium"
   },
   {
-    id: 3,
-    name: "Stealth Wealth",
-    tagline: "Financial Freedom",
-    description: "Smart financial planning powered by AI. Build wealth quietly with intelligent investment strategies and insights.",
+    id: 7,
+    name: "StealthWealth",
+    tagline: "Track Your Net Worth, Privately",
+    description: "Your complete financial picture in one secure place. Track assets, liabilities, and investments with bank-level privacy.",
     icon: TrendingUp,
     gradient: "from-emerald-500 via-teal-500 to-cyan-600",
     iconColor: "text-emerald-300",
     compatibility: ["Web", "iOS"],
     url: "https://stealthwealth.dollyland.ai",
+    size: "medium"
+  },
+  {
+    id: 8,
+    name: "Aura",
+    tagline: "Understand Your Cycle",
+    description: "A private space to track and understand your cycle. AI-powered insights help you optimize your health journey.",
+    icon: Heart,
+    gradient: "from-pink-500 via-rose-500 to-red-600",
+    iconColor: "text-pink-300",
+    compatibility: ["iOS", "Android"],
+    url: "https://auracycle.dollyland.ai",
     size: "medium"
   }
 ];
@@ -348,8 +384,8 @@ export default function Index() {
                 <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
                 <div className="relative">
                   <Layers className="w-12 h-12 mx-auto mb-4 text-primary" />
-                  <div className="text-5xl font-bold mb-2 bg-gradient-to-r from-primary to-purple-500 bg-clip-text text-transparent">
-                    6
+                <div className="text-5xl font-bold mb-2 bg-gradient-to-r from-primary to-purple-500 bg-clip-text text-transparent">
+                    8
                   </div>
                   <div className="text-sm text-muted-foreground uppercase tracking-wider">Products Launched</div>
                 </div>
