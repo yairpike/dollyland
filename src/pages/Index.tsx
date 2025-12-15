@@ -4,8 +4,18 @@ import { Navigation } from "@/components/Navigation";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Sparkles, Zap, Brain, Heart, TrendingUp, ArrowRight, ChevronDown, Layers, Rocket, LayoutGrid, ChefHat, Building2, Home, Film, Globe } from "lucide-react";
+import { Sparkles, Brain, ArrowRight, ChevronDown, Layers, Rocket } from "lucide-react";
 import dollyLogo from "@/assets/dolly-logo-sheep.png";
+
+// Logo imports
+import andormanLogo from "@/assets/logos/andorman-logo.png";
+import hopphausLogo from "@/assets/logos/hopphaus-logo.png";
+import animaiLogo from "@/assets/logos/animai-logo.png";
+import zeroLogo from "@/assets/logos/zero-logo.png";
+import flashcardsLogo from "@/assets/logos/flashcards-logo.png";
+import sageLogo from "@/assets/logos/sage-logo.png";
+import stealthwealthLogo from "@/assets/logos/stealthwealth-logo.png";
+import auraLogo from "@/assets/logos/auracycle-logo.png";
 
 const products = [
   {
@@ -26,9 +36,8 @@ const products = [
     name: "Andorman",
     tagline: "Enterprise Operations, Simplified",
     description: "A powerful ERP platform designed for modern enterprises. Streamline operations, manage resources, and scale your business with intelligent automation.",
-    icon: Building2,
+    logoImage: andormanLogo,
     gradient: "from-slate-600 via-blue-700 to-indigo-800",
-    iconColor: "text-blue-300",
     compatibility: ["Web", "Enterprise"],
     url: "https://andorman.dollyland.ai",
     size: "large"
@@ -38,9 +47,8 @@ const products = [
     name: "hopp.haus",
     tagline: "All-in-One Property Development",
     description: "The complete platform for property developers. Manage projects, track investments, and streamline your real estate operations in one place.",
-    icon: Home,
+    logoImage: hopphausLogo,
     gradient: "from-amber-500 via-orange-500 to-red-600",
-    iconColor: "text-amber-300",
     compatibility: ["Web", "Mobile"],
     url: "https://hopphaus.lovable.app",
     size: "medium"
@@ -50,9 +58,8 @@ const products = [
     name: "AnimAI",
     tagline: "AI-Powered Animation Studio",
     description: "Create stunning animations with the power of AI. Transform your ideas into professional-quality animations in minutes, not hours.",
-    icon: Film,
+    logoImage: animaiLogo,
     gradient: "from-fuchsia-500 via-purple-500 to-violet-600",
-    iconColor: "text-fuchsia-300",
     compatibility: ["Web", "API"],
     url: "https://animai.dollyland.ai",
     size: "large"
@@ -62,9 +69,8 @@ const products = [
     name: "ZERØ",
     tagline: "Global Wealth Optimizer",
     description: "Master your finances with intelligent tracking and multi-currency support. Build wealth globally with smart portfolio insights.",
-    icon: Globe,
+    logoImage: zeroLogo,
     gradient: "from-yellow-500 via-amber-600 to-slate-700",
-    iconColor: "text-yellow-300",
     compatibility: ["Web", "Mobile"],
     url: "https://zero.dollyland.ai",
     size: "medium"
@@ -74,9 +80,8 @@ const products = [
     name: "Flashcards",
     tagline: "Master Any Subject Faster",
     description: "AI-powered flashcard generation from any content. Transform your study materials into interactive learning experiences.",
-    icon: LayoutGrid,
+    logoImage: flashcardsLogo,
     gradient: "from-cyan-500 via-blue-500 to-indigo-600",
-    iconColor: "text-cyan-300",
     compatibility: ["Web", "Mobile"],
     url: "https://flashcards.dollyland.ai",
     size: "medium"
@@ -86,9 +91,8 @@ const products = [
     name: "SAGE",
     tagline: "Smart Recipe Management",
     description: "AI-powered recipe discovery and meal planning. Get personalized recommendations based on your taste and dietary needs.",
-    icon: ChefHat,
+    logoImage: sageLogo,
     gradient: "from-orange-500 via-amber-500 to-yellow-600",
-    iconColor: "text-orange-300",
     compatibility: ["Web", "Mobile"],
     url: "https://sage.dollyland.ai",
     size: "medium"
@@ -98,9 +102,8 @@ const products = [
     name: "StealthWealth",
     tagline: "Track Your Net Worth, Privately",
     description: "Your complete financial picture in one secure place. Track assets, liabilities, and investments with bank-level privacy.",
-    icon: TrendingUp,
+    logoImage: stealthwealthLogo,
     gradient: "from-emerald-500 via-teal-500 to-cyan-600",
-    iconColor: "text-emerald-300",
     compatibility: ["Web", "iOS"],
     url: "https://stealthwealth.dollyland.ai",
     size: "medium"
@@ -110,9 +113,8 @@ const products = [
     name: "Aura",
     tagline: "Understand Your Cycle",
     description: "A private space to track and understand your cycle. AI-powered insights help you optimize your health journey.",
-    icon: Heart,
+    logoImage: auraLogo,
     gradient: "from-pink-500 via-rose-500 to-red-600",
-    iconColor: "text-pink-300",
     compatibility: ["iOS", "Android"],
     url: "https://auracycle.dollyland.ai",
     size: "medium"
@@ -302,7 +304,6 @@ export default function Index() {
           {/* Asymmetric Bento Layout */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto">
             {bentoProducts.map((product, index) => {
-              const Icon = product.icon;
               const isHovered = hoveredProduct === product.id;
               const isLarge = product.size === 'large';
               
@@ -327,9 +328,15 @@ export default function Index() {
                   <div className={`absolute inset-0 bg-gradient-to-br ${product.gradient} opacity-0 group-hover:opacity-10 blur-2xl transition-all duration-700`} />
                   
                   <div className={`relative ${isLarge ? 'p-12' : 'p-8'} h-full flex flex-col`}>
-                    {/* Icon with floating animation */}
-                    <div className={`${isLarge ? 'w-20 h-20 mb-8' : 'w-16 h-16 mb-6'} rounded-2xl bg-gradient-to-br ${product.gradient} flex items-center justify-center group-hover:scale-110 group-hover:rotate-3 transition-all duration-500 shadow-lg relative`}>
-                      <Icon className={`${isLarge ? 'w-10 h-10' : 'w-8 h-8'} ${product.iconColor}`} />
+                    {/* Logo image */}
+                    <div className={`${isLarge ? 'w-20 h-20 mb-8' : 'w-16 h-16 mb-6'} rounded-2xl overflow-hidden group-hover:scale-110 group-hover:rotate-3 transition-all duration-500 shadow-lg relative`}>
+                      {'logoImage' in product && (
+                        <img 
+                          src={product.logoImage} 
+                          alt={`${product.name} logo`}
+                          className="w-full h-full object-cover"
+                        />
+                      )}
                       
                       {/* Pulse ring */}
                       <div className={`absolute inset-0 rounded-2xl bg-gradient-to-br ${product.gradient} opacity-0 group-hover:opacity-50 group-hover:scale-150 transition-all duration-700 blur-md`} />
