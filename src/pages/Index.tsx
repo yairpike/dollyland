@@ -39,7 +39,7 @@ const products = [
     tagline: "Run Your Properties Without the Chaos",
     description: "One platform for payments, guest access, service bookings, and resident communication. Built for property developers and HOAs.",
     logoImage: aetherLogo,
-    gradient: "from-sky-500 via-blue-600 to-indigo-700",
+    gradient: "from-amber-500 via-yellow-600 to-amber-700",
     compatibility: ["Web", "iOS", "Android"],
     url: "https://aether.dollyland.ai",
     size: "large"
@@ -50,7 +50,7 @@ const products = [
     tagline: "Turn Your Lovable App into a Native App",
     description: "Skip the complexity of Xcode, Android Studio, and certificates. Publish to App Store and Google Play directly from your browser.",
     logoImage: linusLogo,
-    gradient: "from-green-500 via-emerald-500 to-teal-600",
+    gradient: "from-indigo-500 via-violet-500 to-purple-600",
     compatibility: ["Web", "iOS", "Android"],
     url: "https://linus.dollyland.ai",
     size: "large"
@@ -64,7 +64,7 @@ const products = [
     gradient: "from-slate-600 via-blue-700 to-indigo-800",
     compatibility: ["Web", "Enterprise"],
     url: "https://andorman.dollyland.ai",
-    size: "large"
+    size: "medium"
   },
   {
     id: 2,
@@ -83,7 +83,7 @@ const products = [
     tagline: "AI-Powered Animation Studio",
     description: "Create stunning animations with AI. Professional-grade editor combining AI power with intuitive tools. Export to Lottie, MP4, SVG and more.",
     logoImage: animalsLogo,
-    gradient: "from-fuchsia-500 via-purple-500 to-violet-600",
+    gradient: "from-slate-500 via-stone-500 to-slate-600",
     compatibility: ["Web", "iPad", "Android Tablets"],
     url: "https://animals.dollyland.ai",
     size: "medium"
