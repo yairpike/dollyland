@@ -4,18 +4,18 @@ import { Navigation } from "@/components/Navigation";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Sparkles, Brain, ArrowRight, ChevronDown, Layers, Rocket } from "lucide-react";
+import { Sparkles, Brain, ArrowRight, ChevronDown, Layers, Rocket, Building2, Smartphone } from "lucide-react";
 import dollyLogo from "@/assets/dolly-logo-sheep.png";
 
 // Logo imports
 import andormanLogo from "@/assets/logos/andorman-logo.png";
 import hopphausLogo from "@/assets/logos/hopphaus-logo.png";
-import animaiLogo from "@/assets/logos/animai-logo.png";
+import animalsLogo from "@/assets/logos/animai-logo.png";
 import zeroLogo from "@/assets/logos/zero-logo.png";
 import flashcardsLogo from "@/assets/logos/flashcards-logo.png";
 import sageLogo from "@/assets/logos/sage-logo.png";
 import stealthwealthLogo from "@/assets/logos/stealthwealth-logo.png";
-import auraLogo from "@/assets/logos/auracycle-logo.png";
+import auracycleLogo from "@/assets/logos/auracycle-logo.png";
 
 const products = [
   {
@@ -30,6 +30,30 @@ const products = [
     url: "/design-system",
     featured: true,
     preview: "Reusable components with cutting-edge design"
+  },
+  {
+    id: 10,
+    name: "Aether",
+    tagline: "Run Your Properties Without the Chaos",
+    description: "One platform for payments, guest access, service bookings, and resident communication. Built for property developers and HOAs.",
+    icon: Building2,
+    gradient: "from-sky-500 via-blue-600 to-indigo-700",
+    iconColor: "text-sky-300",
+    compatibility: ["Web", "iOS", "Android"],
+    url: "https://aether.dollyland.ai",
+    size: "large"
+  },
+  {
+    id: 11,
+    name: "Linus",
+    tagline: "Turn Your Lovable App into a Native App",
+    description: "Skip the complexity of Xcode, Android Studio, and certificates. Publish to App Store and Google Play directly from your browser.",
+    icon: Smartphone,
+    gradient: "from-green-500 via-emerald-500 to-teal-600",
+    iconColor: "text-green-300",
+    compatibility: ["Web", "iOS", "Android"],
+    url: "https://linus.dollyland.ai",
+    size: "large"
   },
   {
     id: 1,
@@ -55,14 +79,14 @@ const products = [
   },
   {
     id: 3,
-    name: "AnimAI",
+    name: "ani🐨als",
     tagline: "AI-Powered Animation Studio",
-    description: "Create stunning animations with the power of AI. Transform your ideas into professional-quality animations in minutes, not hours.",
-    logoImage: animaiLogo,
+    description: "Create stunning animations with AI. Professional-grade editor combining AI power with intuitive tools. Export to Lottie, MP4, SVG and more.",
+    logoImage: animalsLogo,
     gradient: "from-fuchsia-500 via-purple-500 to-violet-600",
-    compatibility: ["Web", "API"],
-    url: "https://animai.dollyland.ai",
-    size: "large"
+    compatibility: ["Web", "iPad", "Android Tablets"],
+    url: "https://animals.dollyland.ai",
+    size: "medium"
   },
   {
     id: 4,
@@ -78,30 +102,30 @@ const products = [
   {
     id: 5,
     name: "Flashcards",
-    tagline: "Master Any Subject Faster",
-    description: "AI-powered flashcard generation from any content. Transform your study materials into interactive learning experiences.",
+    tagline: "Smart Flashcards with Spaced Repetition",
+    description: "Master any subject faster with AI-powered flashcards and scientifically proven spaced repetition. Completely free, no limits.",
     logoImage: flashcardsLogo,
     gradient: "from-cyan-500 via-blue-500 to-indigo-600",
-    compatibility: ["Web", "Mobile"],
+    compatibility: ["Web", "iOS", "Android"],
     url: "https://flashcards.dollyland.ai",
     size: "medium"
   },
   {
     id: 6,
-    name: "SAGE",
+    name: "Sage",
     tagline: "Smart Recipe Management",
-    description: "AI-powered recipe discovery and meal planning. Get personalized recommendations based on your taste and dietary needs.",
+    description: "AI-powered recipe generation, smart meal planning, and intelligent pantry management. Transform your cooking journey.",
     logoImage: sageLogo,
     gradient: "from-orange-500 via-amber-500 to-yellow-600",
-    compatibility: ["Web", "Mobile"],
+    compatibility: ["Web", "iOS", "Android"],
     url: "https://sage.dollyland.ai",
     size: "medium"
   },
   {
     id: 7,
     name: "StealthWealth",
-    tagline: "Track Your Net Worth, Privately",
-    description: "Your complete financial picture in one secure place. Track assets, liabilities, and investments with bank-level privacy.",
+    tagline: "Track Your Complete Net Worth, Privately",
+    description: "Monitor all your assets in one place—stocks, crypto, real estate, and more. No account required. Your data stays on your device.",
     logoImage: stealthwealthLogo,
     gradient: "from-emerald-500 via-teal-500 to-cyan-600",
     compatibility: ["Web", "iOS"],
@@ -110,12 +134,12 @@ const products = [
   },
   {
     id: 8,
-    name: "Aura",
-    tagline: "Understand Your Cycle",
-    description: "A private space to track and understand your cycle. AI-powered insights help you optimize your health journey.",
-    logoImage: auraLogo,
+    name: "AuraCycle",
+    tagline: "A Private Space to Understand Your Cycle",
+    description: "Your data is yours. Everything stays on your device, always. Works offline, no internet required.",
+    logoImage: auracycleLogo,
     gradient: "from-pink-500 via-rose-500 to-red-600",
-    compatibility: ["iOS", "Android"],
+    compatibility: ["Web", "iOS", "Android"],
     url: "https://auracycle.dollyland.ai",
     size: "medium"
   }
@@ -328,15 +352,19 @@ export default function Index() {
                   <div className={`absolute inset-0 bg-gradient-to-br ${product.gradient} opacity-0 group-hover:opacity-10 blur-2xl transition-all duration-700`} />
                   
                   <div className={`relative ${isLarge ? 'p-12' : 'p-8'} h-full flex flex-col`}>
-                    {/* Logo image */}
+                    {/* Logo image or icon */}
                     <div className={`${isLarge ? 'w-20 h-20 mb-8' : 'w-16 h-16 mb-6'} rounded-2xl overflow-hidden group-hover:scale-110 group-hover:rotate-3 transition-all duration-500 shadow-lg relative`}>
-                      {'logoImage' in product && (
+                      {'logoImage' in product ? (
                         <img 
                           src={product.logoImage} 
                           alt={`${product.name} logo`}
                           className="w-full h-full object-cover"
                         />
-                      )}
+                      ) : 'icon' in product ? (
+                        <div className={`w-full h-full bg-gradient-to-br ${product.gradient} flex items-center justify-center`}>
+                          <product.icon className="w-10 h-10 text-white" />
+                        </div>
+                      ) : null}
                       
                       {/* Pulse ring */}
                       <div className={`absolute inset-0 rounded-2xl bg-gradient-to-br ${product.gradient} opacity-0 group-hover:opacity-50 group-hover:scale-150 transition-all duration-700 blur-md`} />
@@ -392,7 +420,7 @@ export default function Index() {
                 <div className="relative">
                   <Layers className="w-12 h-12 mx-auto mb-4 text-primary" />
                 <div className="text-5xl font-bold mb-2 bg-gradient-to-r from-primary to-purple-500 bg-clip-text text-transparent">
-                    8
+                    10
                   </div>
                   <div className="text-sm text-muted-foreground uppercase tracking-wider">Products Launched</div>
                 </div>
