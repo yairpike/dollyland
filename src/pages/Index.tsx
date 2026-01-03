@@ -4,18 +4,20 @@ import { Navigation } from "@/components/Navigation";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Sparkles, Brain, ArrowRight, ChevronDown, Layers, Rocket, Building2, Smartphone } from "lucide-react";
+import { Sparkles, Brain, ArrowRight, ChevronDown, Layers, Rocket } from "lucide-react";
 import dollyLogo from "@/assets/dolly-logo-sheep.png";
 
 // Logo imports
 import andormanLogo from "@/assets/logos/andorman-logo.png";
 import hopphausLogo from "@/assets/logos/hopphaus-logo.png";
-import animalsLogo from "@/assets/logos/animai-logo.png";
+import animalsLogo from "@/assets/logos/animals-logo.png";
 import zeroLogo from "@/assets/logos/zero-logo.png";
 import flashcardsLogo from "@/assets/logos/flashcards-logo.png";
 import sageLogo from "@/assets/logos/sage-logo.png";
 import stealthwealthLogo from "@/assets/logos/stealthwealth-logo.png";
 import auracycleLogo from "@/assets/logos/auracycle-logo.png";
+import aetherLogo from "@/assets/logos/aether-logo.png";
+import linusLogo from "@/assets/logos/linus-logo.png";
 
 const products = [
   {
@@ -36,9 +38,8 @@ const products = [
     name: "Aether",
     tagline: "Run Your Properties Without the Chaos",
     description: "One platform for payments, guest access, service bookings, and resident communication. Built for property developers and HOAs.",
-    icon: Building2,
+    logoImage: aetherLogo,
     gradient: "from-sky-500 via-blue-600 to-indigo-700",
-    iconColor: "text-sky-300",
     compatibility: ["Web", "iOS", "Android"],
     url: "https://aether.dollyland.ai",
     size: "large"
@@ -48,9 +49,8 @@ const products = [
     name: "Linus",
     tagline: "Turn Your Lovable App into a Native App",
     description: "Skip the complexity of Xcode, Android Studio, and certificates. Publish to App Store and Google Play directly from your browser.",
-    icon: Smartphone,
+    logoImage: linusLogo,
     gradient: "from-green-500 via-emerald-500 to-teal-600",
-    iconColor: "text-green-300",
     compatibility: ["Web", "iOS", "Android"],
     url: "https://linus.dollyland.ai",
     size: "large"
