@@ -18,142 +18,130 @@ import stealthwealthLogo from "@/assets/logos/stealthwealth-logo.png";
 import auracycleLogo from "@/assets/logos/auracycle-logo.png";
 import aetherLogo from "@/assets/logos/aether-logo.png";
 import linusLogo from "@/assets/logos/linus-logo.png";
-
-const products = [
-  {
-    id: 9,
-    name: "Dollyland Design System",
-    tagline: "Build Like We Do",
-    description: "A comprehensive design system with glassmorphic effects, gradient meshes, and 3D transforms. Everything you see here, packaged and ready to use.",
-    icon: Layers,
-    gradient: "from-indigo-500 via-purple-500 to-pink-500",
-    iconColor: "text-indigo-300",
-    compatibility: ["React", "TypeScript", "Tailwind"],
-    url: "/design-system",
-    featured: true,
-    preview: "Reusable components with cutting-edge design"
-  },
-  {
-    id: 10,
-    name: "Aether",
-    tagline: "Run Your Properties Without the Chaos",
-    description: "One platform for payments, guest access, service bookings, and resident communication. Built for property developers and HOAs.",
-    logoImage: aetherLogo,
-    gradient: "from-amber-500 via-yellow-600 to-amber-700",
-    compatibility: ["Web", "iOS", "Android"],
-    url: "https://aether.dollyland.ai",
-    size: "large"
-  },
-  {
-    id: 11,
-    name: "Linus",
-    tagline: "Turn Your Lovable App into a Native App",
-    description: "Skip the complexity of Xcode, Android Studio, and certificates. Publish to App Store and Google Play directly from your browser.",
-    logoImage: linusLogo,
-    gradient: "from-indigo-500 via-violet-500 to-purple-600",
-    compatibility: ["Web", "iOS", "Android"],
-    url: "https://linus.dollyland.ai",
-    size: "large"
-  },
-  {
-    id: 1,
-    name: "Andorman",
-    tagline: "Enterprise Operations, Simplified",
-    description: "A powerful ERP platform designed for modern enterprises. Streamline operations, manage resources, and scale your business with intelligent automation.",
-    logoImage: andormanLogo,
-    gradient: "from-slate-600 via-blue-700 to-indigo-800",
-    compatibility: ["Web", "Enterprise"],
-    url: "https://andorman.dollyland.ai",
-    size: "medium"
-  },
-  {
-    id: 2,
-    name: "hopp.haus",
-    tagline: "All-in-One Property Development",
-    description: "The complete platform for property developers. Manage projects, track investments, and streamline your real estate operations in one place.",
-    logoImage: hopphausLogo,
-    gradient: "from-amber-500 via-orange-500 to-red-600",
-    compatibility: ["Web", "Mobile"],
-    url: "https://hopphaus.lovable.app",
-    size: "medium"
-  },
-  {
-    id: 3,
-    name: "ani🐨als",
-    tagline: "AI-Powered Animation Studio",
-    description: "Create stunning animations with AI. Professional-grade editor combining AI power with intuitive tools. Export to Lottie, MP4, SVG and more.",
-    logoImage: animalsLogo,
-    gradient: "from-slate-500 via-stone-500 to-slate-600",
-    compatibility: ["Web", "iPad", "Android Tablets"],
-    url: "https://animals.dollyland.ai",
-    size: "medium"
-  },
-  {
-    id: 4,
-    name: "ZERØ",
-    tagline: "Global Wealth Optimizer",
-    description: "Master your finances with intelligent tracking and multi-currency support. Build wealth globally with smart portfolio insights.",
-    logoImage: zeroLogo,
-    gradient: "from-yellow-500 via-amber-600 to-slate-700",
-    compatibility: ["Web", "Mobile"],
-    url: "https://zero.dollyland.ai",
-    size: "medium"
-  },
-  {
-    id: 5,
-    name: "Flashcards",
-    tagline: "Smart Flashcards with Spaced Repetition",
-    description: "Master any subject faster with AI-powered flashcards and scientifically proven spaced repetition. Completely free, no limits.",
-    logoImage: flashcardsLogo,
-    gradient: "from-cyan-500 via-blue-500 to-indigo-600",
-    compatibility: ["Web", "iOS", "Android"],
-    url: "https://flashcards.dollyland.ai",
-    size: "medium"
-  },
-  {
-    id: 6,
-    name: "Sage",
-    tagline: "Smart Recipe Management",
-    description: "AI-powered recipe generation, smart meal planning, and intelligent pantry management. Transform your cooking journey.",
-    logoImage: sageLogo,
-    gradient: "from-orange-500 via-amber-500 to-yellow-600",
-    compatibility: ["Web", "iOS", "Android"],
-    url: "https://sage.dollyland.ai",
-    size: "medium"
-  },
-  {
-    id: 7,
-    name: "StealthWealth",
-    tagline: "Track Your Complete Net Worth, Privately",
-    description: "Monitor all your assets in one place—stocks, crypto, real estate, and more. No account required. Your data stays on your device.",
-    logoImage: stealthwealthLogo,
-    gradient: "from-emerald-500 via-teal-500 to-cyan-600",
-    compatibility: ["Web", "iOS"],
-    url: "https://stealthwealth.dollyland.ai",
-    size: "medium"
-  },
-  {
-    id: 8,
-    name: "AuraCycle",
-    tagline: "A Private Space to Understand Your Cycle",
-    description: "Your data is yours. Everything stays on your device, always. Works offline, no internet required.",
-    logoImage: auracycleLogo,
-    gradient: "from-pink-500 via-rose-500 to-red-600",
-    compatibility: ["Web", "iOS", "Android"],
-    url: "https://auracycle.dollyland.ai",
-    size: "medium"
-  }
-];
-
+const products = [{
+  id: 9,
+  name: "Dollyland Design System",
+  tagline: "Build Like We Do",
+  description: "A comprehensive design system with glassmorphic effects, gradient meshes, and 3D transforms. Everything you see here, packaged and ready to use.",
+  icon: Layers,
+  gradient: "from-indigo-500 via-purple-500 to-pink-500",
+  iconColor: "text-indigo-300",
+  compatibility: ["React", "TypeScript", "Tailwind"],
+  url: "/design-system",
+  featured: true,
+  preview: "Reusable components with cutting-edge design"
+}, {
+  id: 10,
+  name: "Aether",
+  tagline: "Run Your Properties Without the Chaos",
+  description: "One platform for payments, guest access, service bookings, and resident communication. Built for property developers and HOAs.",
+  logoImage: aetherLogo,
+  gradient: "from-amber-500 via-yellow-600 to-amber-700",
+  compatibility: ["Web", "iOS", "Android"],
+  url: "https://aether.dollyland.ai",
+  size: "large"
+}, {
+  id: 11,
+  name: "Linus",
+  tagline: "Turn Your Lovable App into a Native App",
+  description: "Skip the complexity of Xcode, Android Studio, and certificates. Publish to App Store and Google Play directly from your browser.",
+  logoImage: linusLogo,
+  gradient: "from-indigo-500 via-violet-500 to-purple-600",
+  compatibility: ["Web", "iOS", "Android"],
+  url: "https://linus.dollyland.ai",
+  size: "large"
+}, {
+  id: 1,
+  name: "Andorman",
+  tagline: "Enterprise Operations, Simplified",
+  description: "A powerful ERP platform designed for modern enterprises. Streamline operations, manage resources, and scale your business with intelligent automation.",
+  logoImage: andormanLogo,
+  gradient: "from-slate-600 via-blue-700 to-indigo-800",
+  compatibility: ["Web", "Enterprise"],
+  url: "https://andorman.dollyland.ai",
+  size: "medium"
+}, {
+  id: 2,
+  name: "hopp.haus",
+  tagline: "All-in-One Property Development",
+  description: "The complete platform for property developers. Manage projects, track investments, and streamline your real estate operations in one place.",
+  logoImage: hopphausLogo,
+  gradient: "from-amber-500 via-orange-500 to-red-600",
+  compatibility: ["Web", "Mobile"],
+  url: "https://hopphaus.lovable.app",
+  size: "medium"
+}, {
+  id: 3,
+  name: "ani🐨als",
+  tagline: "AI-Powered Animation Studio",
+  description: "Create stunning animations with AI. Professional-grade editor combining AI power with intuitive tools. Export to Lottie, MP4, SVG and more.",
+  logoImage: animalsLogo,
+  gradient: "from-slate-500 via-stone-500 to-slate-600",
+  compatibility: ["Web", "iPad", "Android Tablets"],
+  url: "https://animals.dollyland.ai",
+  size: "medium"
+}, {
+  id: 4,
+  name: "ZERØ",
+  tagline: "Global Wealth Optimizer",
+  description: "Master your finances with intelligent tracking and multi-currency support. Build wealth globally with smart portfolio insights.",
+  logoImage: zeroLogo,
+  gradient: "from-yellow-500 via-amber-600 to-slate-700",
+  compatibility: ["Web", "Mobile"],
+  url: "https://zero.dollyland.ai",
+  size: "medium"
+}, {
+  id: 5,
+  name: "Flashcards",
+  tagline: "Smart Flashcards with Spaced Repetition",
+  description: "Master any subject faster with AI-powered flashcards and scientifically proven spaced repetition. Completely free, no limits.",
+  logoImage: flashcardsLogo,
+  gradient: "from-cyan-500 via-blue-500 to-indigo-600",
+  compatibility: ["Web", "iOS", "Android"],
+  url: "https://flashcards.dollyland.ai",
+  size: "medium"
+}, {
+  id: 6,
+  name: "Sage",
+  tagline: "Smart Recipe Management",
+  description: "AI-powered recipe generation, smart meal planning, and intelligent pantry management. Transform your cooking journey.",
+  logoImage: sageLogo,
+  gradient: "from-orange-500 via-amber-500 to-yellow-600",
+  compatibility: ["Web", "iOS", "Android"],
+  url: "https://sage.dollyland.ai",
+  size: "medium"
+}, {
+  id: 7,
+  name: "StealthWealth",
+  tagline: "Track Your Complete Net Worth, Privately",
+  description: "Monitor all your assets in one place—stocks, crypto, real estate, and more. No account required. Your data stays on your device.",
+  logoImage: stealthwealthLogo,
+  gradient: "from-emerald-500 via-teal-500 to-cyan-600",
+  compatibility: ["Web", "iOS"],
+  url: "https://stealthwealth.dollyland.ai",
+  size: "medium"
+}, {
+  id: 8,
+  name: "AuraCycle",
+  tagline: "A Private Space to Understand Your Cycle",
+  description: "Your data is yours. Everything stays on your device, always. Works offline, no internet required.",
+  logoImage: auracycleLogo,
+  gradient: "from-pink-500 via-rose-500 to-red-600",
+  compatibility: ["Web", "iOS", "Android"],
+  url: "https://auracycle.dollyland.ai",
+  size: "medium"
+}];
 export default function Index() {
   const navigate = useNavigate();
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [mousePosition, setMousePosition] = useState({
+    x: 0,
+    y: 0
+  });
   const [hoveredProduct, setHoveredProduct] = useState<number | null>(null);
   const [scrollY, setScrollY] = useState(0);
   const heroRef = useRef<HTMLDivElement>(null);
   const featuredProduct = products.find(p => p.featured);
   const bentoProducts = products.filter(p => !p.featured);
-
   const handleProductClick = (url: string) => {
     if (url.startsWith('/')) {
       navigate(url);
@@ -161,16 +149,16 @@ export default function Index() {
       window.open(url, '_blank');
     }
   };
-
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
-      setMousePosition({ x: e.clientX, y: e.clientY });
+      setMousePosition({
+        x: e.clientX,
+        y: e.clientY
+      });
     };
-
     const handleScroll = () => {
       setScrollY(window.scrollY);
     };
-
     window.addEventListener("mousemove", handleMouseMove);
     window.addEventListener("scroll", handleScroll);
     return () => {
@@ -178,45 +166,38 @@ export default function Index() {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
-
-  return (
-    <div className="min-h-screen bg-background text-foreground overflow-hidden relative">
+  return <div className="min-h-screen bg-background text-foreground overflow-hidden relative">
       {/* Gradient mesh background */}
       <div className="fixed inset-0 opacity-30">
         <div className="absolute top-0 left-1/4 w-96 h-96 bg-primary/30 rounded-full mix-blend-multiply filter blur-3xl animate-float" />
-        <div className="absolute top-1/3 right-1/4 w-96 h-96 bg-purple-500/30 rounded-full mix-blend-multiply filter blur-3xl animate-float" style={{ animationDelay: '2s' }} />
-        <div className="absolute bottom-1/4 left-1/3 w-96 h-96 bg-indigo-500/30 rounded-full mix-blend-multiply filter blur-3xl animate-float" style={{ animationDelay: '4s' }} />
+        <div className="absolute top-1/3 right-1/4 w-96 h-96 bg-purple-500/30 rounded-full mix-blend-multiply filter blur-3xl animate-float" style={{
+        animationDelay: '2s'
+      }} />
+        <div className="absolute bottom-1/4 left-1/3 w-96 h-96 bg-indigo-500/30 rounded-full mix-blend-multiply filter blur-3xl animate-float" style={{
+        animationDelay: '4s'
+      }} />
       </div>
 
       {/* Animated grid */}
-      <div className="fixed inset-0 bg-[linear-gradient(rgba(var(--primary-rgb),0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(var(--primary-rgb),0.02)_1px,transparent_1px)] bg-[size:80px_80px] [mask-image:radial-gradient(ellipse_at_center,black_40%,transparent_90%)]" 
-        style={{ transform: `translateY(${scrollY * 0.1}px)` }} 
-      />
+      <div className="fixed inset-0 bg-[linear-gradient(rgba(var(--primary-rgb),0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(var(--primary-rgb),0.02)_1px,transparent_1px)] bg-[size:80px_80px] [mask-image:radial-gradient(ellipse_at_center,black_40%,transparent_90%)]" style={{
+      transform: `translateY(${scrollY * 0.1}px)`
+    }} />
       
       {/* Magnetic cursor glow */}
-      <div 
-        className="fixed w-[800px] h-[800px] rounded-full pointer-events-none transition-all duration-500 blur-3xl opacity-15 mix-blend-screen"
-        style={{
-          background: `radial-gradient(circle, hsl(var(--primary)) 0%, hsl(var(--primary) / 0.5) 30%, transparent 70%)`,
-          left: mousePosition.x - 400,
-          top: mousePosition.y - 400,
-        }}
-      />
+      <div className="fixed w-[800px] h-[800px] rounded-full pointer-events-none transition-all duration-500 blur-3xl opacity-15 mix-blend-screen" style={{
+      background: `radial-gradient(circle, hsl(var(--primary)) 0%, hsl(var(--primary) / 0.5) 30%, transparent 70%)`,
+      left: mousePosition.x - 400,
+      top: mousePosition.y - 400
+    }} />
 
       {/* Floating particles */}
       <div className="fixed inset-0 pointer-events-none">
-        {[...Array(20)].map((_, i) => (
-          <div
-            key={i}
-            className="absolute w-1 h-1 bg-primary/20 rounded-full animate-float"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              animationDelay: `${Math.random() * 5}s`,
-              animationDuration: `${10 + Math.random() * 10}s`
-            }}
-          />
-        ))}
+        {[...Array(20)].map((_, i) => <div key={i} className="absolute w-1 h-1 bg-primary/20 rounded-full animate-float" style={{
+        left: `${Math.random() * 100}%`,
+        top: `${Math.random() * 100}%`,
+        animationDelay: `${Math.random() * 5}s`,
+        animationDuration: `${10 + Math.random() * 10}s`
+      }} />)}
       </div>
 
       {/* Header */}
@@ -231,12 +212,12 @@ export default function Index() {
           </Badge>
           
           <h1 className="text-7xl md:text-9xl font-bold mb-8 tracking-tight leading-none">
-            <span className="block" style={{ transform: `translateY(${scrollY * 0.1}px)` }}>
+            <span className="block" style={{
+            transform: `translateY(${scrollY * 0.1}px)`
+          }}>
               Building the
             </span>
-            <span className="block bg-gradient-to-r from-primary via-purple-500 to-indigo-500 bg-clip-text text-transparent animate-gradient bg-[length:200%_auto]">
-              Future of AI
-            </span>
+            <span className="block bg-gradient-to-r from-primary via-purple-500 to-indigo-500 bg-clip-text text-transparent animate-gradient bg-[length:200%_auto]">Future with AI</span>
           </h1>
           
           <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto mb-16 leading-relaxed font-light">
@@ -251,15 +232,16 @@ export default function Index() {
         </section>
 
         {/* Featured Product Spotlight */}
-        {featuredProduct && (
-          <section className="relative py-32 overflow-hidden">
+        {featuredProduct && <section className="relative py-32 overflow-hidden">
             {/* Diagonal background */}
             <div className="absolute inset-0 bg-gradient-to-br from-background via-primary/5 to-background transform -skew-y-2 scale-110" />
             
             <div className="container mx-auto px-6 relative z-10">
               <div className="grid lg:grid-cols-2 gap-16 items-center max-w-7xl mx-auto">
                 {/* Left: Content */}
-                <div className="space-y-8" style={{ transform: `translateX(${scrollY * 0.05}px)` }}>
+                <div className="space-y-8" style={{
+              transform: `translateX(${scrollY * 0.05}px)`
+            }}>
                   <Badge className={`bg-gradient-to-r ${featuredProduct.gradient} text-white border-0 px-4 py-1.5`}>
                     <Rocket className="w-3 h-3 mr-2" />
                     Featured Product
@@ -274,19 +256,13 @@ export default function Index() {
                   </p>
 
                   <div className="flex flex-wrap gap-3">
-                    {featuredProduct.compatibility.map((platform) => (
-                      <Badge key={platform} variant="secondary" className="px-4 py-1.5">
+                    {featuredProduct.compatibility.map(platform => <Badge key={platform} variant="secondary" className="px-4 py-1.5">
                         {platform}
-                      </Badge>
-                    ))}
+                      </Badge>)}
                   </div>
 
                   <div className="flex gap-4 pt-4">
-                    <Button 
-                      size="lg"
-                      className={`bg-gradient-to-r ${featuredProduct.gradient} text-white border-0 hover:scale-105 transition-transform shadow-lg shadow-primary/25`}
-                      onClick={() => handleProductClick(featuredProduct.url)}
-                    >
+                    <Button size="lg" className={`bg-gradient-to-r ${featuredProduct.gradient} text-white border-0 hover:scale-105 transition-transform shadow-lg shadow-primary/25`} onClick={() => handleProductClick(featuredProduct.url)}>
                       {featuredProduct.url.startsWith('/') ? 'Explore System' : 'Launch App'}
                       <ArrowRight className="w-5 h-5 ml-2" />
                     </Button>
@@ -294,7 +270,9 @@ export default function Index() {
                 </div>
 
                 {/* Right: Visual Preview */}
-                <div className="relative" style={{ transform: `translateX(${-scrollY * 0.05}px)` }}>
+                <div className="relative" style={{
+              transform: `translateX(${-scrollY * 0.05}px)`
+            }}>
                   <div className={`relative aspect-square rounded-3xl bg-gradient-to-br ${featuredProduct.gradient} p-1 shadow-2xl shadow-primary/20 hover:shadow-primary/40 transition-all duration-500 hover:scale-105 group`}>
                     <div className="w-full h-full rounded-3xl bg-background/95 backdrop-blur-xl flex items-center justify-center relative overflow-hidden">
                       <featuredProduct.icon className={`w-32 h-32 ${featuredProduct.iconColor} opacity-20 group-hover:opacity-40 transition-opacity group-hover:scale-110 duration-500`} />
@@ -311,8 +289,7 @@ export default function Index() {
                 </div>
               </div>
             </div>
-          </section>
-        )}
+          </section>}
 
         {/* Bento Grid - Remaining Products */}
         <section className="container mx-auto px-6 py-32">
@@ -328,23 +305,12 @@ export default function Index() {
           {/* Asymmetric Bento Layout */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto">
             {bentoProducts.map((product, index) => {
-              const isHovered = hoveredProduct === product.id;
-              const isLarge = product.size === 'large';
-              
-              return (
-                <Card
-                  key={product.id}
-                  onMouseEnter={() => setHoveredProduct(product.id)}
-                  onMouseLeave={() => setHoveredProduct(null)}
-                  className={`group relative overflow-hidden border-border/50 bg-card/40 backdrop-blur-sm transition-all duration-700 hover:border-primary/50 cursor-pointer ${
-                    isLarge ? 'md:col-span-2 md:row-span-2' : 'lg:col-span-2'
-                  }`}
-                  style={{
-                    animationDelay: `${index * 150}ms`,
-                    transform: isHovered ? `translateY(-8px) scale(1.02)` : 'translateY(0) scale(1)',
-                  }}
-                  onClick={() => handleProductClick(product.url)}
-                >
+            const isHovered = hoveredProduct === product.id;
+            const isLarge = product.size === 'large';
+            return <Card key={product.id} onMouseEnter={() => setHoveredProduct(product.id)} onMouseLeave={() => setHoveredProduct(null)} className={`group relative overflow-hidden border-border/50 bg-card/40 backdrop-blur-sm transition-all duration-700 hover:border-primary/50 cursor-pointer ${isLarge ? 'md:col-span-2 md:row-span-2' : 'lg:col-span-2'}`} style={{
+              animationDelay: `${index * 150}ms`,
+              transform: isHovered ? `translateY(-8px) scale(1.02)` : 'translateY(0) scale(1)'
+            }} onClick={() => handleProductClick(product.url)}>
                   {/* Gradient mesh background */}
                   <div className={`absolute inset-0 bg-gradient-to-br ${product.gradient} opacity-0 group-hover:opacity-5 transition-all duration-700`} />
                   
@@ -354,17 +320,9 @@ export default function Index() {
                   <div className={`relative ${isLarge ? 'p-12' : 'p-8'} h-full flex flex-col`}>
                     {/* Logo image or icon */}
                     <div className={`${isLarge ? 'w-20 h-20 mb-8' : 'w-16 h-16 mb-6'} rounded-2xl overflow-hidden group-hover:scale-110 group-hover:rotate-3 transition-all duration-500 shadow-lg relative`}>
-                      {'logoImage' in product ? (
-                        <img 
-                          src={product.logoImage} 
-                          alt={`${product.name} logo`}
-                          className="w-full h-full object-cover"
-                        />
-                      ) : 'icon' in product ? (
-                        <div className={`w-full h-full bg-gradient-to-br ${product.gradient} flex items-center justify-center`}>
+                      {'logoImage' in product ? <img src={product.logoImage} alt={`${product.name} logo`} className="w-full h-full object-cover" /> : 'icon' in product ? <div className={`w-full h-full bg-gradient-to-br ${product.gradient} flex items-center justify-center`}>
                           <product.icon className="w-10 h-10 text-white" />
-                        </div>
-                      ) : null}
+                        </div> : null}
                       
                       {/* Pulse ring */}
                       <div className={`absolute inset-0 rounded-2xl bg-gradient-to-br ${product.gradient} opacity-0 group-hover:opacity-50 group-hover:scale-150 transition-all duration-700 blur-md`} />
@@ -385,15 +343,9 @@ export default function Index() {
                     </div>
 
                     <div className="flex flex-wrap gap-2 mb-6">
-                      {product.compatibility.map((platform) => (
-                        <Badge 
-                          key={platform} 
-                          variant="secondary" 
-                          className="text-xs bg-background/80 backdrop-blur-sm group-hover:bg-primary/10 transition-colors"
-                        >
+                      {product.compatibility.map(platform => <Badge key={platform} variant="secondary" className="text-xs bg-background/80 backdrop-blur-sm group-hover:bg-primary/10 transition-colors">
                           {platform}
-                        </Badge>
-                      ))}
+                        </Badge>)}
                     </div>
 
                     <div className="flex items-center text-sm font-medium text-primary/70 group-hover:text-primary transition-colors">
@@ -402,12 +354,9 @@ export default function Index() {
                   </div>
 
                   {/* Border glow */}
-                  {isHovered && (
-                    <div className={`absolute inset-0 border-2 border-primary/30 rounded-lg pointer-events-none shadow-lg shadow-primary/10`} />
-                  )}
-                </Card>
-              );
-            })}
+                  {isHovered && <div className={`absolute inset-0 border-2 border-primary/30 rounded-lg pointer-events-none shadow-lg shadow-primary/10`} />}
+                </Card>;
+          })}
           </div>
         </section>
 
@@ -482,6 +431,5 @@ export default function Index() {
           </div>
         </footer>
       </main>
-    </div>
-  );
+    </div>;
 }
