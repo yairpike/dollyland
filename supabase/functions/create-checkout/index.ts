@@ -1,10 +1,10 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import Stripe from "https://esm.sh/stripe@14.21.0";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.55.0";
+import { getCorsHeaders, handleCorsPreflightRequest } from "../_shared/cors.ts";
 
-const corsHeaders = {
-  'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
+// Additional security headers
+const securityHeaders = {
   'Content-Security-Policy': "default-src 'self'",
   'X-Frame-Options': 'DENY',
   'X-Content-Type-Options': 'nosniff',
@@ -19,7 +19,12 @@ const logStep = (step: string, details?: any) => {
 serve(async (req) => {
   logStep("Request received", { method: req.method, url: req.url });
   
-  if (req.method === 'OPTIONS') {
+  const origin = req.headers.get('origin');
+  const corsHeaders = { ...getCorsHeaders(origin), ...securityHeaders };
+  
+  // Handle CORS preflight requests
+  const preflightResponse = handleCorsPreflightRequest(req);
+  if (preflightResponse) {
     logStep("Handling CORS preflight");
     return new Response(null, { headers: corsHeaders });
   }
