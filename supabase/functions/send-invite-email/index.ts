@@ -1,11 +1,7 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { Resend } from "npm:resend@2.0.0";
 import { supabase } from "../_shared/supabase.ts";
-
-const corsHeaders = {
-  "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
-};
+import { getCorsHeaders, handleCorsPreflightRequest } from "../_shared/cors.ts";
 
 interface SendInviteRequest {
   email: string;
@@ -15,6 +11,9 @@ interface SendInviteRequest {
 
 const handler = async (req: Request): Promise<Response> => {
   console.log(`[send-invite-email] Request received: ${req.method}`);
+  
+  const origin = req.headers.get('origin');
+  const corsHeaders = getCorsHeaders(origin);
   
   // Handle CORS preflight requests
   if (req.method === "OPTIONS") {
