@@ -47,8 +47,34 @@ Deno.serve(async (req) => {
 
     const { action, agentId, actionType, parameters, executionId } = await req.json()
 
+    // Helper function to verify agent ownership
+    async function verifyAgentOwnership(agentId: string): Promise<boolean> {
+      if (!agentId) return false
+      
+      const { data: agent, error: agentError } = await supabaseClient
+        .from('agents')
+        .select('user_id')
+        .eq('id', agentId)
+        .single()
+
+      if (agentError || !agent) {
+        console.error('Agent not found or error:', agentError?.message)
+        return false
+      }
+
+      return agent.user_id === user.id
+    }
+
     switch (action) {
       case 'executeAction': {
+        // Verify the user owns this agent before executing actions
+        if (!await verifyAgentOwnership(agentId)) {
+          return new Response(
+            JSON.stringify({ error: 'Forbidden: You do not have permission to execute actions on this agent' }),
+            { headers: { ...corsHeaders, 'Content-Type': 'application/json' }, status: 403 }
+          )
+        }
+
         // Create execution record
         const { data: execution, error: insertError } = await supabaseClient
           .from('agent_action_executions')
@@ -157,12 +183,11 @@ Deno.serve(async (req) => {
               break
             }
 
+            // custom_code action has been removed for security reasons
+            // Arbitrary code execution is a critical security vulnerability
             case 'custom_code': {
-              // Execute custom JavaScript code
-              const { code, context } = parameters
-              const func = new Function('context', `return (${code})(context)`)
-              result = func(context)
-              break
+              console.warn('custom_code action attempted but is disabled for security')
+              throw new Error('custom_code action has been disabled for security reasons. Use predefined action types instead.')
             }
 
             default:
@@ -199,6 +224,14 @@ Deno.serve(async (req) => {
       }
 
       case 'getExecutions': {
+        // Verify the user owns this agent before returning executions
+        if (!await verifyAgentOwnership(agentId)) {
+          return new Response(
+            JSON.stringify({ error: 'Forbidden: You do not have permission to view executions for this agent' }),
+            { headers: { ...corsHeaders, 'Content-Type': 'application/json' }, status: 403 }
+          )
+        }
+
         const { data: executions, error } = await supabaseClient
           .from('agent_action_executions')
           .select('*')
@@ -217,9 +250,10 @@ Deno.serve(async (req) => {
       }
 
       case 'getExecution': {
+        // First get the execution to check the agent ownership
         const { data: execution, error } = await supabaseClient
           .from('agent_action_executions')
-          .select('*')
+          .select('*, agents!inner(user_id)')
           .eq('id', executionId)
           .single()
 
@@ -227,13 +261,43 @@ Deno.serve(async (req) => {
           throw new Error(`Failed to get execution: ${error.message}`)
         }
 
+        // Verify ownership through the agent relationship
+        if (execution.agents?.user_id !== user.id) {
+          return new Response(
+            JSON.stringify({ error: 'Forbidden: You do not have permission to view this execution' }),
+            { headers: { ...corsHeaders, 'Content-Type': 'application/json' }, status: 403 }
+          )
+        }
+
+        // Remove the joined agents data before returning
+        const { agents, ...executionData } = execution
+
         return new Response(
-          JSON.stringify({ execution }),
+          JSON.stringify({ execution: executionData }),
           { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
         )
       }
 
       case 'cancelExecution': {
+        // First get the execution to verify ownership
+        const { data: existingExecution, error: fetchError } = await supabaseClient
+          .from('agent_action_executions')
+          .select('*, agents!inner(user_id)')
+          .eq('id', executionId)
+          .single()
+
+        if (fetchError) {
+          throw new Error(`Failed to get execution: ${fetchError.message}`)
+        }
+
+        // Verify ownership through the agent relationship
+        if (existingExecution.agents?.user_id !== user.id) {
+          return new Response(
+            JSON.stringify({ error: 'Forbidden: You do not have permission to cancel this execution' }),
+            { headers: { ...corsHeaders, 'Content-Type': 'application/json' }, status: 403 }
+          )
+        }
+
         const { data: execution, error } = await supabaseClient
           .from('agent_action_executions')
           .update({
