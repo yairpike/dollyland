@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { Navigation } from "@/components/Navigation";
+import { ContactDialog } from "@/components/ContactDialog";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -426,7 +427,9 @@ export default function Index() {
             </div>
             
             <div className="flex gap-8 text-sm text-muted-foreground">
-              <a href="mailto:help@hypertimestudio.com" className="hover:text-primary transition-colors">Contact</a>
+              <ContactDialog>
+                <button className="hover:text-primary transition-colors">Contact</button>
+              </ContactDialog>
             </div>
           </div>
         </footer>
