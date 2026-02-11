@@ -5,6 +5,7 @@ import {
   DSNavList,
 } from "@/components/design-system";
 import { Home } from "lucide-react";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 interface NavigationProps {
   currentPage: "home" | "components" | "examples" | "installation";
@@ -60,6 +61,7 @@ export function Navigation({ currentPage }: NavigationProps) {
             </li>
           </DSNavList>
         </div>
+        <ThemeToggle iconOnly />
       </div>
     </DSNavigation>
   );
