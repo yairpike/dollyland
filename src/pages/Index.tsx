@@ -19,6 +19,8 @@ import stealthwealthLogo from "@/assets/logos/stealthwealth-logo.png";
 import auracycleLogo from "@/assets/logos/auracycle-logo.png";
 import aetherLogo from "@/assets/logos/aether-logo.png";
 import linusLogo from "@/assets/logos/linus-logo.png";
+import oracleLogo from "@/assets/logos/oracle-logo.png";
+import upawooLogo from "@/assets/logos/upawoo-logo.png";
 const products = [{
   id: 9,
   name: "Dollyland Design System",
@@ -31,6 +33,26 @@ const products = [{
   url: "/design-system",
   featured: true,
   preview: "Reusable components with cutting-edge design"
+}, {
+  id: 12,
+  name: "Oracle",
+  tagline: "Your Cosmic Identity, All in One Place",
+  description: "Discover your cosmic identity through Western astrology, Chinese BaZi, Burmese traditions, AI palmistry, and daily destiny readings — all in one mystical experience.",
+  logoImage: oracleLogo,
+  gradient: "from-indigo-900 via-amber-600 to-yellow-500",
+  compatibility: ["Web", "iOS", "Android"],
+  url: "https://oracle.dollyland.ai",
+  size: "large"
+}, {
+  id: 13,
+  name: "Upawoo",
+  tagline: "Your Burmese AI Assistant",
+  description: "A Burmese-language AI chatbot that helps you explore everything about Myanmar. Ask anything, get answers in Burmese.",
+  logoImage: upawooLogo,
+  gradient: "from-orange-500 via-red-500 to-pink-600",
+  compatibility: ["Web"],
+  url: "https://upawoo.web.app",
+  size: "medium"
 }, {
   id: 10,
   name: "Aether",
@@ -370,7 +392,7 @@ export default function Index() {
                 <div className="relative">
                   <Layers className="w-12 h-12 mx-auto mb-4 text-primary" />
                 <div className="text-5xl font-bold mb-2 bg-gradient-to-r from-primary to-purple-500 bg-clip-text text-transparent">
-                    10
+                    12
                   </div>
                   <div className="text-sm text-muted-foreground uppercase tracking-wider">Products Launched</div>
                 </div>
