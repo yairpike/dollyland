@@ -11,7 +11,7 @@ import Installation from "./pages/Installation";
 import NotFound from "./pages/NotFound";
 
 const App = () => (
-  <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
+  <ThemeProvider attribute="class" defaultTheme="dark" storageKey="dollyland-theme">
     <ErrorBoundary>
       <TooltipProvider>
         <Toaster />
