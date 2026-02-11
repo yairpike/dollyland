@@ -171,14 +171,71 @@ Deno.serve(async (req) => {
 
             case 'trigger_webhook': {
               const { url, payload, method = 'POST' } = parameters
-              const webhookResponse = await fetch(url, {
-                method,
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(payload)
-              })
-              result = { 
-                status: webhookResponse.status,
-                response: await webhookResponse.json()
+
+              // Validate webhook URL to prevent SSRF
+              function isValidWebhookUrl(urlStr: string): boolean {
+                try {
+                  const parsed = new URL(urlStr);
+                  // Only allow http/https
+                  if (!['http:', 'https:'].includes(parsed.protocol)) return false;
+                  const hostname = parsed.hostname;
+                  // Block loopback
+                  if (hostname === 'localhost' || hostname === '127.0.0.1' || hostname === '::1') return false;
+                  // Block private IPs (RFC 1918)
+                  if (/^10\./.test(hostname)) return false;
+                  if (/^172\.(1[6-9]|2[0-9]|3[01])\./.test(hostname)) return false;
+                  if (/^192\.168\./.test(hostname)) return false;
+                  // Block link-local and metadata endpoints
+                  if (/^169\.254\./.test(hostname)) return false;
+                  if (hostname === 'metadata.google.internal') return false;
+                  // Block fd00::/8 IPv6
+                  if (/^fd[0-9a-f]{2}:/i.test(hostname)) return false;
+                  if (hostname === '0.0.0.0') return false;
+                  return true;
+                } catch {
+                  return false;
+                }
+              }
+
+              if (!url || typeof url !== 'string' || !isValidWebhookUrl(url)) {
+                throw new Error('Invalid or disallowed webhook URL. Only public HTTP/HTTPS URLs are permitted.');
+              }
+
+              // Only allow safe HTTP methods
+              const allowedMethods = ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'];
+              const upperMethod = String(method).toUpperCase();
+              if (!allowedMethods.includes(upperMethod)) {
+                throw new Error(`HTTP method '${method}' is not allowed.`);
+              }
+
+              const controller = new AbortController();
+              const timeout = setTimeout(() => controller.abort(), 10000); // 10s timeout
+
+              try {
+                const webhookResponse = await fetch(url, {
+                  method: upperMethod,
+                  headers: { 'Content-Type': 'application/json' },
+                  body: ['GET', 'DELETE'].includes(upperMethod) ? undefined : JSON.stringify(payload),
+                  signal: controller.signal,
+                });
+                clearTimeout(timeout);
+
+                const responseText = await webhookResponse.text();
+                // Limit response size to 1MB
+                if (responseText.length > 1_000_000) {
+                  throw new Error('Webhook response too large');
+                }
+
+                let parsedResponse;
+                try { parsedResponse = JSON.parse(responseText); } catch { parsedResponse = responseText.substring(0, 500); }
+
+                result = {
+                  status: webhookResponse.status,
+                  response: parsedResponse
+                };
+              } catch (fetchError) {
+                clearTimeout(timeout);
+                throw new Error(`Webhook request failed: ${fetchError.message}`);
               }
               break
             }
