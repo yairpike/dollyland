@@ -21,6 +21,7 @@ import aetherLogo from "@/assets/logos/aether-logo.png";
 import linusLogo from "@/assets/logos/linus-logo.png";
 import oracleLogo from "@/assets/logos/oracle-logo.png";
 import upawooLogo from "@/assets/logos/upawoo-logo.png";
+import vibeLogo from "@/assets/logos/vibe-logo.png";
 const products = [{
   id: 9,
   name: "Dollyland Design System",
@@ -152,6 +153,16 @@ const products = [{
   gradient: "from-pink-500 via-rose-500 to-red-600",
   compatibility: ["Web", "iOS", "Android"],
   url: "https://auracycle.dollyland.ai",
+  size: "medium"
+}, {
+  id: 14,
+  name: "Vibe",
+  tagline: "Your Marketing at Scale",
+  description: "AI-powered marketing automation that creates, optimizes, and scales your campaigns effortlessly.",
+  logoImage: vibeLogo,
+  gradient: "from-teal-500 via-cyan-500 to-blue-600",
+  compatibility: ["Web"],
+  url: "https://vibe.dollyland.ai",
   size: "medium"
 }];
 export default function Index() {
@@ -392,7 +403,7 @@ export default function Index() {
                 <div className="relative">
                   <Layers className="w-12 h-12 mx-auto mb-4 text-primary" />
                 <div className="text-5xl font-bold mb-2 bg-gradient-to-r from-primary to-purple-500 bg-clip-text text-transparent">
-                    12
+                    13
                   </div>
                   <div className="text-sm text-muted-foreground uppercase tracking-wider">Products Launched</div>
                 </div>
