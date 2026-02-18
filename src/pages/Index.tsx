@@ -354,7 +354,7 @@ export default function Index() {
                   <div className={`relative ${isLarge ? 'p-12' : 'p-8'} h-full flex flex-col`}>
                     {/* Logo image or icon */}
                     <div className={`${isLarge ? 'w-20 h-20 mb-8' : 'w-16 h-16 mb-6'} rounded-2xl overflow-hidden group-hover:scale-110 group-hover:rotate-3 transition-all duration-500 shadow-lg relative`}>
-                      {'logoImage' in product ? <img src={product.logoImage} alt={`${product.name} logo`} className="w-full h-full object-cover" /> : 'icon' in product ? <div className={`w-full h-full bg-gradient-to-br ${product.gradient} flex items-center justify-center`}>
+                      {'logoImage' in product ? <div className={`w-full h-full bg-gradient-to-br ${product.gradient} flex items-center justify-center p-2`}><img src={product.logoImage} alt={`${product.name} logo`} className="w-full h-full object-contain" /></div> : 'icon' in product ? <div className={`w-full h-full bg-gradient-to-br ${product.gradient} flex items-center justify-center`}>
                           <product.icon className="w-10 h-10 text-white" />
                         </div> : null}
                       
