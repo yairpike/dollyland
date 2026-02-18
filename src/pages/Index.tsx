@@ -35,6 +35,16 @@ const products = [{
   featured: true,
   preview: "Reusable components with cutting-edge design"
 }, {
+  id: 14,
+  name: "Vibe",
+  tagline: "Your Marketing at Scale",
+  description: "AI-powered marketing automation that creates, optimizes, and scales your campaigns effortlessly.",
+  logoImage: vibeLogo,
+  gradient: "from-teal-500 via-cyan-500 to-blue-600",
+  compatibility: ["Web"],
+  url: "https://vibe.dollyland.ai",
+  size: "medium"
+}, {
   id: 12,
   name: "Oracle",
   tagline: "Your Cosmic Identity, All in One Place",
@@ -153,16 +163,6 @@ const products = [{
   gradient: "from-pink-500 via-rose-500 to-red-600",
   compatibility: ["Web", "iOS", "Android"],
   url: "https://auracycle.dollyland.ai",
-  size: "medium"
-}, {
-  id: 14,
-  name: "Vibe",
-  tagline: "Your Marketing at Scale",
-  description: "AI-powered marketing automation that creates, optimizes, and scales your campaigns effortlessly.",
-  logoImage: vibeLogo,
-  gradient: "from-teal-500 via-cyan-500 to-blue-600",
-  compatibility: ["Web"],
-  url: "https://vibe.dollyland.ai",
   size: "medium"
 }];
 export default function Index() {
